@@ -7,36 +7,27 @@
 	<meta name="description" content="Documentation for PathSim - A Python framework for simulating dynamical systems" />
 </svelte:head>
 
-<main id="main-content" class="docs-home">
+<main class="docs-home">
 	<header class="hero">
-		<h1>PathSim Documentation</h1>
-		<p class="tagline">A Python framework for simulating dynamical systems using block diagrams</p>
+		<img src="/pathsim_logo.png" alt="PathSim" class="hero-logo" />
+		<p class="tagline">Documentation for the PathSim ecosystem</p>
 	</header>
 
 	<section class="packages">
 		<h2>Packages</h2>
 		<div class="package-grid">
 			<a href="/pathsim" class="package-card">
-				<div class="package-icon">
-					<Icon name="box" size={32} />
-				</div>
-				<h3>PathSim</h3>
+				<img src="/pathsim_logo.png" alt="PathSim" class="package-logo" />
 				<p>Core simulation framework with blocks, solvers, and event handling</p>
 			</a>
 
 			<a href="/chem" class="package-card">
-				<div class="package-icon chem">
-					<Icon name="flask" size={32} />
-				</div>
-				<h3>PathSim-Chem</h3>
+				<img src="/pathsim_chem_logo.png" alt="PathSim-Chem" class="package-logo" />
 				<p>Chemical engineering toolbox with reactors and separation units</p>
 			</a>
 
 			<a href="/vehicle" class="package-card">
-				<div class="package-icon vehicle">
-					<Icon name="car" size={32} />
-				</div>
-				<h3>PathSim-Vehicle</h3>
+				<img src="/pathsim_vehicle_logo.png" alt="PathSim-Vehicle" class="package-logo" />
 				<p>Vehicle dynamics and powertrain simulation blocks</p>
 			</a>
 		</div>
@@ -77,13 +68,10 @@
 		padding: var(--space-3xl) 0;
 	}
 
-	.hero h1 {
-		font-size: 48px;
-		margin-bottom: var(--space-md);
-		background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
+	.hero-logo {
+		height: 80px;
+		width: auto;
+		margin-bottom: var(--space-lg);
 	}
 
 	.tagline {
@@ -111,6 +99,8 @@
 	.package-card {
 		display: flex;
 		flex-direction: column;
+		align-items: center;
+		text-align: center;
 		padding: var(--space-xl);
 		background: var(--surface-raised);
 		border: 1px solid var(--border);
@@ -127,31 +117,10 @@
 		text-decoration: none;
 	}
 
-	.package-icon {
-		width: 56px;
-		height: 56px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: var(--accent-bg);
-		color: var(--accent);
-		border-radius: var(--radius-md);
+	.package-logo {
+		height: 48px;
+		width: auto;
 		margin-bottom: var(--space-lg);
-	}
-
-	.package-icon.chem {
-		background: rgba(129, 199, 132, 0.15);
-		color: #81C784;
-	}
-
-	.package-icon.vehicle {
-		background: rgba(255, 183, 77, 0.15);
-		color: #FFB74D;
-	}
-
-	.package-card h3 {
-		font-size: var(--font-xl);
-		margin-bottom: var(--space-sm);
 	}
 
 	.package-card p {
