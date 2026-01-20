@@ -300,18 +300,18 @@
 		display: none;
 	}
 
-	/* Parameter/Attribute tables - panel style */
+	/* Parameter/Attribute tables - clean panel style */
 	.docstring-content :global(.param-table-wrapper) {
 		margin: var(--space-md) 0;
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
 	}
 
 	.docstring-content :global(.param-table) {
 		width: 100%;
-		border-collapse: separate;
-		border-spacing: 0;
+		border-collapse: collapse;
 		font-size: var(--font-sm);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
 	}
 
 	/* Header styled like panel-header */
@@ -327,32 +327,9 @@
 		text-align: left;
 	}
 
-	/* Rounded corners on header */
-	.docstring-content :global(.param-table thead th:first-child) {
-		border-top-left-radius: var(--radius-lg);
-	}
-
-	.docstring-content :global(.param-table thead th:last-child) {
-		border-top-right-radius: var(--radius-lg);
-	}
-
 	.docstring-content :global(.param-table td) {
 		padding: var(--space-sm) var(--space-md);
-		background: var(--surface);
 		vertical-align: top;
-	}
-
-	.docstring-content :global(.param-table tbody tr:not(:last-child) td) {
-		border-bottom: 1px solid var(--border);
-	}
-
-	/* Rounded corners on last row */
-	.docstring-content :global(.param-table tbody tr:last-child td:first-child) {
-		border-bottom-left-radius: var(--radius-lg);
-	}
-
-	.docstring-content :global(.param-table tbody tr:last-child td:last-child) {
-		border-bottom-right-radius: var(--radius-lg);
 	}
 
 	.docstring-content :global(.param-table .param-name) {
