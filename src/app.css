@@ -883,7 +883,7 @@ input::placeholder {
 /* CodeMirror styling */
 .cm-editor {
 	height: 100%;
-	font-size: var(--font-sm);
+	font-size: 12px;
 	background: var(--surface);
 	border-radius: var(--radius-md);
 }
@@ -894,7 +894,7 @@ input::placeholder {
 }
 
 .cm-content {
-	padding: var(--space-sm) 0;
+	padding: 8px 0;
 	caret-color: var(--accent);
 }
 
@@ -910,7 +910,7 @@ input::placeholder {
 }
 
 .cm-lineNumbers .cm-gutterElement {
-	padding: 0 var(--space-sm) 0 var(--space-md);
+	padding: 0 8px 0 12px;
 }
 
 .cm-activeLineGutter {
@@ -937,10 +937,25 @@ input::placeholder {
 
 [data-theme='light'] .cm-gutters {
 	background-color: var(--surface) !important;
+	border-right: 1px solid var(--border) !important;
+	color: var(--text-disabled) !important;
+}
+
+[data-theme='light'] .cm-activeLineGutter {
+	background-color: transparent !important;
+	color: var(--text-muted) !important;
 }
 
 [data-theme='light'] .cm-activeLine {
 	background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-theme='light'] .cm-selectionBackground {
+	background: var(--accent-bg) !important;
+}
+
+[data-theme='light'] .cm-focused .cm-selectionBackground {
+	background: var(--accent-bg) !important;
 }
 
 /* KaTeX styling */
