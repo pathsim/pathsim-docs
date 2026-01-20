@@ -69,6 +69,10 @@
 		text-align: left;
 		cursor: pointer;
 		transition: background var(--transition-fast);
+		/* Override panel-header uppercase */
+		text-transform: none;
+		letter-spacing: normal;
+		font-size: var(--font-sm);
 	}
 
 	.class-header:hover {

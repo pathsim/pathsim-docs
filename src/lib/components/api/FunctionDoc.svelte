@@ -48,9 +48,12 @@
 		/* Inherits tile base styles from app.css */
 	}
 
-	/* Override panel-header for method - more compact */
+	/* Override panel-header for method - more compact, no uppercase */
 	.method-tile :global(.panel-header) {
 		padding: var(--space-sm) var(--space-md);
+		text-transform: none;
+		letter-spacing: normal;
+		font-size: var(--font-sm);
 	}
 
 	.method-header-content {
