@@ -118,7 +118,7 @@
 	}
 
 	.package-logo {
-		height: 48px;
+		height: 80px;
 		width: auto;
 		margin-bottom: var(--space-lg);
 	}
