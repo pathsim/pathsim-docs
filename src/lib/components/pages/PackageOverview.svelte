@@ -57,6 +57,8 @@
 	</div>
 </div>
 
+<div class="separator"></div>
+
 <h2 id="key-features">Key Features</h2>
 
 <div class="tile-grid {featureCols}">
@@ -69,6 +71,8 @@
 </div>
 
 {#if pkg.installation.length > 0}
+	<div class="separator"></div>
+
 	<h2 id="installation">Installation</h2>
 
 	<div class="install-grid">
@@ -91,6 +95,8 @@
 {/if}
 
 {#if pkg.quickstart}
+	<div class="separator"></div>
+
 	<h2 id="quick-start">Quick Start</h2>
 
 	<p>{pkg.quickstart.description}</p>
