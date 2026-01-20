@@ -434,6 +434,105 @@ input::placeholder {
 	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
+/* Tile - card variant using panel-header/panel-body */
+.tile {
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tile:hover {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* Tile grid layouts */
+.tile-grid {
+	display: grid;
+	gap: var(--space-lg);
+}
+
+.tile-grid.cols-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.tile-grid.cols-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.tile-grid.cols-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 900px) {
+	.tile-grid.cols-3,
+	.tile-grid.cols-4 {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 600px) {
+	.tile-grid.cols-2,
+	.tile-grid.cols-3,
+	.tile-grid.cols-4 {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* Link tile - clickable tile with icon */
+.link-tile {
+	display: flex;
+	flex-direction: column;
+	text-decoration: none;
+	color: inherit;
+}
+
+.link-tile .panel-body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-xl);
+}
+
+.link-tile:hover {
+	text-decoration: none;
+}
+
+.link-tile .panel-body {
+	color: var(--accent);
+}
+
+/* Tile body text */
+.tile-body {
+	color: var(--text-muted);
+	font-size: var(--font-sm);
+}
+
+/* Code panel - for CodeMirror blocks */
+.code-panel {
+	display: flex;
+	flex-direction: column;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.code-panel:hover {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.code-panel .panel-body {
+	padding: 0;
+}
+
+.code-panel .cm-editor {
+	height: auto;
+	max-height: 400px;
+}
+
 /* Badge */
 .badge {
 	display: inline-flex;
@@ -515,6 +614,13 @@ input::placeholder {
 
 .skip-link:focus {
 	top: 0;
+}
+
+/* Page logo - used at top of doc pages instead of h1 */
+.page-logo {
+	height: 80px;
+	width: auto;
+	margin-bottom: var(--space-lg);
 }
 
 /* Lead paragraph - prominent intro text */

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Icon from '$lib/components/common/Icon.svelte';
+	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages } from '$lib/config/links';
 
 	const pkg = packages.chem;
@@ -9,7 +11,9 @@
 	<meta name="description" content="PathSim-Chem - Chemical engineering blocks for PathSim" />
 </svelte:head>
 
-<h1 id="overview">PathSim-Chem</h1>
+<Tooltip />
+
+<img src={pkg.logo} alt="PathSim-Chem" class="page-logo" />
 
 <p class="lead">
 	Chemical engineering blocks for PathSim.
@@ -24,18 +28,66 @@
 
 <h2 id="key-features">Key Features</h2>
 
-<ul>
-	<li><strong>Reactor models</strong> - CSTR, PFR, batch reactors</li>
-	<li><strong>Heat transfer</strong> - Heat exchangers, heaters, coolers</li>
-	<li><strong>Separation</strong> - Distillation, absorption columns</li>
-	<li><strong>Thermodynamics</strong> - Property calculations</li>
-</ul>
+<div class="tile-grid cols-2">
+	<div class="tile">
+		<div class="panel-header">Reactor Models</div>
+		<div class="panel-body tile-body">CSTR, PFR, batch reactors</div>
+	</div>
+	<div class="tile">
+		<div class="panel-header">Heat Transfer</div>
+		<div class="panel-body tile-body">Heat exchangers, heaters, coolers</div>
+	</div>
+	<div class="tile">
+		<div class="panel-header">Separation</div>
+		<div class="panel-body tile-body">Distillation, absorption columns</div>
+	</div>
+	<div class="tile">
+		<div class="panel-header">Thermodynamics</div>
+		<div class="panel-body tile-body">Property calculations</div>
+	</div>
+</div>
 
 <h2 id="next-steps">Next Steps</h2>
 
-<ul>
-	<li><a href={pkg.gettingStarted}>Installation guide</a></li>
-	<li><a href={pkg.api}>API Reference</a></li>
-	<li><a href={pkg.examples}>Examples</a></li>
-</ul>
+<div class="tile-grid cols-3">
+	<a href={pkg.gettingStarted} class="tile link-tile">
+		<div class="panel-header">
+			<span>Installation</span>
+			<div class="header-actions">
+				<span class="icon-btn" use:tooltip={'Get started'}>
+					<Icon name="download" size={14} />
+				</span>
+			</div>
+		</div>
+		<div class="panel-body">
+			<Icon name="zap" size={32} />
+		</div>
+	</a>
+	<a href={pkg.api} class="tile link-tile">
+		<div class="panel-header">
+			<span>API Reference</span>
+			<div class="header-actions">
+				<span class="icon-btn" use:tooltip={'Browse API'}>
+					<Icon name="braces" size={14} />
+				</span>
+			</div>
+		</div>
+		<div class="panel-body">
+			<Icon name="book" size={32} />
+		</div>
+	</a>
+	<a href={pkg.examples} class="tile link-tile">
+		<div class="panel-header">
+			<span>Examples</span>
+			<div class="header-actions">
+				<span class="icon-btn" use:tooltip={'View examples'}>
+					<Icon name="play" size={14} />
+				</span>
+			</div>
+		</div>
+		<div class="panel-body">
+			<Icon name="play" size={32} />
+		</div>
+	</a>
+</div>
 
