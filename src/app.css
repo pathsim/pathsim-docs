@@ -267,6 +267,56 @@ button.ghost:hover {
 	color: var(--text);
 }
 
+/* Dialog/Modal backdrop */
+.dialog-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+/* Dialog container */
+.dialog {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	box-shadow: var(--shadow-lg);
+	max-width: 90vw;
+	max-height: 90vh;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.dialog-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--space-md) var(--space-lg);
+	background: var(--surface-raised);
+	border-bottom: 1px solid var(--border);
+	font-weight: 600;
+}
+
+.dialog-body {
+	flex: 1;
+	overflow-y: auto;
+	padding: var(--space-lg);
+}
+
+.dialog-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: var(--space-sm);
+	padding: var(--space-md) var(--space-lg);
+	background: var(--surface-raised);
+	border-top: 1px solid var(--border);
+}
+
 /* Form elements */
 input,
 select,
