@@ -105,7 +105,7 @@
 				>
 					{#if hasClasses}
 						<span class="api-toc-icon" class:expanded={isExpanded}>
-							<Icon name="chevron-right" size={12} />
+							<Icon name="chevron-down" size={12} />
 						</span>
 					{/if}
 					<span class="api-toc-module-name">{groupName}</span>
@@ -196,11 +196,12 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		transform: rotate(-90deg);
 		transition: transform var(--transition-fast);
 	}
 
 	.api-toc-icon.expanded {
-		transform: rotate(90deg);
+		transform: rotate(0deg);
 	}
 
 	.api-toc-module-name {

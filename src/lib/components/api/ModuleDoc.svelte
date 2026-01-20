@@ -2,6 +2,7 @@
 	import type { APIModule } from '$lib/api/generated';
 	import ClassDoc from './ClassDoc.svelte';
 	import FunctionDoc from './FunctionDoc.svelte';
+	import DocstringRenderer from './DocstringRenderer.svelte';
 
 	interface Props {
 		module: APIModule;
@@ -21,9 +22,17 @@
 		{/if}
 	</header>
 
+	{#if module.docstring_html}
+		<div class="api-module-docstring">
+			<DocstringRenderer html={module.docstring_html} />
+		</div>
+	{/if}
+
 	{#if module.classes && module.classes.length > 0}
 		<div class="api-module-section">
-			<h4 class="api-module-section-title">Classes</h4>
+			<div class="api-module-section-header">
+				<span class="api-module-section-title">Classes</span>
+			</div>
 			{#each module.classes as cls}
 				<ClassDoc {cls} expanded={defaultExpanded} />
 			{/each}
@@ -32,7 +41,9 @@
 
 	{#if module.functions && module.functions.length > 0}
 		<div class="api-module-section">
-			<h4 class="api-module-section-title">Functions</h4>
+			<div class="api-module-section-header">
+				<span class="api-module-section-title">Functions</span>
+			</div>
 			<div class="api-module-functions">
 				{#each module.functions as func}
 					<FunctionDoc {func} />
@@ -48,9 +59,7 @@
 	}
 
 	.api-module-header {
-		margin-bottom: var(--space-xl);
-		padding-bottom: var(--space-md);
-		border-bottom: 1px solid var(--border);
+		margin-bottom: var(--space-lg);
 	}
 
 	.api-module-name {
@@ -61,6 +70,7 @@
 	}
 
 	.api-module-name code {
+		font-family: var(--font-mono);
 		font-size: var(--font-lg);
 		font-weight: 600;
 		color: var(--text);
@@ -70,22 +80,45 @@
 	}
 
 	.api-module-desc {
+		font-family: var(--font-ui);
+		font-size: var(--font-sm);
 		color: var(--text-muted);
 		margin: 0;
-		font-size: var(--font-sm);
+		line-height: 1.5;
+	}
+
+	.api-module-docstring {
+		margin-bottom: var(--space-xl);
 	}
 
 	.api-module-section {
 		margin-top: var(--space-xl);
 	}
 
+	.api-module-section-header {
+		position: relative;
+		margin-bottom: var(--space-lg);
+		padding-bottom: var(--space-sm);
+	}
+
+	/* Full width separator */
+	.api-module-section-header::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: calc(-50vw + 50%);
+		width: 100vw;
+		height: 1px;
+		background: var(--border);
+	}
+
 	.api-module-section-title {
+		font-family: var(--font-ui);
 		font-size: var(--font-xs);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		margin-bottom: var(--space-md);
 	}
 
 	.api-module-functions {

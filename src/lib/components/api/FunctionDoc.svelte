@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { APIFunction, APIMethod } from '$lib/api/generated';
+	import DocstringRenderer from './DocstringRenderer.svelte';
 
 	interface Props {
 		func: APIFunction | APIMethod;
@@ -27,27 +28,12 @@
 		</div>
 	{/if}
 
-	{#if func.description}
-		<p class="api-method-desc">{func.description}</p>
-	{/if}
-
-	{#if func.parameters && func.parameters.length > 0}
-		<div class="api-method-params">
-			{#each func.parameters as param}
-				<div class="api-method-param">
-					<code class="api-method-param-name">{param.name}</code>
-					{#if param.type}
-						<span class="api-method-param-type">{param.type}</span>
-					{/if}
-					{#if param.default}
-						<span class="api-method-param-default">= {param.default}</span>
-					{/if}
-					{#if param.description}
-						<span class="api-method-param-desc">{param.description}</span>
-					{/if}
-				</div>
-			{/each}
+	{#if func.docstring_html}
+		<div class="api-method-docstring">
+			<DocstringRenderer html={func.docstring_html} />
 		</div>
+	{:else if func.description}
+		<p class="api-method-desc">{func.description}</p>
 	{/if}
 
 	{#if func.returns}
@@ -73,6 +59,7 @@
 	}
 
 	.api-method-name {
+		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		font-weight: 600;
 		color: var(--accent);
@@ -87,6 +74,7 @@
 
 	.api-method-signature code {
 		display: block;
+		font-family: var(--font-mono);
 		font-size: var(--font-xs);
 		color: var(--text-muted);
 		background: var(--surface);
@@ -97,51 +85,16 @@
 		word-break: break-word;
 	}
 
-	.api-method-desc {
-		font-size: var(--font-sm);
-		color: var(--text-muted);
+	.api-method-docstring {
 		margin: var(--space-sm) 0;
 	}
 
-	.api-method-params {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-xs);
-		margin-top: var(--space-sm);
-	}
-
-	.api-method-param {
-		display: flex;
-		align-items: baseline;
-		gap: var(--space-sm);
-		flex-wrap: wrap;
+	.api-method-desc {
+		font-family: var(--font-ui);
 		font-size: var(--font-sm);
-	}
-
-	.api-method-param-name {
-		color: var(--text);
-		background: none;
-		border: none;
-		padding: 0;
-		font-size: var(--font-sm);
-	}
-
-	.api-method-param-type {
-		font-family: var(--font-mono);
-		font-size: var(--font-xs);
 		color: var(--text-muted);
-	}
-
-	.api-method-param-default {
-		font-family: var(--font-mono);
-		font-size: var(--font-xs);
-		color: var(--text-disabled);
-	}
-
-	.api-method-param-desc {
-		color: var(--text-muted);
-		flex-basis: 100%;
-		padding-left: var(--space-md);
+		margin: var(--space-sm) 0;
+		line-height: 1.5;
 	}
 
 	.api-method-returns {
@@ -151,10 +104,10 @@
 		margin-top: var(--space-sm);
 		padding-top: var(--space-sm);
 		border-top: 1px solid var(--border);
-		font-size: var(--font-sm);
 	}
 
 	.api-method-returns-label {
+		font-family: var(--font-ui);
 		font-size: var(--font-xs);
 		font-weight: 500;
 		color: var(--text-muted);
@@ -163,6 +116,8 @@
 	}
 
 	.api-method-returns code {
+		font-family: var(--font-mono);
+		font-size: var(--font-sm);
 		color: var(--text);
 		background: none;
 		border: none;
