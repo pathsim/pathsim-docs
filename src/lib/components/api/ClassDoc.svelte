@@ -218,15 +218,16 @@
 		color: var(--accent);
 	}
 
-	/* Source view */
+	/* Source view - reuse code-panel styling */
 	.source-view {
 		margin: calc(-1 * var(--space-lg));
 		margin-top: 0;
 	}
 
 	.source-view :global(.cm-editor) {
-		border-radius: 0 0 var(--radius-md) var(--radius-md);
+		height: auto;
 		max-height: 600px;
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
 	}
 
 	.loading {
