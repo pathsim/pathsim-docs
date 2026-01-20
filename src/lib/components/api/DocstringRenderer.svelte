@@ -293,25 +293,57 @@
 		margin-bottom: var(--space-xs);
 	}
 
-	/* Section headers (Parameters, Attributes, Returns, etc.) */
-	.docstring-content :global(p > strong:only-child),
-	.docstring-content :global(p:has(> strong:only-child)) {
-		display: block;
+	/* RST section containers - separator ABOVE */
+	.docstring-content :global(.section) {
+		margin-top: var(--space-lg);
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--border);
+	}
+
+	.docstring-content :global(.section:first-child) {
+		margin-top: var(--space-md);
+		padding-top: 0;
+		border-top: none;
+	}
+
+	/* Section headers - consistent style for h3, h4 */
+	.docstring-content :global(h3),
+	.docstring-content :global(h4) {
 		font-family: var(--font-ui);
 		font-size: var(--font-xs);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
-		margin-top: var(--space-xl);
-		margin-bottom: var(--space-sm);
-		padding-bottom: var(--space-sm);
-		border-bottom: 1px solid var(--border);
+		margin: 0 0 var(--space-sm) 0;
+		padding: 0;
+		border: none;
 	}
 
-	.docstring-content :global(p:first-child > strong:only-child),
+	/* NumPy-style section headers converted to <p><strong> - separator ABOVE */
+	.docstring-content :global(p:has(> strong:only-child)) {
+		font-family: var(--font-ui);
+		font-size: var(--font-xs);
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-top: var(--space-lg);
+		margin-bottom: var(--space-sm);
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--border);
+	}
+
 	.docstring-content :global(p:first-child:has(> strong:only-child)) {
-		margin-top: var(--space-md);
+		margin-top: 0;
+		padding-top: 0;
+		border-top: none;
+	}
+
+	/* Ensure strong inside header paragraphs inherits style */
+	.docstring-content :global(p:has(> strong:only-child) > strong) {
+		font-weight: inherit;
+		color: inherit;
 	}
 
 	.docstring-content :global(strong) {

@@ -98,14 +98,14 @@
 	.api-module-section-header {
 		position: relative;
 		margin-bottom: var(--space-lg);
-		padding-bottom: var(--space-sm);
+		padding-top: var(--space-lg);
 	}
 
-	/* Full width separator */
-	.api-module-section-header::after {
+	/* Full width separator ABOVE header */
+	.api-module-section-header::before {
 		content: '';
 		position: absolute;
-		bottom: 0;
+		top: 0;
 		left: calc(-50vw + 50%);
 		width: 100vw;
 		height: 1px;

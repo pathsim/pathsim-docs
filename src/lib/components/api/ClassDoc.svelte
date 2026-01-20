@@ -157,14 +157,14 @@
 	.api-section-header {
 		position: relative;
 		margin-bottom: var(--space-md);
-		padding-bottom: var(--space-sm);
+		padding-top: var(--space-lg);
 	}
 
-	/* Full width separator */
-	.api-section-header::after {
+	/* Full width separator ABOVE header (extends to card edges) */
+	.api-section-header::before {
 		content: '';
 		position: absolute;
-		bottom: 0;
+		top: 0;
 		left: calc(-1 * var(--space-lg));
 		right: calc(-1 * var(--space-lg));
 		height: 1px;
