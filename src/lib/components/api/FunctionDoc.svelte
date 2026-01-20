@@ -84,7 +84,7 @@
 
 	.method-name {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-xs);
 		font-weight: 600;
 		color: var(--accent);
 		background: none;

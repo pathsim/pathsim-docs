@@ -90,7 +90,7 @@
 
 	.class-name {
 		font-family: var(--font-mono);
-		font-size: var(--font-base);
+		font-size: var(--font-sm);
 		font-weight: 600;
 		color: var(--accent);
 		background: none;
