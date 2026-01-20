@@ -196,6 +196,52 @@ def should_skip(name: str, skip_private: bool) -> bool:
     return False
 
 
+def is_defined_in_module(member: griffe.Object, module_path: str, all_modules: list[str]) -> bool:
+    """Check if a member should be documented in this module.
+
+    Returns True if:
+    - The member is defined directly in this module, OR
+    - The member is defined in a submodule that's not in our extraction list, OR
+    - The member is imported from outside and we're documenting the public API
+
+    Returns False if the member is imported from another module we're explicitly extracting.
+    """
+    try:
+        # Get the canonical path where the object is defined
+        if hasattr(member, 'canonical_path'):
+            canonical = str(member.canonical_path)
+            # Get the parent module path (e.g., "pathsim.blocks.integrator" from "pathsim.blocks.integrator.Integrator")
+            source_module = canonical.rsplit('.', 1)[0] if '.' in canonical else canonical
+
+            # If defined directly in this module, include it
+            if source_module == module_path:
+                return True
+
+            # If the source module is a submodule of current module, include it
+            # (the submodules aren't in our extraction list, so document here)
+            if source_module.startswith(module_path + "."):
+                # Only skip if we're explicitly extracting that submodule
+                if source_module in all_modules:
+                    return False
+                return True
+
+            # Imported from a different module tree entirely
+            # Skip if that module is in our extraction list (will be documented there)
+            if source_module in all_modules:
+                return False
+
+            # Check if source is a submodule of something we're extracting
+            for mod in all_modules:
+                if mod != module_path and source_module.startswith(mod + "."):
+                    return False  # Will be documented under that module
+
+            return True  # External import or not in our extraction list
+
+        return True  # If we can't determine, include it
+    except Exception:
+        return True  # If we can't determine, include it
+
+
 def get_signature_str(obj: griffe.Object) -> str | None:
     """Get function/method signature as string."""
     try:
@@ -416,6 +462,7 @@ class APIExtractor:
         }
 
         skip_private = self.config.get("skip_private", True)
+        all_modules = self.config.get("modules", [])
 
         if not hasattr(obj, "members"):
             return module_data
@@ -431,11 +478,17 @@ class APIExtractor:
                         module_data["submodules"].append(name)
 
                 elif member.is_class:
+                    # Skip classes that are just imported from modules we're also extracting
+                    if not is_defined_in_module(member, module_path, all_modules):
+                        continue
                     class_data = self._extract_class(member)
                     if class_data:
                         module_data["classes"].append(class_data)
 
                 elif member.is_function:
+                    # Skip functions that are just imported from modules we're also extracting
+                    if not is_defined_in_module(member, module_path, all_modules):
+                        continue
                     func_data = self._extract_function(member)
                     if func_data:
                         module_data["functions"].append(func_data)
