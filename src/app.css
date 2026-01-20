@@ -412,6 +412,14 @@ input::placeholder {
 	color: var(--text-muted);
 }
 
+/* Separator - full screen width */
+.separator {
+	height: 1px;
+	background: var(--border);
+	width: 100vw;
+	margin-left: calc(-50vw + 50%);
+}
+
 /* Panel style */
 .panel {
 	background: var(--surface-raised);

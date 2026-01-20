@@ -247,12 +247,6 @@
 		padding: var(--space-xl) 0;
 	}
 
-	.separator {
-		height: 1px;
-		background: var(--border);
-		margin: 0 calc(-1 * var(--space-lg));
-	}
-
 	h2 {
 		font-size: var(--font-base);
 		font-weight: 600;
