@@ -1,0 +1,1032 @@
+{
+  "package": "pathsim_chem",
+  "display_name": "PathSim-Chem",
+  "modules": {
+    "pathsim_chem": {
+      "name": "pathsim_chem",
+      "description": "PathSim-Chem: Chemical Engineering Blocks for PathSim",
+      "docstring_html": "<p>PathSim-Chem: Chemical Engineering Blocks for PathSim</p>\n<p>A toolbox providing specialized blocks for chemical engineering simulations\nin the PathSim framework.</p>\n",
+      "classes": [
+        {
+          "name": "ResidenceTime",
+          "description": "Chemical process block with residence time model.",
+          "docstring_html": "<p>Chemical process block with residence time model.</p>\n<p>This block implements an internal 1st order linear ode with\nmultiple inputs, outputs, an internal constant source term\nand no direct passthrough.</p>\n<p>The internal ODE with inputs <math xmlns=\"http://www.w3.org/1998/Math/MathML\">\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math> :</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <mover accent=\"true\">\n    <mi>x</mi>\n    <mo stretchy=\"false\">˙</mo>\n  </mover>\n  <mo>=</mo>\n  <mo form=\"prefix\">−</mo>\n  <mi>x</mi>\n  <mo stretchy=\"false\">/</mo>\n  <mi>τ</mi>\n  <mo>+</mo>\n  <mi>src</mi>\n  <mo>+</mo>\n  <munder>\n    <mo movablelimits=\"true\">∑</mo>\n    <mi>i</mi>\n  </munder>\n  <msub>\n    <mi>β</mi>\n    <mi>i</mi>\n  </msub>\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math>\n</div>\n<p>And the output equation for every output <cite>i</cite> :</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <msub>\n    <mi>y</mi>\n    <mi>i</mi>\n  </msub>\n  <mo>=</mo>\n  <msub>\n    <mi>γ</mi>\n    <mi>i</mi>\n  </msub>\n  <mi>x</mi>\n</math>\n</div>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>tau <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>residence time, inverse natural frequency (eigenvalue)</dd>\n<dt>betas: None | list[float] | np.ndarray[float]</dt>\n<dd>weights of inputs that are accumulated in state, optional</dd>\n<dt>gammas <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">None | list[float] | np.ndarray[float]</span></dt>\n<dd>weights of states (fractions) for output, optional</dd>\n<dt>initial_value <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>initial value of state / initial quantity of process</dd>\n<dt>source_term <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>constant source term / generation term of the process</dd>\n</dl>\n",
+          "bases": [
+            "DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(tau = 1, betas = None, gammas = None, initial_value = 0, source_term = 0)",
+              "parameters": [
+                {
+                  "name": "tau",
+                  "type": null,
+                  "default": "1",
+                  "description": ""
+                },
+                {
+                  "name": "betas",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "gammas",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "initial_value",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                },
+                {
+                  "name": "source_term",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tau",
+              "description": "",
+              "type": null,
+              "value": "tau"
+            },
+            {
+              "name": "betas",
+              "description": "",
+              "type": null,
+              "value": "1 if betas is None else np.array(betas)"
+            },
+            {
+              "name": "gammas",
+              "description": "",
+              "type": null,
+              "value": "1 if gammas is None else np.array(gammas)"
+            },
+            {
+              "name": "source_term",
+              "description": "",
+              "type": null,
+              "value": "source_term"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "tau",
+              "type": null,
+              "default": "1",
+              "description": "residence time, inverse natural frequency (eigenvalue)"
+            },
+            {
+              "name": "betas",
+              "type": null,
+              "default": "None",
+              "description": "weights of inputs that are accumulated in state, optional"
+            },
+            {
+              "name": "gammas",
+              "type": null,
+              "default": "None",
+              "description": "weights of states (fractions) for output, optional"
+            },
+            {
+              "name": "initial_value",
+              "type": null,
+              "default": "0",
+              "description": "initial value of state / initial quantity of process"
+            },
+            {
+              "name": "source_term",
+              "type": null,
+              "default": "0",
+              "description": "constant source term / generation term of the process"
+            }
+          ]
+        },
+        {
+          "name": "Process",
+          "description": "Simplified version of the `ResidenceTime` model block",
+          "docstring_html": "<p>Simplified version of the <cite>ResidenceTime</cite> model block\nwith all inputs being summed equally and only the state\nand the flux being returned to the output</p>\n<p>This block implements an internal 1st order linear ode with\nmultiple inputs, outputs and no direct passthrough.</p>\n<p>The internal ODE with inputs <math xmlns=\"http://www.w3.org/1998/Math/MathML\">\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math> :</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <mover accent=\"true\">\n    <mi>x</mi>\n    <mo stretchy=\"false\">˙</mo>\n  </mover>\n  <mo>=</mo>\n  <mo form=\"prefix\">−</mo>\n  <mi>x</mi>\n  <mo stretchy=\"false\">/</mo>\n  <mi>τ</mi>\n  <mo>+</mo>\n  <mi>src</mi>\n  <mo>+</mo>\n  <munder>\n    <mo movablelimits=\"true\">∑</mo>\n    <mi>i</mi>\n  </munder>\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math>\n</div>\n<p>And the output equations for output <cite>i=0</cite> and <cite>i=1</cite>:</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <msub>\n    <mi>y</mi>\n    <mn>0</mn>\n  </msub>\n  <mo>=</mo>\n  <mi>x</mi>\n</math>\n</div>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <msub>\n    <mi>y</mi>\n    <mn>1</mn>\n  </msub>\n  <mo>=</mo>\n  <mi>x</mi>\n  <mo stretchy=\"false\">/</mo>\n  <mi>τ</mi>\n</math>\n</div>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>tau <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>residence time, inverse natural frequency (eigenvalue)</dd>\n<dt>initial_value <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>initial value of state / initial quantity of process</dd>\n<dt>source_term <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>constant source term / generation term of the process</dd>\n</dl>\n",
+          "bases": [
+            "ResidenceTime"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(tau = 1, initial_value = 0, source_term = 0)",
+              "parameters": [
+                {
+                  "name": "tau",
+                  "type": null,
+                  "default": "1",
+                  "description": ""
+                },
+                {
+                  "name": "initial_value",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                },
+                {
+                  "name": "source_term",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'x': 0, 'x/tau': 1}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "tau",
+              "type": null,
+              "default": "1",
+              "description": "residence time, inverse natural frequency (eigenvalue)"
+            },
+            {
+              "name": "initial_value",
+              "type": null,
+              "default": "0",
+              "description": "initial value of state / initial quantity of process"
+            },
+            {
+              "name": "source_term",
+              "type": null,
+              "default": "0",
+              "description": "constant source term / generation term of the process"
+            }
+          ]
+        },
+        {
+          "name": "Splitter",
+          "description": "Splitter block that splits the input signal into multiple",
+          "docstring_html": "<p>Splitter block that splits the input signal into multiple\noutputs weighted with the specified fractions.</p>\n<div class=\"section\" id=\"note\">\n<h4>Note</h4>\n<p>The output fractions must sum to one.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>fractions <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">np.ndarray | list</span></dt>\n<dd>fractions to split the input signal into,\nmust sum up to one</dd>\n</dl>\n</div>\n",
+          "bases": [
+            "Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(fractions = None)",
+              "parameters": [
+                {
+                  "name": "fractions",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'in': 0}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "fractions",
+              "description": "",
+              "type": null,
+              "value": "np.ones(1) if fractions is None else np.array(fractions)"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fractions",
+              "type": null,
+              "default": "None",
+              "description": "fractions to split the input signal into, must sum up to one"
+            }
+          ]
+        },
+        {
+          "name": "Bubbler4",
+          "description": "Tritium bubbling system with sequential vial collection stages.",
+          "docstring_html": "<p>Tritium bubbling system with sequential vial collection stages.</p>\n<p>This block models a tritium collection system used in fusion reactor blanket \npurge gas processing. The system bubbles tritium-containing gas through a series \nof liquid-filled vials to capture and concentrate tritium for measurement and \ninventory tracking.</p>\n<p>Physical Description\n--------------------\nThe bubbler consists of two parallel processing chains:</p>\n<p>**Soluble Chain (Vials 1-2):** \nTritium already in soluble forms (HTO, HT) flows sequentially through \nvials 1 and 2. Each vial has a collection efficiency :math:<code>\\eta_{vial}</code>, \nrepresenting the fraction of tritium that dissolves into the liquid phase \nand is retained.</p>\n<p>**Insoluble Chain (Vials 3-4):** \nTritium in insoluble forms (T₂, organically bound) first undergoes catalytic \nconversion to soluble forms with efficiency :math:<code>\\alpha_{conv}</code>. The \nconverted tritium, along with uncaptured soluble tritium from the first chain, \nthen flows through vials 3 and 4 with the same collection efficiency.</p>\n<p>Mathematical Formulation\n-------------------------\nThe system is governed by the following differential equations for the \nvial inventories :math:<code>x_i</code>:</p>\n<p>.. math::</p>\n<p>\\frac{dx_1}{dt} &amp;= \\eta_{vial} \\cdot u_{sol}</p>\n<p>\\frac{dx_2}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot u_{sol}</p>\n<p>\\frac{dx_3}{dt} &amp;= \\eta_{vial} \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]</p>\n<p>\\frac{dx_4}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]</p>\n<p>The sample output represents uncaptured tritium exiting the system:</p>\n<p>.. math::</p>\n<p>y_{sample} = (1-\\alpha_{conv}) \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]</p>\n<p>Where:\n    - :math:<code>u_{sol}</code> = soluble tritium input flow rate\n    - :math:<code>u_{insol}</code> = insoluble tritium input flow rate  \n    - :math:<code>\\eta_{vial}</code> = vial collection efficiency\n    - :math:<code>\\alpha_{conv}</code> = conversion efficiency from insoluble to soluble\n    - :math:<code>x_i</code> = tritium inventory in vial i</p>\n<p>Parameters\n----------\nconversion_efficiency : float \n   Conversion efficiency from insoluble to soluble forms (:math:<code>\\alpha_{conv}</code>), \n   between 0 and 1.\nvial_efficiency : float \n   Collection efficiency of each vial (:math:<code>\\eta_{vial}</code>), between 0 and 1.\nreplacement_times : float | list[float] | list[list[float]] \n    Times at which each vial is replaced with a fresh one. If None, no \n    replacement events are created. If a single value is provided, it is \n    used for all vials. If a single list of floats is provided, it will be \n    used for all vials. If a list of lists is provided, each sublist \n    corresponds to the replacement times for each vial.</p>\n<p>Notes\n-----\nVial replacement is modeled as instantaneous reset events that set the \ncorresponding vial inventory to zero, simulating the physical replacement \nof a full vial with an empty one.</p>",
+          "bases": [
+            "DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)",
+              "parameters": [
+                {
+                  "name": "conversion_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "vial_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "replacement_times",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'sample_in_soluble': 0, 'sample_in_insoluble': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'vial1': 0, 'vial2': 1, 'vial3': 2, 'vial4': 3, 'sample_out': 4}"
+            },
+            {
+              "name": "replacement_times",
+              "description": "",
+              "type": null,
+              "value": "replacement_times"
+            },
+            {
+              "name": "vial_efficiency",
+              "description": "",
+              "type": null,
+              "value": "vial_efficiency"
+            },
+            {
+              "name": "conversion_efficiency",
+              "description": "",
+              "type": null,
+              "value": "conversion_efficiency"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "conversion_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Conversion efficiency from insoluble to soluble forms (:math:`\\alpha_{conv}`), between 0 and 1."
+            },
+            {
+              "name": "vial_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Collection efficiency of each vial (:math:`\\eta_{vial}`), between 0 and 1."
+            },
+            {
+              "name": "replacement_times",
+              "type": null,
+              "default": "None",
+              "description": "Times at which each vial is replaced with a fresh one. If None, no replacement events are created. If a single value is provided, it is used for all vials. If a single list of floats is provided, it will be used for all vials. If a list of lists is provided, each sublist corresponds to the replacement times for each vial."
+            }
+          ]
+        },
+        {
+          "name": "GLC",
+          "description": "Gas Liquid Contactor model block. Inherits from Function block.",
+          "docstring_html": "<p>Gas Liquid Contactor model block. Inherits from Function block.</p>\n<p>More details about the model can be found in: <a class=\"reference external\" href=\"https://doi.org/10.13182/FST95-A30485\">https://doi.org/10.13182/FST95-A30485</a></p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>P_in: Inlet operating pressure [Pa]\nL: Column height [m]\nD: Column diameter [m]\nT: Temperature [K]\ng: Gravitational acceleration [m/s^2], default is 9.81\ninitial_nb_of_elements: Initial number of elements for BVP solver\nBCs: Boundary conditions type, &quot;C-C&quot; (Closed-Closed) or &quot;O-C&quot; (Open-Closed), default is &quot;C-C&quot;</dd>\n</dl>\n",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20)",
+              "parameters": [
+                {
+                  "name": "P_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "L",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "D",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "BCs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "g",
+                  "type": null,
+                  "default": "const.g",
+                  "description": ""
+                },
+                {
+                  "name": "initial_nb_of_elements",
+                  "type": null,
+                  "default": "20",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "func",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(c_T_in, flow_l, y_T2_inlet, flow_g)",
+              "parameters": [
+                {
+                  "name": "c_T_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_l",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "y_T2_inlet",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_g",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'c_T_in': 0, 'flow_l': 1, 'y_T2_inlet': 2, 'flow_g': 3}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'c_T_out': 0, 'y_T2_out': 1, 'eff': 2, 'P_out': 3, 'Q_l': 4, 'Q_g_out': 5, 'n_T_out_liquid': 6, 'n_T_out_gas': 7}"
+            },
+            {
+              "name": "params",
+              "description": "",
+              "type": null,
+              "value": "{'P_in': P_in, 'L': L, 'g': g, 'D': D, 'T': T, 'elements': initial_nb_of_elements, 'BCs': BCs}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "P_in",
+              "type": null,
+              "default": null,
+              "description": "L: Column height [m]"
+            },
+            {
+              "name": "L",
+              "type": null,
+              "default": null,
+              "description": "D: Column diameter [m]"
+            },
+            {
+              "name": "D",
+              "type": null,
+              "default": null,
+              "description": "T: Temperature [K]"
+            },
+            {
+              "name": "T",
+              "type": null,
+              "default": null,
+              "description": "g: Gravitational acceleration [m/s^2], default is 9.81"
+            },
+            {
+              "name": "BCs",
+              "type": null,
+              "default": null,
+              "description": "Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
+            },
+            {
+              "name": "g",
+              "type": null,
+              "default": "const.g",
+              "description": "initial_nb_of_elements: Initial number of elements for BVP solver"
+            },
+            {
+              "name": "initial_nb_of_elements",
+              "type": null,
+              "default": "20",
+              "description": "BCs: Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "solve",
+          "description": "Main solver function for the bubble column model.",
+          "docstring_html": "<p>Main solver function for the bubble column model.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>params (dict): A dictionary of all input parameters for the model,</dt>\n<dd>including operational conditions and geometry.</dd>\n</dl>\n</dd>\n<dt>Returns:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>list: A list containing:</dt>\n<dd><ul class=\"first last simple\">\n<li>dict: A dictionary containing the simulation results.</li>\n<li>scipy.integrate.OdeSolution: The raw solution object from the\nBVP solver.</li>\n</ul>\n</dd>\n</dl>\n</dd>\n</dl>\n",
+          "signature": "(params)",
+          "parameters": [
+            {
+              "name": "params",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        }
+      ],
+      "submodules": [
+        "tritium"
+      ]
+    },
+    "pathsim_chem.tritium": {
+      "name": "pathsim_chem.tritium",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "ResidenceTime",
+          "description": "Chemical process block with residence time model.",
+          "docstring_html": "<p>Chemical process block with residence time model.</p>\n<p>This block implements an internal 1st order linear ode with\nmultiple inputs, outputs, an internal constant source term\nand no direct passthrough.</p>\n<p>The internal ODE with inputs <math xmlns=\"http://www.w3.org/1998/Math/MathML\">\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math> :</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <mover accent=\"true\">\n    <mi>x</mi>\n    <mo stretchy=\"false\">˙</mo>\n  </mover>\n  <mo>=</mo>\n  <mo form=\"prefix\">−</mo>\n  <mi>x</mi>\n  <mo stretchy=\"false\">/</mo>\n  <mi>τ</mi>\n  <mo>+</mo>\n  <mi>src</mi>\n  <mo>+</mo>\n  <munder>\n    <mo movablelimits=\"true\">∑</mo>\n    <mi>i</mi>\n  </munder>\n  <msub>\n    <mi>β</mi>\n    <mi>i</mi>\n  </msub>\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math>\n</div>\n<p>And the output equation for every output <cite>i</cite> :</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <msub>\n    <mi>y</mi>\n    <mi>i</mi>\n  </msub>\n  <mo>=</mo>\n  <msub>\n    <mi>γ</mi>\n    <mi>i</mi>\n  </msub>\n  <mi>x</mi>\n</math>\n</div>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>tau <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>residence time, inverse natural frequency (eigenvalue)</dd>\n<dt>betas: None | list[float] | np.ndarray[float]</dt>\n<dd>weights of inputs that are accumulated in state, optional</dd>\n<dt>gammas <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">None | list[float] | np.ndarray[float]</span></dt>\n<dd>weights of states (fractions) for output, optional</dd>\n<dt>initial_value <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>initial value of state / initial quantity of process</dd>\n<dt>source_term <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>constant source term / generation term of the process</dd>\n</dl>\n",
+          "bases": [
+            "DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(tau = 1, betas = None, gammas = None, initial_value = 0, source_term = 0)",
+              "parameters": [
+                {
+                  "name": "tau",
+                  "type": null,
+                  "default": "1",
+                  "description": ""
+                },
+                {
+                  "name": "betas",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "gammas",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                },
+                {
+                  "name": "initial_value",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                },
+                {
+                  "name": "source_term",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tau",
+              "description": "",
+              "type": null,
+              "value": "tau"
+            },
+            {
+              "name": "betas",
+              "description": "",
+              "type": null,
+              "value": "1 if betas is None else np.array(betas)"
+            },
+            {
+              "name": "gammas",
+              "description": "",
+              "type": null,
+              "value": "1 if gammas is None else np.array(gammas)"
+            },
+            {
+              "name": "source_term",
+              "description": "",
+              "type": null,
+              "value": "source_term"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "tau",
+              "type": null,
+              "default": "1",
+              "description": "residence time, inverse natural frequency (eigenvalue)"
+            },
+            {
+              "name": "betas",
+              "type": null,
+              "default": "None",
+              "description": "weights of inputs that are accumulated in state, optional"
+            },
+            {
+              "name": "gammas",
+              "type": null,
+              "default": "None",
+              "description": "weights of states (fractions) for output, optional"
+            },
+            {
+              "name": "initial_value",
+              "type": null,
+              "default": "0",
+              "description": "initial value of state / initial quantity of process"
+            },
+            {
+              "name": "source_term",
+              "type": null,
+              "default": "0",
+              "description": "constant source term / generation term of the process"
+            }
+          ]
+        },
+        {
+          "name": "Process",
+          "description": "Simplified version of the `ResidenceTime` model block",
+          "docstring_html": "<p>Simplified version of the <cite>ResidenceTime</cite> model block\nwith all inputs being summed equally and only the state\nand the flux being returned to the output</p>\n<p>This block implements an internal 1st order linear ode with\nmultiple inputs, outputs and no direct passthrough.</p>\n<p>The internal ODE with inputs <math xmlns=\"http://www.w3.org/1998/Math/MathML\">\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math> :</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <mover accent=\"true\">\n    <mi>x</mi>\n    <mo stretchy=\"false\">˙</mo>\n  </mover>\n  <mo>=</mo>\n  <mo form=\"prefix\">−</mo>\n  <mi>x</mi>\n  <mo stretchy=\"false\">/</mo>\n  <mi>τ</mi>\n  <mo>+</mo>\n  <mi>src</mi>\n  <mo>+</mo>\n  <munder>\n    <mo movablelimits=\"true\">∑</mo>\n    <mi>i</mi>\n  </munder>\n  <msub>\n    <mi>u</mi>\n    <mi>i</mi>\n  </msub>\n</math>\n</div>\n<p>And the output equations for output <cite>i=0</cite> and <cite>i=1</cite>:</p>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <msub>\n    <mi>y</mi>\n    <mn>0</mn>\n  </msub>\n  <mo>=</mo>\n  <mi>x</mi>\n</math>\n</div>\n<div>\n<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\">\n  <msub>\n    <mi>y</mi>\n    <mn>1</mn>\n  </msub>\n  <mo>=</mo>\n  <mi>x</mi>\n  <mo stretchy=\"false\">/</mo>\n  <mi>τ</mi>\n</math>\n</div>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>tau <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>residence time, inverse natural frequency (eigenvalue)</dd>\n<dt>initial_value <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>initial value of state / initial quantity of process</dd>\n<dt>source_term <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>constant source term / generation term of the process</dd>\n</dl>\n",
+          "bases": [
+            "ResidenceTime"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(tau = 1, initial_value = 0, source_term = 0)",
+              "parameters": [
+                {
+                  "name": "tau",
+                  "type": null,
+                  "default": "1",
+                  "description": ""
+                },
+                {
+                  "name": "initial_value",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                },
+                {
+                  "name": "source_term",
+                  "type": null,
+                  "default": "0",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'x': 0, 'x/tau': 1}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "tau",
+              "type": null,
+              "default": "1",
+              "description": "residence time, inverse natural frequency (eigenvalue)"
+            },
+            {
+              "name": "initial_value",
+              "type": null,
+              "default": "0",
+              "description": "initial value of state / initial quantity of process"
+            },
+            {
+              "name": "source_term",
+              "type": null,
+              "default": "0",
+              "description": "constant source term / generation term of the process"
+            }
+          ]
+        },
+        {
+          "name": "Splitter",
+          "description": "Splitter block that splits the input signal into multiple",
+          "docstring_html": "<p>Splitter block that splits the input signal into multiple\noutputs weighted with the specified fractions.</p>\n<div class=\"section\" id=\"note\">\n<h4>Note</h4>\n<p>The output fractions must sum to one.</p>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>fractions <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">np.ndarray | list</span></dt>\n<dd>fractions to split the input signal into,\nmust sum up to one</dd>\n</dl>\n</div>\n",
+          "bases": [
+            "Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(fractions = None)",
+              "parameters": [
+                {
+                  "name": "fractions",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'in': 0}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "None"
+            },
+            {
+              "name": "fractions",
+              "description": "",
+              "type": null,
+              "value": "np.ones(1) if fractions is None else np.array(fractions)"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "fractions",
+              "type": null,
+              "default": "None",
+              "description": "fractions to split the input signal into, must sum up to one"
+            }
+          ]
+        },
+        {
+          "name": "Bubbler4",
+          "description": "Tritium bubbling system with sequential vial collection stages.",
+          "docstring_html": "<p>Tritium bubbling system with sequential vial collection stages.</p>\n<p>This block models a tritium collection system used in fusion reactor blanket \npurge gas processing. The system bubbles tritium-containing gas through a series \nof liquid-filled vials to capture and concentrate tritium for measurement and \ninventory tracking.</p>\n<p>Physical Description\n--------------------\nThe bubbler consists of two parallel processing chains:</p>\n<p>**Soluble Chain (Vials 1-2):** \nTritium already in soluble forms (HTO, HT) flows sequentially through \nvials 1 and 2. Each vial has a collection efficiency :math:<code>\\eta_{vial}</code>, \nrepresenting the fraction of tritium that dissolves into the liquid phase \nand is retained.</p>\n<p>**Insoluble Chain (Vials 3-4):** \nTritium in insoluble forms (T₂, organically bound) first undergoes catalytic \nconversion to soluble forms with efficiency :math:<code>\\alpha_{conv}</code>. The \nconverted tritium, along with uncaptured soluble tritium from the first chain, \nthen flows through vials 3 and 4 with the same collection efficiency.</p>\n<p>Mathematical Formulation\n-------------------------\nThe system is governed by the following differential equations for the \nvial inventories :math:<code>x_i</code>:</p>\n<p>.. math::</p>\n<p>\\frac{dx_1}{dt} &amp;= \\eta_{vial} \\cdot u_{sol}</p>\n<p>\\frac{dx_2}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot u_{sol}</p>\n<p>\\frac{dx_3}{dt} &amp;= \\eta_{vial} \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]</p>\n<p>\\frac{dx_4}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]</p>\n<p>The sample output represents uncaptured tritium exiting the system:</p>\n<p>.. math::</p>\n<p>y_{sample} = (1-\\alpha_{conv}) \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]</p>\n<p>Where:\n    - :math:<code>u_{sol}</code> = soluble tritium input flow rate\n    - :math:<code>u_{insol}</code> = insoluble tritium input flow rate  \n    - :math:<code>\\eta_{vial}</code> = vial collection efficiency\n    - :math:<code>\\alpha_{conv}</code> = conversion efficiency from insoluble to soluble\n    - :math:<code>x_i</code> = tritium inventory in vial i</p>\n<p>Parameters\n----------\nconversion_efficiency : float \n   Conversion efficiency from insoluble to soluble forms (:math:<code>\\alpha_{conv}</code>), \n   between 0 and 1.\nvial_efficiency : float \n   Collection efficiency of each vial (:math:<code>\\eta_{vial}</code>), between 0 and 1.\nreplacement_times : float | list[float] | list[list[float]] \n    Times at which each vial is replaced with a fresh one. If None, no \n    replacement events are created. If a single value is provided, it is \n    used for all vials. If a single list of floats is provided, it will be \n    used for all vials. If a list of lists is provided, each sublist \n    corresponds to the replacement times for each vial.</p>\n<p>Notes\n-----\nVial replacement is modeled as instantaneous reset events that set the \ncorresponding vial inventory to zero, simulating the physical replacement \nof a full vial with an empty one.</p>",
+          "bases": [
+            "DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)",
+              "parameters": [
+                {
+                  "name": "conversion_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "vial_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "replacement_times",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'sample_in_soluble': 0, 'sample_in_insoluble': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'vial1': 0, 'vial2': 1, 'vial3': 2, 'vial4': 3, 'sample_out': 4}"
+            },
+            {
+              "name": "replacement_times",
+              "description": "",
+              "type": null,
+              "value": "replacement_times"
+            },
+            {
+              "name": "vial_efficiency",
+              "description": "",
+              "type": null,
+              "value": "vial_efficiency"
+            },
+            {
+              "name": "conversion_efficiency",
+              "description": "",
+              "type": null,
+              "value": "conversion_efficiency"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "conversion_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Conversion efficiency from insoluble to soluble forms (:math:`\\alpha_{conv}`), between 0 and 1."
+            },
+            {
+              "name": "vial_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Collection efficiency of each vial (:math:`\\eta_{vial}`), between 0 and 1."
+            },
+            {
+              "name": "replacement_times",
+              "type": null,
+              "default": "None",
+              "description": "Times at which each vial is replaced with a fresh one. If None, no replacement events are created. If a single value is provided, it is used for all vials. If a single list of floats is provided, it will be used for all vials. If a list of lists is provided, each sublist corresponds to the replacement times for each vial."
+            }
+          ]
+        },
+        {
+          "name": "GLC",
+          "description": "Gas Liquid Contactor model block. Inherits from Function block.",
+          "docstring_html": "<p>Gas Liquid Contactor model block. Inherits from Function block.</p>\n<p>More details about the model can be found in: <a class=\"reference external\" href=\"https://doi.org/10.13182/FST95-A30485\">https://doi.org/10.13182/FST95-A30485</a></p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>P_in: Inlet operating pressure [Pa]\nL: Column height [m]\nD: Column diameter [m]\nT: Temperature [K]\ng: Gravitational acceleration [m/s^2], default is 9.81\ninitial_nb_of_elements: Initial number of elements for BVP solver\nBCs: Boundary conditions type, &quot;C-C&quot; (Closed-Closed) or &quot;O-C&quot; (Open-Closed), default is &quot;C-C&quot;</dd>\n</dl>\n",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20)",
+              "parameters": [
+                {
+                  "name": "P_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "L",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "D",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "BCs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "g",
+                  "type": null,
+                  "default": "const.g",
+                  "description": ""
+                },
+                {
+                  "name": "initial_nb_of_elements",
+                  "type": null,
+                  "default": "20",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "func",
+              "description": "",
+              "docstring_html": "",
+              "signature": "(c_T_in, flow_l, y_T2_inlet, flow_g)",
+              "parameters": [
+                {
+                  "name": "c_T_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_l",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "y_T2_inlet",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_g",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'c_T_in': 0, 'flow_l': 1, 'y_T2_inlet': 2, 'flow_g': 3}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'c_T_out': 0, 'y_T2_out': 1, 'eff': 2, 'P_out': 3, 'Q_l': 4, 'Q_g_out': 5, 'n_T_out_liquid': 6, 'n_T_out_gas': 7}"
+            },
+            {
+              "name": "params",
+              "description": "",
+              "type": null,
+              "value": "{'P_in': P_in, 'L': L, 'g': g, 'D': D, 'T': T, 'elements': initial_nb_of_elements, 'BCs': BCs}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "P_in",
+              "type": null,
+              "default": null,
+              "description": "L: Column height [m]"
+            },
+            {
+              "name": "L",
+              "type": null,
+              "default": null,
+              "description": "D: Column diameter [m]"
+            },
+            {
+              "name": "D",
+              "type": null,
+              "default": null,
+              "description": "T: Temperature [K]"
+            },
+            {
+              "name": "T",
+              "type": null,
+              "default": null,
+              "description": "g: Gravitational acceleration [m/s^2], default is 9.81"
+            },
+            {
+              "name": "BCs",
+              "type": null,
+              "default": null,
+              "description": "Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
+            },
+            {
+              "name": "g",
+              "type": null,
+              "default": "const.g",
+              "description": "initial_nb_of_elements: Initial number of elements for BVP solver"
+            },
+            {
+              "name": "initial_nb_of_elements",
+              "type": null,
+              "default": "20",
+              "description": "BCs: Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "solve",
+          "description": "Main solver function for the bubble column model.",
+          "docstring_html": "<p>Main solver function for the bubble column model.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>params (dict): A dictionary of all input parameters for the model,</dt>\n<dd>including operational conditions and geometry.</dd>\n</dl>\n</dd>\n<dt>Returns:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>list: A list containing:</dt>\n<dd><ul class=\"first last simple\">\n<li>dict: A dictionary containing the simulation results.</li>\n<li>scipy.integrate.OdeSolution: The raw solution object from the\nBVP solver.</li>\n</ul>\n</dd>\n</dl>\n</dd>\n</dl>\n",
+          "signature": "(params)",
+          "parameters": [
+            {
+              "name": "params",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        }
+      ],
+      "submodules": [
+        "bubbler",
+        "glc",
+        "residencetime",
+        "splitter",
+        "tcap"
+      ]
+    }
+  }
+}
