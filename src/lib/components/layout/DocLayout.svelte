@@ -27,6 +27,7 @@
 		display: flex;
 		flex: 1;
 		min-height: 0;
+		align-items: stretch;
 	}
 
 	@media (max-width: 768px) {

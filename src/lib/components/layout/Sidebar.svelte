@@ -55,7 +55,8 @@
 <style>
 	.sidebar {
 		width: var(--sidebar-width);
-		height: 100%;
+		flex-shrink: 0;
+		align-self: stretch;
 		display: flex;
 		flex-direction: column;
 		background: var(--surface);
