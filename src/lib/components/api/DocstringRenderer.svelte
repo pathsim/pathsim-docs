@@ -300,17 +300,15 @@
 		display: none;
 	}
 
-	/* Parameter/Attribute tables - clean panel style */
+	/* Parameter/Attribute tables - panel style */
 	.docstring-content :global(.param-table-wrapper) {
 		margin: var(--space-md) 0;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		overflow: hidden;
 	}
 
 	.docstring-content :global(.param-table) {
 		width: 100%;
-		border-collapse: collapse;
+		border-collapse: separate;
+		border-spacing: 0;
 		font-size: var(--font-sm);
 	}
 
@@ -318,18 +316,44 @@
 	.docstring-content :global(.param-table thead th) {
 		padding: var(--space-sm) var(--space-md);
 		background: var(--surface-raised);
-		border-bottom: 1px solid var(--border);
 		font-size: 11px;
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
 		text-align: left;
+		border: 1px solid var(--border);
+		border-right: none;
+	}
+
+	.docstring-content :global(.param-table thead th:last-child) {
+		border-right: 1px solid var(--border);
+		border-top-right-radius: var(--radius-lg);
+	}
+
+	.docstring-content :global(.param-table thead th:first-child) {
+		border-top-left-radius: var(--radius-lg);
 	}
 
 	.docstring-content :global(.param-table td) {
 		padding: var(--space-sm) var(--space-md);
+		background: var(--surface);
 		vertical-align: top;
+		border-left: 1px solid var(--border);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.docstring-content :global(.param-table td:last-child) {
+		border-right: 1px solid var(--border);
+	}
+
+	/* Rounded corners on last row */
+	.docstring-content :global(.param-table tbody tr:last-child td:first-child) {
+		border-bottom-left-radius: var(--radius-lg);
+	}
+
+	.docstring-content :global(.param-table tbody tr:last-child td:last-child) {
+		border-bottom-right-radius: var(--radius-lg);
 	}
 
 	.docstring-content :global(.param-table .param-name) {
