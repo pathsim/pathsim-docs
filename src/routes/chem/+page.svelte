@@ -39,10 +39,3 @@
 	<li><a href={pkg.examples}>Examples</a></li>
 </ul>
 
-<style>
-	.lead {
-		font-size: var(--font-lg);
-		color: var(--text-muted);
-		margin-bottom: var(--space-xl);
-	}
-</style>

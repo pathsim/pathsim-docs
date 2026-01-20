@@ -517,24 +517,49 @@ input::placeholder {
 	top: 0;
 }
 
+/* Lead paragraph - prominent intro text */
+.lead {
+	font-size: var(--font-lg);
+	color: var(--text-muted);
+	margin-bottom: var(--space-xl);
+}
+
 /* Prose styling for documentation content */
 .prose {
 	max-width: var(--content-max-width);
 	line-height: 1.7;
 }
 
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
-	margin-top: 2em;
-	margin-bottom: 0.5em;
+.prose h1 {
+	margin-bottom: var(--space-md);
 }
 
-.prose h1:first-child,
-.prose h2:first-child,
-.prose h3:first-child {
+.prose h1:first-child {
 	margin-top: 0;
+}
+
+.prose h2 {
+	font-size: var(--font-lg);
+	font-weight: 600;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-top: var(--space-2xl);
+	margin-bottom: var(--space-lg);
+	padding-top: var(--space-xl);
+	border-top: 1px solid var(--border);
+}
+
+.prose h2:first-of-type {
+	margin-top: var(--space-xl);
+	padding-top: 0;
+	border-top: none;
+}
+
+.prose h3,
+.prose h4 {
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
 }
 
 .prose p {
