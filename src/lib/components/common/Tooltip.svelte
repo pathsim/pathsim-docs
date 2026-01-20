@@ -4,6 +4,7 @@
 	interface TooltipState {
 		text: string;
 		shortcut?: string;
+		maxWidth?: number;
 		x: number;
 		y: number;
 		visible: boolean;
@@ -25,7 +26,8 @@
 		text: string,
 		element: HTMLElement,
 		position: 'bottom' | 'left' | 'right' | 'top' = 'bottom',
-		shortcut?: string
+		shortcut?: string,
+		maxWidth?: number
 	) {
 		if (hideTimeout) {
 			clearTimeout(hideTimeout);
@@ -56,7 +58,7 @@
 					break;
 			}
 
-			tooltipStore.set({ text, shortcut, x, y, visible: true, position });
+			tooltipStore.set({ text, shortcut, maxWidth, x, y, visible: true, position });
 		}, 50);
 	}
 
@@ -70,15 +72,17 @@
 		}, 50);
 	}
 
-	type TooltipParams = string | { text: string; shortcut?: string; position?: 'bottom' | 'left' | 'right' | 'top' };
+	type TooltipParams = string | { text: string; shortcut?: string; maxWidth?: number; position?: 'bottom' | 'left' | 'right' | 'top' };
 
+	// Svelte action for easy tooltip usage
 	export function tooltip(node: HTMLElement, params: TooltipParams) {
 		let text = typeof params === 'string' ? params : params.text;
 		let shortcut = typeof params === 'string' ? undefined : params.shortcut;
-		let position: 'bottom' | 'left' | 'right' | 'top' = typeof params === 'string' ? 'bottom' : (params.position ?? 'bottom');
+		let maxWidth = typeof params === 'string' ? undefined : params.maxWidth;
+		let position = typeof params === 'string' ? 'bottom' : (params.position ?? 'bottom');
 
 		function handleMouseEnter() {
-			if (text) showTooltip(text, node, position, shortcut);
+			if (text) showTooltip(text, node, position, shortcut, maxWidth);
 		}
 
 		function handleMouseLeave() {
@@ -90,8 +94,10 @@
 
 		return {
 			update(newParams: TooltipParams) {
+				// Just update the captured variables - handlers reference them via closure
 				text = typeof newParams === 'string' ? newParams : newParams.text;
 				shortcut = typeof newParams === 'string' ? undefined : newParams.shortcut;
+				maxWidth = typeof newParams === 'string' ? undefined : newParams.maxWidth;
 				position = typeof newParams === 'string' ? 'bottom' : (newParams.position ?? 'bottom');
 			},
 			destroy() {
@@ -114,7 +120,7 @@
 {#if state.visible}
 	<div
 		class="tooltip tooltip-{state.position}"
-		style="left: {state.x}px; top: {state.y}px;"
+		style="left: {state.x}px; top: {state.y}px;{state.maxWidth ? ` max-width: ${state.maxWidth}px;` : ''}"
 	>
 		<span class="text">{state.text}</span>
 		{#if state.shortcut}
@@ -131,14 +137,14 @@
 		gap: 8px;
 		padding: 4px 8px;
 		max-width: 240px;
-		background: var(--surface-raised);
+		background: var(--surface);
 		border: 1px solid var(--border);
-		border-radius: var(--radius-sm);
+		border-radius: var(--radius-md);
 		font-size: 11px;
 		color: var(--text-muted);
 		pointer-events: none;
 		z-index: 10000;
-		box-shadow: var(--shadow-md);
+		box-shadow: var(--shadow-lg);
 		animation: fadeIn var(--transition-fast) ease-out;
 	}
 
