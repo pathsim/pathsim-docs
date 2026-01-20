@@ -189,7 +189,7 @@
 		gap: var(--space-sm);
 		max-width: 480px;
 		margin: 0 auto var(--space-lg);
-		padding: var(--space-sm) var(--space-md);
+		padding: var(--space-md) var(--space-lg);
 		background: var(--surface);
 		border: 1px solid var(--border);
 		border-radius: var(--radius-xl);
