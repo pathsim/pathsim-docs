@@ -50,5 +50,6 @@
 		max-width: var(--content-max-width);
 		margin: 0 auto;
 		padding: var(--space-xl);
+		padding-bottom: var(--space-2xl);
 	}
 </style>
