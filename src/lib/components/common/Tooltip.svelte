@@ -144,7 +144,7 @@
 		color: var(--text-muted);
 		pointer-events: none;
 		z-index: 10000;
-		box-shadow: var(--shadow-lg);
+		box-shadow: var(--shadow-sm);
 		animation: fadeIn var(--transition-fast) ease-out;
 	}
 

@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
+	import { external, nav } from '$lib/config/links';
 
 	let { children } = $props();
 
@@ -46,27 +47,21 @@
 <div class="app">
 	<header>
 		<div class="header-content">
-			<a href="https://pathsim.org" class="logo" use:tooltip={'Home'}>
+			<a href="/" class="logo" use:tooltip={'Docs'}>
 				<img src="/favicon.png" alt="PathSim" />
 			</a>
-			<nav>
-				<a href="/pathsim" class="icon-btn" use:tooltip={'PathSim Core'}>
-					<Icon name="box" size={20} />
+			<nav class="header-actions">
+				<a href={nav.home} class="icon-btn" use:tooltip={'Home'}>
+					<Icon name="home" size={14} />
 				</a>
-				<a href="/chem" class="icon-btn" use:tooltip={'PathSim-Chem'}>
-					<Icon name="flask" size={20} />
+				<a href={nav.tryOnline} class="icon-btn" use:tooltip={'Editor'}>
+					<Icon name="play" size={14} />
 				</a>
-				<a href="/vehicle" class="icon-btn" use:tooltip={'PathSim-Vehicle'}>
-					<Icon name="car" size={20} />
-				</a>
-				<a href="https://view.pathsim.org" class="icon-btn" use:tooltip={'Editor'}>
-					<Icon name="play" size={20} />
-				</a>
-				<a href="https://github.com/milanofthe/pathsim" class="icon-btn" use:tooltip={'GitHub'}>
-					<Icon name="github" size={20} />
+				<a href={nav.github} class="icon-btn" use:tooltip={'GitHub'}>
+					<Icon name="github" size={14} />
 				</a>
 				<button class="icon-btn" onclick={toggleTheme} use:tooltip={'Toggle theme'}>
-					<Icon name={theme === 'dark' ? 'sun' : 'moon'} size={20} />
+					<Icon name={theme === 'dark' ? 'sun' : 'moon'} size={14} />
 				</button>
 			</nav>
 		</div>
@@ -108,7 +103,7 @@
 	.header-content {
 		max-width: 1400px;
 		margin: 0 auto;
-		padding: var(--space-md) var(--space-lg);
+		padding: var(--space-sm) var(--space-lg);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -120,7 +115,7 @@
 	}
 
 	.logo img {
-		height: 32px;
+		height: 24px;
 		width: auto;
 	}
 
