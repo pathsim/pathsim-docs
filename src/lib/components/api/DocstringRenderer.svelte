@@ -63,19 +63,23 @@
 		editorViews = [];
 
 		cmModules = await loadCodeMirrorModules();
-
-		const codeBlocks = container.querySelectorAll('pre > code, pre code');
 		const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
-		for (const codeEl of codeBlocks) {
-			const preEl = codeEl.parentElement;
-			if (!preEl || preEl.tagName !== 'PRE') continue;
+		// Find all pre elements that contain code
+		// Handles: <pre><code>...</code></pre> and <pre class="code">...</pre>
+		const preElements = container.querySelectorAll('pre');
 
+		for (const preEl of preElements) {
 			// Skip if already processed
 			if (preEl.classList.contains('cm-processed')) continue;
 
-			const code = codeEl.textContent || '';
-			const language = Array.from(codeEl.classList).find(c => c.startsWith('language-'))?.replace('language-', '') || 'python';
+			// Get code content - either from nested code element or directly from pre
+			const codeEl = preEl.querySelector('code');
+			const code = codeEl ? codeEl.textContent : preEl.textContent;
+			if (!code?.trim()) continue;
+
+			// Mark as processed
+			preEl.classList.add('cm-processed');
 
 			// Create wrapper div
 			const wrapper = document.createElement('div');
