@@ -107,6 +107,9 @@
 	// Watch for theme changes
 	let observer: MutationObserver | null = null;
 
+	// Track if we've done initial render
+	let hasRendered = false;
+
 	onMount(() => {
 		// Add KaTeX CSS
 		if (!document.querySelector('link[href*="katex"]')) {
@@ -116,15 +119,12 @@
 			document.head.appendChild(link);
 		}
 
-		// Initial render
-		tick().then(() => {
-			renderMath();
-			renderCodeBlocks();
-		});
-
 		// Watch for theme changes to re-render code blocks
 		observer = new MutationObserver(() => {
-			renderCodeBlocks();
+			// Only re-render if we have existing editors
+			if (editorViews.length > 0) {
+				renderCodeBlocks();
+			}
 		});
 		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
@@ -133,12 +133,17 @@
 			for (const view of editorViews) {
 				view.destroy();
 			}
+			editorViews = [];
 		};
 	});
 
-	// Re-render when html changes
+	// Render when container is ready and html is set
 	$effect(() => {
-		if (html && container) {
+		// Access html to create dependency
+		const currentHtml = html;
+
+		if (currentHtml && container && !hasRendered) {
+			hasRendered = true;
 			tick().then(() => {
 				renderMath();
 				renderCodeBlocks();
@@ -191,12 +196,66 @@
 		display: none;
 	}
 
-	/* Definition lists */
-	.docstring-content :global(dl) {
+	/* Definition lists - styled as parameter cards */
+	.docstring-content :global(dl.docutils) {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
 		margin: var(--space-md) 0;
 	}
 
-	.docstring-content :global(dt) {
+	.docstring-content :global(dl.docutils dt) {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		padding: var(--space-sm) var(--space-md);
+		padding-bottom: 0;
+		background: var(--surface-raised);
+		border-radius: var(--radius-md) var(--radius-md) 0 0;
+		font-family: var(--font-mono);
+		font-size: var(--font-sm);
+		color: var(--accent);
+		font-weight: 500;
+		margin: 0;
+	}
+
+	/* Type annotations in dt */
+	.docstring-content :global(dl.docutils dt .classifier-delimiter) {
+		color: var(--text-muted);
+		margin: 0 var(--space-xs);
+	}
+
+	.docstring-content :global(dl.docutils dt .classifier) {
+		font-family: var(--font-mono);
+		font-size: var(--font-xs);
+		color: var(--text-muted);
+		font-weight: 400;
+	}
+
+	.docstring-content :global(dl.docutils dd) {
+		margin: 0;
+		padding: var(--space-xs) var(--space-md) var(--space-sm);
+		background: var(--surface-raised);
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
+		color: var(--text-muted);
+		font-size: var(--font-sm);
+		line-height: 1.5;
+	}
+
+	/* When dd follows dd (multiple descriptions), adjust spacing */
+	.docstring-content :global(dl.docutils dd + dd) {
+		margin-top: calc(-1 * var(--space-sm));
+		padding-top: 0;
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
+	}
+
+	/* Generic dl fallback */
+	.docstring-content :global(dl:not(.docutils)) {
+		margin: var(--space-md) 0;
+	}
+
+	.docstring-content :global(dl:not(.docutils) dt) {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		color: var(--accent);
@@ -204,7 +263,7 @@
 		font-weight: 500;
 	}
 
-	.docstring-content :global(dd) {
+	.docstring-content :global(dl:not(.docutils) dd) {
 		margin-left: var(--space-lg);
 		color: var(--text-muted);
 		margin-top: var(--space-xs);
@@ -221,17 +280,29 @@
 		margin-bottom: var(--space-xs);
 	}
 
-	/* Section headers */
-	.docstring-content :global(strong) {
+	/* Section headers (Parameters, Attributes, Returns, etc.) */
+	.docstring-content :global(p > strong:only-child),
+	.docstring-content :global(p:has(> strong:only-child)) {
 		display: block;
-		font-size: var(--font-sm);
-		color: var(--text);
-		margin-top: var(--space-lg);
+		font-family: var(--font-ui);
+		font-size: var(--font-xs);
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin-top: var(--space-xl);
 		margin-bottom: var(--space-sm);
+		padding-bottom: var(--space-sm);
+		border-bottom: 1px solid var(--border);
 	}
 
-	.docstring-content :global(strong:first-child) {
-		margin-top: 0;
+	.docstring-content :global(p:first-child > strong:only-child),
+	.docstring-content :global(p:first-child:has(> strong:only-child)) {
+		margin-top: var(--space-md);
+	}
+
+	.docstring-content :global(strong) {
+		font-weight: 600;
 	}
 
 	/* KaTeX styling */
