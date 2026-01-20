@@ -49,7 +49,7 @@
 			<a href="https://pathsim.org" class="logo" use:tooltip={'Home'}>
 				<img src="/favicon.png" alt="PathSim" />
 			</a>
-			<nav class="nav-links">
+			<nav>
 				<a href="/pathsim" class="icon-btn" use:tooltip={'PathSim Core'}>
 					<Icon name="box" size={20} />
 				</a>
@@ -59,8 +59,6 @@
 				<a href="/vehicle" class="icon-btn" use:tooltip={'PathSim-Vehicle'}>
 					<Icon name="car" size={20} />
 				</a>
-			</nav>
-			<div class="nav-actions">
 				<a href="https://view.pathsim.org" class="icon-btn" use:tooltip={'Editor'}>
 					<Icon name="play" size={20} />
 				</a>
@@ -70,7 +68,7 @@
 				<button class="icon-btn" onclick={toggleTheme} use:tooltip={'Toggle theme'}>
 					<Icon name={theme === 'dark' ? 'sun' : 'moon'} size={20} />
 				</button>
-			</div>
+			</nav>
 		</div>
 	</header>
 	<div id="main-content">
@@ -113,7 +111,7 @@
 		padding: var(--space-md) var(--space-lg);
 		display: flex;
 		align-items: center;
-		gap: var(--space-xl);
+		justify-content: space-between;
 	}
 
 	.logo {
@@ -126,14 +124,7 @@
 		width: auto;
 	}
 
-	.nav-links {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		flex: 1;
-	}
-
-	.nav-actions {
+	nav {
 		display: flex;
 		align-items: center;
 		gap: var(--space-xs);
@@ -141,11 +132,5 @@
 
 	#main-content {
 		flex: 1;
-	}
-
-	@media (max-width: 768px) {
-		.nav-links {
-			display: none;
-		}
 	}
 </style>
