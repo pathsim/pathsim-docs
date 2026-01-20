@@ -29,10 +29,7 @@
 	{/if}
 
 	{#if module.classes && module.classes.length > 0}
-		<div class="api-module-section">
-			<div class="api-module-section-header">
-				<span class="api-module-section-title">Classes</span>
-			</div>
+		<div class="api-module-classes">
 			{#each module.classes as cls}
 				<ClassDoc {cls} expanded={defaultExpanded} />
 			{/each}
@@ -40,22 +37,39 @@
 	{/if}
 
 	{#if module.functions && module.functions.length > 0}
-		<div class="api-module-section">
-			<div class="api-module-section-header">
-				<span class="api-module-section-title">Functions</span>
-			</div>
-			<div class="api-module-functions">
-				{#each module.functions as func}
-					<FunctionDoc {func} />
-				{/each}
-			</div>
+		<div class="api-module-functions">
+			{#each module.functions as func}
+				<FunctionDoc {func} />
+			{/each}
 		</div>
 	{/if}
 </section>
 
 <style>
 	.api-module {
+		position: relative;
 		margin-bottom: var(--space-3xl);
+		padding-top: var(--space-xl);
+	}
+
+	/* Full width separator ABOVE each module - extends to doc-main edges */
+	.api-module::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -50vw;
+		width: 200vw;
+		height: 1px;
+		background: var(--border);
+	}
+
+	/* Hide separator for first module (Modules h2 already has one) */
+	.api-module:first-child {
+		padding-top: 0;
+	}
+
+	.api-module:first-child::before {
+		display: none;
 	}
 
 	.api-module-header {
@@ -71,9 +85,9 @@
 
 	.api-module-name code {
 		font-family: var(--font-mono);
-		font-size: var(--font-lg);
+		font-size: var(--font-xl);
 		font-weight: 600;
-		color: var(--text);
+		color: var(--accent);
 		background: none;
 		border: none;
 		padding: 0;
@@ -81,49 +95,27 @@
 
 	.api-module-desc {
 		font-family: var(--font-ui);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		margin: 0;
-		line-height: 1.5;
+		line-height: 1.6;
 	}
 
 	.api-module-docstring {
+		margin-top: var(--space-lg);
 		margin-bottom: var(--space-xl);
 	}
 
-	.api-module-section {
-		margin-top: var(--space-xl);
-	}
-
-	.api-module-section-header {
-		position: relative;
-		margin-bottom: var(--space-lg);
-		padding-top: var(--space-lg);
-	}
-
-	/* Full width separator ABOVE header */
-	.api-module-section-header::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: calc(-50vw + 50%);
-		width: 100vw;
-		height: 1px;
-		background: var(--border);
-	}
-
-	.api-module-section-title {
-		font-family: var(--font-ui);
-		font-size: var(--font-xs);
-		font-weight: 600;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
+	.api-module-classes {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-lg);
 	}
 
 	.api-module-functions {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
+		margin-top: var(--space-lg);
 	}
 </style>

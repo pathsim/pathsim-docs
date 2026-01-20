@@ -14,6 +14,9 @@
 	let cmModules: CodeMirrorModules | null = null;
 	let editorViews: import('@codemirror/view').EditorView[] = [];
 
+	// Store code content and container refs for theme switching
+	let codeBlocks: { wrapper: HTMLElement; code: string }[] = [];
+
 	// Render math with KaTeX (same approach as PathView)
 	async function renderMath() {
 		if (!container) return;
@@ -154,6 +157,39 @@
 		}
 	}
 
+	// Detect language from code content
+	function detectLanguage(code: string): 'python' | 'console' {
+		// Check for Python REPL prompts
+		if (code.includes('>>>') || code.includes('...')) {
+			return 'console';
+		}
+		return 'python';
+	}
+
+	// Create copy button with icon
+	function createCopyButton(code: string): HTMLButtonElement {
+		const button = document.createElement('button');
+		button.className = 'code-copy-btn';
+		button.title = 'Copy to clipboard';
+		button.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+
+		button.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(code);
+				button.classList.add('copied');
+				button.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+				setTimeout(() => {
+					button.classList.remove('copied');
+					button.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+				}, 2000);
+			} catch (e) {
+				console.warn('Failed to copy:', e);
+			}
+		});
+
+		return button;
+	}
+
 	// Render code blocks with CodeMirror
 	async function renderCodeBlocks() {
 		if (!container) return;
@@ -163,6 +199,7 @@
 			view.destroy();
 		}
 		editorViews = [];
+		codeBlocks = [];
 
 		cmModules = await loadCodeMirrorModules();
 		const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
@@ -183,9 +220,24 @@
 			// Mark as processed
 			preEl.classList.add('cm-processed');
 
+			const trimmedCode = code.trim();
+			const language = detectLanguage(trimmedCode);
+
 			// Create wrapper div
 			const wrapper = document.createElement('div');
 			wrapper.className = 'code-block-wrapper';
+
+			// Create header
+			const header = document.createElement('div');
+			header.className = 'code-block-header';
+
+			const label = document.createElement('span');
+			label.className = 'code-block-label';
+			label.textContent = language === 'console' ? 'CONSOLE' : 'PYTHON';
+			header.appendChild(label);
+
+			header.appendChild(createCopyButton(trimmedCode));
+			wrapper.appendChild(header);
 
 			// Create editor container
 			const editorDiv = document.createElement('div');
@@ -195,11 +247,45 @@
 			// Replace pre with wrapper
 			preEl.parentNode?.replaceChild(wrapper, preEl);
 
+			// Store code and wrapper for theme switching
+			codeBlocks.push({ wrapper, code: trimmedCode });
+
 			// Create CodeMirror editor
 			const view = new cmModules.EditorView({
-				doc: code.trim(),
+				doc: trimmedCode,
 				extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
 				parent: editorDiv
+			});
+
+			editorViews.push(view);
+		}
+	}
+
+	// Update existing code blocks with new theme
+	async function updateCodeBlockTheme() {
+		if (!cmModules || codeBlocks.length === 0) return;
+
+		const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+
+		// Destroy old editors
+		for (const view of editorViews) {
+			view.destroy();
+		}
+		editorViews = [];
+
+		// Recreate editors with new theme
+		for (const { wrapper, code } of codeBlocks) {
+			const editorDiv = wrapper.querySelector('.cm-container');
+			if (!editorDiv) continue;
+
+			// Clear old editor content
+			editorDiv.innerHTML = '';
+
+			// Create new editor with updated theme
+			const view = new cmModules.EditorView({
+				doc: code,
+				extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
+				parent: editorDiv as HTMLElement
 			});
 
 			editorViews.push(view);
@@ -221,11 +307,11 @@
 			document.head.appendChild(link);
 		}
 
-		// Watch for theme changes to re-render code blocks
+		// Watch for theme changes to update code block themes
 		observer = new MutationObserver(() => {
-			// Only re-render if we have existing editors
-			if (editorViews.length > 0) {
-				renderCodeBlocks();
+			// Only update if we have existing editors
+			if (codeBlocks.length > 0) {
+				updateCodeBlockTheme();
 			}
 		});
 		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
@@ -236,6 +322,7 @@
 				view.destroy();
 			}
 			editorViews = [];
+			codeBlocks = [];
 		};
 	});
 
@@ -278,8 +365,49 @@
 	.docstring-content :global(.code-block-wrapper) {
 		margin: var(--space-md) 0;
 		border: 1px solid var(--border);
-		border-radius: var(--radius-md);
+		border-radius: var(--radius-lg);
 		overflow: hidden;
+	}
+
+	/* Code block header - styled like panel-header */
+	.docstring-content :global(.code-block-header) {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: var(--space-xs) var(--space-md);
+		background: var(--surface-raised);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.docstring-content :global(.code-block-label) {
+		font-family: var(--font-ui);
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+	}
+
+	.docstring-content :global(.code-copy-btn) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-xs);
+		background: transparent;
+		border: none;
+		border-radius: var(--radius-sm);
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: color var(--transition-fast), background var(--transition-fast);
+	}
+
+	.docstring-content :global(.code-copy-btn:hover) {
+		color: var(--text);
+		background: var(--surface);
+	}
+
+	.docstring-content :global(.code-copy-btn.copied) {
+		color: var(--success, #22c55e);
 	}
 
 	.docstring-content :global(.cm-container) {
@@ -295,11 +423,7 @@
 		padding: var(--space-sm);
 	}
 
-	/* Hide line numbers for inline snippets */
-	.docstring-content :global(.cm-gutters) {
-		display: none;
-	}
-
+	
 	/* Parameter/Attribute tables - panel style */
 	.docstring-content :global(.param-table-wrapper) {
 		margin: var(--space-md) 0;
@@ -314,7 +438,7 @@
 
 	/* Header styled like panel-header */
 	.docstring-content :global(.param-table thead th) {
-		padding: var(--space-sm) var(--space-md);
+		padding: var(--space-xs) var(--space-md);
 		background: var(--surface-raised);
 		font-size: 11px;
 		font-weight: 600;
@@ -336,7 +460,7 @@
 	}
 
 	.docstring-content :global(.param-table td) {
-		padding: var(--space-sm) var(--space-md);
+		padding: var(--space-xs) var(--space-md);
 		background: var(--surface);
 		vertical-align: top;
 		border-left: 1px solid var(--border);
@@ -420,7 +544,7 @@
 		margin-bottom: var(--space-xs);
 	}
 
-	/* RST section containers - full width separator ABOVE */
+	/* RST section containers - separator ABOVE, extends to panel edges */
 	.docstring-content :global(.section) {
 		position: relative;
 		margin-top: var(--space-lg);
@@ -432,7 +556,7 @@
 		position: absolute;
 		top: 0;
 		left: calc(-1 * var(--space-lg));
-		right: calc(-1 * var(--space-lg));
+		width: calc(100% + 2 * var(--space-lg));
 		height: 1px;
 		background: var(--border);
 	}
@@ -460,7 +584,7 @@
 		border: none;
 	}
 
-	/* NumPy-style section headers converted to <p><strong> - full width separator ABOVE */
+	/* NumPy-style section headers converted to <p><strong> - separator ABOVE, extends to panel edges */
 	.docstring-content :global(p:has(> strong:only-child)) {
 		position: relative;
 		font-family: var(--font-ui);
@@ -479,7 +603,7 @@
 		position: absolute;
 		top: 0;
 		left: calc(-1 * var(--space-lg));
-		right: calc(-1 * var(--space-lg));
+		width: calc(100% + 2 * var(--space-lg));
 		height: 1px;
 		background: var(--border);
 	}

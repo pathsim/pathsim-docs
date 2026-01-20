@@ -71,14 +71,16 @@
 		position: sticky;
 		top: 0;
 		z-index: 100;
+		height: var(--header-height);
 		background: var(--surface-raised);
 		border-bottom: 1px solid var(--border);
 	}
 
 	.header-content {
+		height: 100%;
 		max-width: 1400px;
 		margin: 0 auto;
-		padding: var(--space-sm) var(--space-lg);
+		padding: 0 var(--space-lg);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;

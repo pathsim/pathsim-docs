@@ -26,8 +26,7 @@
 	.doc-layout {
 		display: flex;
 		flex: 1;
-		min-height: 0;
-		align-items: stretch;
+		align-items: flex-start;
 	}
 
 	@media (max-width: 768px) {
@@ -40,8 +39,8 @@
 		flex: 1;
 		display: flex;
 		min-width: 0;
-		overflow-y: auto;
 		background: var(--surface);
+		overflow-x: hidden; /* Clip separators at content area edge */
 	}
 
 	.doc-content {

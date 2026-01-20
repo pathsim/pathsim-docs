@@ -412,12 +412,12 @@ input::placeholder {
 	color: var(--text-muted);
 }
 
-/* Separator - full screen width */
+/* Separator - extends to doc-main edges */
 .separator {
 	height: 1px;
 	background: var(--border);
-	width: 100vw;
-	margin-left: calc(-50vw + 50%);
+	width: 200vw;
+	margin-left: -50vw;
 }
 
 /* Panel style */
@@ -749,8 +749,8 @@ input::placeholder {
 	content: '';
 	position: absolute;
 	top: 0;
-	left: calc(-50vw + 50%);
-	width: 100vw;
+	left: -50vw;
+	width: 200vw;
 	height: 1px;
 	background: var(--border);
 }

@@ -152,8 +152,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
-		overflow-y: auto;
-		max-height: calc(100vh - 300px);
 	}
 
 	.api-toc-group {

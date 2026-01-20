@@ -34,34 +34,38 @@
 </script>
 
 <aside class="sidebar">
-	<div class="search-container">
-		<span class="search-icon"><Icon name="search" size={14} /></span>
-		<input
-			type="text"
-			placeholder="Search docs..."
-			bind:value={searchQuery}
-			class="search-input"
-			onkeydown={handleSearchKeydown}
-		/>
-		{#if searchQuery}
-			<button class="clear-btn" onclick={() => (searchQuery = '')}>
-				<Icon name="x" size={12} />
-			</button>
-		{/if}
+	<div class="sidebar-fixed">
+		<div class="search-container">
+			<span class="search-icon"><Icon name="search" size={14} /></span>
+			<input
+				type="text"
+				placeholder="Search docs..."
+				bind:value={searchQuery}
+				class="search-input"
+				onkeydown={handleSearchKeydown}
+			/>
+			{#if searchQuery}
+				<button class="clear-btn" onclick={() => (searchQuery = '')}>
+					<Icon name="x" size={12} />
+				</button>
+			{/if}
+		</div>
+		<nav class="sidebar-nav">
+			{#each items as item}
+				<a href={item.path} class="sidebar-item" class:active={isActive(item.path)}>
+					{#if item.icon}
+						<Icon name={item.icon} size={14} />
+					{/if}
+					<span>{item.title}</span>
+				</a>
+			{/each}
+		</nav>
 	</div>
-	<nav class="sidebar-nav">
-		{#each items as item}
-			<a href={item.path} class="sidebar-item" class:active={isActive(item.path)}>
-				{#if item.icon}
-					<Icon name={item.icon} size={14} />
-				{/if}
-				<span>{item.title}</span>
-			</a>
-		{/each}
-	</nav>
 
 	{#if isApiPage && $apiModulesStore.length > 0}
-		<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
+		<div class="sidebar-scrollable">
+			<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
+		</div>
 	{/if}
 </aside>
 
@@ -69,12 +73,23 @@
 	.sidebar {
 		width: var(--sidebar-width);
 		flex-shrink: 0;
-		align-self: stretch;
 		display: flex;
 		flex-direction: column;
 		background: var(--surface);
 		border-right: 1px solid var(--border);
+		position: sticky;
+		top: var(--header-height);
+		height: calc(100vh - var(--header-height) - 40px); /* viewport minus header and footer */
+	}
+
+	.sidebar-fixed {
+		flex-shrink: 0;
+	}
+
+	.sidebar-scrollable {
+		flex: 1;
 		overflow-y: auto;
+		min-height: 0;
 	}
 
 	.search-container {
