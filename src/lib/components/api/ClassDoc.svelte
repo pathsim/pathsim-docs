@@ -1,14 +1,15 @@
 <script lang="ts">
 	import type { APIClass } from '$lib/api/generated';
 	import FunctionDoc from './FunctionDoc.svelte';
+	import Icon from '$lib/components/common/Icon.svelte';
 
 	interface Props {
 		cls: APIClass;
 		expanded?: boolean;
 	}
 
-	let { cls, expanded = false }: Props = $props();
-	let isExpanded = $state(expanded);
+	let { cls, expanded: initialExpanded = false }: Props = $props();
+	let isExpanded = $state(initialExpanded);
 
 	// Filter methods - skip __init__ since we show parameters separately
 	let publicMethods = $derived(
@@ -16,85 +17,83 @@
 	);
 </script>
 
-<div class="class-doc" id={cls.name}>
-	<button class="class-header" onclick={() => (isExpanded = !isExpanded)}>
-		<div class="class-title">
-			<span class="expand-icon">{isExpanded ? '▼' : '▶'}</span>
-			<code class="class-name">{cls.name}</code>
+<div class="api-class" id={cls.name}>
+	<button class="api-class-header" onclick={() => (isExpanded = !isExpanded)}>
+		<div class="api-class-title">
+			<span class="api-class-toggle" class:expanded={isExpanded}>
+				<Icon name="chevron-right" size={14} />
+			</span>
+			<code class="api-class-name">{cls.name}</code>
 			{#if cls.bases && cls.bases.length > 0}
-				<span class="class-bases">({cls.bases.join(', ')})</span>
+				<span class="api-class-bases">({cls.bases.join(', ')})</span>
 			{/if}
 		</div>
-		<span class="class-description">{cls.description}</span>
+		{#if cls.description}
+			<span class="api-class-desc">{cls.description}</span>
+		{/if}
 	</button>
 
 	{#if isExpanded}
-		<div class="class-body">
+		<div class="api-class-body">
 			{#if cls.docstring_html}
-				<div class="docstring">
+				<div class="api-docstring">
 					{@html cls.docstring_html}
 				</div>
 			{/if}
 
 			{#if cls.parameters && cls.parameters.length > 0}
-				<div class="section">
-					<h5 class="section-title">Constructor Parameters</h5>
-					<table class="api-param-table">
-						<thead>
-							<tr>
-								<th>Parameter</th>
-								<th>Type</th>
-								<th>Description</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each cls.parameters as param}
-								<tr>
-									<td>
-										{param.name}
-										{#if param.default}
-											<span class="param-default">= {param.default}</span>
-										{/if}
-									</td>
-									<td>{param.type || 'any'}</td>
-									<td>{param.description || ''}</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
+				<div class="api-section">
+					<h5 class="api-section-title">Constructor Parameters</h5>
+					<div class="api-params">
+						{#each cls.parameters as param}
+							<div class="api-param">
+								<div class="api-param-name">
+									<code>{param.name}</code>
+									{#if param.type}
+										<span class="api-param-type">{param.type}</span>
+									{/if}
+									{#if param.default}
+										<span class="api-param-default">= {param.default}</span>
+									{/if}
+								</div>
+								{#if param.description}
+									<p class="api-param-desc">{param.description}</p>
+								{/if}
+							</div>
+						{/each}
+					</div>
 				</div>
 			{/if}
 
 			{#if cls.attributes && cls.attributes.length > 0}
-				<div class="section">
-					<h5 class="section-title">Attributes</h5>
-					<table class="api-param-table">
-						<thead>
-							<tr>
-								<th>Attribute</th>
-								<th>Type</th>
-								<th>Description</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each cls.attributes as attr}
-								<tr>
-									<td>{attr.name}</td>
-									<td>{attr.type || ''}</td>
-									<td>{attr.description || ''}</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
+				<div class="api-section">
+					<h5 class="api-section-title">Attributes</h5>
+					<div class="api-params">
+						{#each cls.attributes as attr}
+							<div class="api-param">
+								<div class="api-param-name">
+									<code>{attr.name}</code>
+									{#if attr.type}
+										<span class="api-param-type">{attr.type}</span>
+									{/if}
+								</div>
+								{#if attr.description}
+									<p class="api-param-desc">{attr.description}</p>
+								{/if}
+							</div>
+						{/each}
+					</div>
 				</div>
 			{/if}
 
 			{#if publicMethods.length > 0}
-				<div class="section">
-					<h5 class="section-title">Methods</h5>
-					{#each publicMethods as method}
-						<FunctionDoc func={method} isMethod={true} />
-					{/each}
+				<div class="api-section">
+					<h5 class="api-section-title">Methods</h5>
+					<div class="api-methods">
+						{#each publicMethods as method}
+							<FunctionDoc func={method} isMethod={true} />
+						{/each}
+					</div>
 				</div>
 			{/if}
 		</div>
@@ -102,14 +101,19 @@
 </div>
 
 <style>
-	.class-doc {
+	.api-class {
 		border: 1px solid var(--border);
 		border-radius: var(--radius-lg);
 		margin-bottom: var(--space-lg);
 		overflow: hidden;
+		transition: border-color var(--transition-fast);
 	}
 
-	.class-header {
+	.api-class:hover {
+		border-color: var(--border-focus);
+	}
+
+	.api-class-header {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -124,23 +128,29 @@
 		transition: background var(--transition-fast);
 	}
 
-	.class-header:hover {
+	.api-class-header:hover {
 		background: var(--surface-hover);
 	}
 
-	.class-title {
+	.api-class-title {
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
 	}
 
-	.expand-icon {
-		font-size: var(--font-xs);
+	.api-class-toggle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		color: var(--text-muted);
-		width: 12px;
+		transition: transform var(--transition-fast);
 	}
 
-	.class-name {
+	.api-class-toggle.expanded {
+		transform: rotate(90deg);
+	}
+
+	.api-class-name {
 		font-size: var(--font-md);
 		font-weight: 600;
 		color: var(--accent);
@@ -149,63 +159,68 @@
 		padding: 0;
 	}
 
-	.class-bases {
+	.api-class-bases {
 		font-size: var(--font-sm);
 		color: var(--text-muted);
+		font-family: var(--font-mono);
 	}
 
-	.class-description {
+	.api-class-desc {
 		font-size: var(--font-sm);
 		color: var(--text-muted);
-		margin-left: calc(12px + var(--space-sm));
+		margin-left: calc(14px + var(--space-sm));
 	}
 
-	.class-body {
+	.api-class-body {
 		padding: var(--space-lg);
 		background: var(--surface);
 		border-top: 1px solid var(--border);
 	}
 
-	.docstring {
-		margin-bottom: var(--space-lg);
+	.api-docstring {
 		font-size: var(--font-sm);
 		line-height: 1.6;
+		margin-bottom: var(--space-lg);
 	}
 
-	.docstring :global(p) {
+	.api-docstring :global(p) {
 		margin-bottom: 0.75em;
 	}
 
-	.docstring :global(pre) {
+	.api-docstring :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.api-docstring :global(pre) {
 		margin: 1em 0;
 	}
 
-	.docstring :global(dl) {
+	.api-docstring :global(dl) {
 		margin: 0.5em 0;
 	}
 
-	.docstring :global(dt) {
+	.api-docstring :global(dt) {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		color: var(--accent);
 		margin-top: 0.5em;
 	}
 
-	.docstring :global(dd) {
+	.api-docstring :global(dd) {
 		margin-left: var(--space-lg);
 		color: var(--text-muted);
 	}
 
-	.section {
+	.api-section {
 		margin-top: var(--space-xl);
 	}
 
-	.section:first-child {
+	.api-section:first-child {
 		margin-top: 0;
 	}
 
-	.section-title {
-		font-size: var(--font-sm);
+	.api-section-title {
+		font-size: var(--font-xs);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
@@ -213,8 +228,54 @@
 		margin-bottom: var(--space-md);
 	}
 
-	.param-default {
-		color: var(--text-muted);
+	.api-params {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+	}
+
+	.api-param {
+		padding: var(--space-sm) var(--space-md);
+		background: var(--surface-raised);
+		border-radius: var(--radius-md);
+	}
+
+	.api-param-name {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-sm);
+		flex-wrap: wrap;
+	}
+
+	.api-param-name code {
+		color: var(--accent);
+		font-size: var(--font-sm);
+		background: none;
+		border: none;
+		padding: 0;
+	}
+
+	.api-param-type {
+		font-family: var(--font-mono);
 		font-size: var(--font-xs);
+		color: var(--text-muted);
+	}
+
+	.api-param-default {
+		font-family: var(--font-mono);
+		font-size: var(--font-xs);
+		color: var(--text-disabled);
+	}
+
+	.api-param-desc {
+		margin: var(--space-xs) 0 0;
+		font-size: var(--font-sm);
+		color: var(--text-muted);
+	}
+
+	.api-methods {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-lg);
 	}
 </style>

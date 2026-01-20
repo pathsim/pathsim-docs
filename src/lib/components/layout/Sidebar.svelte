@@ -2,6 +2,8 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { getSidebarItems, type PackageId } from '$lib/config/packages';
+	import { apiModulesStore } from '$lib/stores/apiContext';
+	import { ApiToc } from '$lib/components/api';
 
 	interface Props {
 		packageId: PackageId;
@@ -12,6 +14,9 @@
 	let items = $derived(getSidebarItems(packageId));
 	let searchQuery = $state('');
 
+	// Check if we're on an API page
+	let isApiPage = $derived($page.url.pathname.endsWith('/api'));
+
 	function isActive(path: string): boolean {
 		return $page.url.pathname === path;
 	}
@@ -21,6 +26,10 @@
 			searchQuery = '';
 			event.stopPropagation();
 		}
+	}
+
+	function handleTocNavigate(id: string) {
+		// Could track navigation for analytics or other purposes
 	}
 </script>
 
@@ -50,6 +59,10 @@
 			</a>
 		{/each}
 	</nav>
+
+	{#if isApiPage && $apiModulesStore.length > 0}
+		<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
+	{/if}
 </aside>
 
 <style>
@@ -61,6 +74,7 @@
 		flex-direction: column;
 		background: var(--surface);
 		border-right: 1px solid var(--border);
+		overflow-y: auto;
 	}
 
 	.search-container {

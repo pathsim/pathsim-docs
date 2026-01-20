@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
 	import { apiData, type APIModule } from '$lib/api/generated';
 	import { ModuleDoc } from '$lib/components/api';
+	import { apiModulesStore } from '$lib/stores/apiContext';
 
 	interface Props {
 		packageId: PackageId;
@@ -23,30 +25,15 @@
 	let apiPackage = $derived(apiData[apiKey]);
 	let modules = $derived(apiPackage ? Object.values(apiPackage.modules) : []);
 
-	// Group modules by top-level (e.g., pathsim.blocks vs pathsim)
-	let moduleGroups = $derived.by(() => {
-		const groups: Record<string, APIModule[]> = {};
-		for (const mod of modules) {
-			const parts = mod.name.split('.');
-			const groupKey = parts.length > 1 ? parts.slice(0, 2).join('.') : mod.name;
-			if (!groups[groupKey]) {
-				groups[groupKey] = [];
-			}
-			groups[groupKey].push(mod);
-		}
-		return groups;
+	// Update the store with modules for the sidebar TOC
+	$effect(() => {
+		apiModulesStore.set(modules);
 	});
 
-	// Get selected module from URL hash
-	let selectedModule = $state<string | null>(null);
-
-	function scrollToModule(moduleName: string) {
-		const id = moduleName.replace(/\./g, '-');
-		const element = document.getElementById(id);
-		if (element) {
-			element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-		}
-	}
+	// Clear the store when component unmounts
+	onDestroy(() => {
+		apiModulesStore.set([]);
+	});
 </script>
 
 <svelte:head>
@@ -70,24 +57,6 @@
 		</div>
 	</div>
 {:else}
-	<!-- Module navigation -->
-	<nav class="module-nav">
-		{#each Object.entries(moduleGroups) as [groupName, groupModules]}
-			<button
-				class="module-nav-item"
-				class:active={selectedModule === groupName}
-				onclick={() => scrollToModule(groupName)}
-			>
-				<code>{groupName}</code>
-				{#if groupModules[0]}
-					<span class="module-stats">
-						{groupModules[0].classes.length} classes
-					</span>
-				{/if}
-			</button>
-		{/each}
-	</nav>
-
 	<!-- Module documentation -->
 	<div class="api-content">
 		{#each modules as module}
@@ -97,49 +66,6 @@
 {/if}
 
 <style>
-	.module-nav {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
-		margin-bottom: var(--space-xl);
-	}
-
-	.module-nav-item {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 2px;
-		padding: var(--space-sm) var(--space-md);
-		background: var(--surface-raised);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-md);
-		cursor: pointer;
-		transition: all var(--transition-fast);
-	}
-
-	.module-nav-item:hover {
-		border-color: var(--accent);
-		background: var(--surface-hover);
-	}
-
-	.module-nav-item.active {
-		border-color: var(--accent);
-		background: var(--accent-bg);
-	}
-
-	.module-nav-item code {
-		font-size: var(--font-sm);
-		background: none;
-		border: none;
-		padding: 0;
-		color: var(--text);
-	}
-
-	.module-stats {
-		font-size: var(--font-xs);
-		color: var(--text-muted);
-	}
-
 	.api-content {
 		margin-top: var(--space-xl);
 	}
