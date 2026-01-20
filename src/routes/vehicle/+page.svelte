@@ -13,18 +13,16 @@
 
 <Tooltip />
 
-<img src={pkg.logo} alt="PathSim-Vehicle" class="page-logo" />
-
-<p class="lead">
-	Vehicle dynamics blocks for PathSim.
-</p>
-
-<h2 id="what-is-vehicle">What is PathSim-Vehicle?</h2>
-
-<p>
-	PathSim-Vehicle extends PathSim with blocks for vehicle dynamics simulations,
-	including tire models, suspension systems, and powertrain components.
-</p>
+<div class="hero">
+	<img src={pkg.logo} alt="PathSim-Vehicle" class="hero-logo" />
+	<div class="hero-content">
+		<p class="tagline">Vehicle dynamics blocks for PathSim.</p>
+		<p class="description">
+			PathSim-Vehicle extends PathSim with blocks for vehicle dynamics simulations,
+			including tire models, suspension systems, and powertrain components.
+		</p>
+	</div>
+</div>
 
 <h2 id="key-features">Key Features</h2>
 
@@ -90,4 +88,3 @@
 		</div>
 	</a>
 </div>
-
