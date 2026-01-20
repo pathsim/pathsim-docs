@@ -57,7 +57,7 @@
 			}
 
 			tooltipStore.set({ text, shortcut, x, y, visible: true, position });
-		}, 300);
+		}, 50);
 	}
 
 	export function hideTooltip() {
