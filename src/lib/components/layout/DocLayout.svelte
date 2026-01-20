@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Sidebar } from './index';
-	import type { PackageId } from '$lib/config/links';
+	import type { PackageId } from '$lib/config/packages';
 	import type { Snippet } from 'svelte';
 
 	interface Props {

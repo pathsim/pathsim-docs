@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Sidebar from './Sidebar.svelte';
-	import { packages, packageOrder, type PackageId } from '$lib/config/links';
+	import { packages, packageOrder, type PackageId } from '$lib/config/packages';
 
 	interface Props {
 		open: boolean;

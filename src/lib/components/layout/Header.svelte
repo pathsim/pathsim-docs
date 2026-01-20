@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { packages, packageOrder, nav, type PackageId } from '$lib/config/links';
+	import { packages, packageOrder, nav, type PackageId } from '$lib/config/packages';
 
 	interface Props {
 		onMenuClick?: () => void;
@@ -128,26 +128,34 @@
 		}
 	}
 
+	/* Pill-style tabs matching pathview results panel */
 	.package-tab {
-		padding: var(--space-xs) var(--space-md);
-		font-size: 11px;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		height: 24px;
+		padding: 0 10px;
+		font-size: 10px;
+		font-weight: 500;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 12px;
 		color: var(--text-muted);
 		text-decoration: none;
-		border-radius: var(--radius-sm);
+		white-space: nowrap;
 		transition: all var(--transition-fast);
 	}
 
 	.package-tab:hover {
-		color: var(--text);
 		background: var(--surface-hover);
+		border-color: var(--border-focus);
+		color: var(--text);
 		text-decoration: none;
 	}
 
 	.package-tab.active {
+		background: color-mix(in srgb, var(--accent) 15%, var(--surface));
+		border-color: var(--accent);
 		color: var(--accent);
-		background: var(--accent-bg);
 	}
 </style>

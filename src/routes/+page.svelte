@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { packages, nav, footer } from '$lib/config/links';
+	import { packages, nav, footer } from '$lib/config/packages';
 </script>
 
 <svelte:head>
@@ -23,7 +23,7 @@
 				<Icon name="home" size={20} />
 				<span class="action-label">Home</span>
 			</a>
-			<a href={packages.pathsim.gettingStarted} class="action-card">
+			<a href={packages.pathsim.docs} class="action-card">
 				<Icon name="zap" size={20} />
 				<span class="action-label">Get Started</span>
 			</a>
@@ -196,7 +196,7 @@
 	}
 
 	h2 {
-		font-size: var(--font-lg);
+		font-size: var(--font-base);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;

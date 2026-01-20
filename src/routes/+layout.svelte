@@ -4,7 +4,7 @@
 	import { page } from '$app/stores';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
-	import { packageOrder, type PackageId } from '$lib/config/links';
+	import { packageOrder, type PackageId } from '$lib/config/packages';
 
 	let { children } = $props();
 

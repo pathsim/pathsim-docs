@@ -447,6 +447,17 @@ input::placeholder {
 	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
+.placeholder-tile {
+	border-style: dashed;
+	text-align: center;
+	color: var(--text-muted);
+}
+
+.placeholder-tile:hover {
+	border-color: var(--border);
+	box-shadow: none;
+}
+
 /* Tile grid layouts */
 .tile-grid {
 	display: grid;
@@ -506,6 +517,51 @@ input::placeholder {
 /* Tile body text */
 .tile-body {
 	color: var(--text-muted);
+	font-size: var(--font-sm);
+}
+
+/* Install cards - copyable installation commands */
+.install-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: var(--space-lg);
+}
+
+.install-card {
+	display: flex;
+	flex-direction: column;
+	border-radius: var(--radius-lg);
+	border: 1px solid var(--border);
+	overflow: hidden;
+	background: transparent;
+	padding: 0;
+	text-align: left;
+	cursor: pointer;
+	transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.install-card:hover {
+	background: transparent;
+	border-color: var(--accent);
+	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.install-card .panel-header,
+.install-card .install-body {
+	width: 100%;
+}
+
+.install-body {
+	display: flex;
+	align-items: center;
+	padding: var(--space-lg);
+	background: var(--surface);
+}
+
+.install-body code {
+	background: none;
+	border: none;
+	padding: 0;
 	font-size: var(--font-sm);
 }
 
@@ -670,7 +726,7 @@ input::placeholder {
 }
 
 .prose h2 {
-	font-size: var(--font-lg);
+	font-size: var(--font-base);
 	font-weight: 600;
 	color: var(--text-muted);
 	text-transform: uppercase;
@@ -683,8 +739,6 @@ input::placeholder {
 
 .prose h2:first-of-type {
 	margin-top: var(--space-xl);
-	padding-top: 0;
-	border-top: none;
 }
 
 .prose h3,
