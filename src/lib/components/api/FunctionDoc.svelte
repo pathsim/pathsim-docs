@@ -1,13 +1,16 @@
 <script lang="ts">
 	import type { APIFunction, APIMethod } from '$lib/api/generated';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import Icon from '$lib/components/common/Icon.svelte';
 
 	interface Props {
 		func: APIFunction | APIMethod;
 		isMethod?: boolean;
+		expanded?: boolean;
 	}
 
-	let { func, isMethod = false }: Props = $props();
+	let { func, isMethod = false, expanded: initialExpanded = false }: Props = $props();
+	let isExpanded = $state(initialExpanded);
 
 	// Get method type badge if applicable
 	let methodType = $derived((func as APIMethod).method_type);
@@ -15,8 +18,11 @@
 </script>
 
 <div class="tile method-tile" id={func.name}>
-	<div class="panel-header">
-		<div class="method-header-content">
+	<button class="panel-header method-header" onclick={() => (isExpanded = !isExpanded)}>
+		<div class="method-header-left">
+			<span class="method-toggle" class:expanded={isExpanded}>
+				<Icon name="chevron-down" size={14} />
+			</span>
 			<code class="method-name">{func.name}</code>
 			{#if func.signature}
 				<code class="method-signature">{func.signature}</code>
@@ -25,22 +31,24 @@
 		{#if showBadge}
 			<span class="badge accent">{methodType}</span>
 		{/if}
-	</div>
+	</button>
 
-	<div class="panel-body method-body">
-		{#if func.docstring_html}
-			<DocstringRenderer html={func.docstring_html} />
-		{:else if func.description}
-			<p class="method-desc">{func.description}</p>
-		{/if}
+	{#if isExpanded}
+		<div class="panel-body method-body">
+			{#if func.docstring_html}
+				<DocstringRenderer html={func.docstring_html} />
+			{:else if func.description}
+				<p class="method-desc">{func.description}</p>
+			{/if}
 
-		{#if func.returns}
-			<div class="method-returns">
-				<span class="method-returns-label">Returns</span>
-				<code>{func.returns}</code>
-			</div>
-		{/if}
-	</div>
+			{#if func.returns}
+				<div class="method-returns">
+					<span class="method-returns-label">Returns</span>
+					<code>{func.returns}</code>
+				</div>
+			{/if}
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -54,20 +62,40 @@
 		box-shadow: none;
 	}
 
-	/* Override panel-header for method - more compact, no uppercase */
-	.method-tile :global(.panel-header) {
+	/* Override panel-header for method - clickable, no uppercase */
+	.method-header {
 		padding: var(--space-sm) var(--space-md);
 		text-transform: none;
 		letter-spacing: normal;
 		font-size: var(--font-sm);
+		width: 100%;
+		border-radius: 0;
+		text-align: left;
+		cursor: pointer;
 	}
 
-	.method-header-content {
+	.method-header-left {
 		display: flex;
 		align-items: baseline;
 		gap: var(--space-xs);
 		flex-wrap: wrap;
 		min-width: 0;
+	}
+
+	.method-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 16px;
+		height: 16px;
+		color: var(--text-muted);
+		transition: transform var(--transition-fast);
+		flex-shrink: 0;
+		align-self: center;
+	}
+
+	.method-toggle.expanded :global(svg) {
+		transform: rotate(180deg);
 	}
 
 	.method-name {
