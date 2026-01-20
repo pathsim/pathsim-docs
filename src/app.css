@@ -734,6 +734,7 @@ input::placeholder {
 }
 
 .prose h2 {
+	position: relative;
 	font-size: var(--font-base);
 	font-weight: 600;
 	color: var(--text-muted);
@@ -742,7 +743,16 @@ input::placeholder {
 	margin-top: var(--space-2xl);
 	margin-bottom: var(--space-lg);
 	padding-top: var(--space-xl);
-	border-top: 1px solid var(--border);
+}
+
+.prose h2::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: calc(-50vw + 50%);
+	width: 100vw;
+	height: 1px;
+	background: var(--border);
 }
 
 .prose h2:first-of-type {
