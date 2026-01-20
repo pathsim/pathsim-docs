@@ -68,5 +68,6 @@
 <style>
 	.api-content {
 		margin-top: var(--space-xl);
+		padding-bottom: var(--space-2xl);
 	}
 </style>
