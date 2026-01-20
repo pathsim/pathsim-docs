@@ -190,7 +190,7 @@
 		max-width: 480px;
 		margin: var(--space-2xl) auto var(--space-2xl);
 		padding: var(--space-md) var(--space-lg);
-		background: var(--surface);
+		background: var(--surface-raised);
 		border: 1px solid var(--border);
 		border-radius: var(--radius-xl);
 		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
