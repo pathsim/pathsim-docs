@@ -77,25 +77,24 @@
 	<div id="main-content" class="main-content">
 		{@render children()}
 	</div>
+	<footer>
+		<div class="footer-content">
+			<a href={footer.home} class="footer-link">
+				<Icon name="home" size={14} />
+				<span>Home</span>
+			</a>
+			<a href={footer.github} class="footer-link">
+				<Icon name="github" size={14} />
+				<span>GitHub</span>
+			</a>
+			<a href={footer.pypi} class="footer-link">
+				<Icon name="package" size={14} />
+				<span>PyPI</span>
+			</a>
+			<span class="footer-text">MIT License</span>
+		</div>
+	</footer>
 </div>
-
-<footer>
-	<div class="footer-content">
-		<a href={footer.home} class="footer-link">
-			<Icon name="home" size={14} />
-			<span>Home</span>
-		</a>
-		<a href={footer.github} class="footer-link">
-			<Icon name="github" size={14} />
-			<span>GitHub</span>
-		</a>
-		<a href={footer.pypi} class="footer-link">
-			<Icon name="package" size={14} />
-			<span>PyPI</span>
-		</a>
-		<span class="footer-text">MIT License</span>
-	</div>
-</footer>
 
 <MobileDrawer open={mobileMenuOpen} packageId={currentPackage} onClose={closeMobileMenu} />
 
