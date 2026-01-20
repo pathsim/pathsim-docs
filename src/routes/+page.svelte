@@ -69,7 +69,7 @@
 	}
 
 	.hero-logo {
-		height: 80px;
+		height: 200px;
 		width: auto;
 		margin-bottom: var(--space-lg);
 	}
@@ -118,7 +118,7 @@
 	}
 
 	.package-logo {
-		height: 80px;
+		height: 120px;
 		width: auto;
 		margin-bottom: var(--space-lg);
 	}
