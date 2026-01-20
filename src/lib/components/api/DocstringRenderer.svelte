@@ -310,7 +310,8 @@
 
 	.docstring-content :global(.param-table) {
 		width: 100%;
-		border-collapse: collapse;
+		border-collapse: separate;
+		border-spacing: 0;
 		font-size: var(--font-sm);
 	}
 
@@ -327,6 +328,15 @@
 		text-align: left;
 	}
 
+	/* Rounded corners on header */
+	.docstring-content :global(.param-table thead th:first-child) {
+		border-top-left-radius: var(--radius-lg);
+	}
+
+	.docstring-content :global(.param-table thead th:last-child) {
+		border-top-right-radius: var(--radius-lg);
+	}
+
 	.docstring-content :global(.param-table td) {
 		padding: var(--space-sm) var(--space-md);
 		background: var(--surface);
@@ -335,6 +345,15 @@
 
 	.docstring-content :global(.param-table tbody tr:not(:last-child) td) {
 		border-bottom: 1px solid var(--border);
+	}
+
+	/* Rounded corners on last row */
+	.docstring-content :global(.param-table tbody tr:last-child td:first-child) {
+		border-bottom-left-radius: var(--radius-lg);
+	}
+
+	.docstring-content :global(.param-table tbody tr:last-child td:last-child) {
+		border-bottom-right-radius: var(--radius-lg);
 	}
 
 	.docstring-content :global(.param-table .param-name) {
