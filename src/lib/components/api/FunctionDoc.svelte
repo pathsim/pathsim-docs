@@ -187,14 +187,9 @@
 		text-overflow: ellipsis;
 	}
 
-	/* View toggle button */
+	/* View toggle button - inherits .icon-btn styles */
 	.view-toggle-btn {
 		flex-shrink: 0;
-		color: var(--text-muted);
-	}
-
-	.view-toggle-btn:hover {
-		color: var(--text);
 	}
 
 	.view-toggle-btn.active {
