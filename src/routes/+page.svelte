@@ -188,7 +188,7 @@
 		align-items: center;
 		gap: var(--space-sm);
 		max-width: 480px;
-		margin: var(--space-xl) auto var(--space-2xl);
+		margin: var(--space-2xl) auto var(--space-2xl);
 		padding: var(--space-md) var(--space-lg);
 		background: var(--surface);
 		border: 1px solid var(--border);
