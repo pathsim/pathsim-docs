@@ -107,13 +107,12 @@
 		border-radius: var(--radius-lg);
 		text-decoration: none;
 		color: inherit;
-		transition: all var(--transition-normal);
+		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 	}
 
 	.package-card:hover {
 		border-color: var(--accent);
-		box-shadow: var(--shadow-md);
-		transform: translateY(-2px);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 		text-decoration: none;
 	}
 
@@ -145,12 +144,12 @@
 		border-radius: var(--radius-md);
 		text-decoration: none;
 		color: var(--text);
-		transition: all var(--transition-fast);
+		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 	}
 
 	.link-card:hover {
-		border-color: var(--border-focus);
-		background: var(--surface-hover);
+		border-color: var(--accent);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 		text-decoration: none;
 	}
 </style>
