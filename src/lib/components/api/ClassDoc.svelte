@@ -59,6 +59,12 @@
 		margin-bottom: var(--space-lg);
 	}
 
+	/* Disable tile hover effect */
+	.class-tile:hover {
+		border-color: var(--border);
+		box-shadow: none;
+	}
+
 	/* Override panel-header for class - make it clickable and flex column */
 	.class-header {
 		flex-direction: column;
@@ -75,9 +81,6 @@
 		font-size: var(--font-sm);
 	}
 
-	.class-header:hover {
-		background: var(--surface-hover);
-	}
 
 	.class-header-left {
 		display: flex;

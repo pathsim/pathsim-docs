@@ -48,6 +48,12 @@
 		/* Inherits tile base styles from app.css */
 	}
 
+	/* Disable tile hover effect */
+	.method-tile:hover {
+		border-color: var(--border);
+		box-shadow: none;
+	}
+
 	/* Override panel-header for method - more compact, no uppercase */
 	.method-tile :global(.panel-header) {
 		padding: var(--space-sm) var(--space-md);
