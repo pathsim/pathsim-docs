@@ -82,6 +82,17 @@
 			const table = document.createElement('table');
 			table.className = 'param-table';
 
+			// Add header row
+			const thead = document.createElement('thead');
+			const headerRow = document.createElement('tr');
+			['Name', 'Type', 'Description'].forEach(text => {
+				const th = document.createElement('th');
+				th.textContent = text;
+				headerRow.appendChild(th);
+			});
+			thead.appendChild(headerRow);
+			table.appendChild(thead);
+
 			const tbody = document.createElement('tbody');
 
 			// Get all dt/dd pairs
@@ -303,13 +314,26 @@
 		font-size: var(--font-sm);
 	}
 
+	/* Header styled like panel-header */
+	.docstring-content :global(.param-table thead th) {
+		padding: var(--space-sm) var(--space-md);
+		background: var(--surface-raised);
+		border-bottom: 1px solid var(--border);
+		font-size: 11px;
+		font-weight: 600;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		text-align: left;
+	}
+
 	.docstring-content :global(.param-table td) {
 		padding: var(--space-sm) var(--space-md);
 		background: var(--surface);
 		vertical-align: top;
 	}
 
-	.docstring-content :global(.param-table tr:not(:last-child) td) {
+	.docstring-content :global(.param-table tbody tr:not(:last-child) td) {
 		border-bottom: 1px solid var(--border);
 	}
 
