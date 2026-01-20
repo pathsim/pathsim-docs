@@ -103,7 +103,7 @@
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		background: var(--surface);
+		background: var(--surface-raised);
 		border-bottom: 1px solid var(--border);
 	}
 
@@ -145,7 +145,7 @@
 
 	.nav-link:hover {
 		color: var(--text);
-		background: var(--surface-raised);
+		background: var(--surface-hover);
 	}
 
 	.nav-actions {
@@ -166,7 +166,7 @@
 
 	.icon-btn:hover {
 		color: var(--text);
-		background: var(--surface-raised);
+		background: var(--surface-hover);
 	}
 
 	#main-content {
