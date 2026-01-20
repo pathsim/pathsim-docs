@@ -75,6 +75,10 @@
 			// Skip if already transformed
 			if (dl.classList.contains('table-transformed')) continue;
 
+			// Create wrapper for panel styling
+			const wrapper = document.createElement('div');
+			wrapper.className = 'param-table-wrapper';
+
 			const table = document.createElement('table');
 			table.className = 'param-table';
 
@@ -132,9 +136,10 @@
 			}
 
 			table.appendChild(tbody);
+			wrapper.appendChild(table);
 
-			// Replace dl with table
-			dl.parentNode?.replaceChild(table, dl);
+			// Replace dl with wrapped table
+			dl.parentNode?.replaceChild(wrapper, dl);
 		}
 	}
 
@@ -284,22 +289,28 @@
 		display: none;
 	}
 
-	/* Parameter/Attribute tables */
+	/* Parameter/Attribute tables - panel style */
+	.docstring-content :global(.param-table-wrapper) {
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		margin: var(--space-md) 0;
+	}
+
 	.docstring-content :global(.param-table) {
 		width: 100%;
 		border-collapse: collapse;
-		margin: var(--space-md) 0;
 		font-size: var(--font-sm);
 	}
 
 	.docstring-content :global(.param-table td) {
 		padding: var(--space-sm) var(--space-md);
-		border-bottom: 1px solid var(--border);
+		background: var(--surface);
 		vertical-align: top;
 	}
 
-	.docstring-content :global(.param-table tr:last-child td) {
-		border-bottom: none;
+	.docstring-content :global(.param-table tr:not(:last-child) td) {
+		border-bottom: 1px solid var(--border);
 	}
 
 	.docstring-content :global(.param-table .param-name) {
