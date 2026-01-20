@@ -633,6 +633,68 @@ input::placeholder {
 	border-color: var(--accent);
 }
 
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Expandable toggle icon - rotates on expand */
+.expandable-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: var(--text);
+	transition: transform var(--transition-fast);
+}
+
+.expandable-toggle.expanded {
+	transform: rotate(180deg);
+}
+
+/* Uppercase label - used for section headers, panel labels */
+.label-uppercase {
+	font-family: var(--font-ui);
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}
+
+/* Section divider - extends to panel edges */
+.section-divider {
+	position: relative;
+	margin-top: var(--space-lg);
+	padding-top: var(--space-lg);
+}
+
+.section-divider::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: calc(-1 * var(--space-lg));
+	width: calc(100% + 2 * var(--space-lg));
+	height: 1px;
+	background: var(--border);
+}
+
+/* Section divider full - extends to doc-main edges */
+.section-divider-full {
+	position: relative;
+	margin-top: var(--space-xl);
+	padding-top: var(--space-xl);
+}
+
+.section-divider-full::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -50vw;
+	width: 200vw;
+	height: 1px;
+	background: var(--border);
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
 	width: 8px;

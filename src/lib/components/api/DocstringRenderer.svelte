@@ -2,6 +2,7 @@
 	import { onMount, tick } from 'svelte';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
+	import { theme } from '$lib/stores/themeStore';
 
 	interface Props {
 		html: string;
@@ -232,7 +233,7 @@
 			header.className = 'code-block-header';
 
 			const label = document.createElement('span');
-			label.className = 'code-block-label';
+			label.className = 'label-uppercase';
 			label.textContent = language === 'console' ? 'CONSOLE' : 'PYTHON';
 			header.appendChild(label);
 
@@ -292,9 +293,6 @@
 		}
 	}
 
-	// Watch for theme changes
-	let observer: MutationObserver | null = null;
-
 	// Track if we've done initial render
 	let hasRendered = false;
 
@@ -307,23 +305,22 @@
 			document.head.appendChild(link);
 		}
 
-		// Watch for theme changes to update code block themes
-		observer = new MutationObserver(() => {
-			// Only update if we have existing editors
-			if (codeBlocks.length > 0) {
-				updateCodeBlockTheme();
-			}
-		});
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
 		return () => {
-			observer?.disconnect();
 			for (const view of editorViews) {
 				view.destroy();
 			}
 			editorViews = [];
 			codeBlocks = [];
 		};
+	});
+
+	// Watch for theme changes to update code block themes
+	$effect(() => {
+		const currentTheme = $theme;
+		// Only update if we have existing editors
+		if (codeBlocks.length > 0) {
+			updateCodeBlockTheme();
+		}
 	});
 
 	// Render when container is ready and html is set
@@ -379,15 +376,7 @@
 		border-bottom: 1px solid var(--border);
 	}
 
-	.docstring-content :global(.code-block-label) {
-		font-family: var(--font-ui);
-		font-size: 11px;
-		font-weight: 600;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-	}
-
+	
 	.docstring-content :global(.code-copy-btn) {
 		display: flex;
 		align-items: center;

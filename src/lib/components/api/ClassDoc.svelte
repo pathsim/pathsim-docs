@@ -21,7 +21,7 @@
 <div class="tile class-tile" id={cls.name}>
 	<button class="panel-header class-header" onclick={() => (isExpanded = !isExpanded)}>
 		<div class="class-header-left">
-			<span class="class-toggle" class:expanded={isExpanded}>
+			<span class="expandable-toggle" class:expanded={isExpanded}>
 				<Icon name="chevron-down" size={16} />
 			</span>
 			<code class="class-name">{cls.name}</code>
@@ -42,7 +42,7 @@
 
 			{#if publicMethods.length > 0}
 				<div class="methods-section">
-					<div class="methods-header">Methods</div>
+					<div class="label-uppercase methods-header">Methods</div>
 					<div class="methods-list">
 						{#each publicMethods as method}
 							<FunctionDoc func={method} isMethod={true} />
@@ -88,18 +88,6 @@
 		gap: var(--space-sm);
 	}
 
-	.class-toggle {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--text);
-		transition: transform var(--transition-fast);
-	}
-
-	.class-toggle.expanded :global(svg) {
-		transform: rotate(180deg);
-	}
-
 	.class-name {
 		font-family: var(--font-mono);
 		font-size: var(--font-base);
@@ -126,10 +114,6 @@
 		letter-spacing: normal;
 	}
 
-	.class-body {
-		/* Inherits panel-body styles */
-	}
-
 	.methods-section {
 		position: relative;
 		margin-top: var(--space-xl);
@@ -148,12 +132,6 @@
 	}
 
 	.methods-header {
-		font-family: var(--font-ui);
-		font-size: var(--font-xs);
-		font-weight: 600;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
 		margin-bottom: var(--space-md);
 	}
 

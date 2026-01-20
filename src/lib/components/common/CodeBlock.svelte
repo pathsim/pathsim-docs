@@ -3,6 +3,7 @@
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
+	import { theme } from '$lib/stores/themeStore';
 
 	interface Props {
 		code: string;
@@ -16,7 +17,6 @@
 	let editorView: import('@codemirror/view').EditorView | null = null;
 	let cmModules: CodeMirrorModules | null = null;
 	let loading = $state(true);
-	let observer: MutationObserver | null = null;
 
 	function copyToClipboard() {
 		navigator.clipboard.writeText(code);
@@ -30,7 +30,7 @@
 		loadCodeMirrorModules().then((modules) => {
 			cmModules = modules;
 
-			const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+			const isDark = $theme === 'dark';
 
 			editorView = new cmModules.EditorView({
 				doc: code,
@@ -39,25 +39,24 @@
 			});
 
 			loading = false;
-
-			// Watch for theme changes
-			observer = new MutationObserver(() => {
-				if (editorView && cmModules && editorContainer) {
-					const newIsDark = document.documentElement.getAttribute('data-theme') !== 'light';
-					editorView.destroy();
-					editorView = new cmModules.EditorView({
-						doc: code,
-						extensions: createEditorExtensions(cmModules, newIsDark, { readOnly: true }),
-						parent: editorContainer
-					});
-				}
-			});
-			observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 		});
 	});
 
+	// Watch for theme changes
+	$effect(() => {
+		const currentTheme = $theme;
+		if (editorView && cmModules && editorContainer) {
+			const isDark = currentTheme === 'dark';
+			editorView.destroy();
+			editorView = new cmModules.EditorView({
+				doc: code,
+				extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
+				parent: editorContainer
+			});
+		}
+	});
+
 	onDestroy(() => {
-		observer?.disconnect();
 		editorView?.destroy();
 	});
 </script>

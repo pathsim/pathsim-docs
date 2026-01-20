@@ -86,7 +86,7 @@
 </script>
 
 <div class="api-toc">
-	<div class="api-toc-header">On this page</div>
+	<div class="label-uppercase api-toc-header">On this page</div>
 	<nav class="api-toc-nav">
 		{#each Object.entries(moduleGroups) as [groupName, groupModules]}
 			{@const groupId = getModuleId(groupName)}
@@ -140,11 +140,6 @@
 	}
 
 	.api-toc-header {
-		font-size: var(--font-xs);
-		font-weight: 600;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
 		margin-bottom: var(--space-sm);
 	}
 

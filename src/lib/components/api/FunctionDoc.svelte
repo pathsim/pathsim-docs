@@ -20,7 +20,7 @@
 <div class="tile method-tile" id={func.name}>
 	<button class="panel-header method-header" onclick={() => (isExpanded = !isExpanded)}>
 		<div class="method-header-left">
-			<span class="method-toggle" class:expanded={isExpanded}>
+			<span class="expandable-toggle" class:expanded={isExpanded}>
 				<Icon name="chevron-down" size={14} />
 			</span>
 			<code class="method-name">{func.name}</code>
@@ -43,7 +43,7 @@
 
 			{#if func.returns}
 				<div class="method-returns">
-					<span class="method-returns-label">Returns</span>
+					<span class="label-uppercase">Returns</span>
 					<code>{func.returns}</code>
 				</div>
 			{/if}
@@ -52,10 +52,6 @@
 </div>
 
 <style>
-	.method-tile {
-		/* Inherits tile base styles from app.css */
-	}
-
 	/* Disable tile hover effect */
 	.method-tile:hover {
 		border-color: var(--border);
@@ -82,18 +78,8 @@
 		min-width: 0;
 	}
 
-	.method-toggle {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		color: var(--text);
-		transition: transform var(--transition-fast);
-		flex-shrink: 0;
+	.method-header-left :global(.expandable-toggle) {
 		align-self: center;
-	}
-
-	.method-toggle.expanded :global(svg) {
-		transform: rotate(180deg);
 	}
 
 	.method-name {
@@ -138,15 +124,6 @@
 		margin-top: var(--space-md);
 		padding-top: var(--space-md);
 		border-top: 1px solid var(--border);
-	}
-
-	.method-returns-label {
-		font-family: var(--font-ui);
-		font-size: var(--font-xs);
-		font-weight: 500;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
 	}
 
 	.method-returns code {
