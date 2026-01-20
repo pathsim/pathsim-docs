@@ -2,7 +2,6 @@
 	import type { APIClass } from '$lib/api/generated';
 	import FunctionDoc from './FunctionDoc.svelte';
 	import DocstringRenderer from './DocstringRenderer.svelte';
-	import Icon from '$lib/components/common/Icon.svelte';
 
 	interface Props {
 		cls: APIClass;
@@ -20,10 +19,7 @@
 
 <div class="tile class-tile" id={cls.name}>
 	<button class="panel-header class-header" onclick={() => (isExpanded = !isExpanded)}>
-		<div class="class-header-left">
-			<span class="expandable-toggle" class:expanded={isExpanded}>
-				<Icon name="chevron-down" size={16} />
-			</span>
+		<div class="class-header-top">
 			<code class="class-name">{cls.name}</code>
 			{#if cls.bases && cls.bases.length > 0}
 				<span class="class-bases">({cls.bases.join(', ')})</span>
@@ -81,11 +77,11 @@
 		font-size: var(--font-sm);
 	}
 
-
-	.class-header-left {
+	.class-header-top {
 		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
+		align-items: baseline;
+		gap: var(--space-xs);
+		flex-wrap: wrap;
 	}
 
 	.class-name {
@@ -100,18 +96,15 @@
 
 	.class-bases {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-xs);
 		color: var(--text-muted);
 	}
 
 	.class-desc {
 		font-family: var(--font-ui);
-		font-size: var(--font-sm);
+		font-size: var(--font-xs);
 		color: var(--text-muted);
-		margin-left: calc(20px + var(--space-sm));
 		line-height: 1.5;
-		text-transform: none;
-		letter-spacing: normal;
 	}
 
 	.methods-section {

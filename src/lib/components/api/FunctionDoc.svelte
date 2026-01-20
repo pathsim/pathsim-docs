@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { APIFunction, APIMethod } from '$lib/api/generated';
 	import DocstringRenderer from './DocstringRenderer.svelte';
-	import Icon from '$lib/components/common/Icon.svelte';
 
 	interface Props {
 		func: APIFunction | APIMethod;
@@ -19,15 +18,10 @@
 
 <div class="tile method-tile" id={func.name}>
 	<button class="panel-header method-header" onclick={() => (isExpanded = !isExpanded)}>
-		<div class="method-header-left">
-			<span class="expandable-toggle" class:expanded={isExpanded}>
-				<Icon name="chevron-down" size={14} />
-			</span>
-			<code class="method-name">{func.name}</code>
-			{#if func.signature}
-				<code class="method-signature">{func.signature}</code>
-			{/if}
-		</div>
+		<code class="method-name">{func.name}</code>
+		{#if func.signature}
+			<code class="method-signature">{func.signature}</code>
+		{/if}
 		{#if showBadge}
 			<span class="badge accent">{methodType}</span>
 		{/if}
@@ -68,18 +62,8 @@
 		border-radius: 0;
 		text-align: left;
 		cursor: pointer;
-	}
-
-	.method-header-left {
-		display: flex;
-		align-items: baseline;
-		gap: var(--space-xs);
 		flex-wrap: wrap;
-		min-width: 0;
-	}
-
-	.method-header-left :global(.expandable-toggle) {
-		align-self: center;
+		gap: var(--space-xs);
 	}
 
 	.method-name {
