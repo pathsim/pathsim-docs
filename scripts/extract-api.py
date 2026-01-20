@@ -71,7 +71,6 @@ CONFIG = {
         "source_path": PACKAGE_PATHS["pathsim_chem"],
         "modules": [
             "pathsim_chem",
-            "pathsim_chem.tritium",
         ],
         "skip_private": True,
         "skip_modules": ["pathsim_chem._version"],
