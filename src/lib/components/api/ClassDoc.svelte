@@ -89,20 +89,11 @@
 	}
 
 	.class-toggle {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 20px;
-		height: 20px;
-		color: var(--text-muted);
-		background: var(--surface);
-		border-radius: var(--radius-sm);
-		transition: all var(--transition-fast);
-	}
-
-	.class-toggle.expanded {
-		background: var(--accent-bg);
-		color: var(--accent);
+		color: var(--text);
+		transition: transform var(--transition-fast);
 	}
 
 	.class-toggle.expanded :global(svg) {

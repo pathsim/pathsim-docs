@@ -86,9 +86,7 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 16px;
-		height: 16px;
-		color: var(--text-muted);
+		color: var(--text);
 		transition: transform var(--transition-fast);
 		flex-shrink: 0;
 		align-self: center;
