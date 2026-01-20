@@ -50,13 +50,13 @@
 				<img src="/favicon.png" alt="PathSim" />
 			</a>
 			<nav class="nav-links">
-				<a href="/pathsim" class="nav-link" use:tooltip={'PathSim Core'}>
+				<a href="/pathsim" class="icon-btn" use:tooltip={'PathSim Core'}>
 					<Icon name="box" size={20} />
 				</a>
-				<a href="/chem" class="nav-link" use:tooltip={'PathSim-Chem'}>
+				<a href="/chem" class="icon-btn" use:tooltip={'PathSim-Chem'}>
 					<Icon name="flask" size={20} />
 				</a>
-				<a href="/vehicle" class="nav-link" use:tooltip={'PathSim-Vehicle'}>
+				<a href="/vehicle" class="icon-btn" use:tooltip={'PathSim-Vehicle'}>
 					<Icon name="car" size={20} />
 				</a>
 			</nav>
@@ -129,44 +129,14 @@
 	.nav-links {
 		display: flex;
 		align-items: center;
-		gap: var(--space-sm);
+		gap: var(--space-xs);
 		flex: 1;
-	}
-
-	.nav-link {
-		padding: var(--space-sm);
-		color: var(--text-muted);
-		border-radius: var(--radius-sm);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		transition: all var(--transition-fast);
-	}
-
-	.nav-link:hover {
-		color: var(--text);
-		background: var(--surface-hover);
 	}
 
 	.nav-actions {
 		display: flex;
 		align-items: center;
-		gap: var(--space-sm);
-	}
-
-	.icon-btn {
-		padding: var(--space-sm);
-		background: transparent;
-		color: var(--text-muted);
-		border-radius: var(--radius-sm);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.icon-btn:hover {
-		color: var(--text);
-		background: var(--surface-hover);
+		gap: var(--space-xs);
 	}
 
 	#main-content {
