@@ -105,8 +105,8 @@
 	</button>
 
 	{#if isExpanded}
-		<div class="panel-body class-body">
-			{#if viewMode === 'docs'}
+		{#if viewMode === 'docs'}
+			<div class="panel-body class-body">
 				{#if cls.docstring_html}
 					<DocstringRenderer html={cls.docstring_html} />
 				{/if}
@@ -121,14 +121,14 @@
 						</div>
 					</div>
 				{/if}
-			{:else}
-				<div class="source-view" bind:this={editorContainer}>
-					{#if editorLoading}
-						<div class="loading">Loading...</div>
-					{/if}
-				</div>
-			{/if}
-		</div>
+			</div>
+		{:else}
+			<div class="source-view" bind:this={editorContainer}>
+				{#if editorLoading}
+					<div class="loading">Loading...</div>
+				{/if}
+			</div>
+		{/if}
 	{/if}
 </div>
 
@@ -218,25 +218,22 @@
 		color: var(--accent);
 	}
 
-	/* Source view - reuse code-panel styling */
-	.source-view {
-		margin: calc(-1 * var(--space-lg));
-		margin-top: 0;
-	}
-
+	/* Source view - no padding, CodeMirror fills the space */
 	.source-view :global(.cm-editor) {
 		height: auto;
 		max-height: 600px;
 		border-radius: 0 0 var(--radius-md) var(--radius-md);
 	}
 
-	.loading {
+	.source-view .loading {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		height: 100px;
+		height: 200px;
 		color: var(--text-muted);
 		font-size: var(--font-sm);
+		background: var(--surface);
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
 	}
 
 	.methods-section {
