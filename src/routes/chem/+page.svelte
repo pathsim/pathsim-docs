@@ -15,13 +15,11 @@
 
 <div class="hero">
 	<img src={pkg.logo} alt="PathSim-Chem" class="hero-logo" />
-	<div class="hero-content">
-		<p class="tagline">Chemical engineering blocks for PathSim.</p>
-		<p class="description">
-			PathSim-Chem extends PathSim with blocks for chemical engineering simulations,
-			including reactors, heat exchangers, and separation units.
-		</p>
-	</div>
+	<p class="tagline">Chemical engineering blocks for PathSim.</p>
+	<p class="description">
+		PathSim-Chem extends PathSim with blocks for chemical engineering simulations,
+		including reactors, heat exchangers, and separation units.
+	</p>
 </div>
 
 <h2 id="key-features">Key Features</h2>

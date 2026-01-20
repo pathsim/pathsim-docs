@@ -15,13 +15,11 @@
 
 <div class="hero">
 	<img src={pkg.logo} alt="PathSim-Vehicle" class="hero-logo" />
-	<div class="hero-content">
-		<p class="tagline">Vehicle dynamics blocks for PathSim.</p>
-		<p class="description">
-			PathSim-Vehicle extends PathSim with blocks for vehicle dynamics simulations,
-			including tire models, suspension systems, and powertrain components.
-		</p>
-	</div>
+	<p class="tagline">Vehicle dynamics blocks for PathSim.</p>
+	<p class="description">
+		PathSim-Vehicle extends PathSim with blocks for vehicle dynamics simulations,
+		including tire models, suspension systems, and powertrain components.
+	</p>
 </div>
 
 <h2 id="key-features">Key Features</h2>

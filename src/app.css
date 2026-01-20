@@ -616,23 +616,16 @@ input::placeholder {
 	top: 0;
 }
 
-/* Hero section - logo left, text right */
+/* Hero section - centered logo, tagline, description */
 .hero {
-	display: flex;
-	align-items: flex-start;
-	gap: var(--space-xl);
+	text-align: center;
 	margin-bottom: var(--space-xl);
 }
 
 .hero-logo {
 	height: 100px;
 	width: auto;
-	flex-shrink: 0;
-}
-
-.hero-content {
-	flex: 1;
-	min-width: 0;
+	margin-bottom: var(--space-lg);
 }
 
 .hero .tagline {
@@ -645,14 +638,9 @@ input::placeholder {
 .hero .description {
 	color: var(--text-muted);
 	margin: 0;
-}
-
-@media (max-width: 600px) {
-	.hero {
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-	}
+	max-width: 600px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* Page logo - used at top of doc pages instead of h1 */
