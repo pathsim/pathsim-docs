@@ -293,17 +293,30 @@
 		margin-bottom: var(--space-xs);
 	}
 
-	/* RST section containers - separator ABOVE */
+	/* RST section containers - full width separator ABOVE */
 	.docstring-content :global(.section) {
+		position: relative;
 		margin-top: var(--space-lg);
 		padding-top: var(--space-lg);
-		border-top: 1px solid var(--border);
+	}
+
+	.docstring-content :global(.section::before) {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: calc(-1 * var(--space-lg));
+		right: calc(-1 * var(--space-lg));
+		height: 1px;
+		background: var(--border);
 	}
 
 	.docstring-content :global(.section:first-child) {
 		margin-top: var(--space-md);
 		padding-top: 0;
-		border-top: none;
+	}
+
+	.docstring-content :global(.section:first-child::before) {
+		display: none;
 	}
 
 	/* Section headers - consistent style for h3, h4 */
@@ -320,8 +333,9 @@
 		border: none;
 	}
 
-	/* NumPy-style section headers converted to <p><strong> - separator ABOVE */
+	/* NumPy-style section headers converted to <p><strong> - full width separator ABOVE */
 	.docstring-content :global(p:has(> strong:only-child)) {
+		position: relative;
 		font-family: var(--font-ui);
 		font-size: var(--font-xs);
 		font-weight: 600;
@@ -331,13 +345,25 @@
 		margin-top: var(--space-lg);
 		margin-bottom: var(--space-sm);
 		padding-top: var(--space-lg);
-		border-top: 1px solid var(--border);
+	}
+
+	.docstring-content :global(p:has(> strong:only-child)::before) {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: calc(-1 * var(--space-lg));
+		right: calc(-1 * var(--space-lg));
+		height: 1px;
+		background: var(--border);
 	}
 
 	.docstring-content :global(p:first-child:has(> strong:only-child)) {
 		margin-top: 0;
 		padding-top: 0;
-		border-top: none;
+	}
+
+	.docstring-content :global(p:first-child:has(> strong:only-child)::before) {
+		display: none;
 	}
 
 	/* Ensure strong inside header paragraphs inherits style */

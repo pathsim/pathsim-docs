@@ -65,7 +65,6 @@
 		align-items: flex-start;
 		gap: var(--space-xs);
 		width: 100%;
-		border: none;
 		border-radius: 0;
 		text-align: left;
 		cursor: pointer;
@@ -134,9 +133,20 @@
 	}
 
 	.methods-section {
+		position: relative;
 		margin-top: var(--space-xl);
 		padding-top: var(--space-lg);
-		border-top: 1px solid var(--border);
+	}
+
+	/* Full width separator extending to card edges */
+	.methods-section::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: calc(-1 * var(--space-lg));
+		right: calc(-1 * var(--space-lg));
+		height: 1px;
+		background: var(--border);
 	}
 
 	.methods-header {
