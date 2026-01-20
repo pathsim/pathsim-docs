@@ -2,14 +2,13 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
+	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 
 	let { children } = $props();
 
-	// Theme state
 	let theme = $state<'dark' | 'light'>('dark');
 
 	onMount(() => {
-		// Check for saved preference or system preference
 		const saved = localStorage.getItem('theme');
 		if (saved === 'light' || saved === 'dark') {
 			theme = saved;
@@ -18,9 +17,7 @@
 		}
 		document.documentElement.setAttribute('data-theme', theme);
 
-		// Handle keyboard shortcuts
 		const handleKeydown = (e: KeyboardEvent) => {
-			// Cmd/Ctrl+K for search
 			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
 				e.preventDefault();
 				// TODO: Open search dialog
@@ -42,28 +39,35 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
 </svelte:head>
 
+<Tooltip />
+
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <div class="app">
 	<header>
 		<div class="header-content">
-			<a href="https://pathsim.org" class="logo">
+			<a href="https://pathsim.org" class="logo" use:tooltip={'Home'}>
 				<img src="/favicon.png" alt="PathSim" />
 			</a>
 			<nav class="nav-links">
-				<a href="/pathsim" class="nav-link">PathSim</a>
-				<a href="/chem" class="nav-link">Chem</a>
-				<a href="/vehicle" class="nav-link">Vehicle</a>
+				<a href="/pathsim" class="nav-link" use:tooltip={'PathSim Core'}>
+					<Icon name="box" size={20} />
+				</a>
+				<a href="/chem" class="nav-link" use:tooltip={'PathSim-Chem'}>
+					<Icon name="flask" size={20} />
+				</a>
+				<a href="/vehicle" class="nav-link" use:tooltip={'PathSim-Vehicle'}>
+					<Icon name="car" size={20} />
+				</a>
 			</nav>
 			<div class="nav-actions">
-				<a href="https://view.pathsim.org" class="nav-link">
-					<Icon name="play" size={16} />
-					Editor
+				<a href="https://view.pathsim.org" class="icon-btn" use:tooltip={'Editor'}>
+					<Icon name="play" size={20} />
 				</a>
-				<a href="https://github.com/milanofthe/pathsim" class="icon-btn">
+				<a href="https://github.com/milanofthe/pathsim" class="icon-btn" use:tooltip={'GitHub'}>
 					<Icon name="github" size={20} />
 				</a>
-				<button class="icon-btn" onclick={toggleTheme} aria-label="Toggle theme">
+				<button class="icon-btn" onclick={toggleTheme} use:tooltip={'Toggle theme'}>
 					<Icon name={theme === 'dark' ? 'sun' : 'moon'} size={20} />
 				</button>
 			</div>
@@ -125,28 +129,29 @@
 	.nav-links {
 		display: flex;
 		align-items: center;
-		gap: var(--space-lg);
+		gap: var(--space-sm);
 		flex: 1;
 	}
 
 	.nav-link {
+		padding: var(--space-sm);
 		color: var(--text-muted);
-		font-size: var(--font-sm);
-		font-weight: 500;
-		transition: color var(--transition-fast);
+		border-radius: var(--radius-sm);
 		display: flex;
 		align-items: center;
-		gap: var(--space-xs);
+		justify-content: center;
+		transition: all var(--transition-fast);
 	}
 
 	.nav-link:hover {
 		color: var(--text);
+		background: var(--surface-raised);
 	}
 
 	.nav-actions {
 		display: flex;
 		align-items: center;
-		gap: var(--space-md);
+		gap: var(--space-sm);
 	}
 
 	.icon-btn {
