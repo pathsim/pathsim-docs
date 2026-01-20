@@ -2,6 +2,8 @@
 	import { onDestroy } from 'svelte';
 	import type { APIFunction, APIMethod } from '$lib/api/generated';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import Icon from '$lib/components/common/Icon.svelte';
+	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
 
@@ -24,6 +26,11 @@
 	// Get method type badge if applicable
 	let methodType = $derived((func as APIMethod).method_type);
 	let showBadge = $derived(isMethod && methodType && methodType !== 'method');
+
+	function toggleView(e: MouseEvent) {
+		e.stopPropagation();
+		viewMode = viewMode === 'docs' ? 'source' : 'docs';
+	}
 
 	// Initialize CodeMirror when switching to source view
 	$effect(() => {
@@ -73,36 +80,29 @@
 
 <div class="tile method-tile" id={func.name}>
 	<button class="panel-header method-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
-		<code class="method-name">{func.name}</code>
-		{#if func.signature}
-			<code class="method-signature">{func.signature}</code>
-		{/if}
-		{#if showBadge}
-			<span class="badge accent">{methodType}</span>
+		<div class="method-header-content">
+			<code class="method-name">{func.name}</code>
+			{#if func.signature}
+				<code class="method-signature">{func.signature}</code>
+			{/if}
+			{#if showBadge}
+				<span class="badge accent">{methodType}</span>
+			{/if}
+		</div>
+		{#if func.source && isExpanded}
+			<button
+				class="icon-btn view-toggle-btn"
+				class:active={viewMode === 'source'}
+				onclick={toggleView}
+				use:tooltip={viewMode === 'docs' ? 'View source' : 'View docs'}
+			>
+				<Icon name={viewMode === 'docs' ? 'code' : 'book'} size={14} />
+			</button>
 		{/if}
 	</button>
 
 	{#if isExpanded}
 		<div class="panel-body method-body">
-			{#if func.source}
-				<div class="view-toggle">
-					<button
-						class="toggle-btn"
-						class:active={viewMode === 'docs'}
-						onclick={() => (viewMode = 'docs')}
-					>
-						Docs
-					</button>
-					<button
-						class="toggle-btn"
-						class:active={viewMode === 'source'}
-						onclick={() => (viewMode = 'source')}
-					>
-						Source
-					</button>
-				</div>
-			{/if}
-
 			{#if viewMode === 'docs'}
 				{#if func.docstring_html}
 					<DocstringRenderer html={func.docstring_html} />
@@ -136,6 +136,10 @@
 
 	/* Override panel-header for method - clickable, no uppercase */
 	.method-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm);
 		padding: var(--space-sm) var(--space-md);
 		text-transform: none;
 		letter-spacing: normal;
@@ -145,12 +149,19 @@
 		border-bottom: none;
 		text-align: left;
 		cursor: pointer;
-		flex-wrap: wrap;
-		gap: var(--space-xs);
 	}
 
 	.method-header.method-header.expanded {
 		border-bottom: 1px solid var(--border);
+	}
+
+	.method-header-content {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		flex-wrap: wrap;
+		flex: 1;
+		min-width: 0;
 	}
 
 	.method-name {
@@ -176,6 +187,20 @@
 		text-overflow: ellipsis;
 	}
 
+	/* View toggle button */
+	.view-toggle-btn {
+		flex-shrink: 0;
+		color: var(--text-muted);
+	}
+
+	.view-toggle-btn:hover {
+		color: var(--text);
+	}
+
+	.view-toggle-btn.active {
+		color: var(--accent);
+	}
+
 	.method-body {
 		padding: var(--space-md);
 	}
@@ -188,47 +213,14 @@
 		line-height: 1.5;
 	}
 
-	/* View toggle */
-	.view-toggle {
-		display: flex;
-		gap: 2px;
-		margin-bottom: var(--space-md);
-		background: var(--bg-secondary);
-		border-radius: var(--radius-sm);
-		padding: 2px;
-		width: fit-content;
-	}
-
-	.toggle-btn {
-		padding: var(--space-xs) var(--space-sm);
-		font-size: var(--font-xs);
-		font-family: var(--font-ui);
-		background: transparent;
-		border: none;
-		border-radius: var(--radius-xs);
-		color: var(--text-muted);
-		cursor: pointer;
-		transition: all var(--transition-fast);
-	}
-
-	.toggle-btn:hover {
-		color: var(--text);
-	}
-
-	.toggle-btn.active {
-		background: var(--bg);
-		color: var(--text);
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-	}
-
 	/* Source view */
 	.source-view {
-		border-radius: var(--radius-sm);
-		overflow: hidden;
+		margin: calc(-1 * var(--space-md));
+		margin-top: 0;
 	}
 
 	.source-view :global(.cm-editor) {
-		font-size: var(--font-xs);
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
 		max-height: 400px;
 	}
 

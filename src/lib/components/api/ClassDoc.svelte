@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import type { APIClass } from '$lib/api/generated';
 	import FunctionDoc from './FunctionDoc.svelte';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import Icon from '$lib/components/common/Icon.svelte';
+	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
 
@@ -25,6 +27,11 @@
 	let publicMethods = $derived(
 		cls.methods.filter((m) => m.name !== '__init__' && !m.name.startsWith('_'))
 	);
+
+	function toggleView(e: MouseEvent) {
+		e.stopPropagation();
+		viewMode = viewMode === 'docs' ? 'source' : 'docs';
+	}
 
 	// Initialize CodeMirror when switching to source view
 	$effect(() => {
@@ -74,38 +81,31 @@
 
 <div class="tile class-tile" id={cls.name}>
 	<button class="panel-header class-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
-		<div class="class-header-top">
-			<code class="class-name">{cls.name}</code>
-			{#if cls.bases && cls.bases.length > 0}
-				<span class="class-bases">({cls.bases.join(', ')})</span>
+		<div class="class-header-content">
+			<div class="class-header-top">
+				<code class="class-name">{cls.name}</code>
+				{#if cls.bases && cls.bases.length > 0}
+					<span class="class-bases">({cls.bases.join(', ')})</span>
+				{/if}
+			</div>
+			{#if cls.description}
+				<span class="class-desc">{cls.description}</span>
 			{/if}
 		</div>
-		{#if cls.description}
-			<span class="class-desc">{cls.description}</span>
+		{#if cls.source && isExpanded}
+			<button
+				class="icon-btn view-toggle-btn"
+				class:active={viewMode === 'source'}
+				onclick={toggleView}
+				use:tooltip={viewMode === 'docs' ? 'View source' : 'View docs'}
+			>
+				<Icon name={viewMode === 'docs' ? 'code' : 'book'} size={14} />
+			</button>
 		{/if}
 	</button>
 
 	{#if isExpanded}
 		<div class="panel-body class-body">
-			{#if cls.source}
-				<div class="view-toggle">
-					<button
-						class="toggle-btn"
-						class:active={viewMode === 'docs'}
-						onclick={() => (viewMode = 'docs')}
-					>
-						Docs
-					</button>
-					<button
-						class="toggle-btn"
-						class:active={viewMode === 'source'}
-						onclick={() => (viewMode = 'source')}
-					>
-						Source
-					</button>
-				</div>
-			{/if}
-
 			{#if viewMode === 'docs'}
 				{#if cls.docstring_html}
 					<DocstringRenderer html={cls.docstring_html} />
@@ -143,11 +143,12 @@
 		box-shadow: none;
 	}
 
-	/* Override panel-header for class - make it clickable and flex column */
+	/* Override panel-header for class - make it clickable */
 	.class-header {
-		flex-direction: column;
+		display: flex;
 		align-items: flex-start;
-		gap: var(--space-xs);
+		justify-content: space-between;
+		gap: var(--space-sm);
 		width: 100%;
 		border-radius: 0;
 		border-bottom: none;
@@ -162,6 +163,15 @@
 
 	.class-header.class-header.expanded {
 		border-bottom: 1px solid var(--border);
+	}
+
+	.class-header-content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-xs);
+		flex: 1;
+		min-width: 0;
 	}
 
 	.class-header-top {
@@ -194,48 +204,29 @@
 		line-height: 1.5;
 	}
 
-	/* View toggle */
-	.view-toggle {
-		display: flex;
-		gap: 2px;
-		margin-bottom: var(--space-md);
-		background: var(--bg-secondary);
-		border-radius: var(--radius-sm);
-		padding: 2px;
-		width: fit-content;
-	}
-
-	.toggle-btn {
-		padding: var(--space-xs) var(--space-sm);
-		font-size: var(--font-xs);
-		font-family: var(--font-ui);
-		background: transparent;
-		border: none;
-		border-radius: var(--radius-xs);
+	/* View toggle button */
+	.view-toggle-btn {
+		flex-shrink: 0;
 		color: var(--text-muted);
-		cursor: pointer;
-		transition: all var(--transition-fast);
 	}
 
-	.toggle-btn:hover {
+	.view-toggle-btn:hover {
 		color: var(--text);
 	}
 
-	.toggle-btn.active {
-		background: var(--bg);
-		color: var(--text);
-		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	.view-toggle-btn.active {
+		color: var(--accent);
 	}
 
 	/* Source view */
 	.source-view {
-		border-radius: var(--radius-sm);
-		overflow: hidden;
+		margin: calc(-1 * var(--space-lg));
+		margin-top: 0;
 	}
 
 	.source-view :global(.cm-editor) {
-		font-size: var(--font-xs);
-		max-height: 500px;
+		border-radius: 0 0 var(--radius-md) var(--radius-md);
+		max-height: 600px;
 	}
 
 	.loading {
