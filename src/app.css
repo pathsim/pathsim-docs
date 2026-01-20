@@ -581,18 +581,31 @@ input::placeholder {
 	display: flex;
 	flex-direction: column;
 	border: 1px solid var(--border);
-	border-radius: var(--radius-lg);
+	border-radius: var(--radius-md);
 	overflow: hidden;
-	transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.code-panel:hover {
-	border-color: var(--accent);
-	box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+.code-panel .panel-header {
+	padding: var(--space-xs) var(--space-md);
+}
+
+.code-panel .panel-header .icon-btn {
+	width: 24px;
+	height: 24px;
 }
 
 .code-panel .panel-body {
 	padding: 0;
+	min-height: 200px;
+}
+
+.code-panel .panel-body .loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 200px;
+	color: var(--text-muted);
+	font-size: 12px;
 }
 
 .code-panel .cm-editor {

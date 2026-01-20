@@ -78,12 +78,5 @@
 </div>
 
 <style>
-	.loading {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 100px;
-		color: var(--text-muted);
-		font-size: var(--font-sm);
-	}
+	/* Styles handled by global .code-panel rules in app.css */
 </style>

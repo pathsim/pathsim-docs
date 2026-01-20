@@ -123,7 +123,7 @@
 				{/if}
 			</div>
 		{:else}
-			<div class="source-view" bind:this={editorContainer}>
+			<div class="panel-body source-body" bind:this={editorContainer}>
 				{#if editorLoading}
 					<div class="loading">Loading...</div>
 				{/if}
@@ -214,21 +214,24 @@
 	}
 
 	/* Source view - no padding, CodeMirror fills the space */
-	.source-view :global(.cm-editor) {
+	.source-body {
+		padding: 0;
+	}
+
+	.source-body :global(.cm-editor) {
 		height: auto;
 		max-height: 600px;
 		border-radius: 0 0 var(--radius-md) var(--radius-md);
 	}
 
-	.source-view .loading {
+	.source-body .loading {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		height: 200px;
 		color: var(--text-muted);
-		font-size: var(--font-sm);
+		font-size: 12px;
 		background: var(--surface);
-		border-radius: 0 0 var(--radius-md) var(--radius-md);
 	}
 
 	.methods-section {
