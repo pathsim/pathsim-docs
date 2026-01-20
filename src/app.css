@@ -450,7 +450,7 @@ input::placeholder {
 	border-radius: var(--radius-lg);
 	overflow: hidden;
 	transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-	scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+	scroll-margin-top: var(--space-lg);
 }
 
 .tile:hover {
@@ -1067,5 +1067,5 @@ input::placeholder {
 
 /* API module sections - scroll target */
 .api-module {
-	scroll-margin-top: calc(var(--header-height) + var(--space-lg));
+	scroll-margin-top: var(--space-lg);
 }

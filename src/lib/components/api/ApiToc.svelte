@@ -56,6 +56,9 @@
 	$effect(() => {
 		if (typeof window === 'undefined') return;
 
+		// Find the scroll container (.doc-main)
+		const scrollContainer = document.querySelector('.doc-main');
+
 		const observer = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
@@ -65,7 +68,8 @@
 				}
 			},
 			{
-				rootMargin: '-20% 0px -70% 0px',
+				root: scrollContainer,
+				rootMargin: '-10% 0px -80% 0px',
 				threshold: 0
 			}
 		);

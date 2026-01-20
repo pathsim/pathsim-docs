@@ -77,9 +77,6 @@
 		flex-direction: column;
 		background: var(--surface);
 		border-right: 1px solid var(--border);
-		position: sticky;
-		top: var(--header-height);
-		height: calc(100vh - var(--header-height) - 40px); /* viewport minus header and footer */
 	}
 
 	.sidebar-fixed {

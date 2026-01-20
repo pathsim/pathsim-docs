@@ -26,7 +26,8 @@
 	.doc-layout {
 		display: flex;
 		flex: 1;
-		align-items: flex-start;
+		min-height: 0;
+		overflow: hidden;
 	}
 
 	@media (max-width: 768px) {
@@ -41,6 +42,7 @@
 		min-width: 0;
 		background: var(--surface);
 		overflow-x: hidden; /* Clip separators at content area edge */
+		overflow-y: auto; /* This is the main scrollable area */
 	}
 
 	.doc-content {

@@ -101,26 +101,24 @@
 
 <style>
 	.app {
-		min-height: 100vh;
+		height: 100vh;
 		display: flex;
 		flex-direction: column;
-		padding-bottom: 40px;
+		overflow: hidden;
 	}
 
 	.main-content {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
+		overflow: hidden;
+		min-height: 0;
 	}
 
 	footer {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
+		flex-shrink: 0;
 		background: var(--surface-raised);
 		border-top: 1px solid var(--border);
-		z-index: 100;
 	}
 
 	.footer-content {

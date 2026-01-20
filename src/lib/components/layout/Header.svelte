@@ -68,9 +68,7 @@
 
 <style>
 	header {
-		position: sticky;
-		top: 0;
-		z-index: 100;
+		flex-shrink: 0;
 		height: var(--header-height);
 		background: var(--surface-raised);
 		border-bottom: 1px solid var(--border);
