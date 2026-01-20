@@ -155,6 +155,7 @@
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 var(--space-lg);
+		overflow-x: hidden;
 	}
 
 	.hero {
