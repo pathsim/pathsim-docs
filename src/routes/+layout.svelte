@@ -48,7 +48,7 @@
 	<header>
 		<div class="header-content">
 			<a href="https://pathsim.org" class="logo">
-				<img src="/pathsim_logo.png" alt="PathSim" />
+				<img src="/favicon.png" alt="PathSim" />
 			</a>
 			<nav class="nav-links">
 				<a href="/pathsim" class="nav-link">PathSim</a>
@@ -118,7 +118,7 @@
 	}
 
 	.logo img {
-		height: 36px;
+		height: 32px;
 		width: auto;
 	}
 
