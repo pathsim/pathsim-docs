@@ -112,7 +112,7 @@ def rst_to_html(rst_text: str) -> str:
                 "report_level": 5,
                 "halt_level": 5,
                 "initial_header_level": 4,
-                "math_output": "MathML",
+                "math_output": "MathJax",
                 "syntax_highlight": "short",
             }
         )
@@ -141,18 +141,9 @@ def preprocess_numpy_docstring(docstring: str) -> str:
 
 
 def postprocess_math(html: str) -> str:
-    """Convert math markup to KaTeX-friendly format."""
-    html = re.sub(
-        r'<span class="math">(.*?)</span>',
-        r'<span class="math-inline">\1</span>',
-        html
-    )
-    html = re.sub(
-        r'<div class="math">(.*?)</div>',
-        r'<div class="math-block">\1</div>',
-        html,
-        flags=re.DOTALL
-    )
+    """Post-process math markup - MathJax output uses .math class which is already KaTeX-compatible."""
+    # MathJax output format: <div class="math">\LaTeX content\</div>
+    # This is already compatible with KaTeX rendering, no changes needed
     return html
 
 

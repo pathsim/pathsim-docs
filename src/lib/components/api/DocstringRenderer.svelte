@@ -14,40 +14,53 @@
 	let cmModules: CodeMirrorModules | null = null;
 	let editorViews: import('@codemirror/view').EditorView[] = [];
 
-	// Render math with KaTeX
+	// Render math with KaTeX (same approach as PathView)
 	async function renderMath() {
 		if (!container) return;
 
 		const k = await loadKatex();
 		katexLoaded = true;
 
-		// Find all math elements
-		const inlineEls = container.querySelectorAll('.math-inline, span.math');
-		const blockEls = container.querySelectorAll('.math-block, div.math');
+		// Find all math elements - docutils MathJax output uses <div class="math"> with LaTeX content
+		const mathElements = container.querySelectorAll('.math');
 
-		for (const el of inlineEls) {
+		for (const el of mathElements) {
+			// Skip if already rendered
+			if (el.classList.contains('katex-rendered')) continue;
+
 			const latex = el.textContent || '';
+			if (!latex.trim()) continue;
+
 			try {
-				el.innerHTML = k.default.renderToString(latex, {
-					displayMode: false,
+				// Clean up the LaTeX
+				let cleaned = latex
+					.replace(/^\\\(|\\\)$/g, '')  // Remove \( \) delimiters
+					.replace(/^\\\[|\\\]$/g, '')  // Remove \[ \] delimiters
+					.trim();
+
+				// Convert unsupported environments
+				cleaned = cleaned
+					.replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}')
+					.replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
+
+				// Wrap multi-line equations in aligned environment if not already wrapped
+				if (cleaned.includes('\\\\') && !cleaned.includes('\\begin{')) {
+					cleaned = `\\begin{aligned}${cleaned}\\end{aligned}`;
+				}
+
+				const isDisplay = el.tagName === 'DIV' || latex.includes('\\[');
+
+				const rendered = k.default.renderToString(cleaned, {
+					displayMode: isDisplay,
 					throwOnError: false,
 					strict: false
 				});
-			} catch (e) {
-				console.warn('KaTeX inline error:', e);
-			}
-		}
 
-		for (const el of blockEls) {
-			const latex = el.textContent || '';
-			try {
-				el.innerHTML = k.default.renderToString(latex, {
-					displayMode: true,
-					throwOnError: false,
-					strict: false
-				});
+				el.innerHTML = rendered;
+				el.classList.add('katex-rendered');
 			} catch (e) {
-				console.warn('KaTeX block error:', e);
+				console.warn('KaTeX error for:', latex, e);
+				// Leave original content
 			}
 		}
 	}
@@ -347,13 +360,18 @@
 		overflow-x: auto;
 	}
 
-	/* Math fallback */
+	/* Math fallback (before KaTeX renders) */
 	.docstring-content :global(.katex-error),
-	.docstring-content :global(.math-inline),
-	.docstring-content :global(.math-block) {
+	.docstring-content :global(.math:not(.katex-rendered)) {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		color: var(--text-muted);
+	}
+
+	/* Math container styling */
+	.docstring-content :global(div.math) {
+		margin: var(--space-md) 0;
+		text-align: center;
 	}
 
 	/* Tables */
