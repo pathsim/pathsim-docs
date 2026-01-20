@@ -412,12 +412,14 @@ input::placeholder {
 	color: var(--text-muted);
 }
 
-/* Separator - extends to doc-main edges */
+/* Separator - extends to viewport edges */
 .separator {
 	height: 1px;
 	background: var(--border);
-	width: 200vw;
-	margin-left: -50vw;
+	width: 100vw;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 /* Panel style */
