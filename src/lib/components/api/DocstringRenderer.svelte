@@ -173,6 +173,7 @@
 	.docstring-content {
 		font-size: var(--font-sm);
 		line-height: 1.7;
+		color: var(--text-muted);
 	}
 
 	.docstring-content :global(p) {
@@ -408,9 +409,9 @@
 		overflow-x: auto;
 	}
 
-	/* KaTeX styling (if used) */
+	/* KaTeX styling - use default sizing (~1.21em for better math readability) */
 	.docstring-content :global(.katex) {
-		font-size: 1em;
+		/* Let KaTeX use its default font-size */
 	}
 
 	.docstring-content :global(.katex-display) {
