@@ -302,9 +302,6 @@
 
 	/* Parameter/Attribute tables - panel style */
 	.docstring-content :global(.param-table-wrapper) {
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		overflow: hidden;
 		margin: var(--space-md) 0;
 	}
 
@@ -313,6 +310,8 @@
 		border-collapse: separate;
 		border-spacing: 0;
 		font-size: var(--font-sm);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
 	}
 
 	/* Header styled like panel-header */
