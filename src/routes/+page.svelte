@@ -20,54 +20,57 @@
 
 <Tooltip />
 
-<main>
-	<header class="hero">
-		<img src="/pathsim_logo.png" alt="PathSim" class="hero-logo" />
-		<p class="tagline">Documentation for the PathSim ecosystem</p>
-		<p class="description">
-			API reference, tutorials, and examples for PathSim and its domain-specific toolboxes.
-		</p>
-		<div class="hero-search">
-			<Icon name="search" size={18} />
-			<input
-				type="text"
-				placeholder="Search documentation..."
-				bind:value={searchQuery}
-				onkeydown={handleSearchKeydown}
-			/>
-			{#if searchQuery}
-				<button class="clear-btn" onclick={() => (searchQuery = '')}>
-					<Icon name="x" size={14} />
-				</button>
-			{/if}
-		</div>
-		<div class="hero-actions">
-			<a href={nav.home} class="action-card">
-				<Icon name="home" size={20} />
-				<span class="action-label">Home</span>
-			</a>
-			<a href={packages.pathsim.docs} class="action-card">
-				<Icon name="zap" size={20} />
-				<span class="action-label">Get Started</span>
-			</a>
-			<a href={nav.tryOnline} class="action-card">
-				<Icon name="play" size={20} />
-				<span class="action-label">Try Online</span>
-			</a>
-			<a href={nav.github} class="action-card">
-				<Icon name="github" size={20} />
-				<span class="action-label">GitHub</span>
-			</a>
-			<a href={nav.sponsor} class="action-card">
-				<Icon name="heart" size={20} />
-				<span class="action-label">Sponsor</span>
-			</a>
-		</div>
-	</header>
+<div class="page-wrapper">
+	<main>
+		<header class="hero">
+			<img src="/pathsim_logo.png" alt="PathSim" class="hero-logo" />
+			<p class="tagline">Documentation for the PathSim ecosystem</p>
+			<p class="description">
+				API reference, tutorials, and examples for PathSim and its domain-specific toolboxes.
+			</p>
+			<div class="hero-search">
+				<Icon name="search" size={18} />
+				<input
+					type="text"
+					placeholder="Search documentation..."
+					bind:value={searchQuery}
+					onkeydown={handleSearchKeydown}
+				/>
+				{#if searchQuery}
+					<button class="clear-btn" onclick={() => (searchQuery = '')}>
+						<Icon name="x" size={14} />
+					</button>
+				{/if}
+			</div>
+			<div class="hero-actions">
+				<a href={nav.home} class="action-card">
+					<Icon name="home" size={20} />
+					<span class="action-label">Home</span>
+				</a>
+				<a href={packages.pathsim.docs} class="action-card">
+					<Icon name="zap" size={20} />
+					<span class="action-label">Get Started</span>
+				</a>
+				<a href={nav.tryOnline} class="action-card">
+					<Icon name="play" size={20} />
+					<span class="action-label">Try Online</span>
+				</a>
+				<a href={nav.github} class="action-card">
+					<Icon name="github" size={20} />
+					<span class="action-label">GitHub</span>
+				</a>
+				<a href={nav.sponsor} class="action-card">
+					<Icon name="heart" size={20} />
+					<span class="action-label">Sponsor</span>
+				</a>
+			</div>
+		</header>
+	</main>
 
 	<div class="separator"></div>
 
-	<section class="packages">
+	<main>
+		<section class="packages">
 		<h2>Packages</h2>
 		<div class="package-grid">
 			<div class="package-card">
@@ -146,16 +149,19 @@
 				</a>
 			</div>
 		</div>
-	</section>
-
-</main>
+		</section>
+	</main>
+</div>
 
 <style>
+	.page-wrapper {
+		overflow-x: hidden;
+	}
+
 	main {
 		max-width: 1200px;
 		margin: 0 auto;
 		padding: 0 var(--space-lg);
-		overflow-x: hidden;
 	}
 
 	.hero {
