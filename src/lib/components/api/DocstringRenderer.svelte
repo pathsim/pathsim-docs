@@ -65,6 +65,79 @@
 		}
 	}
 
+	// Transform definition lists to tables
+	function transformDefinitionListsToTables() {
+		if (!container) return;
+
+		const dlElements = container.querySelectorAll('dl.docutils');
+
+		for (const dl of dlElements) {
+			// Skip if already transformed
+			if (dl.classList.contains('table-transformed')) continue;
+
+			const table = document.createElement('table');
+			table.className = 'param-table';
+
+			const tbody = document.createElement('tbody');
+
+			// Get all dt/dd pairs
+			const dts = dl.querySelectorAll(':scope > dt');
+
+			for (const dt of dts) {
+				const row = document.createElement('tr');
+
+				// Extract name (text before classifier-delimiter)
+				const nameCell = document.createElement('td');
+				nameCell.className = 'param-name';
+				const nameCode = document.createElement('code');
+
+				// Get the name - it's the first text node or text before classifier-delimiter
+				let name = '';
+				for (const node of dt.childNodes) {
+					if (node.nodeType === Node.TEXT_NODE) {
+						name = node.textContent?.trim() || '';
+						if (name) break;
+					} else if (node.nodeType === Node.ELEMENT_NODE) {
+						const el = node as Element;
+						if (el.classList.contains('classifier-delimiter')) break;
+						name = el.textContent?.trim() || '';
+						if (name) break;
+					}
+				}
+				nameCode.textContent = name;
+				nameCell.appendChild(nameCode);
+				row.appendChild(nameCell);
+
+				// Extract type from classifier span
+				const typeCell = document.createElement('td');
+				typeCell.className = 'param-type';
+				const classifier = dt.querySelector('.classifier');
+				if (classifier) {
+					const typeCode = document.createElement('code');
+					typeCode.textContent = classifier.textContent || '';
+					typeCell.appendChild(typeCode);
+				}
+				row.appendChild(typeCell);
+
+				// Get description from following dd
+				const descCell = document.createElement('td');
+				descCell.className = 'param-desc';
+				const dd = dt.nextElementSibling;
+				if (dd && dd.tagName === 'DD') {
+					descCell.innerHTML = dd.innerHTML;
+				}
+				row.appendChild(descCell);
+
+				tbody.appendChild(row);
+			}
+
+			table.appendChild(tbody);
+
+			// Replace dl with table
+			dl.parentNode?.replaceChild(table, dl);
+		}
+	}
+
 	// Render code blocks with CodeMirror
 	async function renderCodeBlocks() {
 		if (!container) return;
@@ -158,6 +231,7 @@
 		if (currentHtml && container && !hasRendered) {
 			hasRendered = true;
 			tick().then(() => {
+				transformDefinitionListsToTables();
 				renderMath();
 				renderCodeBlocks();
 			});
@@ -210,58 +284,56 @@
 		display: none;
 	}
 
-	/* Definition lists - styled as parameter cards */
-	.docstring-content :global(dl.docutils) {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-sm);
+	/* Parameter/Attribute tables */
+	.docstring-content :global(.param-table) {
+		width: 100%;
+		border-collapse: collapse;
 		margin: var(--space-md) 0;
+		font-size: var(--font-sm);
 	}
 
-	.docstring-content :global(dl.docutils dt) {
-		display: flex;
-		align-items: baseline;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
+	.docstring-content :global(.param-table td) {
 		padding: var(--space-sm) var(--space-md);
-		padding-bottom: 0;
-		background: var(--surface-raised);
-		border-radius: var(--radius-md) var(--radius-md) 0 0;
+		border-bottom: 1px solid var(--border);
+		vertical-align: top;
+	}
+
+	.docstring-content :global(.param-table tr:last-child td) {
+		border-bottom: none;
+	}
+
+	.docstring-content :global(.param-table .param-name) {
+		width: 1%;
+		white-space: nowrap;
+	}
+
+	.docstring-content :global(.param-table .param-name code) {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
-		color: var(--accent);
 		font-weight: 500;
-		margin: 0;
+		color: var(--accent);
+		background: none;
+		border: none;
+		padding: 0;
 	}
 
-	/* Type annotations in dt */
-	.docstring-content :global(dl.docutils dt .classifier-delimiter) {
-		color: var(--text-muted);
-		margin: 0 var(--space-xs);
+	.docstring-content :global(.param-table .param-type) {
+		width: 1%;
+		white-space: nowrap;
 	}
 
-	.docstring-content :global(dl.docutils dt .classifier) {
+	.docstring-content :global(.param-table .param-type code) {
 		font-family: var(--font-mono);
 		font-size: var(--font-xs);
 		color: var(--text-muted);
-		font-weight: 400;
+		background: none;
+		border: none;
+		padding: 0;
 	}
 
-	.docstring-content :global(dl.docutils dd) {
-		margin: 0;
-		padding: var(--space-xs) var(--space-md) var(--space-sm);
-		background: var(--surface-raised);
-		border-radius: 0 0 var(--radius-md) var(--radius-md);
+	.docstring-content :global(.param-table .param-desc) {
 		color: var(--text-muted);
-		font-size: var(--font-sm);
 		line-height: 1.5;
-	}
-
-	/* When dd follows dd (multiple descriptions), adjust spacing */
-	.docstring-content :global(dl.docutils dd + dd) {
-		margin-top: calc(-1 * var(--space-sm));
-		padding-top: 0;
-		border-radius: 0 0 var(--radius-md) var(--radius-md);
 	}
 
 	/* Generic dl fallback */
