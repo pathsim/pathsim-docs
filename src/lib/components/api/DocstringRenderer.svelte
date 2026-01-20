@@ -305,7 +305,39 @@
 		font-weight: 600;
 	}
 
-	/* KaTeX styling */
+	/* MathML styling (native browser rendering) */
+	.docstring-content :global(math) {
+		font-family: 'Latin Modern Math', 'STIX Two Math', 'Cambria Math', 'Times New Roman', serif;
+		font-size: 1.1em;
+		color: var(--text);
+	}
+
+	/* Block math (display mode) */
+	.docstring-content :global(div > math[display="block"]),
+	.docstring-content :global(math[display="block"]) {
+		display: block;
+		margin: var(--space-md) 0;
+		text-align: center;
+		overflow-x: auto;
+	}
+
+	/* Inline math */
+	.docstring-content :global(p math),
+	.docstring-content :global(math:not([display="block"])) {
+		display: inline;
+		vertical-align: middle;
+	}
+
+	/* Math container divs */
+	.docstring-content :global(div:has(> math[display="block"])) {
+		margin: var(--space-md) 0;
+		padding: var(--space-sm) var(--space-md);
+		background: var(--surface-raised);
+		border-radius: var(--radius-md);
+		overflow-x: auto;
+	}
+
+	/* KaTeX styling (if used) */
 	.docstring-content :global(.katex) {
 		font-size: 1em;
 	}
