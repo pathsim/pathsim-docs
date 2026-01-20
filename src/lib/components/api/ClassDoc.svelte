@@ -18,34 +18,32 @@
 	);
 </script>
 
-<div class="api-class" id={cls.name}>
-	<button class="api-class-header" onclick={() => (isExpanded = !isExpanded)}>
-		<div class="api-class-title">
-			<span class="api-class-toggle" class:expanded={isExpanded}>
+<div class="tile class-tile" id={cls.name}>
+	<button class="panel-header class-header" onclick={() => (isExpanded = !isExpanded)}>
+		<div class="class-header-left">
+			<span class="class-toggle" class:expanded={isExpanded}>
 				<Icon name="chevron-down" size={16} />
 			</span>
-			<code class="api-class-name">{cls.name}</code>
+			<code class="class-name">{cls.name}</code>
 			{#if cls.bases && cls.bases.length > 0}
-				<span class="api-class-bases">({cls.bases.join(', ')})</span>
+				<span class="class-bases">({cls.bases.join(', ')})</span>
 			{/if}
 		</div>
 		{#if cls.description}
-			<span class="api-class-desc">{cls.description}</span>
+			<span class="class-desc">{cls.description}</span>
 		{/if}
 	</button>
 
 	{#if isExpanded}
-		<div class="api-class-body">
+		<div class="panel-body class-body">
 			{#if cls.docstring_html}
 				<DocstringRenderer html={cls.docstring_html} />
 			{/if}
 
 			{#if publicMethods.length > 0}
-				<div class="api-section">
-					<div class="api-section-header">
-						<span class="api-section-title">Methods</span>
-					</div>
-					<div class="api-methods">
+				<div class="methods-section">
+					<div class="methods-header">Methods</div>
+					<div class="methods-list">
 						{#each publicMethods as method}
 							<FunctionDoc func={method} isMethod={true} />
 						{/each}
@@ -57,27 +55,16 @@
 </div>
 
 <style>
-	.api-class {
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
+	.class-tile {
 		margin-bottom: var(--space-lg);
-		overflow: hidden;
-		transition: border-color var(--transition-fast);
 	}
 
-	.api-class:hover {
-		border-color: var(--border-focus);
-	}
-
-	.api-class-header {
-		display: flex;
+	/* Override panel-header for class - make it clickable and flex column */
+	.class-header {
 		flex-direction: column;
 		align-items: flex-start;
-		justify-content: flex-start;
 		gap: var(--space-xs);
 		width: 100%;
-		padding: var(--space-md) var(--space-lg);
-		background: var(--surface-raised);
 		border: none;
 		border-radius: 0;
 		text-align: left;
@@ -85,17 +72,17 @@
 		transition: background var(--transition-fast);
 	}
 
-	.api-class-header:hover {
+	.class-header:hover {
 		background: var(--surface-hover);
 	}
 
-	.api-class-title {
+	.class-header-left {
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
 	}
 
-	.api-class-toggle {
+	.class-toggle {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -107,16 +94,16 @@
 		transition: all var(--transition-fast);
 	}
 
-	.api-class-toggle.expanded {
+	.class-toggle.expanded {
 		background: var(--accent-bg);
 		color: var(--accent);
 	}
 
-	.api-class-toggle.expanded :global(svg) {
+	.class-toggle.expanded :global(svg) {
 		transform: rotate(180deg);
 	}
 
-	.api-class-name {
+	.class-name {
 		font-family: var(--font-mono);
 		font-size: var(--font-base);
 		font-weight: 600;
@@ -126,63 +113,45 @@
 		padding: 0;
 	}
 
-	.api-class-bases {
+	.class-bases {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		color: var(--text-muted);
 	}
 
-	.api-class-desc {
+	.class-desc {
 		font-family: var(--font-ui);
 		font-size: var(--font-sm);
 		color: var(--text-muted);
 		margin-left: calc(20px + var(--space-sm));
 		line-height: 1.5;
+		text-transform: none;
+		letter-spacing: normal;
 	}
 
-	.api-class-body {
-		padding: var(--space-lg);
-		background: var(--surface);
+	.class-body {
+		/* Inherits panel-body styles */
+	}
+
+	.methods-section {
+		margin-top: var(--space-xl);
+		padding-top: var(--space-lg);
 		border-top: 1px solid var(--border);
 	}
 
-	.api-section {
-		margin-top: var(--space-xl);
-	}
-
-	.api-section:first-child {
-		margin-top: var(--space-lg);
-	}
-
-	.api-section-header {
-		position: relative;
-		margin-bottom: var(--space-md);
-		padding-top: var(--space-lg);
-	}
-
-	/* Full width separator ABOVE header (extends to card edges) */
-	.api-section-header::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: calc(-1 * var(--space-lg));
-		right: calc(-1 * var(--space-lg));
-		height: 1px;
-		background: var(--border);
-	}
-
-	.api-section-title {
+	.methods-header {
 		font-family: var(--font-ui);
 		font-size: var(--font-xs);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
+		margin-bottom: var(--space-md);
 	}
 
-	.api-methods {
+	.methods-list {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-lg);
+		gap: var(--space-md);
 	}
 </style>

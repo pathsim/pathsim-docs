@@ -14,51 +14,54 @@
 	let showBadge = $derived(isMethod && methodType && methodType !== 'method');
 </script>
 
-<div class="api-method" id={func.name}>
-	<div class="api-method-header">
-		<code class="api-method-name">{func.name}</code>
+<div class="tile method-tile" id={func.name}>
+	<div class="panel-header">
+		<div class="method-header-content">
+			<code class="method-name">{func.name}</code>
+			{#if func.signature}
+				<code class="method-signature">{func.signature}</code>
+			{/if}
+		</div>
 		{#if showBadge}
 			<span class="badge accent">{methodType}</span>
 		{/if}
 	</div>
 
-	{#if func.signature}
-		<div class="api-method-signature">
-			<code><span class="syntax-function">{func.name}</span>{func.signature}</code>
-		</div>
-	{/if}
-
-	{#if func.docstring_html}
-		<div class="api-method-docstring">
+	<div class="panel-body method-body">
+		{#if func.docstring_html}
 			<DocstringRenderer html={func.docstring_html} />
-		</div>
-	{:else if func.description}
-		<p class="api-method-desc">{func.description}</p>
-	{/if}
+		{:else if func.description}
+			<p class="method-desc">{func.description}</p>
+		{/if}
 
-	{#if func.returns}
-		<div class="api-method-returns">
-			<span class="api-method-returns-label">Returns</span>
-			<code>{func.returns}</code>
-		</div>
-	{/if}
+		{#if func.returns}
+			<div class="method-returns">
+				<span class="method-returns-label">Returns</span>
+				<code>{func.returns}</code>
+			</div>
+		{/if}
+	</div>
 </div>
 
 <style>
-	.api-method {
-		padding: var(--space-md);
-		background: var(--surface-raised);
-		border-radius: var(--radius-md);
+	.method-tile {
+		/* Inherits tile base styles from app.css */
 	}
 
-	.api-method-header {
+	/* Override panel-header for method - more compact */
+	.method-tile :global(.panel-header) {
+		padding: var(--space-sm) var(--space-md);
+	}
+
+	.method-header-content {
 		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
-		margin-bottom: var(--space-xs);
+		align-items: baseline;
+		gap: var(--space-xs);
+		flex-wrap: wrap;
+		min-width: 0;
 	}
 
-	.api-method-name {
+	.method-name {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		font-weight: 600;
@@ -66,47 +69,43 @@
 		background: none;
 		border: none;
 		padding: 0;
+		flex-shrink: 0;
 	}
 
-	.api-method-signature {
-		margin-bottom: var(--space-sm);
-	}
-
-	.api-method-signature code {
-		display: block;
+	.method-signature {
 		font-family: var(--font-mono);
 		font-size: var(--font-xs);
 		color: var(--text-muted);
-		background: var(--surface);
-		padding: var(--space-xs) var(--space-sm);
-		border-radius: var(--radius-sm);
-		border: 1px solid var(--border);
-		white-space: pre-wrap;
-		word-break: break-word;
+		background: none;
+		border: none;
+		padding: 0;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
-	.api-method-docstring {
-		margin: var(--space-sm) 0;
+	.method-body {
+		padding: var(--space-md);
 	}
 
-	.api-method-desc {
+	.method-desc {
 		font-family: var(--font-ui);
 		font-size: var(--font-sm);
 		color: var(--text-muted);
-		margin: var(--space-sm) 0;
+		margin: 0;
 		line-height: 1.5;
 	}
 
-	.api-method-returns {
+	.method-returns {
 		display: flex;
 		align-items: baseline;
 		gap: var(--space-sm);
-		margin-top: var(--space-sm);
-		padding-top: var(--space-sm);
+		margin-top: var(--space-md);
+		padding-top: var(--space-md);
 		border-top: 1px solid var(--border);
 	}
 
-	.api-method-returns-label {
+	.method-returns-label {
 		font-family: var(--font-ui);
 		font-size: var(--font-xs);
 		font-weight: 500;
@@ -115,7 +114,7 @@
 		letter-spacing: 0.5px;
 	}
 
-	.api-method-returns code {
+	.method-returns code {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		color: var(--text);
