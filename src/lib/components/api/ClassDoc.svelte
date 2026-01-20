@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import type { APIClass } from '$lib/api/generated';
 	import FunctionDoc from './FunctionDoc.svelte';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
+	import { theme } from '$lib/stores/themeStore';
 
 	interface Props {
 		cls: APIClass;
@@ -10,11 +13,63 @@
 
 	let { cls, expanded: initialExpanded = false }: Props = $props();
 	let isExpanded = $state(initialExpanded);
+	let viewMode = $state<'docs' | 'source'>('docs');
+
+	// CodeMirror state
+	let editorContainer = $state<HTMLDivElement | undefined>(undefined);
+	let editorView: import('@codemirror/view').EditorView | null = null;
+	let cmModules: CodeMirrorModules | null = null;
+	let editorLoading = $state(false);
 
 	// Filter methods - skip __init__ since parameters are in docstring
 	let publicMethods = $derived(
 		cls.methods.filter((m) => m.name !== '__init__' && !m.name.startsWith('_'))
 	);
+
+	// Initialize CodeMirror when switching to source view
+	$effect(() => {
+		if (viewMode === 'source' && cls.source && editorContainer && !editorView) {
+			editorLoading = true;
+			loadCodeMirrorModules().then((modules) => {
+				cmModules = modules;
+				const isDark = $theme === 'dark';
+				editorView = new cmModules.EditorView({
+					doc: cls.source || '',
+					extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
+					parent: editorContainer!
+				});
+				editorLoading = false;
+			});
+		}
+	});
+
+	// Update editor theme when it changes
+	$effect(() => {
+		const currentTheme = $theme;
+		if (viewMode === 'source' && editorView && cmModules && editorContainer) {
+			const isDark = currentTheme === 'dark';
+			editorView.destroy();
+			editorView = new cmModules.EditorView({
+				doc: cls.source || '',
+				extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
+				parent: editorContainer
+			});
+		}
+	});
+
+	// Cleanup editor when collapsed or view changes
+	$effect(() => {
+		if (!isExpanded || viewMode !== 'source') {
+			if (editorView) {
+				editorView.destroy();
+				editorView = null;
+			}
+		}
+	});
+
+	onDestroy(() => {
+		editorView?.destroy();
+	});
 </script>
 
 <div class="tile class-tile" id={cls.name}>
@@ -32,18 +87,45 @@
 
 	{#if isExpanded}
 		<div class="panel-body class-body">
-			{#if cls.docstring_html}
-				<DocstringRenderer html={cls.docstring_html} />
+			{#if cls.source}
+				<div class="view-toggle">
+					<button
+						class="toggle-btn"
+						class:active={viewMode === 'docs'}
+						onclick={() => (viewMode = 'docs')}
+					>
+						Docs
+					</button>
+					<button
+						class="toggle-btn"
+						class:active={viewMode === 'source'}
+						onclick={() => (viewMode = 'source')}
+					>
+						Source
+					</button>
+				</div>
 			{/if}
 
-			{#if publicMethods.length > 0}
-				<div class="methods-section">
-					<div class="label-uppercase methods-header">Methods</div>
-					<div class="methods-list">
-						{#each publicMethods as method}
-							<FunctionDoc func={method} isMethod={true} />
-						{/each}
+			{#if viewMode === 'docs'}
+				{#if cls.docstring_html}
+					<DocstringRenderer html={cls.docstring_html} />
+				{/if}
+
+				{#if publicMethods.length > 0}
+					<div class="methods-section">
+						<div class="label-uppercase methods-header">Methods</div>
+						<div class="methods-list">
+							{#each publicMethods as method}
+								<FunctionDoc func={method} isMethod={true} />
+							{/each}
+						</div>
 					</div>
+				{/if}
+			{:else}
+				<div class="source-view" bind:this={editorContainer}>
+					{#if editorLoading}
+						<div class="loading">Loading...</div>
+					{/if}
 				</div>
 			{/if}
 		</div>
@@ -78,7 +160,7 @@
 		font-size: var(--font-sm);
 	}
 
-	.class-header.expanded {
+	.class-header.class-header.expanded {
 		border-bottom: 1px solid var(--border);
 	}
 
@@ -110,6 +192,59 @@
 		font-size: var(--font-xs);
 		color: var(--text-muted);
 		line-height: 1.5;
+	}
+
+	/* View toggle */
+	.view-toggle {
+		display: flex;
+		gap: 2px;
+		margin-bottom: var(--space-md);
+		background: var(--bg-secondary);
+		border-radius: var(--radius-sm);
+		padding: 2px;
+		width: fit-content;
+	}
+
+	.toggle-btn {
+		padding: var(--space-xs) var(--space-sm);
+		font-size: var(--font-xs);
+		font-family: var(--font-ui);
+		background: transparent;
+		border: none;
+		border-radius: var(--radius-xs);
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.toggle-btn:hover {
+		color: var(--text);
+	}
+
+	.toggle-btn.active {
+		background: var(--bg);
+		color: var(--text);
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+	}
+
+	/* Source view */
+	.source-view {
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+	}
+
+	.source-view :global(.cm-editor) {
+		font-size: var(--font-xs);
+		max-height: 500px;
+	}
+
+	.loading {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100px;
+		color: var(--text-muted);
+		font-size: var(--font-sm);
 	}
 
 	.methods-section {

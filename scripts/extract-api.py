@@ -166,6 +166,35 @@ def markdown_fallback(text: str) -> str:
 # Extraction Utilities
 # =============================================================================
 
+def extract_source_code(obj: griffe.Object) -> str | None:
+    """Extract source code for a griffe object."""
+    try:
+        # Get file path and line numbers
+        filepath = obj.filepath
+        lineno = obj.lineno
+        endlineno = obj.endlineno
+
+        if not filepath or not lineno or not endlineno:
+            return None
+
+        # Read the source file
+        with open(filepath, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+
+        # Extract the relevant lines (1-indexed to 0-indexed)
+        source_lines = lines[lineno - 1:endlineno]
+        source = ''.join(source_lines)
+
+        # Dedent if needed (remove common leading whitespace)
+        if source:
+            import textwrap
+            source = textwrap.dedent(source)
+
+        return source.rstrip() if source else None
+    except Exception:
+        return None
+
+
 def extract_first_line(docstring: str | None) -> str:
     """Extract first line/sentence as brief description."""
     if not docstring:
@@ -506,6 +535,7 @@ class APIExtractor:
                 "name": cls.name,
                 "description": extract_first_line(docstring),
                 "docstring_html": rst_to_html(docstring),
+                "source": extract_source_code(cls),
                 "bases": [],
                 "methods": [],
                 "attributes": [],
@@ -561,6 +591,7 @@ class APIExtractor:
                 "name": func.name,
                 "description": extract_first_line(docstring),
                 "docstring_html": rst_to_html(docstring),
+                "source": extract_source_code(func),
                 "signature": get_signature_str(func),
                 "parameters": extract_parameters_list(func, docstring),
                 "returns": str(func.returns) if hasattr(func, "returns") and func.returns else None,
@@ -590,6 +621,7 @@ class APIExtractor:
                 "name": method.name,
                 "description": extract_first_line(docstring),
                 "docstring_html": rst_to_html(docstring),
+                "source": extract_source_code(method),
                 "signature": get_signature_str(method),
                 "parameters": extract_parameters_list(method, docstring),
                 "returns": str(method.returns) if hasattr(method, "returns") and method.returns else None,
@@ -658,6 +690,7 @@ def write_typescript_index(packages: list[str], output_dir: Path) -> None:
         "  name: string;",
         "  description: string;",
         "  docstring_html: string;",
+        "  source: string | null;",
         "  signature: string | null;",
         "  parameters: APIParameter[];",
         "  returns: string | null;",
@@ -668,6 +701,7 @@ def write_typescript_index(packages: list[str], output_dir: Path) -> None:
         "  name: string;",
         "  description: string;",
         "  docstring_html: string;",
+        "  source: string | null;",
         "  bases: string[];",
         "  methods: APIMethod[];",
         "  attributes: APIAttribute[];",
@@ -678,6 +712,7 @@ def write_typescript_index(packages: list[str], output_dir: Path) -> None:
         "  name: string;",
         "  description: string;",
         "  docstring_html: string;",
+        "  source: string | null;",
         "  signature: string | null;",
         "  parameters: APIParameter[];",
         "  returns: string | null;",

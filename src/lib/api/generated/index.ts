@@ -23,6 +23,7 @@ export interface APIMethod {
   name: string;
   description: string;
   docstring_html: string;
+  source: string | null;
   signature: string | null;
   parameters: APIParameter[];
   returns: string | null;
@@ -33,6 +34,7 @@ export interface APIClass {
   name: string;
   description: string;
   docstring_html: string;
+  source: string | null;
   bases: string[];
   methods: APIMethod[];
   attributes: APIAttribute[];
@@ -43,6 +45,7 @@ export interface APIFunction {
   name: string;
   description: string;
   docstring_html: string;
+  source: string | null;
   signature: string | null;
   parameters: APIParameter[];
   returns: string | null;
