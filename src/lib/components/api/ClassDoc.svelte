@@ -18,7 +18,7 @@
 </script>
 
 <div class="tile class-tile" id={cls.name}>
-	<button class="panel-header class-header" onclick={() => (isExpanded = !isExpanded)}>
+	<button class="panel-header class-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<div class="class-header-top">
 			<code class="class-name">{cls.name}</code>
 			{#if cls.bases && cls.bases.length > 0}
@@ -68,6 +68,7 @@
 		gap: var(--space-xs);
 		width: 100%;
 		border-radius: 0;
+		border-bottom: none;
 		text-align: left;
 		cursor: pointer;
 		transition: background var(--transition-fast);
@@ -75,6 +76,10 @@
 		text-transform: none;
 		letter-spacing: normal;
 		font-size: var(--font-sm);
+	}
+
+	.class-header.expanded {
+		border-bottom: 1px solid var(--border);
 	}
 
 	.class-header-top {

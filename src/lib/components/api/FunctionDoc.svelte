@@ -17,7 +17,7 @@
 </script>
 
 <div class="tile method-tile" id={func.name}>
-	<button class="panel-header method-header" onclick={() => (isExpanded = !isExpanded)}>
+	<button class="panel-header method-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<code class="method-name">{func.name}</code>
 		{#if func.signature}
 			<code class="method-signature">{func.signature}</code>
@@ -60,10 +60,15 @@
 		font-size: var(--font-sm);
 		width: 100%;
 		border-radius: 0;
+		border-bottom: none;
 		text-align: left;
 		cursor: pointer;
 		flex-wrap: wrap;
 		gap: var(--space-xs);
+	}
+
+	.method-header.expanded {
+		border-bottom: 1px solid var(--border);
 	}
 
 	.method-name {
