@@ -37,11 +37,9 @@ scope.plot()`;
 
 <div class="hero">
 	<img src={pkg.logo} alt="PathSim" class="hero-logo" />
-	<p class="tagline">A Python framework for simulating dynamical systems using block diagrams.</p>
 	<p class="description">
-		PathSim is a Python library for building and simulating continuous-time, discrete-time, and hybrid
-		dynamical systems. It uses a block-diagram approach where systems are built by connecting modular
-		blocks that represent mathematical operations, integrators, sources, and sinks.
+		A Python library for building and simulating continuous-time, discrete-time, and hybrid
+		dynamical systems using a block-diagram approach.
 	</p>
 </div>
 

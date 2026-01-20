@@ -628,13 +628,6 @@ input::placeholder {
 	margin-bottom: var(--space-lg);
 }
 
-.hero .tagline {
-	font-size: var(--font-lg);
-	font-weight: 600;
-	color: var(--text);
-	margin-bottom: var(--space-md);
-}
-
 .hero .description {
 	color: var(--text-muted);
 	margin: 0;

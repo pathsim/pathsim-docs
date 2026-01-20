@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Sidebar, Breadcrumb } from './index';
+	import { Sidebar } from './index';
 	import type { PackageId } from '$lib/config/links';
 	import type { Snippet } from 'svelte';
 
@@ -15,7 +15,6 @@
 	<Sidebar {packageId} />
 	<div class="doc-main">
 		<div class="doc-content">
-			<Breadcrumb />
 			<article class="prose">
 				{@render children()}
 			</article>

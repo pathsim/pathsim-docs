@@ -15,10 +15,8 @@
 
 <div class="hero">
 	<img src={pkg.logo} alt="PathSim-Chem" class="hero-logo" />
-	<p class="tagline">Chemical engineering blocks for PathSim.</p>
 	<p class="description">
-		PathSim-Chem extends PathSim with blocks for chemical engineering simulations,
-		including reactors, heat exchangers, and separation units.
+		Chemical engineering blocks for PathSim, including reactors, heat exchangers, and separation units.
 	</p>
 </div>
 
