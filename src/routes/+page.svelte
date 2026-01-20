@@ -2,6 +2,15 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, nav } from '$lib/config/packages';
+
+	let searchQuery = $state('');
+
+	function handleSearchKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' && searchQuery) {
+			searchQuery = '';
+			event.stopPropagation();
+		}
+	}
 </script>
 
 <svelte:head>
@@ -18,6 +27,20 @@
 		<p class="description">
 			API reference, tutorials, and examples for PathSim and its domain-specific toolboxes.
 		</p>
+		<div class="hero-search">
+			<Icon name="search" size={18} />
+			<input
+				type="text"
+				placeholder="Search documentation..."
+				bind:value={searchQuery}
+				onkeydown={handleSearchKeydown}
+			/>
+			{#if searchQuery}
+				<button class="clear-btn" onclick={() => (searchQuery = '')}>
+					<Icon name="x" size={14} />
+				</button>
+			{/if}
+		</div>
 		<div class="hero-actions">
 			<a href={nav.home} class="action-card">
 				<Icon name="home" size={20} />
@@ -158,6 +181,60 @@
 		font-size: var(--font-base);
 		color: var(--text);
 		margin-bottom: var(--space-lg);
+	}
+
+	.hero-search {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		max-width: 480px;
+		margin: 0 auto var(--space-lg);
+		padding: var(--space-sm) var(--space-md);
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-xl);
+		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+	}
+
+	.hero-search:focus-within {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 3px var(--accent-bg);
+	}
+
+	.hero-search :global(svg) {
+		color: var(--text-muted);
+		flex-shrink: 0;
+	}
+
+	.hero-search input {
+		flex: 1;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		font-size: var(--font-base);
+		color: var(--text);
+		outline: none;
+		box-shadow: none;
+		padding: 0;
+	}
+
+	.hero-search input::placeholder {
+		color: var(--text-muted);
+	}
+
+	.hero-search .clear-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		color: var(--text-muted);
+		padding: 2px;
+		cursor: pointer;
+	}
+
+	.hero-search .clear-btn:hover {
+		color: var(--text);
 	}
 
 	.hero-actions {
