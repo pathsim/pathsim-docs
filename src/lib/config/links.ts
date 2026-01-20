@@ -27,7 +27,7 @@ export const packages: Record<PackageId, PackageConfig> = {
 	pathsim: {
 		id: 'pathsim',
 		name: 'PathSim',
-		shortName: 'Core',
+		shortName: 'pathsim',
 		logo: '/pathsim_logo.png',
 		docs: '/pathsim',
 		api: '/pathsim/api',
@@ -39,7 +39,7 @@ export const packages: Record<PackageId, PackageConfig> = {
 	chem: {
 		id: 'chem',
 		name: 'PathSim-Chem',
-		shortName: 'Chem',
+		shortName: 'chem',
 		logo: '/pathsim_chem_logo.png',
 		docs: '/chem',
 		api: '/chem/api',
@@ -51,7 +51,7 @@ export const packages: Record<PackageId, PackageConfig> = {
 	vehicle: {
 		id: 'vehicle',
 		name: 'PathSim-Vehicle',
-		shortName: 'Vehicle',
+		shortName: 'vehicle',
 		logo: '/pathsim_vehicle_logo.png',
 		docs: '/vehicle',
 		api: '/vehicle/api',

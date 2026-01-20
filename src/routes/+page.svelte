@@ -49,7 +49,7 @@
 		<div class="package-grid">
 			<div class="package-card">
 				<div class="panel-header">
-					<span>{packages.pathsim.name}</span>
+					<span>{packages.pathsim.shortName}</span>
 					<div class="header-actions">
 						<a href={packages.pathsim.api} class="icon-btn" use:tooltip={'API'}>
 							<Icon name="braces" size={14} />
@@ -74,7 +74,7 @@
 			</div>
 			<div class="package-card">
 				<div class="panel-header">
-					<span>{packages.chem.name}</span>
+					<span>{packages.chem.shortName}</span>
 					<div class="header-actions">
 						<a href={packages.chem.api} class="icon-btn" use:tooltip={'API'}>
 							<Icon name="braces" size={14} />
@@ -99,7 +99,7 @@
 			</div>
 			<div class="package-card">
 				<div class="panel-header">
-					<span>{packages.vehicle.name}</span>
+					<span>{packages.vehicle.shortName}</span>
 					<div class="header-actions">
 						<a href={packages.vehicle.api} class="icon-btn" use:tooltip={'API'}>
 							<Icon name="braces" size={14} />
