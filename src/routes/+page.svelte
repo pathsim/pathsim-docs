@@ -23,9 +23,9 @@
 				<Icon name="home" size={20} />
 				<span class="action-label">Home</span>
 			</a>
-			<a href={nav.quickstart} class="action-card">
+			<a href={packages.pathsim.gettingStarted} class="action-card">
 				<Icon name="zap" size={20} />
-				<span class="action-label">Quickstart</span>
+				<span class="action-label">Get Started</span>
 			</a>
 			<a href={nav.tryOnline} class="action-card">
 				<Icon name="play" size={20} />

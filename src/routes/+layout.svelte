@@ -1,13 +1,26 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
-	import Icon from '$lib/components/common/Icon.svelte';
-	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { external, nav } from '$lib/config/links';
+	import { page } from '$app/stores';
+	import Tooltip from '$lib/components/common/Tooltip.svelte';
+	import { Header, MobileDrawer } from '$lib/components/layout';
+	import { packageOrder, type PackageId } from '$lib/config/links';
 
 	let { children } = $props();
 
 	let theme = $state<'dark' | 'light'>('dark');
+	let mobileMenuOpen = $state(false);
+
+	// Determine current package from URL
+	let currentPackage = $derived.by(() => {
+		const path = $page.url.pathname;
+		for (const id of packageOrder) {
+			if (path.startsWith(`/${id}`)) {
+				return id;
+			}
+		}
+		return null;
+	});
 
 	onMount(() => {
 		const saved = localStorage.getItem('theme');
@@ -34,6 +47,20 @@
 		document.documentElement.setAttribute('data-theme', theme);
 		localStorage.setItem('theme', theme);
 	}
+
+	function openMobileMenu() {
+		mobileMenuOpen = true;
+	}
+
+	function closeMobileMenu() {
+		mobileMenuOpen = false;
+	}
+
+	// Close mobile menu on navigation
+	$effect(() => {
+		$page.url.pathname;
+		mobileMenuOpen = false;
+	});
 </script>
 
 <svelte:head>
@@ -45,87 +72,24 @@
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
 <div class="app">
-	<header>
-		<div class="header-content">
-			<a href="/" class="logo" use:tooltip={'Docs'}>
-				<img src="/favicon.png" alt="PathSim" />
-			</a>
-			<nav class="header-actions">
-				<a href={nav.home} class="icon-btn" use:tooltip={'Home'}>
-					<Icon name="home" size={14} />
-				</a>
-				<a href={nav.tryOnline} class="icon-btn" use:tooltip={'Editor'}>
-					<Icon name="play" size={14} />
-				</a>
-				<a href={nav.github} class="icon-btn" use:tooltip={'GitHub'}>
-					<Icon name="github" size={14} />
-				</a>
-				<button class="icon-btn" onclick={toggleTheme} use:tooltip={'Toggle theme'}>
-					<Icon name={theme === 'dark' ? 'sun' : 'moon'} size={14} />
-				</button>
-			</nav>
-		</div>
-	</header>
-	<div id="main-content">
+	<Header onMenuClick={openMobileMenu} onThemeToggle={toggleTheme} {theme} />
+	<div id="main-content" class="main-content">
 		{@render children()}
 	</div>
 </div>
 
+<MobileDrawer open={mobileMenuOpen} packageId={currentPackage} onClose={closeMobileMenu} />
+
 <style>
-	.skip-link {
-		position: absolute;
-		top: -100px;
-		left: 0;
-		background: var(--accent);
-		color: white;
-		padding: var(--space-sm) var(--space-md);
-		z-index: 1000;
-	}
-
-	.skip-link:focus {
-		top: 0;
-	}
-
 	.app {
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
 	}
 
-	header {
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: var(--surface-raised);
-		border-bottom: 1px solid var(--border);
-	}
-
-	.header-content {
-		max-width: 1400px;
-		margin: 0 auto;
-		padding: var(--space-sm) var(--space-lg);
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.logo {
-		display: flex;
-		align-items: center;
-	}
-
-	.logo img {
-		height: 24px;
-		width: auto;
-	}
-
-	nav {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-	}
-
-	#main-content {
+	.main-content {
 		flex: 1;
+		display: flex;
+		flex-direction: column;
 	}
 </style>
