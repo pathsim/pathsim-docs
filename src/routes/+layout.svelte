@@ -3,8 +3,9 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
+	import Icon from '$lib/components/common/Icon.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
-	import { packageOrder, type PackageId } from '$lib/config/packages';
+	import { packageOrder, footer, type PackageId } from '$lib/config/packages';
 
 	let { children } = $props();
 
@@ -78,6 +79,24 @@
 	</div>
 </div>
 
+<footer>
+	<div class="footer-content">
+		<a href={footer.home} class="footer-link">
+			<Icon name="home" size={14} />
+			<span>Home</span>
+		</a>
+		<a href={footer.github} class="footer-link">
+			<Icon name="github" size={14} />
+			<span>GitHub</span>
+		</a>
+		<a href={footer.pypi} class="footer-link">
+			<Icon name="package" size={14} />
+			<span>PyPI</span>
+		</a>
+		<span class="footer-text">MIT License</span>
+	</div>
+</footer>
+
 <MobileDrawer open={mobileMenuOpen} packageId={currentPackage} onClose={closeMobileMenu} />
 
 <style>
@@ -85,11 +104,53 @@
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
+		padding-bottom: 40px;
 	}
 
 	.main-content {
 		flex: 1;
 		display: flex;
 		flex-direction: column;
+	}
+
+	footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		background: var(--surface-raised);
+		border-top: 1px solid var(--border);
+		z-index: 100;
+	}
+
+	.footer-content {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: var(--space-sm) var(--space-lg);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-lg);
+	}
+
+	.footer-link {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		color: var(--text-muted);
+		font-size: 11px;
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.footer-link:hover {
+		color: var(--text);
+		text-decoration: none;
+	}
+
+	.footer-text {
+		color: var(--text-muted);
+		font-size: 11px;
+		font-weight: 500;
 	}
 </style>

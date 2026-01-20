@@ -10,13 +10,36 @@
 	let { packageId }: Props = $props();
 
 	let items = $derived(getSidebarItems(packageId));
+	let searchQuery = $state('');
 
 	function isActive(path: string): boolean {
 		return $page.url.pathname === path;
 	}
+
+	function handleSearchKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape' && searchQuery) {
+			searchQuery = '';
+			event.stopPropagation();
+		}
+	}
 </script>
 
 <aside class="sidebar">
+	<div class="search-container">
+		<span class="search-icon"><Icon name="search" size={14} /></span>
+		<input
+			type="text"
+			placeholder="Search docs..."
+			bind:value={searchQuery}
+			class="search-input"
+			onkeydown={handleSearchKeydown}
+		/>
+		{#if searchQuery}
+			<button class="clear-btn" onclick={() => (searchQuery = '')}>
+				<Icon name="x" size={12} />
+			</button>
+		{/if}
+	</div>
 	<nav class="sidebar-nav">
 		{#each items as item}
 			<a href={item.path} class="sidebar-item" class:active={isActive(item.path)}>
@@ -37,6 +60,51 @@
 		flex-direction: column;
 		background: var(--surface);
 		border-right: 1px solid var(--border);
+	}
+
+	.search-container {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		height: var(--header-height);
+		padding: 0 var(--space-md);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.search-icon {
+		color: var(--text-muted);
+		flex-shrink: 0;
+	}
+
+	.search-input {
+		flex: 1;
+		background: transparent;
+		border: none;
+		font-size: var(--font-base);
+		color: var(--text);
+		outline: none;
+		box-shadow: none;
+		padding: 0;
+	}
+
+	.search-input::placeholder {
+		color: var(--text-muted);
+	}
+
+	.clear-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		color: var(--text-muted);
+		padding: 2px;
+		cursor: pointer;
+	}
+
+	.clear-btn:hover {
+		color: var(--text);
 	}
 
 	.sidebar-nav {

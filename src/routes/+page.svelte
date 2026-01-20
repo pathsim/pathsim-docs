@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { packages, nav, footer } from '$lib/config/packages';
+	import { packages, nav } from '$lib/config/packages';
 </script>
 
 <svelte:head>
@@ -127,25 +127,6 @@
 
 </main>
 
-<!-- Footer -->
-<footer>
-	<div class="footer-content">
-		<a href={footer.home} class="footer-link">
-			<Icon name="home" size={14} />
-			<span>Home</span>
-		</a>
-		<a href={footer.github} class="footer-link">
-			<Icon name="github" size={14} />
-			<span>GitHub</span>
-		</a>
-		<a href={footer.pypi} class="footer-link">
-			<Icon name="package" size={14} />
-			<span>PyPI</span>
-		</a>
-		<span class="footer-text">MIT License</span>
-	</div>
-</footer>
-
 <style>
 	main {
 		max-width: 1200px;
@@ -252,52 +233,5 @@
 		height: 100px;
 		width: auto;
 		object-fit: contain;
-	}
-
-	/* Footer */
-	footer {
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		background: var(--surface-raised);
-		border-top: 1px solid var(--border);
-		z-index: 100;
-	}
-
-	/* Add padding to main to account for fixed footer */
-	main {
-		padding-bottom: 48px;
-	}
-
-	.footer-content {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: var(--space-sm) var(--space-lg);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: var(--space-lg);
-	}
-
-	.footer-link {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		color: var(--text-muted);
-		font-size: 11px;
-		font-weight: 500;
-		text-decoration: none;
-	}
-
-	.footer-link:hover {
-		color: var(--text);
-		text-decoration: none;
-	}
-
-	.footer-text {
-		color: var(--text-muted);
-		font-size: 11px;
-		font-weight: 500;
 	}
 </style>

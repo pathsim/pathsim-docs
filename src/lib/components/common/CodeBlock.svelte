@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
@@ -16,6 +16,7 @@
 	let editorView: import('@codemirror/view').EditorView | null = null;
 	let cmModules: CodeMirrorModules | null = null;
 	let loading = $state(true);
+	let observer: MutationObserver | null = null;
 
 	function copyToClipboard() {
 		navigator.clipboard.writeText(code);
@@ -23,39 +24,41 @@
 		setTimeout(() => (copied = false), 2000);
 	}
 
-	onMount(async () => {
+	onMount(() => {
 		if (!editorContainer) return;
 
-		cmModules = await loadCodeMirrorModules();
+		loadCodeMirrorModules().then((modules) => {
+			cmModules = modules;
 
-		const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+			const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
 
-		editorView = new cmModules.EditorView({
-			doc: code,
-			extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
-			parent: editorContainer
+			editorView = new cmModules.EditorView({
+				doc: code,
+				extensions: createEditorExtensions(cmModules, isDark, { readOnly: true }),
+				parent: editorContainer!
+			});
+
+			loading = false;
+
+			// Watch for theme changes
+			observer = new MutationObserver(() => {
+				if (editorView && cmModules && editorContainer) {
+					const newIsDark = document.documentElement.getAttribute('data-theme') !== 'light';
+					editorView.destroy();
+					editorView = new cmModules.EditorView({
+						doc: code,
+						extensions: createEditorExtensions(cmModules, newIsDark, { readOnly: true }),
+						parent: editorContainer
+					});
+				}
+			});
+			observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 		});
+	});
 
-		loading = false;
-
-		// Watch for theme changes
-		const observer = new MutationObserver(() => {
-			if (editorView && cmModules && editorContainer) {
-				const newIsDark = document.documentElement.getAttribute('data-theme') !== 'light';
-				editorView.destroy();
-				editorView = new cmModules.EditorView({
-					doc: code,
-					extensions: createEditorExtensions(cmModules, newIsDark, { readOnly: true }),
-					parent: editorContainer
-				});
-			}
-		});
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-		return () => {
-			observer.disconnect();
-			editorView?.destroy();
-		};
+	onDestroy(() => {
+		observer?.disconnect();
+		editorView?.destroy();
 	});
 </script>
 
