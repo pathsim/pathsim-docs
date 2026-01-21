@@ -143,11 +143,11 @@
 		max-width: 100%;
 		height: auto;
 		border-radius: var(--radius-sm);
-		background: white;
+		background: transparent;
 	}
 
 	.output-image.svg {
-		background: white;
+		background: transparent;
 		border-radius: var(--radius-sm);
 		margin: var(--space-md);
 	}
