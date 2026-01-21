@@ -31,43 +31,55 @@
 		breaks: false
 	});
 
-	// Placeholder for protected math blocks
-	const mathPlaceholders = new Map<string, { content: string; isDisplay: boolean }>();
+	// Store for math blocks extracted from markdown
+	let mathBlocks = $state<Map<string, { content: string; isDisplay: boolean }>>(new Map());
 
 	/**
 	 * Protect math blocks from marked processing
-	 * Replaces $$...$$ and $...$ with placeholders, restores after marked
+	 * Replaces $$...$$ and $...$ with placeholders, returns map of placeholders
 	 */
-	function protectMath(text: string): string {
-		mathPlaceholders.clear();
+	function protectMath(text: string): { text: string; blocks: Map<string, { content: string; isDisplay: boolean }> } {
+		const blocks = new Map<string, { content: string; isDisplay: boolean }>();
 		let counter = 0;
 
 		// Protect display math first ($$...$$) - can span multiple lines
 		text = text.replace(/\$\$([\s\S]*?)\$\$/g, (_, content) => {
-			const id = `__MATH_DISPLAY_${counter++}__`;
-			mathPlaceholders.set(id, { content: content.trim(), isDisplay: true });
+			const id = `MATHDISPLAY${counter++}ENDMATH`;
+			blocks.set(id, { content: content.trim(), isDisplay: true });
 			return id;
 		});
 
 		// Protect inline math ($...$) - single line only
 		text = text.replace(/\$([^\s$][^$]*[^\s$]|\S)\$/g, (_, content) => {
-			const id = `__MATH_INLINE_${counter++}__`;
-			mathPlaceholders.set(id, { content: content.trim(), isDisplay: false });
+			const id = `MATHINLINE${counter++}ENDMATH`;
+			blocks.set(id, { content: content.trim(), isDisplay: false });
 			return id;
 		});
 
-		return text;
+		return { text, blocks };
 	}
 
+	// Convert markdown to HTML, then process cross-references
+	let html = $derived.by(() => {
+		if (!markdown?.trim()) return '';
+		// Protect math blocks before marked processes them
+		const { text: protected_, blocks } = protectMath(markdown);
+		mathBlocks = blocks;
+		const rawHtml = marked.parse(protected_, { async: false }) as string;
+		return processCrossRefs(rawHtml);
+	});
+
 	/**
-	 * Restore math placeholders with KaTeX-rendered HTML
+	 * Render math by replacing placeholders with KaTeX HTML
 	 */
-	async function restoreMath(html: string): Promise<string> {
-		if (mathPlaceholders.size === 0) return html;
+	async function renderMath() {
+		if (!container || mathBlocks.size === 0) return;
 
 		const k = await loadKatex();
 
-		for (const [id, { content, isDisplay }] of mathPlaceholders) {
+		let innerHTML = container.innerHTML;
+
+		for (const [id, { content, isDisplay }] of mathBlocks) {
 			try {
 				const rendered = k.default.renderToString(content, {
 					displayMode: isDisplay,
@@ -80,34 +92,15 @@
 					? `<div class="katex-display">${rendered}</div>`
 					: `<span class="katex-inline">${rendered}</span>`;
 
-				html = html.replace(id, wrapper);
+				// Replace placeholder (may be wrapped in <p> tags by marked)
+				innerHTML = innerHTML.replace(new RegExp(`(<p>)?${id}(</p>)?`, 'g'), wrapper);
 			} catch (e) {
 				console.warn('KaTeX error for:', content, e);
-				html = html.replace(id, `<code class="katex-error">${content}</code>`);
+				innerHTML = innerHTML.replace(new RegExp(`(<p>)?${id}(</p>)?`, 'g'), `<code class="katex-error">${content}</code>`);
 			}
 		}
 
-		return html;
-	}
-
-	// Convert markdown to HTML, then process cross-references
-	let html = $derived.by(() => {
-		if (!markdown?.trim()) return '';
-		// Protect math blocks before marked processes them
-		const protected_ = protectMath(markdown);
-		const rawHtml = marked.parse(protected_, { async: false }) as string;
-		return processCrossRefs(rawHtml);
-	});
-
-	/**
-	 * Render math by restoring placeholders with KaTeX HTML
-	 */
-	async function renderMath() {
-		if (!container) return;
-
-		// Restore math placeholders in the container's HTML
-		const restoredHtml = await restoreMath(container.innerHTML);
-		container.innerHTML = restoredHtml;
+		container.innerHTML = innerHTML;
 	}
 
 	/**
