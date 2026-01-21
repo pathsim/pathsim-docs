@@ -59,7 +59,6 @@ function buildSearchIndex(): SearchResult[] {
 
 				// Add methods
 				for (const method of cls.methods) {
-					if (method.name.startsWith('_') && method.name !== '__init__') continue;
 					results.push({
 						type: 'method',
 						name: method.name,

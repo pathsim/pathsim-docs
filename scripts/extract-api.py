@@ -63,7 +63,7 @@ CONFIG = {
             "pathsim.optim",
             "pathsim.utils",
         ],
-        "skip_private": True,
+        "skip_private": False,
         "skip_patterns": ["_constants", "_version", "__pycache__"],
     },
     "chem": {
@@ -74,7 +74,7 @@ CONFIG = {
             "pathsim_chem",
             "pathsim_chem.tritium",
         ],
-        "skip_private": True,
+        "skip_private": False,
         "skip_patterns": ["_version", "__pycache__"],
     },
     "vehicle": {
@@ -84,7 +84,7 @@ CONFIG = {
         "root_modules": [
             "pathsim_vehicle",
         ],
-        "skip_private": True,
+        "skip_private": False,
         "skip_patterns": ["_version", "__pycache__"],
     },
 }

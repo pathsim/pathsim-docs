@@ -28,8 +28,8 @@
 	let editorLoading = $state(false);
 
 	// Filter methods - skip __init__ since parameters are in docstring
-	let publicMethods = $derived(
-		cls.methods.filter((m) => m.name !== '__init__' && !m.name.startsWith('_'))
+	let methods = $derived(
+		cls.methods.filter((m) => m.name !== '__init__')
 	);
 
 	function toggleView(e: MouseEvent | KeyboardEvent) {
@@ -137,11 +137,11 @@
 					<DocstringRenderer html={cls.docstring_html} />
 				{/if}
 
-				{#if publicMethods.length > 0}
+				{#if methods.length > 0}
 					<div class="methods-section">
 						<div class="label-uppercase methods-header">Methods</div>
 						<div class="methods-list">
-							{#each publicMethods as method}
+							{#each methods as method}
 								<FunctionDoc func={method} isMethod={true} />
 							{/each}
 						</div>

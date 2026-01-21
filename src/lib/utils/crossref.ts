@@ -56,8 +56,6 @@ function buildCrossRefIndex(): Map<string, CrossRefTarget> {
 
 				// Add methods
 				for (const method of cls.methods) {
-					if (method.name.startsWith('_') && method.name !== '__init__') continue;
-
 					const methodTarget: CrossRefTarget = {
 						name: method.name,
 						type: 'method',
