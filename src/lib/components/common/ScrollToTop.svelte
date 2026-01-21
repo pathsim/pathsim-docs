@@ -62,7 +62,7 @@
 	}
 
 	.scroll-to-top:hover {
-		color: var(--text);
 		border-color: var(--accent);
+		box-shadow: var(--shadow-md), 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 	}
 </style>
