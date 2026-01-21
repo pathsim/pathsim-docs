@@ -1,7 +1,7 @@
 <script lang="ts">
 	/**
 	 * ExamplesToc - Table of contents for examples page
-	 * Shows categories with nested examples
+	 * Shows categories with nested examples (styled like ApiToc)
 	 */
 	import Icon from '$lib/components/common/Icon.svelte';
 	import type { GroupedExamples } from '$lib/stores/examplesContext';
@@ -13,7 +13,7 @@
 
 	let { groups, packageId }: Props = $props();
 
-	// Track expanded categories
+	// Track expanded categories (all expanded by default)
 	let expandedCategories = $state<Set<string>>(new Set(groups.map((g) => g.category.id)));
 
 	// Track active item from scroll position
@@ -55,7 +55,7 @@
 			}
 		);
 
-		// Observe all category headings and example tiles
+		// Observe all category headings
 		for (const group of groups) {
 			const catEl = document.getElementById(group.category.id);
 			if (catEl) observer.observe(catEl);
@@ -66,31 +66,31 @@
 </script>
 
 <div class="examples-toc">
-	<div class="label-uppercase toc-header">On this page</div>
-	<nav class="toc-nav">
+	<div class="label-uppercase examples-toc-header">On this page</div>
+	<nav class="examples-toc-nav">
 		{#each groups as group}
 			{@const isExpanded = expandedCategories.has(group.category.id)}
-			<div class="toc-group">
+			<div class="examples-toc-item">
 				<button
-					class="toc-category"
+					class="examples-toc-node has-children"
 					class:active={activeId === group.category.id}
 					onclick={() => {
 						scrollTo(group.category.id);
 						toggleCategory(group.category.id);
 					}}
 				>
-					<span class="toc-icon" class:expanded={isExpanded}>
+					<span class="examples-toc-icon" class:expanded={isExpanded}>
 						<Icon name="chevron-down" size={12} />
 					</span>
-					<span>{group.category.title}</span>
+					<span class="examples-toc-name">{group.category.title}</span>
 				</button>
 
 				{#if isExpanded}
-					<div class="toc-examples">
+					<div class="examples-toc-children">
 						{#each group.notebooks as notebook}
 							<a
 								href="/{packageId}/examples/{notebook.slug}"
-								class="toc-example"
+								class="examples-toc-example"
 							>
 								{notebook.title}
 							</a>
@@ -110,29 +110,31 @@
 		border-top: 1px solid var(--border);
 	}
 
-	.toc-header {
+	.examples-toc-header {
 		margin-bottom: var(--space-sm);
 	}
 
-	.toc-nav {
+	.examples-toc-nav {
 		display: flex;
 		flex-direction: column;
 		gap: 1px;
 	}
 
-	.toc-group {
+	.examples-toc-item {
 		display: flex;
 		flex-direction: column;
 	}
 
-	.toc-category {
+	.examples-toc-node {
 		display: flex;
 		align-items: center;
+		justify-content: flex-start;
 		gap: var(--space-xs);
 		width: 100%;
-		padding: var(--space-xs) 0;
+		padding: var(--space-xs) var(--space-sm);
 		background: none;
 		border: none;
+		border-radius: var(--radius-sm);
 		font-size: var(--font-sm);
 		color: var(--text-muted);
 		text-align: left;
@@ -140,15 +142,17 @@
 		transition: all var(--transition-fast);
 	}
 
-	.toc-category:hover {
+	.examples-toc-node:hover {
 		color: var(--text);
+		background: var(--surface-hover);
 	}
 
-	.toc-category.active {
+	.examples-toc-node.active {
 		color: var(--accent);
+		background: var(--accent-bg);
 	}
 
-	.toc-icon {
+	.examples-toc-icon {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -156,28 +160,45 @@
 		transition: transform var(--transition-fast);
 	}
 
-	.toc-icon.expanded {
+	.examples-toc-icon.expanded {
 		transform: rotate(0deg);
 	}
 
-	.toc-examples {
+	.examples-toc-name {
+		font-size: var(--font-xs);
+	}
+
+	.examples-toc-children {
 		display: flex;
 		flex-direction: column;
 		gap: 1px;
-		padding-left: calc(12px + var(--space-xs));
 	}
 
-	.toc-example {
-		display: block;
-		padding: var(--space-xs) 0;
+	.examples-toc-example {
+		display: flex;
+		justify-content: flex-start;
+		width: 100%;
+		padding: var(--space-xs) var(--space-sm);
+		padding-left: calc(var(--space-sm) + 12px + var(--space-xs));
+		background: none;
+		border: none;
+		border-radius: var(--radius-sm);
 		font-size: var(--font-xs);
 		color: var(--text-muted);
+		text-align: left;
 		text-decoration: none;
-		transition: color var(--transition-fast);
+		cursor: pointer;
+		transition: all var(--transition-fast);
 	}
 
-	.toc-example:hover {
+	.examples-toc-example:hover {
 		color: var(--text);
+		background: var(--surface-hover);
 		text-decoration: none;
+	}
+
+	.examples-toc-example.active {
+		color: var(--accent);
+		background: var(--accent-bg);
 	}
 </style>
