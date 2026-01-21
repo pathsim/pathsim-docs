@@ -55,7 +55,7 @@
 				API reference, tutorials, and examples for PathSim and its domain-specific toolboxes.
 			</p>
 			<div class="hero-search">
-				<div class="search-box">
+				<div class="search-box elevated">
 					<Icon name="search" size={16} />
 					<input
 						type="text"
@@ -120,7 +120,7 @@
 		<div class="package-grid">
 			{#each packageOrder as pkgId}
 				{@const pkg = packages[pkgId]}
-				<div class="package-card">
+				<div class="package-card elevated">
 					<div class="panel-header">
 						<span>{pkg.shortName}</span>
 						<div class="header-actions">
