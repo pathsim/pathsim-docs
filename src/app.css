@@ -878,6 +878,12 @@ input::placeholder {
 	outline-offset: 2px;
 }
 
+/* Remove focus outline from CodeMirror (has its own cursor) */
+.cm-editor:focus-visible,
+.cm-editor *:focus-visible {
+	outline: none;
+}
+
 /* Skip link for accessibility */
 .skip-link {
 	position: absolute;
