@@ -296,7 +296,8 @@ code {
 
 pre {
 	font-family: var(--font-mono);
-	font-size: var(--font-sm);
+	font-size: 12px;
+	font-weight: 500; /* Match CodeMirror */
 	line-height: 1.5;
 	color: var(--text);
 	white-space: pre-wrap;
