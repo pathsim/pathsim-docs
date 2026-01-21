@@ -26,6 +26,6 @@
 
 <style>
 	.raw-cell {
-		padding: var(--space-md) 0;
+		/* Spacing handled by parent .notebook-cells gap */
 	}
 </style>

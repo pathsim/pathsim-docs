@@ -41,6 +41,6 @@
 
 <style>
 	.code-cell-wrapper {
-		margin-bottom: var(--space-lg);
+		/* Spacing handled by parent .notebook-cells gap */
 	}
 </style>

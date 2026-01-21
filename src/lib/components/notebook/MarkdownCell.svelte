@@ -19,8 +19,6 @@
 
 <style>
 	.markdown-cell {
-		padding: var(--space-md) 0;
+		/* Spacing handled by parent .notebook-cells gap */
 	}
-
-	/* H1 styling now matches section headers - defined in app.css */
 </style>
