@@ -54,7 +54,8 @@ CONFIG = {
         "package": "pathsim",
         "display_name": "PathSim",
         "source_path": PACKAGE_PATHS["pathsim"],
-        "modules": [
+        # Root modules to scan (will auto-discover all submodules)
+        "root_modules": [
             "pathsim",
             "pathsim.blocks",
             "pathsim.solvers",
@@ -63,27 +64,28 @@ CONFIG = {
             "pathsim.utils",
         ],
         "skip_private": True,
-        "skip_modules": ["pathsim._constants", "pathsim._version"],
+        "skip_patterns": ["_constants", "_version", "__pycache__"],
     },
     "chem": {
         "package": "pathsim_chem",
         "display_name": "PathSim-Chem",
         "source_path": PACKAGE_PATHS["pathsim_chem"],
-        "modules": [
+        "root_modules": [
             "pathsim_chem",
+            "pathsim_chem.tritium",
         ],
         "skip_private": True,
-        "skip_modules": ["pathsim_chem._version"],
+        "skip_patterns": ["_version", "__pycache__"],
     },
     "vehicle": {
         "package": "pathsim_vehicle",
         "display_name": "PathSim-Vehicle",
         "source_path": PACKAGE_PATHS["pathsim_vehicle"],
-        "modules": [
+        "root_modules": [
             "pathsim_vehicle",
         ],
         "skip_private": True,
-        "skip_modules": ["pathsim_vehicle._version"],
+        "skip_patterns": ["_version", "__pycache__"],
     },
 }
 
@@ -225,50 +227,25 @@ def should_skip(name: str, skip_private: bool) -> bool:
     return False
 
 
-def is_defined_in_module(member: griffe.Object, module_path: str, all_modules: list[str]) -> bool:
-    """Check if a member should be documented in this module.
+def should_skip_module(name: str, skip_patterns: list[str]) -> bool:
+    """Check if a module name matches skip patterns."""
+    for pattern in skip_patterns:
+        if pattern in name:
+            return True
+    return False
 
-    Returns True if:
-    - The member is defined directly in this module, OR
-    - The member is defined in a submodule that's not in our extraction list, OR
-    - The member is imported from outside and we're documenting the public API
 
-    Returns False if the member is imported from another module we're explicitly extracting.
-    """
+def is_defined_here(member: griffe.Object, module_path: str) -> bool:
+    """Check if a member is actually defined in this module (not imported)."""
     try:
-        # Get the canonical path where the object is defined
         if hasattr(member, 'canonical_path'):
             canonical = str(member.canonical_path)
-            # Get the parent module path (e.g., "pathsim.blocks.integrator" from "pathsim.blocks.integrator.Integrator")
+            # The canonical path includes the object name, so get parent module
             source_module = canonical.rsplit('.', 1)[0] if '.' in canonical else canonical
-
-            # If defined directly in this module, include it
-            if source_module == module_path:
-                return True
-
-            # If the source module is a submodule of current module, include it
-            # (the submodules aren't in our extraction list, so document here)
-            if source_module.startswith(module_path + "."):
-                # Only skip if we're explicitly extracting that submodule
-                if source_module in all_modules:
-                    return False
-                return True
-
-            # Imported from a different module tree entirely
-            # Skip if that module is in our extraction list (will be documented there)
-            if source_module in all_modules:
-                return False
-
-            # Check if source is a submodule of something we're extracting
-            for mod in all_modules:
-                if mod != module_path and source_module.startswith(mod + "."):
-                    return False  # Will be documented under that module
-
-            return True  # External import or not in our extraction list
-
-        return True  # If we can't determine, include it
+            return source_module == module_path
+        return True
     except Exception:
-        return True  # If we can't determine, include it
+        return True
 
 
 def get_signature_str(obj: griffe.Object) -> str | None:
@@ -353,22 +330,16 @@ class APIExtractor:
 
     def __init__(self, config: dict):
         self.config = config
-        source_path = config["source_path"]
-
-        # Initialize loader - disable inspection to avoid import errors
-        self.loader = GriffeLoader(
-            search_paths=[str(source_path)] if source_path.exists() else None,
-            docstring_parser="numpy",
-            allow_inspection=False,  # Don't try to import modules
-        )
+        self.source_path = config["source_path"]
+        self.skip_private = config.get("skip_private", True)
+        self.skip_patterns = config.get("skip_patterns", [])
 
     def extract(self) -> dict:
         """Extract API documentation for configured package."""
         package_name = self.config["package"]
-        source_path = self.config["source_path"]
 
-        if not source_path.exists():
-            print(f"  Warning: Source path not found: {source_path}")
+        if not self.source_path.exists():
+            print(f"  Warning: Source path not found: {self.source_path}")
             return self._empty_result()
 
         result = {
@@ -377,82 +348,63 @@ class APIExtractor:
             "modules": {},
         }
 
-        # Load package - this may fail on some modules, that's OK
-        try:
-            package = self.loader.load(package_name)
-        except Exception as e:
-            print(f"  Error loading {package_name}: {e}")
-            # Try to load individual modules as files
-            return self._extract_from_files(result)
+        # Discover and extract all modules
+        for root_module in self.config["root_modules"]:
+            discovered = self._discover_modules(root_module)
+            for module_path in discovered:
+                if should_skip_module(module_path, self.skip_patterns):
+                    continue
 
-        # Extract each configured module
-        for module_path in self.config["modules"]:
-            if module_path in self.config.get("skip_modules", []):
-                continue
-
-            try:
-                module_data = self._extract_module(package, module_path)
-                if module_data:
-                    result["modules"][module_path] = module_data
-                    print(f"    Extracted: {module_path}")
-            except Exception as e:
-                print(f"    Warning: Failed to extract {module_path}: {e}")
-                # Try fallback to file-based extraction
-                fallback = self._extract_module_from_file(module_path)
-                if fallback:
-                    result["modules"][module_path] = fallback
-                    print(f"    Extracted (fallback): {module_path}")
+                try:
+                    module_data = self._extract_module(module_path)
+                    if module_data and (module_data["classes"] or module_data["functions"] or module_data["docstring_html"]):
+                        result["modules"][module_path] = module_data
+                        class_count = len(module_data["classes"])
+                        func_count = len(module_data["functions"])
+                        print(f"    {module_path}: {class_count} classes, {func_count} functions")
+                except Exception as e:
+                    print(f"    Warning: Failed to extract {module_path}: {e}")
 
         return result
 
-    def _extract_from_files(self, result: dict) -> dict:
-        """Fallback: extract from individual files."""
-        source_path = self.config["source_path"]
-        package_name = self.config["package"]
+    def _discover_modules(self, root_module: str) -> list[str]:
+        """Discover all modules under a root module path."""
+        modules = []
+        parts = root_module.split(".")
+        module_dir = self.source_path / Path(*parts)
 
-        for module_path in self.config["modules"]:
-            if module_path in self.config.get("skip_modules", []):
-                continue
+        if not module_dir.exists():
+            return modules
 
-            fallback = self._extract_module_from_file(module_path)
-            if fallback:
-                result["modules"][module_path] = fallback
-                print(f"    Extracted (file): {module_path}")
+        # If it's a directory (package), scan for all .py files
+        if module_dir.is_dir():
+            # Add the package itself (from __init__.py)
+            init_file = module_dir / "__init__.py"
+            if init_file.exists():
+                modules.append(root_module)
 
-        return result
+            # Add all .py files as submodules
+            for py_file in sorted(module_dir.glob("*.py")):
+                if py_file.name == "__init__.py":
+                    continue
+                if self.skip_private and py_file.stem.startswith("_"):
+                    continue
 
-    def _extract_module_from_file(self, module_path: str) -> dict | None:
-        """Extract module by loading its file directly."""
-        source_path = self.config["source_path"]
-        package_name = self.config["package"]
+                submodule = f"{root_module}.{py_file.stem}"
+                if not should_skip_module(submodule, self.skip_patterns):
+                    modules.append(submodule)
 
-        # Convert module path to file path
-        parts = module_path.split(".")
-        rel_path = Path(*parts)
+        return modules
 
-        # Try both package and module paths
-        candidates = [
-            source_path / rel_path / "__init__.py",
-            source_path / f"{rel_path}.py",
-        ]
-
-        file_path = None
-        for candidate in candidates:
-            if candidate.exists():
-                file_path = candidate
-                break
-
-        if not file_path:
-            return None
-
+    def _extract_module(self, module_path: str) -> dict | None:
+        """Extract a single module."""
         try:
-            # Create a fresh loader for this file
             loader = GriffeLoader(
-                search_paths=[str(source_path)],
+                search_paths=[str(self.source_path)],
                 docstring_parser="numpy",
                 allow_inspection=False,
             )
-            module = loader.load(str(file_path))
+            module = loader.load(module_path)
             return self._extract_module_obj(module, module_path)
         except Exception as e:
             return None
@@ -465,20 +417,8 @@ class APIExtractor:
             "modules": {},
         }
 
-    def _extract_module(self, package: griffe.Object, module_path: str) -> dict | None:
-        """Extract a single module from loaded package."""
-        parts = module_path.split(".")
-        obj = package
-
-        for part in parts[1:]:
-            if not hasattr(obj, "members") or part not in obj.members:
-                return None
-            obj = obj.members[part]
-
-        return self._extract_module_obj(obj, module_path)
-
     def _extract_module_obj(self, obj: griffe.Object, module_path: str) -> dict | None:
-        """Extract module data from griffe object."""
+        """Extract module data from griffe object - only items defined here."""
         docstring = obj.docstring.value if obj.docstring else ""
 
         module_data = {
@@ -487,122 +427,33 @@ class APIExtractor:
             "docstring_html": rst_to_html(docstring),
             "classes": [],
             "functions": [],
-            "submodules": [],
         }
-
-        skip_private = self.config.get("skip_private", True)
-        all_modules = self.config.get("modules", [])
-
-        # Track what we've already extracted to avoid duplicates
-        extracted_classes = set()
-        extracted_functions = set()
 
         if not hasattr(obj, "members"):
             return module_data
 
-        # First, extract from the module's direct members (what's exported in __init__.py)
         for name, member in obj.members.items():
-            if should_skip(name, skip_private):
+            if should_skip(name, self.skip_private):
+                continue
+
+            # Only extract if defined in THIS module (not imported)
+            if not is_defined_here(member, module_path):
                 continue
 
             try:
-                if member.is_module:
-                    full_name = f"{module_path}.{name}"
-                    if full_name not in self.config.get("skip_modules", []):
-                        module_data["submodules"].append(name)
-
-                elif member.is_class:
-                    # Skip classes that are just imported from modules we're also extracting
-                    if not is_defined_in_module(member, module_path, all_modules):
-                        continue
+                if member.is_class:
                     class_data = self._extract_class(member)
                     if class_data:
                         module_data["classes"].append(class_data)
-                        extracted_classes.add(class_data["name"])
 
                 elif member.is_function:
-                    # Skip functions that are just imported from modules we're also extracting
-                    if not is_defined_in_module(member, module_path, all_modules):
-                        continue
                     func_data = self._extract_function(member)
                     if func_data:
                         module_data["functions"].append(func_data)
-                        extracted_functions.add(func_data["name"])
             except Exception:
                 continue
 
-        # Now, scan all .py files in the module directory to extract classes/functions
-        # that aren't exported in __init__.py
-        self._extract_from_submodule_files(
-            module_path, module_data, extracted_classes, extracted_functions
-        )
-
         return module_data
-
-    def _extract_from_submodule_files(
-        self,
-        module_path: str,
-        module_data: dict,
-        extracted_classes: set,
-        extracted_functions: set
-    ) -> None:
-        """Scan all .py files in a module directory and extract classes/functions."""
-        source_path = self.config["source_path"]
-        skip_private = self.config.get("skip_private", True)
-
-        # Convert module path to directory path
-        parts = module_path.split(".")
-        module_dir = source_path / Path(*parts)
-
-        if not module_dir.is_dir():
-            return
-
-        # Find all .py files (excluding __init__.py and private modules)
-        for py_file in module_dir.glob("*.py"):
-            if py_file.name == "__init__.py":
-                continue
-            if skip_private and py_file.stem.startswith("_"):
-                continue
-
-            submodule_name = f"{module_path}.{py_file.stem}"
-
-            try:
-                # Load the submodule using griffe
-                loader = GriffeLoader(
-                    search_paths=[str(source_path)],
-                    docstring_parser="numpy",
-                    allow_inspection=False,
-                )
-                submodule = loader.load(submodule_name)
-
-                # Extract classes and functions from this submodule
-                if hasattr(submodule, "members"):
-                    for name, member in submodule.members.items():
-                        if should_skip(name, skip_private):
-                            continue
-
-                        try:
-                            if member.is_class and name not in extracted_classes:
-                                class_data = self._extract_class(member)
-                                if class_data:
-                                    # Add source module info
-                                    class_data["source_module"] = py_file.stem
-                                    module_data["classes"].append(class_data)
-                                    extracted_classes.add(name)
-
-                            elif member.is_function and name not in extracted_functions:
-                                func_data = self._extract_function(member)
-                                if func_data:
-                                    # Add source module info
-                                    func_data["source_module"] = py_file.stem
-                                    module_data["functions"].append(func_data)
-                                    extracted_functions.add(name)
-                        except Exception:
-                            continue
-
-            except Exception as e:
-                # If we can't load the submodule, continue to next file
-                continue
 
     def _extract_class(self, cls: griffe.Class) -> dict | None:
         """Extract class documentation."""
@@ -802,7 +653,6 @@ def write_typescript_index(packages: list[str], output_dir: Path) -> None:
         "  docstring_html: string;",
         "  classes: APIClass[];",
         "  functions: APIFunction[];",
-        "  submodules: string[];",
         "}",
         "",
         "export interface APIPackage {",

@@ -7,8 +7,7 @@
       "description": "PathSim-Vehicle: Vehicle Dynamics Blocks for PathSim",
       "docstring_html": "<p>PathSim-Vehicle: Vehicle Dynamics Blocks for PathSim</p>\n<p>A toolbox providing specialized blocks for vehicle dynamics simulations\nin the PathSim framework.</p>\n",
       "classes": [],
-      "functions": [],
-      "submodules": []
+      "functions": []
     }
   }
 }

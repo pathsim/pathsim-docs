@@ -7,34 +7,62 @@
 		onNavigate?: (id: string) => void;
 	}
 
+	interface TreeNode {
+		name: string;
+		fullPath: string;
+		module: APIModule | null;
+		children: Map<string, TreeNode>;
+	}
+
 	let { modules, onNavigate }: Props = $props();
 
-	// Group modules by top-level (e.g., pathsim.blocks vs pathsim)
-	let moduleGroups = $derived.by(() => {
-		const groups: Record<string, APIModule[]> = {};
+	// Build a tree structure from flat module list
+	let moduleTree = $derived.by(() => {
+		const root: TreeNode = {
+			name: '',
+			fullPath: '',
+			module: null,
+			children: new Map()
+		};
+
 		for (const mod of modules) {
 			const parts = mod.name.split('.');
-			const groupKey = parts.length > 1 ? parts.slice(0, 2).join('.') : mod.name;
-			if (!groups[groupKey]) {
-				groups[groupKey] = [];
+			let current = root;
+
+			for (let i = 0; i < parts.length; i++) {
+				const part = parts[i];
+				const fullPath = parts.slice(0, i + 1).join('.');
+
+				if (!current.children.has(part)) {
+					current.children.set(part, {
+						name: part,
+						fullPath,
+						module: null,
+						children: new Map()
+					});
+				}
+				current = current.children.get(part)!;
 			}
-			groups[groupKey].push(mod);
+
+			// Assign the module to the leaf node
+			current.module = mod;
 		}
-		return groups;
+
+		return root;
 	});
 
-	// Track expanded state for each module group
+	// Track expanded state for each group path
 	let expandedGroups = $state<Set<string>>(new Set());
 
 	// Track active element (from scroll position)
 	let activeId = $state<string | null>(null);
 
-	function toggleGroup(groupName: string) {
+	function toggleGroup(path: string) {
 		const newExpanded = new Set(expandedGroups);
-		if (newExpanded.has(groupName)) {
-			newExpanded.delete(groupName);
+		if (newExpanded.has(path)) {
+			newExpanded.delete(path);
 		} else {
-			newExpanded.add(groupName);
+			newExpanded.add(path);
 		}
 		expandedGroups = newExpanded;
 	}
@@ -52,11 +80,26 @@
 		return moduleName.replace(/\./g, '-');
 	}
 
+	// Get sorted children entries
+	function getSortedChildren(node: TreeNode): [string, TreeNode][] {
+		return Array.from(node.children.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+	}
+
+	// Check if a node has any content (classes or functions) in itself or descendants
+	function hasContent(node: TreeNode): boolean {
+		if (node.module && (node.module.classes.length > 0 || node.module.functions.length > 0)) {
+			return true;
+		}
+		for (const child of node.children.values()) {
+			if (hasContent(child)) return true;
+		}
+		return false;
+	}
+
 	// Set up intersection observer to track active section
 	$effect(() => {
 		if (typeof window === 'undefined') return;
 
-		// Find the scroll container (.doc-main)
 		const scrollContainer = document.querySelector('.doc-main');
 
 		const observer = new IntersectionObserver(
@@ -89,48 +132,82 @@
 	});
 </script>
 
+{#snippet treeItem(node: TreeNode, depth: number)}
+	{@const hasChildren = node.children.size > 0}
+	{@const isExpanded = expandedGroups.has(node.fullPath)}
+	{@const nodeId = getModuleId(node.fullPath)}
+	{@const hasClasses = node.module?.classes && node.module.classes.length > 0}
+	{@const hasFunctions = node.module?.functions && node.module.functions.length > 0}
+	{@const hasModuleContent = hasClasses || hasFunctions}
+
+	{#if hasContent(node)}
+		<div class="api-toc-item" style="--depth: {depth}">
+			<button
+				class="api-toc-node"
+				class:active={activeId === nodeId}
+				class:has-children={hasChildren || hasModuleContent}
+				onclick={() => {
+					if (node.module) {
+						scrollToElement(nodeId);
+					}
+					if (hasChildren || hasModuleContent) {
+						toggleGroup(node.fullPath);
+					}
+				}}
+			>
+				{#if hasChildren || hasModuleContent}
+					<span class="api-toc-icon" class:expanded={isExpanded}>
+						<Icon name="chevron-down" size={12} />
+					</span>
+				{/if}
+				<span class="api-toc-name">{node.name}</span>
+			</button>
+
+			{#if isExpanded}
+				<div class="api-toc-children">
+					<!-- Child submodules -->
+					{#each getSortedChildren(node) as [, child]}
+						{@render treeItem(child, depth + 1)}
+					{/each}
+
+					<!-- Classes in this module -->
+					{#if hasClasses}
+						{#each node.module!.classes as cls}
+							<button
+								class="api-toc-class"
+								class:active={activeId === cls.name}
+								style="--depth: {depth + 1}"
+								onclick={() => scrollToElement(cls.name)}
+							>
+								{cls.name}
+							</button>
+						{/each}
+					{/if}
+
+					<!-- Functions in this module -->
+					{#if hasFunctions}
+						{#each node.module!.functions as func}
+							<button
+								class="api-toc-function"
+								class:active={activeId === func.name}
+								style="--depth: {depth + 1}"
+								onclick={() => scrollToElement(func.name)}
+							>
+								{func.name}()
+							</button>
+						{/each}
+					{/if}
+				</div>
+			{/if}
+		</div>
+	{/if}
+{/snippet}
+
 <div class="api-toc">
 	<div class="label-uppercase api-toc-header">On this page</div>
 	<nav class="api-toc-nav">
-		{#each Object.entries(moduleGroups) as [groupName, groupModules]}
-			{@const groupId = getModuleId(groupName)}
-			{@const isExpanded = expandedGroups.has(groupName)}
-			{@const hasClasses = groupModules.some((m) => m.classes.length > 0)}
-
-			<div class="api-toc-group">
-				<button
-					class="api-toc-module"
-					class:active={activeId === groupId}
-					class:has-children={hasClasses}
-					onclick={() => {
-						scrollToElement(groupId);
-						if (hasClasses) toggleGroup(groupName);
-					}}
-				>
-					{#if hasClasses}
-						<span class="api-toc-icon" class:expanded={isExpanded}>
-							<Icon name="chevron-down" size={12} />
-						</span>
-					{/if}
-					<span class="api-toc-module-name">{groupName}</span>
-				</button>
-
-				{#if isExpanded && hasClasses}
-					<div class="api-toc-classes">
-						{#each groupModules as mod}
-							{#each mod.classes as cls}
-								<button
-									class="api-toc-class"
-									class:active={activeId === cls.name}
-									onclick={() => scrollToElement(cls.name)}
-								>
-									{cls.name}
-								</button>
-							{/each}
-						{/each}
-					</div>
-				{/if}
-			</div>
+		{#each getSortedChildren(moduleTree) as [, rootNode]}
+			{@render treeItem(rootNode, 0)}
 		{/each}
 	</nav>
 </div>
@@ -150,21 +227,22 @@
 	.api-toc-nav {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
+		gap: 1px;
 	}
 
-	.api-toc-group {
+	.api-toc-item {
 		display: flex;
 		flex-direction: column;
 	}
 
-	.api-toc-module {
+	.api-toc-node {
 		display: flex;
 		align-items: center;
 		justify-content: flex-start;
 		gap: var(--space-xs);
 		width: 100%;
 		padding: var(--space-xs) var(--space-sm);
+		padding-left: calc(var(--space-sm) + var(--depth, 0) * var(--space-md));
 		background: none;
 		border: none;
 		border-radius: var(--radius-sm);
@@ -175,18 +253,18 @@
 		transition: all var(--transition-fast);
 	}
 
-	.api-toc-module:hover {
+	.api-toc-node:hover {
 		color: var(--text);
 		background: var(--surface-hover);
 	}
 
-	.api-toc-module.active {
+	.api-toc-node.active {
 		color: var(--accent);
 		background: var(--accent-bg);
 	}
 
-	.api-toc-module:not(.has-children) {
-		padding-left: calc(var(--space-sm) + 12px + var(--space-xs));
+	.api-toc-node:not(.has-children) {
+		padding-left: calc(var(--space-sm) + 12px + var(--space-xs) + var(--depth, 0) * var(--space-md));
 	}
 
 	.api-toc-icon {
@@ -201,23 +279,24 @@
 		transform: rotate(0deg);
 	}
 
-	.api-toc-module-name {
+	.api-toc-name {
 		font-family: var(--font-mono);
 		font-size: var(--font-xs);
 	}
 
-	.api-toc-classes {
+	.api-toc-children {
 		display: flex;
 		flex-direction: column;
 		gap: 1px;
-		padding-left: calc(var(--space-sm) + 12px + var(--space-xs));
 	}
 
-	.api-toc-class {
+	.api-toc-class,
+	.api-toc-function {
 		display: flex;
 		justify-content: flex-start;
 		width: 100%;
 		padding: var(--space-xs) var(--space-sm);
+		padding-left: calc(var(--space-sm) + 12px + var(--space-xs) + var(--depth, 0) * var(--space-md));
 		background: none;
 		border: none;
 		border-radius: var(--radius-sm);
@@ -229,12 +308,14 @@
 		transition: all var(--transition-fast);
 	}
 
-	.api-toc-class:hover {
+	.api-toc-class:hover,
+	.api-toc-function:hover {
 		color: var(--text);
 		background: var(--surface-hover);
 	}
 
-	.api-toc-class.active {
+	.api-toc-class.active,
+	.api-toc-function.active {
 		color: var(--accent);
 		background: var(--accent-bg);
 	}

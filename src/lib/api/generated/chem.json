@@ -6,6 +6,301 @@
       "name": "pathsim_chem",
       "description": "PathSim-Chem: Chemical Engineering Blocks for PathSim",
       "docstring_html": "<p>PathSim-Chem: Chemical Engineering Blocks for PathSim</p>\n<p>A toolbox providing specialized blocks for chemical engineering simulations\nin the PathSim framework.</p>\n",
+      "classes": [],
+      "functions": []
+    },
+    "pathsim_chem.tritium.bubbler": {
+      "name": "pathsim_chem.tritium.bubbler",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
+        {
+          "name": "Bubbler4",
+          "description": "Tritium bubbling system with sequential vial collection stages.",
+          "docstring_html": "<p>Tritium bubbling system with sequential vial collection stages.</p>\n<p>This block models a tritium collection system used in fusion reactor blanket\npurge gas processing. The system bubbles tritium-containing gas through a series\nof liquid-filled vials to capture and concentrate tritium for measurement and\ninventory tracking.</p>\n<div class=\"section\" id=\"physical-description\">\n<h4>Physical Description</h4>\n<p>The bubbler consists of two parallel processing chains:</p>\n<p><strong>Soluble Chain (Vials 1-2):</strong>\nTritium already in soluble forms (HTO, HT) flows sequentially through\nvials 1 and 2. Each vial has a collection efficiency <span class=\"math\">\\(\\eta_{vial}\\)</span>,\nrepresenting the fraction of tritium that dissolves into the liquid phase\nand is retained.</p>\n<p><strong>Insoluble Chain (Vials 3-4):</strong>\nTritium in insoluble forms (T₂, organically bound) first undergoes catalytic\nconversion to soluble forms with efficiency <span class=\"math\">\\(\\alpha_{conv}\\)</span>. The\nconverted tritium, along with uncaptured soluble tritium from the first chain,\nthen flows through vials 3 and 4 with the same collection efficiency.</p>\n</div>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The system is governed by the following differential equations for the\nvial inventories <span class=\"math\">\\(x_i\\)</span>:</p>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_1}{dt} &amp;= \\eta_{vial} \\cdot u_{sol}\n\\end{equation*}\n</div>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_2}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot u_{sol}\n\\end{equation*}\n</div>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_3}{dt} &amp;= \\eta_{vial} \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{equation*}\n</div>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_4}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{equation*}\n</div>\n<p>The sample output represents uncaptured tritium exiting the system:</p>\n<div class=\"math\">\n\\begin{equation*}\ny_{sample} = (1-\\alpha_{conv}) \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{equation*}\n</div>\n<dl class=\"docutils\">\n<dt>Where:</dt>\n<dd><ul class=\"first last simple\">\n<li><span class=\"math\">\\(u_{sol}\\)</span> = soluble tritium input flow rate</li>\n<li><span class=\"math\">\\(u_{insol}\\)</span> = insoluble tritium input flow rate</li>\n<li><span class=\"math\">\\(\\eta_{vial}\\)</span> = vial collection efficiency</li>\n<li><span class=\"math\">\\(\\alpha_{conv}\\)</span> = conversion efficiency from insoluble to soluble</li>\n<li><span class=\"math\">\\(x_i\\)</span> = tritium inventory in vial i</li>\n</ul>\n</dd>\n</dl>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>conversion_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Conversion efficiency from insoluble to soluble forms (<span class=\"math\">\\(\\alpha_{conv}\\)</span>),\nbetween 0 and 1.</dd>\n<dt>vial_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Collection efficiency of each vial (<span class=\"math\">\\(\\eta_{vial}\\)</span>), between 0 and 1.</dd>\n<dt>replacement_times <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float | list[float] | list[list[float]]</span></dt>\n<dd>Times at which each vial is replaced with a fresh one. If None, no\nreplacement events are created. If a single value is provided, it is\nused for all vials. If a single list of floats is provided, it will be\nused for all vials. If a list of lists is provided, each sublist\ncorresponds to the replacement times for each vial.</dd>\n</dl>\n<p><strong>Notes</strong></p>\n<p>Vial replacement is modeled as instantaneous reset events that set the\ncorresponding vial inventory to zero, simulating the physical replacement\nof a full vial with an empty one.</p>\n</div>\n",
+          "source": "class Bubbler4(DynamicalSystem):\n    \"\"\"\n    Tritium bubbling system with sequential vial collection stages.\n\n    This block models a tritium collection system used in fusion reactor blanket \n    purge gas processing. The system bubbles tritium-containing gas through a series \n    of liquid-filled vials to capture and concentrate tritium for measurement and \n    inventory tracking.\n\n\n    Physical Description\n    --------------------\n    The bubbler consists of two parallel processing chains:\n\n    **Soluble Chain (Vials 1-2):** \n    Tritium already in soluble forms (HTO, HT) flows sequentially through \n    vials 1 and 2. Each vial has a collection efficiency :math:`\\\\eta_{vial}`, \n    representing the fraction of tritium that dissolves into the liquid phase \n    and is retained.\n\n    **Insoluble Chain (Vials 3-4):** \n    Tritium in insoluble forms (T₂, organically bound) first undergoes catalytic \n    conversion to soluble forms with efficiency :math:`\\\\alpha_{conv}`. The \n    converted tritium, along with uncaptured soluble tritium from the first chain, \n    then flows through vials 3 and 4 with the same collection efficiency.\n\n\n    Mathematical Formulation\n    -------------------------\n    The system is governed by the following differential equations for the \n    vial inventories :math:`x_i`:\n\n    .. math::\n\n        \\\\frac{dx_1}{dt} &= \\\\eta_{vial} \\\\cdot u_{sol}\n\n        \\\\frac{dx_2}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot u_{sol}\n\n        \\\\frac{dx_3}{dt} &= \\\\eta_{vial} \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n        \\\\frac{dx_4}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n\n    The sample output represents uncaptured tritium exiting the system:\n\n    .. math::\n\n        y_{sample} = (1-\\\\alpha_{conv}) \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n\n    Where:\n        - :math:`u_{sol}` = soluble tritium input flow rate\n        - :math:`u_{insol}` = insoluble tritium input flow rate  \n        - :math:`\\\\eta_{vial}` = vial collection efficiency\n        - :math:`\\\\alpha_{conv}` = conversion efficiency from insoluble to soluble\n        - :math:`x_i` = tritium inventory in vial i\n\n    Parameters\n    ----------\n    conversion_efficiency : float \n       Conversion efficiency from insoluble to soluble forms (:math:`\\\\alpha_{conv}`), \n       between 0 and 1.\n    vial_efficiency : float \n       Collection efficiency of each vial (:math:`\\\\eta_{vial}`), between 0 and 1.\n    replacement_times : float | list[float] | list[list[float]] \n        Times at which each vial is replaced with a fresh one. If None, no \n        replacement events are created. If a single value is provided, it is \n        used for all vials. If a single list of floats is provided, it will be \n        used for all vials. If a list of lists is provided, each sublist \n        corresponds to the replacement times for each vial.\n\n    Notes\n    -----\n    Vial replacement is modeled as instantaneous reset events that set the \n    corresponding vial inventory to zero, simulating the physical replacement \n    of a full vial with an empty one.\n    \"\"\"\n\n    input_port_labels = {\n        \"sample_in_soluble\": 0,\n        \"sample_in_insoluble\": 1,\n        }\n    output_port_labels = {\n        \"vial1\": 0,\n        \"vial2\": 1,\n        \"vial3\": 2,\n        \"vial4\": 3,\n        \"sample_out\": 4,\n        }\n\n    def __init__(\n        self,\n        conversion_efficiency=0.9,\n        vial_efficiency=0.9,\n        replacement_times=None,\n        ):\n\n        #bubbler parameters\n        self.replacement_times = replacement_times\n        self.vial_efficiency = vial_efficiency\n        self.conversion_efficiency = conversion_efficiency\n\n        #dynamical component, ode rhs\n        def _fn_d(x, u, t):\n\n            #short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            #unpack inputs\n            sol, ins = u\n\n            #compute vial content change rates\n            dv1 = ve * sol\n            dv2 = dv1 * (1 - ve)\n            dv3 = ve * (ce * ins + (1 - ve)**2 * sol)\n            dv4 = dv3 * (1 - ve)\n\n            return np.array([dv1, dv2, dv3, dv4])\n\n        #algebraic output component\n        def _fn_a(x, u, t):\n\n            #short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            #unpack inputs\n            sol, ins = u\n\n            sample_out = (1 - ce) * ins + (1 - ve)**2 * (ce * ins + (1 - ve)**2 * sol)\n\n            return np.hstack([x, sample_out])\n\n        #initialization just like `DynamicalSystem` block\n        super().__init__(\n            func_dyn=_fn_d, \n            func_alg=_fn_a, \n            initial_value=np.zeros(4),\n            )\n\n        #create internal vial reset events\n        self._create_reset_events()\n\n\n    def _create_reset_event_vial(self, i, reset_times):\n        \"\"\"Define event action function and return a `ScheduleList` event \n        per vial `i` that triggers at predefined `reset_times`. \n        \"\"\"\n\n        def reset_vial_i(_):\n            #get the full engine state\n            x = self.engine.get()\n            #set index 'i' to zero\n            x[i] = 0.0\n            #set the full engine state \n            self.engine.set(x)\n\n        return ScheduleList(\n            times_evt=reset_times, \n            func_act=reset_vial_i\n            )\n\n\n    def _create_reset_events(self):\n        \"\"\"Create reset events for all vials based on the replacement times.\n\n        Raises\n        ------\n        ValueError : If reset_times is not valid.\n        \"\"\"\n\n        replacement_times = self.replacement_times\n        self.events = []\n\n        # if reset_times is a single list use it for all vials\n        if replacement_times is None:\n            return \n\n        if isinstance(replacement_times, (int, float)):\n            replacement_times = [replacement_times]\n\n        # if it's a flat list use it for all vials\n        elif isinstance(replacement_times, list) and all(\n            isinstance(t, (int, float)) for t in replacement_times\n            ):\n            replacement_times = [replacement_times] * 4\n\n        elif isinstance(replacement_times, np.ndarray) and replacement_times.ndim == 1:\n            replacement_times = [replacement_times.tolist()] * 4\n\n        elif isinstance(replacement_times, list) and len(replacement_times) != 4:\n            raise ValueError(\n                \"replacement_times must be a single value or a list with the same length as the number of vials\"\n            )\n\n        #create the internal events\n        self.events = [\n            self._create_reset_event_vial(i, ts) for i, ts in enumerate(replacement_times)\n            ]",
+          "bases": [
+            "DynamicalSystem"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    conversion_efficiency=0.9,\n    vial_efficiency=0.9,\n    replacement_times=None,\n    ):\n\n    #bubbler parameters\n    self.replacement_times = replacement_times\n    self.vial_efficiency = vial_efficiency\n    self.conversion_efficiency = conversion_efficiency\n\n    #dynamical component, ode rhs\n    def _fn_d(x, u, t):\n\n        #short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        #unpack inputs\n        sol, ins = u\n\n        #compute vial content change rates\n        dv1 = ve * sol\n        dv2 = dv1 * (1 - ve)\n        dv3 = ve * (ce * ins + (1 - ve)**2 * sol)\n        dv4 = dv3 * (1 - ve)\n\n        return np.array([dv1, dv2, dv3, dv4])\n\n    #algebraic output component\n    def _fn_a(x, u, t):\n\n        #short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        #unpack inputs\n        sol, ins = u\n\n        sample_out = (1 - ce) * ins + (1 - ve)**2 * (ce * ins + (1 - ve)**2 * sol)\n\n        return np.hstack([x, sample_out])\n\n    #initialization just like `DynamicalSystem` block\n    super().__init__(\n        func_dyn=_fn_d, \n        func_alg=_fn_a, \n        initial_value=np.zeros(4),\n        )\n\n    #create internal vial reset events\n    self._create_reset_events()",
+              "signature": "(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)",
+              "parameters": [
+                {
+                  "name": "conversion_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "vial_efficiency",
+                  "type": null,
+                  "default": "0.9",
+                  "description": ""
+                },
+                {
+                  "name": "replacement_times",
+                  "type": null,
+                  "default": "None",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'sample_in_soluble': 0, 'sample_in_insoluble': 1}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'vial1': 0, 'vial2': 1, 'vial3': 2, 'vial4': 3, 'sample_out': 4}"
+            },
+            {
+              "name": "replacement_times",
+              "description": "",
+              "type": null,
+              "value": "replacement_times"
+            },
+            {
+              "name": "vial_efficiency",
+              "description": "",
+              "type": null,
+              "value": "vial_efficiency"
+            },
+            {
+              "name": "conversion_efficiency",
+              "description": "",
+              "type": null,
+              "value": "conversion_efficiency"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "conversion_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Conversion efficiency from insoluble to soluble forms (:math:`\\alpha_{conv}`), between 0 and 1."
+            },
+            {
+              "name": "vial_efficiency",
+              "type": null,
+              "default": "0.9",
+              "description": "Collection efficiency of each vial (:math:`\\eta_{vial}`), between 0 and 1."
+            },
+            {
+              "name": "replacement_times",
+              "type": null,
+              "default": "None",
+              "description": "Times at which each vial is replaced with a fresh one. If None, no replacement events are created. If a single value is provided, it is used for all vials. If a single list of floats is provided, it will be used for all vials. If a list of lists is provided, each sublist corresponds to the replacement times for each vial."
+            }
+          ]
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.tritium.glc": {
+      "name": "pathsim_chem.tritium.glc",
+      "description": "Bubble column gas-liquid contactor model solver.",
+      "docstring_html": "<p>Bubble column gas-liquid contactor model solver.</p>\n<p>This module solves the coupled, non-linear, second-order ordinary differential\nequations that describe tritium transport in a counter-current bubble column,\nbased on the model by C. Malara (1995).</p>\n",
+      "classes": [
+        {
+          "name": "GLC",
+          "description": "Gas Liquid Contactor model block. Inherits from Function block.",
+          "docstring_html": "<p>Gas Liquid Contactor model block. Inherits from Function block.</p>\n<p>More details about the model can be found in: <a class=\"reference external\" href=\"https://doi.org/10.13182/FST95-A30485\">https://doi.org/10.13182/FST95-A30485</a></p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>P_in: Inlet operating pressure [Pa]\nL: Column height [m]\nD: Column diameter [m]\nT: Temperature [K]\ng: Gravitational acceleration [m/s^2], default is 9.81\ninitial_nb_of_elements: Initial number of elements for BVP solver\nBCs: Boundary conditions type, &quot;C-C&quot; (Closed-Closed) or &quot;O-C&quot; (Open-Closed), default is &quot;C-C&quot;</dd>\n</dl>\n",
+          "source": "class GLC(pathsim.blocks.Function):\n    \"\"\"\n    Gas Liquid Contactor model block. Inherits from Function block.\n\n    More details about the model can be found in: https://doi.org/10.13182/FST95-A30485\n\n    Args:\n        P_in: Inlet operating pressure [Pa]\n        L: Column height [m]\n        D: Column diameter [m]\n        T: Temperature [K]\n        g: Gravitational acceleration [m/s^2], default is 9.81\n        initial_nb_of_elements: Initial number of elements for BVP solver\n        BCs: Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\"\n    \"\"\"\n\n    input_port_labels = {\n        \"c_T_in\": 0,\n        \"flow_l\": 1,\n        \"y_T2_inlet\": 2,\n        \"flow_g\": 3,\n        }\n    output_port_labels = {\n        \"c_T_out\": 0,\n        \"y_T2_out\": 1,\n        \"eff\": 2,\n        \"P_out\": 3,\n        \"Q_l\": 4,\n        \"Q_g_out\": 5,\n        \"n_T_out_liquid\": 6,\n        \"n_T_out_gas\": 7,\n        }\n\n    def __init__(\n        self,\n        P_in,\n        L,\n        D,\n        T,\n        BCs,\n        g=const.g,\n        initial_nb_of_elements=20,\n    ):\n        self.params = {\n            \"P_in\": P_in,\n            \"L\": L,\n            \"g\": g,\n            \"D\": D,\n            \"T\": T,\n            \"elements\": initial_nb_of_elements,\n            \"BCs\": BCs,\n        }\n        super().__init__(func=self.func)\n\n    def func(self, c_T_in, flow_l, y_T2_inlet, flow_g):\n        new_params = self.params.copy()\n        new_params[\"c_T_in\"] = c_T_in\n        new_params[\"flow_l\"] = flow_l\n        new_params[\"y_T2_in\"] = y_T2_inlet\n        new_params[\"flow_g\"] = flow_g\n\n        res, _ = solve(new_params)\n\n        c_T_out = res[\"c_T_outlet [mol/m^3]\"]\n        y_T2_out = res[\"y_T2_outlet_gas\"]\n        eff = res[\"extraction_efficiency [fraction]\"]\n        P_total_outlet = res[\"total_gas_P_outlet [Pa]\"]\n        Q_l = res[\"liquid_vol_flow [m^3/s]\"]\n        Q_g_out = res[\"gas_vol_flow_outlet [m^3/s]\"]\n        n_T_out_liquid = res[\"tritium_out_liquid [mol/s]\"]\n        n_T_out_gas = res[\"tritium_out_gas [mol/s]\"]\n\n        return (\n            c_T_out,\n            y_T2_out,\n            eff,\n            P_total_outlet,\n            Q_l,\n            Q_g_out,\n            n_T_out_liquid,\n            n_T_out_gas,\n        )",
+          "bases": [
+            "pathsim.blocks.Function"
+          ],
+          "methods": [
+            {
+              "name": "__init__",
+              "description": "",
+              "docstring_html": "",
+              "source": "def __init__(\n    self,\n    P_in,\n    L,\n    D,\n    T,\n    BCs,\n    g=const.g,\n    initial_nb_of_elements=20,\n):\n    self.params = {\n        \"P_in\": P_in,\n        \"L\": L,\n        \"g\": g,\n        \"D\": D,\n        \"T\": T,\n        \"elements\": initial_nb_of_elements,\n        \"BCs\": BCs,\n    }\n    super().__init__(func=self.func)",
+              "signature": "(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20)",
+              "parameters": [
+                {
+                  "name": "P_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "L",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "D",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "T",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "BCs",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "g",
+                  "type": null,
+                  "default": "const.g",
+                  "description": ""
+                },
+                {
+                  "name": "initial_nb_of_elements",
+                  "type": null,
+                  "default": "20",
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            },
+            {
+              "name": "func",
+              "description": "",
+              "docstring_html": "",
+              "source": "def func(self, c_T_in, flow_l, y_T2_inlet, flow_g):\n    new_params = self.params.copy()\n    new_params[\"c_T_in\"] = c_T_in\n    new_params[\"flow_l\"] = flow_l\n    new_params[\"y_T2_in\"] = y_T2_inlet\n    new_params[\"flow_g\"] = flow_g\n\n    res, _ = solve(new_params)\n\n    c_T_out = res[\"c_T_outlet [mol/m^3]\"]\n    y_T2_out = res[\"y_T2_outlet_gas\"]\n    eff = res[\"extraction_efficiency [fraction]\"]\n    P_total_outlet = res[\"total_gas_P_outlet [Pa]\"]\n    Q_l = res[\"liquid_vol_flow [m^3/s]\"]\n    Q_g_out = res[\"gas_vol_flow_outlet [m^3/s]\"]\n    n_T_out_liquid = res[\"tritium_out_liquid [mol/s]\"]\n    n_T_out_gas = res[\"tritium_out_gas [mol/s]\"]\n\n    return (\n        c_T_out,\n        y_T2_out,\n        eff,\n        P_total_outlet,\n        Q_l,\n        Q_g_out,\n        n_T_out_liquid,\n        n_T_out_gas,\n    )",
+              "signature": "(c_T_in, flow_l, y_T2_inlet, flow_g)",
+              "parameters": [
+                {
+                  "name": "c_T_in",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_l",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "y_T2_inlet",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                },
+                {
+                  "name": "flow_g",
+                  "type": null,
+                  "default": null,
+                  "description": ""
+                }
+              ],
+              "returns": null,
+              "method_type": "method"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "input_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'c_T_in': 0, 'flow_l': 1, 'y_T2_inlet': 2, 'flow_g': 3}"
+            },
+            {
+              "name": "output_port_labels",
+              "description": "",
+              "type": null,
+              "value": "{'c_T_out': 0, 'y_T2_out': 1, 'eff': 2, 'P_out': 3, 'Q_l': 4, 'Q_g_out': 5, 'n_T_out_liquid': 6, 'n_T_out_gas': 7}"
+            },
+            {
+              "name": "params",
+              "description": "",
+              "type": null,
+              "value": "{'P_in': P_in, 'L': L, 'g': g, 'D': D, 'T': T, 'elements': initial_nb_of_elements, 'BCs': BCs}"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "P_in",
+              "type": null,
+              "default": null,
+              "description": "L: Column height [m]"
+            },
+            {
+              "name": "L",
+              "type": null,
+              "default": null,
+              "description": "D: Column diameter [m]"
+            },
+            {
+              "name": "D",
+              "type": null,
+              "default": null,
+              "description": "T: Temperature [K]"
+            },
+            {
+              "name": "T",
+              "type": null,
+              "default": null,
+              "description": "g: Gravitational acceleration [m/s^2], default is 9.81"
+            },
+            {
+              "name": "BCs",
+              "type": null,
+              "default": null,
+              "description": "Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
+            },
+            {
+              "name": "g",
+              "type": null,
+              "default": "const.g",
+              "description": "initial_nb_of_elements: Initial number of elements for BVP solver"
+            },
+            {
+              "name": "initial_nb_of_elements",
+              "type": null,
+              "default": "20",
+              "description": "BCs: Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "solve",
+          "description": "Main solver function for the bubble column model.",
+          "docstring_html": "<p>Main solver function for the bubble column model.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>params (dict): A dictionary of all input parameters for the model,</dt>\n<dd>including operational conditions and geometry.</dd>\n</dl>\n</dd>\n<dt>Returns:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>list: A list containing:</dt>\n<dd><ul class=\"first last simple\">\n<li>dict: A dictionary containing the simulation results.</li>\n<li>scipy.integrate.OdeSolution: The raw solution object from the\nBVP solver.</li>\n</ul>\n</dd>\n</dl>\n</dd>\n</dl>\n",
+          "source": "def solve(params):\n    \"\"\"\n    Main solver function for the bubble column model.\n\n    Args:\n        params (dict): A dictionary of all input parameters for the model,\n                       including operational conditions and geometry.\n\n    Returns:\n        list: A list containing:\n              - dict: A dictionary containing the simulation results.\n              - scipy.integrate.OdeSolution: The raw solution object from the\n                BVP solver.\n    \"\"\"\n    # Adjust inlet gas concentration to avoid numerical instability at zero\n    y_T2_in = max(params[\"y_T2_in\"], 1e-20)\n\n    # 1. Calculate physical, hydrodynamic, and mass transfer properties\n    phys_props = _calculate_properties(params)\n\n    # Pre-solver check for non-physical outlet pressure\n    P_out = params[\"P_in\"] - (\n        phys_props[\"rho_l\"] * (1 - phys_props[\"epsilon_g\"]) * g * params[\"L\"]\n    )\n    if P_out <= 0:\n        raise ValueError(\n            f\"Calculated gas outlet pressure is non-positive ({P_out:.2e} Pa). \"\n            \"Check input parameters P_in, L, etc.\"\n        )\n\n    # 2. Calculate dimensionless groups for the ODE system\n    dim_params = _calculate_dimensionless_groups(params, phys_props)\n\n    # 3. Solve the boundary value problem\n    solution = _solve_bvp_system(dim_params, y_T2_in, params[\"BCs\"], params[\"elements\"])\n\n    # 4. Process and return the results in a dimensional format\n    [results, solution] = _process_results(solution, params, phys_props, dim_params)\n\n    return [results, solution]",
+          "signature": "(params)",
+          "parameters": [
+            {
+              "name": "params",
+              "type": null,
+              "default": null,
+              "description": ""
+            }
+          ],
+          "returns": null
+        }
+      ]
+    },
+    "pathsim_chem.tritium.residencetime": {
+      "name": "pathsim_chem.tritium.residencetime",
+      "description": "",
+      "docstring_html": "",
       "classes": [
         {
           "name": "ResidenceTime",
@@ -190,7 +485,15 @@
               "description": "constant source term / generation term of the process"
             }
           ]
-        },
+        }
+      ],
+      "functions": []
+    },
+    "pathsim_chem.tritium.splitter": {
+      "name": "pathsim_chem.tritium.splitter",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
         {
           "name": "Splitter",
           "description": "Splitter block that splits the input signal into multiple",
@@ -246,284 +549,29 @@
               "description": "fractions to split the input signal into, must sum up to one"
             }
           ]
-        },
-        {
-          "name": "Bubbler4",
-          "description": "Tritium bubbling system with sequential vial collection stages.",
-          "docstring_html": "<p>Tritium bubbling system with sequential vial collection stages.</p>\n<p>This block models a tritium collection system used in fusion reactor blanket\npurge gas processing. The system bubbles tritium-containing gas through a series\nof liquid-filled vials to capture and concentrate tritium for measurement and\ninventory tracking.</p>\n<div class=\"section\" id=\"physical-description\">\n<h4>Physical Description</h4>\n<p>The bubbler consists of two parallel processing chains:</p>\n<p><strong>Soluble Chain (Vials 1-2):</strong>\nTritium already in soluble forms (HTO, HT) flows sequentially through\nvials 1 and 2. Each vial has a collection efficiency <span class=\"math\">\\(\\eta_{vial}\\)</span>,\nrepresenting the fraction of tritium that dissolves into the liquid phase\nand is retained.</p>\n<p><strong>Insoluble Chain (Vials 3-4):</strong>\nTritium in insoluble forms (T₂, organically bound) first undergoes catalytic\nconversion to soluble forms with efficiency <span class=\"math\">\\(\\alpha_{conv}\\)</span>. The\nconverted tritium, along with uncaptured soluble tritium from the first chain,\nthen flows through vials 3 and 4 with the same collection efficiency.</p>\n</div>\n<div class=\"section\" id=\"mathematical-formulation\">\n<h4>Mathematical Formulation</h4>\n<p>The system is governed by the following differential equations for the\nvial inventories <span class=\"math\">\\(x_i\\)</span>:</p>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_1}{dt} &amp;= \\eta_{vial} \\cdot u_{sol}\n\\end{equation*}\n</div>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_2}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot u_{sol}\n\\end{equation*}\n</div>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_3}{dt} &amp;= \\eta_{vial} \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{equation*}\n</div>\n<div class=\"math\">\n\\begin{equation*}\n\\frac{dx_4}{dt} &amp;= \\eta_{vial} \\cdot (1-\\eta_{vial}) \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{equation*}\n</div>\n<p>The sample output represents uncaptured tritium exiting the system:</p>\n<div class=\"math\">\n\\begin{equation*}\ny_{sample} = (1-\\alpha_{conv}) \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot [\\alpha_{conv} \\cdot u_{insol} + (1-\\eta_{vial})^2 \\cdot u_{sol}]\n\\end{equation*}\n</div>\n<dl class=\"docutils\">\n<dt>Where:</dt>\n<dd><ul class=\"first last simple\">\n<li><span class=\"math\">\\(u_{sol}\\)</span> = soluble tritium input flow rate</li>\n<li><span class=\"math\">\\(u_{insol}\\)</span> = insoluble tritium input flow rate</li>\n<li><span class=\"math\">\\(\\eta_{vial}\\)</span> = vial collection efficiency</li>\n<li><span class=\"math\">\\(\\alpha_{conv}\\)</span> = conversion efficiency from insoluble to soluble</li>\n<li><span class=\"math\">\\(x_i\\)</span> = tritium inventory in vial i</li>\n</ul>\n</dd>\n</dl>\n<p><strong>Parameters</strong></p>\n<dl class=\"docutils\">\n<dt>conversion_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Conversion efficiency from insoluble to soluble forms (<span class=\"math\">\\(\\alpha_{conv}\\)</span>),\nbetween 0 and 1.</dd>\n<dt>vial_efficiency <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float</span></dt>\n<dd>Collection efficiency of each vial (<span class=\"math\">\\(\\eta_{vial}\\)</span>), between 0 and 1.</dd>\n<dt>replacement_times <span class=\"classifier-delimiter\">:</span> <span class=\"classifier\">float | list[float] | list[list[float]]</span></dt>\n<dd>Times at which each vial is replaced with a fresh one. If None, no\nreplacement events are created. If a single value is provided, it is\nused for all vials. If a single list of floats is provided, it will be\nused for all vials. If a list of lists is provided, each sublist\ncorresponds to the replacement times for each vial.</dd>\n</dl>\n<p><strong>Notes</strong></p>\n<p>Vial replacement is modeled as instantaneous reset events that set the\ncorresponding vial inventory to zero, simulating the physical replacement\nof a full vial with an empty one.</p>\n</div>\n",
-          "source": "class Bubbler4(DynamicalSystem):\n    \"\"\"\n    Tritium bubbling system with sequential vial collection stages.\n\n    This block models a tritium collection system used in fusion reactor blanket \n    purge gas processing. The system bubbles tritium-containing gas through a series \n    of liquid-filled vials to capture and concentrate tritium for measurement and \n    inventory tracking.\n\n\n    Physical Description\n    --------------------\n    The bubbler consists of two parallel processing chains:\n\n    **Soluble Chain (Vials 1-2):** \n    Tritium already in soluble forms (HTO, HT) flows sequentially through \n    vials 1 and 2. Each vial has a collection efficiency :math:`\\\\eta_{vial}`, \n    representing the fraction of tritium that dissolves into the liquid phase \n    and is retained.\n\n    **Insoluble Chain (Vials 3-4):** \n    Tritium in insoluble forms (T₂, organically bound) first undergoes catalytic \n    conversion to soluble forms with efficiency :math:`\\\\alpha_{conv}`. The \n    converted tritium, along with uncaptured soluble tritium from the first chain, \n    then flows through vials 3 and 4 with the same collection efficiency.\n\n\n    Mathematical Formulation\n    -------------------------\n    The system is governed by the following differential equations for the \n    vial inventories :math:`x_i`:\n\n    .. math::\n\n        \\\\frac{dx_1}{dt} &= \\\\eta_{vial} \\\\cdot u_{sol}\n\n        \\\\frac{dx_2}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot u_{sol}\n\n        \\\\frac{dx_3}{dt} &= \\\\eta_{vial} \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n        \\\\frac{dx_4}{dt} &= \\\\eta_{vial} \\\\cdot (1-\\\\eta_{vial}) \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n\n    The sample output represents uncaptured tritium exiting the system:\n\n    .. math::\n\n        y_{sample} = (1-\\\\alpha_{conv}) \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot [\\\\alpha_{conv} \\\\cdot u_{insol} + (1-\\\\eta_{vial})^2 \\\\cdot u_{sol}]\n\n\n    Where:\n        - :math:`u_{sol}` = soluble tritium input flow rate\n        - :math:`u_{insol}` = insoluble tritium input flow rate  \n        - :math:`\\\\eta_{vial}` = vial collection efficiency\n        - :math:`\\\\alpha_{conv}` = conversion efficiency from insoluble to soluble\n        - :math:`x_i` = tritium inventory in vial i\n\n    Parameters\n    ----------\n    conversion_efficiency : float \n       Conversion efficiency from insoluble to soluble forms (:math:`\\\\alpha_{conv}`), \n       between 0 and 1.\n    vial_efficiency : float \n       Collection efficiency of each vial (:math:`\\\\eta_{vial}`), between 0 and 1.\n    replacement_times : float | list[float] | list[list[float]] \n        Times at which each vial is replaced with a fresh one. If None, no \n        replacement events are created. If a single value is provided, it is \n        used for all vials. If a single list of floats is provided, it will be \n        used for all vials. If a list of lists is provided, each sublist \n        corresponds to the replacement times for each vial.\n\n    Notes\n    -----\n    Vial replacement is modeled as instantaneous reset events that set the \n    corresponding vial inventory to zero, simulating the physical replacement \n    of a full vial with an empty one.\n    \"\"\"\n\n    input_port_labels = {\n        \"sample_in_soluble\": 0,\n        \"sample_in_insoluble\": 1,\n        }\n    output_port_labels = {\n        \"vial1\": 0,\n        \"vial2\": 1,\n        \"vial3\": 2,\n        \"vial4\": 3,\n        \"sample_out\": 4,\n        }\n\n    def __init__(\n        self,\n        conversion_efficiency=0.9,\n        vial_efficiency=0.9,\n        replacement_times=None,\n        ):\n\n        #bubbler parameters\n        self.replacement_times = replacement_times\n        self.vial_efficiency = vial_efficiency\n        self.conversion_efficiency = conversion_efficiency\n\n        #dynamical component, ode rhs\n        def _fn_d(x, u, t):\n\n            #short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            #unpack inputs\n            sol, ins = u\n\n            #compute vial content change rates\n            dv1 = ve * sol\n            dv2 = dv1 * (1 - ve)\n            dv3 = ve * (ce * ins + (1 - ve)**2 * sol)\n            dv4 = dv3 * (1 - ve)\n\n            return np.array([dv1, dv2, dv3, dv4])\n\n        #algebraic output component\n        def _fn_a(x, u, t):\n\n            #short\n            ve = self.vial_efficiency\n            ce = self.conversion_efficiency\n\n            #unpack inputs\n            sol, ins = u\n\n            sample_out = (1 - ce) * ins + (1 - ve)**2 * (ce * ins + (1 - ve)**2 * sol)\n\n            return np.hstack([x, sample_out])\n\n        #initialization just like `DynamicalSystem` block\n        super().__init__(\n            func_dyn=_fn_d, \n            func_alg=_fn_a, \n            initial_value=np.zeros(4),\n            )\n\n        #create internal vial reset events\n        self._create_reset_events()\n\n\n    def _create_reset_event_vial(self, i, reset_times):\n        \"\"\"Define event action function and return a `ScheduleList` event \n        per vial `i` that triggers at predefined `reset_times`. \n        \"\"\"\n\n        def reset_vial_i(_):\n            #get the full engine state\n            x = self.engine.get()\n            #set index 'i' to zero\n            x[i] = 0.0\n            #set the full engine state \n            self.engine.set(x)\n\n        return ScheduleList(\n            times_evt=reset_times, \n            func_act=reset_vial_i\n            )\n\n\n    def _create_reset_events(self):\n        \"\"\"Create reset events for all vials based on the replacement times.\n\n        Raises\n        ------\n        ValueError : If reset_times is not valid.\n        \"\"\"\n\n        replacement_times = self.replacement_times\n        self.events = []\n\n        # if reset_times is a single list use it for all vials\n        if replacement_times is None:\n            return \n\n        if isinstance(replacement_times, (int, float)):\n            replacement_times = [replacement_times]\n\n        # if it's a flat list use it for all vials\n        elif isinstance(replacement_times, list) and all(\n            isinstance(t, (int, float)) for t in replacement_times\n            ):\n            replacement_times = [replacement_times] * 4\n\n        elif isinstance(replacement_times, np.ndarray) and replacement_times.ndim == 1:\n            replacement_times = [replacement_times.tolist()] * 4\n\n        elif isinstance(replacement_times, list) and len(replacement_times) != 4:\n            raise ValueError(\n                \"replacement_times must be a single value or a list with the same length as the number of vials\"\n            )\n\n        #create the internal events\n        self.events = [\n            self._create_reset_event_vial(i, ts) for i, ts in enumerate(replacement_times)\n            ]",
-          "bases": [
-            "DynamicalSystem"
-          ],
-          "methods": [
-            {
-              "name": "__init__",
-              "description": "",
-              "docstring_html": "",
-              "source": "def __init__(\n    self,\n    conversion_efficiency=0.9,\n    vial_efficiency=0.9,\n    replacement_times=None,\n    ):\n\n    #bubbler parameters\n    self.replacement_times = replacement_times\n    self.vial_efficiency = vial_efficiency\n    self.conversion_efficiency = conversion_efficiency\n\n    #dynamical component, ode rhs\n    def _fn_d(x, u, t):\n\n        #short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        #unpack inputs\n        sol, ins = u\n\n        #compute vial content change rates\n        dv1 = ve * sol\n        dv2 = dv1 * (1 - ve)\n        dv3 = ve * (ce * ins + (1 - ve)**2 * sol)\n        dv4 = dv3 * (1 - ve)\n\n        return np.array([dv1, dv2, dv3, dv4])\n\n    #algebraic output component\n    def _fn_a(x, u, t):\n\n        #short\n        ve = self.vial_efficiency\n        ce = self.conversion_efficiency\n\n        #unpack inputs\n        sol, ins = u\n\n        sample_out = (1 - ce) * ins + (1 - ve)**2 * (ce * ins + (1 - ve)**2 * sol)\n\n        return np.hstack([x, sample_out])\n\n    #initialization just like `DynamicalSystem` block\n    super().__init__(\n        func_dyn=_fn_d, \n        func_alg=_fn_a, \n        initial_value=np.zeros(4),\n        )\n\n    #create internal vial reset events\n    self._create_reset_events()",
-              "signature": "(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)",
-              "parameters": [
-                {
-                  "name": "conversion_efficiency",
-                  "type": null,
-                  "default": "0.9",
-                  "description": ""
-                },
-                {
-                  "name": "vial_efficiency",
-                  "type": null,
-                  "default": "0.9",
-                  "description": ""
-                },
-                {
-                  "name": "replacement_times",
-                  "type": null,
-                  "default": "None",
-                  "description": ""
-                }
-              ],
-              "returns": null,
-              "method_type": "method"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "input_port_labels",
-              "description": "",
-              "type": null,
-              "value": "{'sample_in_soluble': 0, 'sample_in_insoluble': 1}"
-            },
-            {
-              "name": "output_port_labels",
-              "description": "",
-              "type": null,
-              "value": "{'vial1': 0, 'vial2': 1, 'vial3': 2, 'vial4': 3, 'sample_out': 4}"
-            },
-            {
-              "name": "replacement_times",
-              "description": "",
-              "type": null,
-              "value": "replacement_times"
-            },
-            {
-              "name": "vial_efficiency",
-              "description": "",
-              "type": null,
-              "value": "vial_efficiency"
-            },
-            {
-              "name": "conversion_efficiency",
-              "description": "",
-              "type": null,
-              "value": "conversion_efficiency"
-            }
-          ],
-          "parameters": [
-            {
-              "name": "conversion_efficiency",
-              "type": null,
-              "default": "0.9",
-              "description": "Conversion efficiency from insoluble to soluble forms (:math:`\\alpha_{conv}`), between 0 and 1."
-            },
-            {
-              "name": "vial_efficiency",
-              "type": null,
-              "default": "0.9",
-              "description": "Collection efficiency of each vial (:math:`\\eta_{vial}`), between 0 and 1."
-            },
-            {
-              "name": "replacement_times",
-              "type": null,
-              "default": "None",
-              "description": "Times at which each vial is replaced with a fresh one. If None, no replacement events are created. If a single value is provided, it is used for all vials. If a single list of floats is provided, it will be used for all vials. If a list of lists is provided, each sublist corresponds to the replacement times for each vial."
-            }
-          ]
-        },
-        {
-          "name": "GLC",
-          "description": "Gas Liquid Contactor model block. Inherits from Function block.",
-          "docstring_html": "<p>Gas Liquid Contactor model block. Inherits from Function block.</p>\n<p>More details about the model can be found in: <a class=\"reference external\" href=\"https://doi.org/10.13182/FST95-A30485\">https://doi.org/10.13182/FST95-A30485</a></p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd>P_in: Inlet operating pressure [Pa]\nL: Column height [m]\nD: Column diameter [m]\nT: Temperature [K]\ng: Gravitational acceleration [m/s^2], default is 9.81\ninitial_nb_of_elements: Initial number of elements for BVP solver\nBCs: Boundary conditions type, &quot;C-C&quot; (Closed-Closed) or &quot;O-C&quot; (Open-Closed), default is &quot;C-C&quot;</dd>\n</dl>\n",
-          "source": "class GLC(pathsim.blocks.Function):\n    \"\"\"\n    Gas Liquid Contactor model block. Inherits from Function block.\n\n    More details about the model can be found in: https://doi.org/10.13182/FST95-A30485\n\n    Args:\n        P_in: Inlet operating pressure [Pa]\n        L: Column height [m]\n        D: Column diameter [m]\n        T: Temperature [K]\n        g: Gravitational acceleration [m/s^2], default is 9.81\n        initial_nb_of_elements: Initial number of elements for BVP solver\n        BCs: Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\"\n    \"\"\"\n\n    input_port_labels = {\n        \"c_T_in\": 0,\n        \"flow_l\": 1,\n        \"y_T2_inlet\": 2,\n        \"flow_g\": 3,\n        }\n    output_port_labels = {\n        \"c_T_out\": 0,\n        \"y_T2_out\": 1,\n        \"eff\": 2,\n        \"P_out\": 3,\n        \"Q_l\": 4,\n        \"Q_g_out\": 5,\n        \"n_T_out_liquid\": 6,\n        \"n_T_out_gas\": 7,\n        }\n\n    def __init__(\n        self,\n        P_in,\n        L,\n        D,\n        T,\n        BCs,\n        g=const.g,\n        initial_nb_of_elements=20,\n    ):\n        self.params = {\n            \"P_in\": P_in,\n            \"L\": L,\n            \"g\": g,\n            \"D\": D,\n            \"T\": T,\n            \"elements\": initial_nb_of_elements,\n            \"BCs\": BCs,\n        }\n        super().__init__(func=self.func)\n\n    def func(self, c_T_in, flow_l, y_T2_inlet, flow_g):\n        new_params = self.params.copy()\n        new_params[\"c_T_in\"] = c_T_in\n        new_params[\"flow_l\"] = flow_l\n        new_params[\"y_T2_in\"] = y_T2_inlet\n        new_params[\"flow_g\"] = flow_g\n\n        res, _ = solve(new_params)\n\n        c_T_out = res[\"c_T_outlet [mol/m^3]\"]\n        y_T2_out = res[\"y_T2_outlet_gas\"]\n        eff = res[\"extraction_efficiency [fraction]\"]\n        P_total_outlet = res[\"total_gas_P_outlet [Pa]\"]\n        Q_l = res[\"liquid_vol_flow [m^3/s]\"]\n        Q_g_out = res[\"gas_vol_flow_outlet [m^3/s]\"]\n        n_T_out_liquid = res[\"tritium_out_liquid [mol/s]\"]\n        n_T_out_gas = res[\"tritium_out_gas [mol/s]\"]\n\n        return (\n            c_T_out,\n            y_T2_out,\n            eff,\n            P_total_outlet,\n            Q_l,\n            Q_g_out,\n            n_T_out_liquid,\n            n_T_out_gas,\n        )",
-          "bases": [
-            "pathsim.blocks.Function"
-          ],
-          "methods": [
-            {
-              "name": "__init__",
-              "description": "",
-              "docstring_html": "",
-              "source": "def __init__(\n    self,\n    P_in,\n    L,\n    D,\n    T,\n    BCs,\n    g=const.g,\n    initial_nb_of_elements=20,\n):\n    self.params = {\n        \"P_in\": P_in,\n        \"L\": L,\n        \"g\": g,\n        \"D\": D,\n        \"T\": T,\n        \"elements\": initial_nb_of_elements,\n        \"BCs\": BCs,\n    }\n    super().__init__(func=self.func)",
-              "signature": "(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20)",
-              "parameters": [
-                {
-                  "name": "P_in",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "L",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "D",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "T",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "BCs",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "g",
-                  "type": null,
-                  "default": "const.g",
-                  "description": ""
-                },
-                {
-                  "name": "initial_nb_of_elements",
-                  "type": null,
-                  "default": "20",
-                  "description": ""
-                }
-              ],
-              "returns": null,
-              "method_type": "method"
-            },
-            {
-              "name": "func",
-              "description": "",
-              "docstring_html": "",
-              "source": "def func(self, c_T_in, flow_l, y_T2_inlet, flow_g):\n    new_params = self.params.copy()\n    new_params[\"c_T_in\"] = c_T_in\n    new_params[\"flow_l\"] = flow_l\n    new_params[\"y_T2_in\"] = y_T2_inlet\n    new_params[\"flow_g\"] = flow_g\n\n    res, _ = solve(new_params)\n\n    c_T_out = res[\"c_T_outlet [mol/m^3]\"]\n    y_T2_out = res[\"y_T2_outlet_gas\"]\n    eff = res[\"extraction_efficiency [fraction]\"]\n    P_total_outlet = res[\"total_gas_P_outlet [Pa]\"]\n    Q_l = res[\"liquid_vol_flow [m^3/s]\"]\n    Q_g_out = res[\"gas_vol_flow_outlet [m^3/s]\"]\n    n_T_out_liquid = res[\"tritium_out_liquid [mol/s]\"]\n    n_T_out_gas = res[\"tritium_out_gas [mol/s]\"]\n\n    return (\n        c_T_out,\n        y_T2_out,\n        eff,\n        P_total_outlet,\n        Q_l,\n        Q_g_out,\n        n_T_out_liquid,\n        n_T_out_gas,\n    )",
-              "signature": "(c_T_in, flow_l, y_T2_inlet, flow_g)",
-              "parameters": [
-                {
-                  "name": "c_T_in",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "flow_l",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "y_T2_inlet",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                },
-                {
-                  "name": "flow_g",
-                  "type": null,
-                  "default": null,
-                  "description": ""
-                }
-              ],
-              "returns": null,
-              "method_type": "method"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "input_port_labels",
-              "description": "",
-              "type": null,
-              "value": "{'c_T_in': 0, 'flow_l': 1, 'y_T2_inlet': 2, 'flow_g': 3}"
-            },
-            {
-              "name": "output_port_labels",
-              "description": "",
-              "type": null,
-              "value": "{'c_T_out': 0, 'y_T2_out': 1, 'eff': 2, 'P_out': 3, 'Q_l': 4, 'Q_g_out': 5, 'n_T_out_liquid': 6, 'n_T_out_gas': 7}"
-            },
-            {
-              "name": "params",
-              "description": "",
-              "type": null,
-              "value": "{'P_in': P_in, 'L': L, 'g': g, 'D': D, 'T': T, 'elements': initial_nb_of_elements, 'BCs': BCs}"
-            }
-          ],
-          "parameters": [
-            {
-              "name": "P_in",
-              "type": null,
-              "default": null,
-              "description": "L: Column height [m]"
-            },
-            {
-              "name": "L",
-              "type": null,
-              "default": null,
-              "description": "D: Column diameter [m]"
-            },
-            {
-              "name": "D",
-              "type": null,
-              "default": null,
-              "description": "T: Temperature [K]"
-            },
-            {
-              "name": "T",
-              "type": null,
-              "default": null,
-              "description": "g: Gravitational acceleration [m/s^2], default is 9.81"
-            },
-            {
-              "name": "BCs",
-              "type": null,
-              "default": null,
-              "description": "Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
-            },
-            {
-              "name": "g",
-              "type": null,
-              "default": "const.g",
-              "description": "initial_nb_of_elements: Initial number of elements for BVP solver"
-            },
-            {
-              "name": "initial_nb_of_elements",
-              "type": null,
-              "default": "20",
-              "description": "BCs: Boundary conditions type, \"C-C\" (Closed-Closed) or \"O-C\" (Open-Closed), default is \"C-C\""
-            }
-          ]
         }
       ],
-      "functions": [
+      "functions": []
+    },
+    "pathsim_chem.tritium.tcap": {
+      "name": "pathsim_chem.tritium.tcap",
+      "description": "",
+      "docstring_html": "",
+      "classes": [
         {
-          "name": "solve",
-          "description": "Main solver function for the bubble column model.",
-          "docstring_html": "<p>Main solver function for the bubble column model.</p>\n<dl class=\"docutils\">\n<dt>Args:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>params (dict): A dictionary of all input parameters for the model,</dt>\n<dd>including operational conditions and geometry.</dd>\n</dl>\n</dd>\n<dt>Returns:</dt>\n<dd><dl class=\"first last docutils\">\n<dt>list: A list containing:</dt>\n<dd><ul class=\"first last simple\">\n<li>dict: A dictionary containing the simulation results.</li>\n<li>scipy.integrate.OdeSolution: The raw solution object from the\nBVP solver.</li>\n</ul>\n</dd>\n</dl>\n</dd>\n</dl>\n",
-          "source": "def solve(params):\n    \"\"\"\n    Main solver function for the bubble column model.\n\n    Args:\n        params (dict): A dictionary of all input parameters for the model,\n                       including operational conditions and geometry.\n\n    Returns:\n        list: A list containing:\n              - dict: A dictionary containing the simulation results.\n              - scipy.integrate.OdeSolution: The raw solution object from the\n                BVP solver.\n    \"\"\"\n    # Adjust inlet gas concentration to avoid numerical instability at zero\n    y_T2_in = max(params[\"y_T2_in\"], 1e-20)\n\n    # 1. Calculate physical, hydrodynamic, and mass transfer properties\n    phys_props = _calculate_properties(params)\n\n    # Pre-solver check for non-physical outlet pressure\n    P_out = params[\"P_in\"] - (\n        phys_props[\"rho_l\"] * (1 - phys_props[\"epsilon_g\"]) * g * params[\"L\"]\n    )\n    if P_out <= 0:\n        raise ValueError(\n            f\"Calculated gas outlet pressure is non-positive ({P_out:.2e} Pa). \"\n            \"Check input parameters P_in, L, etc.\"\n        )\n\n    # 2. Calculate dimensionless groups for the ODE system\n    dim_params = _calculate_dimensionless_groups(params, phys_props)\n\n    # 3. Solve the boundary value problem\n    solution = _solve_bvp_system(dim_params, y_T2_in, params[\"BCs\"], params[\"elements\"])\n\n    # 4. Process and return the results in a dimensional format\n    [results, solution] = _process_results(solution, params, phys_props, dim_params)\n\n    return [results, solution]",
-          "signature": "(params)",
-          "parameters": [
-            {
-              "name": "params",
-              "type": null,
-              "default": null,
-              "description": ""
-            }
+          "name": "TCAP1D",
+          "description": "This block models the Thermal Cycle Absorption Process (TCAP) in 1d.",
+          "docstring_html": "<p>This block models the Thermal Cycle Absorption Process (TCAP) in 1d.</p>\n<p>The model uses a 1d finite difference spatial discretization to construct\na nonlinear ODE internally as proposed in</p>\n<blockquote>\n<a class=\"reference external\" href=\"https://doi.org/10.1016/j.ijhydene.2023.03.101\">https://doi.org/10.1016/j.ijhydene.2023.03.101</a></blockquote>\n",
+          "source": "class TCAP1D(ODE):\n    \"\"\"This block models the Thermal Cycle Absorption Process (TCAP) in 1d. \n\n    The model uses a 1d finite difference spatial discretization to construct \n    a nonlinear ODE internally as proposed in\n\n        https://doi.org/10.1016/j.ijhydene.2023.03.101\n\n\n    \"\"\"\n    raise NotImplementedError(\"TCAP1D block is currently not impolemented!\")",
+          "bases": [
+            "ODE"
           ],
-          "returns": null
+          "methods": [],
+          "attributes": [],
+          "parameters": []
         }
       ],
-      "submodules": [
-        "tritium"
-      ]
+      "functions": []
     }
   }
 }

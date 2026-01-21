@@ -57,7 +57,6 @@ export interface APIModule {
   docstring_html: string;
   classes: APIClass[];
   functions: APIFunction[];
-  submodules: string[];
 }
 
 export interface APIPackage {
