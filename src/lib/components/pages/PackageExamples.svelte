@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
@@ -68,15 +69,16 @@
 
 		<div class="tile-grid cols-3">
 			{#each notebooks as notebook}
-				<a href="/{packageId}/examples/{notebook.slug}" class="tile example-tile">
-					<div class="panel-header">
-						<span>{notebook.title}</span>
-						{#if !notebook.executable}
-							<span class="badge warning">View Only</span>
-						{/if}
-					</div>
+				<div
+					class="tile example-tile"
+					onclick={() => goto(`/${packageId}/examples/${notebook.slug}`)}
+					onkeydown={(e) => e.key === 'Enter' && goto(`/${packageId}/examples/${notebook.slug}`)}
+					role="button"
+					tabindex="0"
+				>
+					<div class="panel-header">{notebook.title}</div>
 					<div class="panel-body tile-body">{notebook.description}</div>
-				</a>
+				</div>
 			{/each}
 		</div>
 	{/each}
@@ -113,20 +115,8 @@
 		color: var(--error);
 	}
 
-	/* Example tile - clickable card link */
+	/* Example tile - clickable */
 	.example-tile {
-		display: block;
-		text-decoration: none;
-		/* Reset link colors for entire tile */
-		color: var(--text-muted);
-	}
-
-	.example-tile:hover {
-		text-decoration: none;
-		color: var(--text-muted);
-	}
-
-	.example-tile :global(.panel-header) {
-		color: var(--text-muted);
+		cursor: pointer;
 	}
 </style>
