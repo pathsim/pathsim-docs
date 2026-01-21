@@ -471,10 +471,20 @@ class APIExtractor:
                 "parameters": [],
             }
 
-            # Extract bases safely
+            # Extract bases with full canonical paths
             try:
                 if cls.bases:
-                    class_data["bases"] = [str(base) for base in cls.bases]
+                    bases = []
+                    for base in cls.bases:
+                        try:
+                            # Try to get the resolved canonical path
+                            if hasattr(base, 'canonical_path') and base.canonical_path:
+                                bases.append(str(base.canonical_path))
+                            else:
+                                bases.append(str(base))
+                        except Exception:
+                            bases.append(str(base))
+                    class_data["bases"] = bases
             except Exception:
                 pass
 
