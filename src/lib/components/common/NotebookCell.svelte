@@ -346,10 +346,11 @@
 
 	/* Duration in header */
 	.output-panel .duration {
-		font-family: var(--font-mono);
-		font-size: var(--font-xs);
-		text-transform: none;
-		color: var(--text-disabled);
+		font-family: var(--font-ui);
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
 	}
 
 	/* Error panel */
