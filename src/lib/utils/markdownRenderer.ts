@@ -31,8 +31,9 @@ export async function renderMarkdown(markdown: string): Promise<string> {
 	});
 
 	// Replace inline math ($...$) with placeholders
-	// Be careful not to match currency like $10
-	processed = processed.replace(/\$([^\s$][^$]*?[^\s$])\$/g, (_, latex) => {
+	// Handles single chars like $x$ and expressions like $x + y$
+	// Requires non-whitespace at start and end to avoid matching currency
+	processed = processed.replace(/\$([^\s$](?:[^$]*[^\s$])?)\$/g, (_, latex) => {
 		const placeholder = `__MATH_INLINE_${counter++}__`;
 		mathBlocks.push({ placeholder, latex: latex.trim(), display: false });
 		return placeholder;

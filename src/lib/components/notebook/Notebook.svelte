@@ -95,7 +95,6 @@
 
 <article class="notebook">
 	<header class="notebook-header">
-		<h1 class="notebook-title">{notebook.title}</h1>
 		<div class="notebook-actions">
 			{#if pyodideLoading}
 				<div class="pyodide-status">
@@ -156,18 +155,10 @@
 
 	.notebook-header {
 		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
+		align-items: center;
+		justify-content: flex-end;
 		gap: var(--space-lg);
-		margin-bottom: var(--space-xl);
-		padding-bottom: var(--space-lg);
-		border-bottom: 1px solid var(--border);
-	}
-
-	.notebook-title {
-		font-size: var(--font-2xl);
-		font-weight: 600;
-		margin: 0;
+		margin-bottom: var(--space-md);
 	}
 
 	.notebook-actions {

@@ -1,11 +1,11 @@
 <script lang="ts">
 	/**
 	 * MarkdownCell - Renders markdown content with KaTeX math support
-	 * Styling matches DocstringRenderer for consistency
+	 * Uses same post-processing approach as DocstringRenderer
 	 */
-	import { onMount } from 'svelte';
-	import { renderMarkdown } from '$lib/utils/markdownRenderer';
-	import { getKatexCssUrl } from '$lib/utils/katexLoader';
+	import { onMount, tick } from 'svelte';
+	import { marked } from 'marked';
+	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import type { MarkdownCellData } from '$lib/notebook/types';
 
 	interface Props {
@@ -14,8 +14,124 @@
 
 	let { cell }: Props = $props();
 
-	let html = $state('');
+	let container: HTMLDivElement | undefined = $state();
 	let loading = $state(true);
+
+	// Configure marked
+	marked.setOptions({
+		gfm: true,
+		breaks: false
+	});
+
+	/**
+	 * Render math with KaTeX - same approach as DocstringRenderer
+	 */
+	async function renderMath() {
+		if (!container) return;
+
+		const k = await loadKatex();
+
+		// Process the text content to find $...$ and $$...$$ patterns
+		const walker = document.createTreeWalker(
+			container,
+			NodeFilter.SHOW_TEXT,
+			null
+		);
+
+		const textNodes: Text[] = [];
+		let node: Text | null;
+		while ((node = walker.nextNode() as Text | null)) {
+			if (node.textContent && (node.textContent.includes('$'))) {
+				textNodes.push(node);
+			}
+		}
+
+		for (const textNode of textNodes) {
+			const text = textNode.textContent || '';
+
+			// Skip if inside code/pre elements
+			let parent = textNode.parentElement;
+			let inCode = false;
+			while (parent && parent !== container) {
+				if (parent.tagName === 'CODE' || parent.tagName === 'PRE') {
+					inCode = true;
+					break;
+				}
+				parent = parent.parentElement;
+			}
+			if (inCode) continue;
+
+			// Find and replace math patterns
+			const fragment = document.createDocumentFragment();
+			let lastIndex = 0;
+			let hasMatch = false;
+
+			// Combined regex for display ($$...$$) and inline ($...$) math
+			const mathRegex = /\$\$([\s\S]*?)\$\$|\$([^\s$](?:[^$]*[^\s$])?)\$/g;
+			let match;
+
+			while ((match = mathRegex.exec(text)) !== null) {
+				hasMatch = true;
+
+				// Add text before match
+				if (match.index > lastIndex) {
+					fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+				}
+
+				const isDisplay = match[1] !== undefined;
+				const latex = (match[1] || match[2]).trim();
+
+				try {
+					const rendered = k.default.renderToString(latex, {
+						displayMode: isDisplay,
+						throwOnError: false,
+						strict: false
+					});
+
+					if (isDisplay) {
+						const div = document.createElement('div');
+						div.className = 'katex-display';
+						div.innerHTML = rendered;
+						fragment.appendChild(div);
+					} else {
+						const span = document.createElement('span');
+						span.className = 'katex-inline';
+						span.innerHTML = rendered;
+						fragment.appendChild(span);
+					}
+				} catch (e) {
+					console.warn('KaTeX error for:', latex, e);
+					const code = document.createElement('code');
+					code.className = 'katex-error';
+					code.textContent = latex;
+					fragment.appendChild(code);
+				}
+
+				lastIndex = match.index + match[0].length;
+			}
+
+			if (hasMatch) {
+				// Add remaining text
+				if (lastIndex < text.length) {
+					fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+				}
+				textNode.parentNode?.replaceChild(fragment, textNode);
+			}
+		}
+	}
+
+	async function render() {
+		if (!container) return;
+
+		// Render markdown to HTML
+		const html = await marked.parse(cell.source);
+		container.innerHTML = html;
+
+		// Post-process: render math with KaTeX
+		await renderMath();
+
+		loading = false;
+	}
 
 	onMount(async () => {
 		// Ensure KaTeX CSS is loaded
@@ -26,27 +142,25 @@
 			document.head.appendChild(link);
 		}
 
-		html = await renderMarkdown(cell.source);
-		loading = false;
+		await tick();
+		await render();
 	});
 
 	// Re-render when source changes
 	$effect(() => {
 		const source = cell.source;
-		renderMarkdown(source).then((rendered) => {
-			html = rendered;
-		});
+		if (container && !loading) {
+			render();
+		}
 	});
 </script>
 
 <div class="markdown-cell">
-	{#if loading}
-		<div class="loading">Loading...</div>
-	{:else}
-		<div class="markdown-content">
-			{@html html}
-		</div>
-	{/if}
+	<div class="markdown-content" bind:this={container}>
+		{#if loading}
+			<div class="loading">Loading...</div>
+		{/if}
+	</div>
 </div>
 
 <style>
@@ -235,10 +349,6 @@
 		overflow-x: auto;
 	}
 
-	.markdown-content :global(.katex-inline) {
-		/* Let KaTeX use default sizing */
-	}
-
 	.markdown-content :global(.katex-error) {
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
@@ -248,6 +358,5 @@
 	.loading {
 		color: var(--text-muted);
 		font-size: var(--font-sm);
-		padding: var(--space-md);
 	}
 </style>

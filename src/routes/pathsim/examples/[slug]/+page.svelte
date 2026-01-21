@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Notebook } from '$lib/components/notebook';
-	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import type { PageData } from './$types';
 
@@ -17,60 +16,31 @@
 <Tooltip />
 
 <div class="prose">
-	<nav class="notebook-nav">
-		<a href="/{data.packageId}/examples" class="nav-link">
-			<Icon name="arrow-left" size={16} />
-			<span>Examples</span>
-		</a>
-		{#if !data.meta.executable}
+	{#if !data.meta.executable}
+		<div class="notebook-notice">
 			<span class="badge warning">View Only</span>
-		{/if}
-	</nav>
+		</div>
+	{/if}
 
 	<Notebook notebook={data.notebook} {basePath} showStaticOutputs={true} />
 
-	<footer class="notebook-footer">
-		<a href="/{data.packageId}/examples" class="nav-link">
-			<Icon name="arrow-left" size={16} />
-			<span>Back to Examples</span>
-		</a>
-		<div class="notebook-tags">
-			{#each data.meta.tags as tag}
-				<span class="notebook-tag">{tag}</span>
-			{/each}
-		</div>
-	</footer>
+	{#if data.meta.tags.length > 0}
+		<footer class="notebook-footer">
+			<div class="notebook-tags">
+				{#each data.meta.tags as tag}
+					<span class="notebook-tag">{tag}</span>
+				{/each}
+			</div>
+		</footer>
+	{/if}
 </div>
 
 <style>
-	.notebook-nav {
-		display: flex;
-		align-items: center;
-		gap: var(--space-md);
-		margin-bottom: var(--space-xl);
-		padding-bottom: var(--space-md);
-		border-bottom: 1px solid var(--border);
-	}
-
-	.nav-link {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		color: var(--text-muted);
-		text-decoration: none;
-		font-size: var(--font-sm);
-		transition: color var(--transition-fast);
-	}
-
-	.nav-link:hover {
-		color: var(--accent);
-		text-decoration: none;
+	.notebook-notice {
+		margin-bottom: var(--space-lg);
 	}
 
 	.notebook-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
 		margin-top: var(--space-xl);
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--border);
