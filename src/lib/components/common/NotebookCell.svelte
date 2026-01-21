@@ -276,6 +276,7 @@
 		border: 1px solid var(--border);
 		border-radius: var(--radius-md);
 		overflow: hidden;
+		min-width: 0;
 		transition: border-color var(--transition-fast);
 	}
 

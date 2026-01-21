@@ -106,6 +106,8 @@
 <style>
 	.cell-outputs {
 		background: var(--surface);
+		overflow: hidden;
+		min-width: 0;
 	}
 
 	/* Stream output (stdout/stderr) */
@@ -151,11 +153,13 @@
 		background: transparent;
 		border-radius: var(--radius-sm);
 		margin: var(--space-md);
+		overflow: hidden;
 	}
 
 	.output-image.svg :global(svg) {
 		max-width: 100%;
 		height: auto;
+		display: block;
 	}
 
 	/* HTML output - styled like docstring content */

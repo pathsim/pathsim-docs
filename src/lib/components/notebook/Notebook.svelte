@@ -86,6 +86,8 @@
 	.notebook {
 		max-width: var(--content-max-width);
 		margin: 0 auto;
+		min-width: 0;
+		overflow: hidden;
 	}
 
 	.pyodide-status {
@@ -110,5 +112,6 @@
 	.notebook-cells {
 		display: flex;
 		flex-direction: column;
+		min-width: 0;
 	}
 </style>

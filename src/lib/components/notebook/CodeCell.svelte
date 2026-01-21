@@ -42,5 +42,6 @@
 <style>
 	.code-cell-wrapper {
 		margin: var(--space-md) 0;
+		min-width: 0;
 	}
 </style>
