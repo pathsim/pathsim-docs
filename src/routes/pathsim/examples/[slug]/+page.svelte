@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { Notebook } from '$lib/components/notebook';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
-	let basePath = $derived(`/notebooks/${data.packageId}`);
+	let basePath = $derived(`${base}/notebooks/${data.packageId}`);
 </script>
 
 <svelte:head>

@@ -23,7 +23,7 @@ function buildCrossRefIndex(): Map<string, CrossRefTarget> {
 	const index = new Map<string, CrossRefTarget>();
 
 	for (const [packageId, pkg] of Object.entries(apiData)) {
-		const basePath = `/${packageId}/api`;
+		const basePath = `${packageId}/api`;
 
 		for (const [moduleName, module] of Object.entries(pkg.modules)) {
 			// Add module
@@ -118,8 +118,11 @@ export function lookupRef(name: string): CrossRefTarget | undefined {
  * - Title tag references from docutils: <cite>ClassName</cite>
  * - Single-quoted class names in text: 'ClassName'
  */
-export function processCrossRefs(html: string, currentPackageId?: string): string {
+export function processCrossRefs(html: string, basePath: string = '', currentPackageId?: string): string {
 	const index = getCrossRefIndex();
+
+	// Helper to build full path with base
+	const fullPath = (path: string) => `${basePath}/${path}`;
 
 	// 1. Handle RST role syntax: :class:`Name`, :func:`Name`, :meth:`Name`, :mod:`Name`
 	// These often get converted to various forms by docutils
@@ -128,7 +131,7 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 		(match, name) => {
 			const target = index.get(name.trim());
 			if (target) {
-				return `<a href="${target.path}" class="crossref crossref-${target.type}">${name}</a>`;
+				return `<a href="${fullPath(target.path)}" class="crossref crossref-${target.type}">${name}</a>`;
 			}
 			return match;
 		}
@@ -141,7 +144,7 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 			const trimmed = name.trim();
 			const target = index.get(trimmed);
 			if (target) {
-				return `<a href="${target.path}" class="crossref crossref-${target.type}">${name}</a>`;
+				return `<a href="${fullPath(target.path)}" class="crossref crossref-${target.type}">${name}</a>`;
 			}
 			return match;
 		}
@@ -155,7 +158,7 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 			// Skip if it looks like it's already part of a link
 			const target = index.get(name);
 			if (target && target.type === 'class') {
-				return `<a href="${target.path}" class="crossref crossref-class"><code>${name}</code></a>`;
+				return `<a href="${fullPath(target.path)}" class="crossref crossref-class"><code>${name}</code></a>`;
 			}
 			return match;
 		}
@@ -167,7 +170,7 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 		(match, title, text) => {
 			const target = index.get(title) || index.get(text);
 			if (target) {
-				return `<a href="${target.path}" class="crossref crossref-${target.type}">${text}</a>`;
+				return `<a href="${fullPath(target.path)}" class="crossref crossref-${target.type}">${text}</a>`;
 			}
 			return match;
 		}
@@ -180,7 +183,7 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 		(match, name) => {
 			const target = index.get(name);
 			if (target && target.type === 'class') {
-				return `<a href="${target.path}" class="crossref crossref-class">'${name}'</a>`;
+				return `<a href="${fullPath(target.path)}" class="crossref crossref-class">'${name}'</a>`;
 			}
 			return match;
 		}

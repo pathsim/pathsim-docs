@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
@@ -15,7 +16,7 @@
 	let { html }: Props = $props();
 
 	// Process HTML for cross-references
-	let processedHtml = $derived(processCrossRefs(html));
+	let processedHtml = $derived(processCrossRefs(html, base));
 
 	let container: HTMLDivElement | undefined = $state();
 	let katexLoaded = $state(false);

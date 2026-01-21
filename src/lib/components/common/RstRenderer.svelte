@@ -5,6 +5,7 @@
 	 * For full RST rendering, content should be pre-processed to HTML
 	 */
 	import { onMount, tick } from 'svelte';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
@@ -255,7 +256,7 @@
 				.replace(/``([^`]+)``/g, '<code>$1</code>');
 
 			// Process cross-references for class/function names
-			para = processCrossRefs(para);
+			para = processCrossRefs(para, base);
 
 			blocks.push({ type: 'paragraph', content: para });
 		}

@@ -4,6 +4,7 @@
 	 * Mirrors DocstringRenderer functionality: KaTeX math, CodeMirror code blocks, cross-refs
 	 */
 	import { onMount, tick } from 'svelte';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
@@ -62,7 +63,7 @@
 		// Protect math blocks before marked processes them
 		const { text: protected_, blocks } = protectMath(markdown);
 		const rawHtml = marked.parse(protected_, { async: false }) as string;
-		return { html: processCrossRefs(rawHtml), mathBlocks: blocks };
+		return { html: processCrossRefs(rawHtml, base), mathBlocks: blocks };
 	});
 
 	let html = $derived(processedMarkdown.html);
