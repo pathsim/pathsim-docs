@@ -1180,6 +1180,21 @@ input::placeholder {
 	display: none;
 }
 
+/* Notebook cell output text (live execution) */
+.output-text {
+	margin: 0;
+	padding: var(--space-md);
+	font-family: var(--font-mono);
+	font-size: var(--font-sm);
+	line-height: 1.5;
+	color: var(--text);
+	white-space: pre-wrap;
+	word-break: break-word;
+	background: transparent;
+	border: none;
+	border-radius: 0;
+}
+
 .execution-count {
 	font-family: var(--font-mono);
 	font-size: var(--font-xs);
