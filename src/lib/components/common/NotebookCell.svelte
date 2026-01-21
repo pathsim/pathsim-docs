@@ -154,19 +154,16 @@
 		{editable}
 	>
 		{#snippet headerActions()}
-			{#if cellState.executionCount > 0}
-				<span class="execution-count">[{cellState.executionCount}]</span>
-			{/if}
 			{#if isRunning}
-				<button class="icon-btn status-running" disabled use:tooltip={'Running...'}>
+				<button class="icon-btn" disabled use:tooltip={'Running...'}>
 					<Icon name="loader" size={14} />
 				</button>
 			{:else if isPending}
-				<button class="icon-btn status-pending" disabled use:tooltip={'Waiting...'}>
+				<button class="icon-btn" disabled use:tooltip={'Waiting...'}>
 					<Icon name="loader" size={14} />
 				</button>
 			{:else}
-				<button class="icon-btn run-btn" onclick={handleRun} use:tooltip={'Run cell'}>
+				<button class="icon-btn" onclick={handleRun} use:tooltip={'Run cell'}>
 					<Icon name="play" size={14} />
 				</button>
 			{/if}
@@ -176,59 +173,76 @@
 	{#if hasOutput}
 		<div class="output-section">
 			{#if error}
-				<div class="output-error">
-					<div class="output-header">
-						<Icon name="alert-triangle" size={12} />
+				<div class="output-panel error">
+					<div class="panel-header">
 						<span>Error</span>
+						<div class="header-actions">
+							<button class="icon-btn" onclick={clearOutput} use:tooltip={'Clear'}>
+								<Icon name="x" size={14} />
+							</button>
+						</div>
 					</div>
-					<pre class="error-message">{error.message}</pre>
-					{#if error.traceback}
-						<pre class="error-traceback">{error.traceback}</pre>
-					{/if}
+					<div class="panel-body">
+						<pre class="error-message">{error.message}</pre>
+						{#if error.traceback}
+							<pre class="error-traceback">{error.traceback}</pre>
+						{/if}
+					</div>
 				</div>
 			{/if}
 
 			{#if stdout}
-				<div class="output-stdout">
-					<div class="output-header">
-						<Icon name="terminal" size={12} />
+				<div class="output-panel">
+					<div class="panel-header">
 						<span>Output</span>
-						{#if duration !== null}
-							<span class="duration">{duration}ms</span>
-						{/if}
+						<div class="header-actions">
+							{#if duration !== null}
+								<span class="duration">{duration}ms</span>
+							{/if}
+							<button class="icon-btn" onclick={clearOutput} use:tooltip={'Clear'}>
+								<Icon name="x" size={14} />
+							</button>
+						</div>
 					</div>
-					<pre>{stdout}</pre>
+					<div class="panel-body">
+						<pre>{stdout}</pre>
+					</div>
 				</div>
 			{/if}
 
 			{#if stderr && !error}
-				<div class="output-stderr">
-					<div class="output-header">
-						<Icon name="alert-triangle" size={12} />
+				<div class="output-panel warning">
+					<div class="panel-header">
 						<span>Stderr</span>
+						<div class="header-actions">
+							<button class="icon-btn" onclick={clearOutput} use:tooltip={'Clear'}>
+								<Icon name="x" size={14} />
+							</button>
+						</div>
 					</div>
-					<pre>{stderr}</pre>
+					<div class="panel-body">
+						<pre>{stderr}</pre>
+					</div>
 				</div>
 			{/if}
 
 			{#if plots.length > 0}
-				<div class="output-plots">
-					<div class="output-header">
-						<Icon name="image" size={12} />
-						<span>Plots ({plots.length})</span>
+				<div class="output-panel">
+					<div class="panel-header">
+						<span>Plot</span>
+						<div class="header-actions">
+							<button class="icon-btn" onclick={clearOutput} use:tooltip={'Clear'}>
+								<Icon name="x" size={14} />
+							</button>
+						</div>
 					</div>
-					<div class="plots-container">
+					<div class="panel-body plots-body">
 						{#each plots as plot, i}
 							<img src="data:image/png;base64,{plot}" alt="Plot {i + 1}" class="plot-image" />
 						{/each}
 					</div>
 				</div>
 			{/if}
-
-			<button class="clear-output-btn" onclick={clearOutput} use:tooltip={'Clear output'}>
-				<Icon name="x" size={12} />
-				<span>Clear</span>
-			</button>
 		</div>
 	{/if}
 </div>
@@ -257,36 +271,12 @@
 		border-radius: 0;
 	}
 
-	/* Execution count badge */
-	.execution-count {
-		font-family: var(--font-mono);
-		font-size: var(--font-xs);
-		color: var(--text-disabled);
-		margin-right: var(--space-xs);
-	}
-
-	/* Run button */
-	.run-btn {
-		color: var(--success);
-	}
-
-	.run-btn:hover {
-		background: var(--success-bg);
-		color: var(--success);
-	}
-
-	/* Status icons */
-	.status-running,
-	.status-pending {
-		color: var(--accent);
-	}
-
-	.status-running :global(svg),
-	.status-pending :global(svg) {
+	/* Spinning loader for running/pending states */
+	.notebook-cell .icon-btn:disabled :global(svg) {
 		animation: spin 1s linear infinite;
 	}
 
-	.status-pending {
+	.notebook-cell.pending .icon-btn:disabled {
 		opacity: 0.5;
 	}
 
@@ -298,82 +288,84 @@
 	/* Output section */
 	.output-section {
 		border-top: 1px solid var(--border);
-		background: var(--surface);
 	}
 
-	.output-header {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
+	/* Output panels use global panel-header/panel-body styles */
+	.output-panel {
+		border-top: 1px solid var(--border);
+	}
+
+	.output-panel:first-child {
+		border-top: none;
+	}
+
+	.output-panel .panel-header {
 		padding: var(--space-xs) var(--space-md);
-		background: var(--surface-raised);
-		font-size: var(--font-xs);
-		font-weight: 500;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
 	}
 
-	.output-header .duration {
-		margin-left: auto;
-		font-family: var(--font-mono);
-		text-transform: none;
-		color: var(--text-disabled);
+	.output-panel .panel-body {
+		padding: 0;
 	}
 
-	.output-stdout pre,
-	.output-stderr pre,
-	.error-message,
-	.error-traceback {
+	.output-panel .panel-body pre {
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
+		line-height: 1.5;
+		color: var(--text);
 		white-space: pre-wrap;
 		word-break: break-word;
+		overflow-x: auto;
 		background: transparent;
 		border: none;
 		border-radius: 0;
 	}
 
-	.output-error {
+	/* Duration in header */
+	.output-panel .duration {
+		font-family: var(--font-mono);
+		font-size: var(--font-xs);
+		text-transform: none;
+		color: var(--text-disabled);
+	}
+
+	/* Error panel */
+	.output-panel.error {
 		background: var(--error-bg);
 	}
 
-	.output-error .output-header {
+	.output-panel.error .panel-header {
 		background: transparent;
 		color: var(--error);
 	}
 
-	.error-message {
+	.output-panel.error .error-message {
 		color: var(--error);
 	}
 
-	.error-traceback {
+	.output-panel.error .error-traceback {
 		color: var(--text-muted);
 		font-size: var(--font-xs);
 		border-top: 1px solid var(--border);
 	}
 
-	.output-stderr {
+	/* Warning panel (stderr) */
+	.output-panel.warning {
 		background: var(--warning-bg);
 	}
 
-	.output-stderr .output-header {
+	.output-panel.warning .panel-header {
 		background: transparent;
 		color: var(--warning);
 	}
 
-	.output-stderr pre {
+	.output-panel.warning pre {
 		color: var(--warning);
 	}
 
 	/* Plots */
-	.output-plots {
-		border-top: 1px solid var(--border);
-	}
-
-	.plots-container {
+	.plots-body {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
@@ -385,24 +377,5 @@
 		height: auto;
 		border-radius: var(--radius-sm);
 		background: white;
-	}
-
-	/* Clear button */
-	.clear-output-btn {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		padding: var(--space-xs) var(--space-md);
-		margin: var(--space-sm) var(--space-md);
-		font-size: var(--font-xs);
-		color: var(--text-muted);
-		background: transparent;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-sm);
-	}
-
-	.clear-output-btn:hover {
-		background: var(--surface-raised);
-		color: var(--text);
 	}
 </style>

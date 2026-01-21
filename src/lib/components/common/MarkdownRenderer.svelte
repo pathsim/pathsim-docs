@@ -441,23 +441,10 @@
 		color: var(--text-muted);
 	}
 
-	/* Inline code */
+	/* Inline code - plain style, no pill */
 	.markdown-content :global(code) {
 		font-family: var(--font-mono);
-		font-size: 0.9em;
-		background: var(--surface-raised);
-		padding: 1px 4px;
-		border-radius: var(--radius-sm);
-		border: 1px solid var(--border);
-	}
-
-	/* Don't style code inside pre/codemirror */
-	.markdown-content :global(pre code),
-	.markdown-content :global(.cm-content code) {
-		background: none;
-		padding: 0;
-		border: none;
-		border-radius: 0;
+		font-size: inherit;
 	}
 
 	/* Blockquote */

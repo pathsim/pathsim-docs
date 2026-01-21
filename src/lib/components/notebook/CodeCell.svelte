@@ -55,18 +55,13 @@
 
 	// Transform code for Pyodide compatibility
 	let transformedCode = $derived(transformCodeForPyodide(cell.source));
-
-	// Generate title with execution count
-	let title = $derived(
-		cell.execution_count ? `In [${cell.execution_count}]` : `In [${index + 1}]`
-	);
 </script>
 
 <div class="code-cell-wrapper">
 	<NotebookCell
 		id={cell.id}
 		code={transformedCode}
-		{title}
+		title="Python"
 		editable={true}
 		{prerequisites}
 	/>

@@ -610,14 +610,10 @@
 		overflow-x: auto;
 	}
 
-	/* Inline code */
+	/* Inline code - plain style, no pill */
 	.rst-content :global(code) {
 		font-family: var(--font-mono);
-		font-size: 0.9em;
-		background: var(--surface-raised);
-		padding: 1px 4px;
-		border-radius: var(--radius-sm);
-		border: 1px solid var(--border);
+		font-size: inherit;
 	}
 
 	/* Strong/emphasis */
