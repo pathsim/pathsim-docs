@@ -68,7 +68,7 @@
 
 		<div class="tile-grid cols-3">
 			{#each notebooks as notebook}
-				<a href="/{packageId}/examples/{notebook.slug}" class="tile link-tile">
+				<a href="/{packageId}/examples/{notebook.slug}" class="tile example-tile">
 					<div class="panel-header">
 						<span>{notebook.title}</span>
 						{#if !notebook.executable}
@@ -111,5 +111,15 @@
 		gap: var(--space-md);
 		padding: var(--space-xl);
 		color: var(--error);
+	}
+
+	/* Example tile - clickable link */
+	.example-tile {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.example-tile:hover {
+		text-decoration: none;
 	}
 </style>
