@@ -879,21 +879,36 @@ input::placeholder {
 }
 
 /* Remove focus outline from CodeMirror and code blocks (editor has its own cursor) */
-.cm-editor:focus-visible,
+.cm-editor,
+.cm-editor *,
+.cm-content,
+.code-panel,
+.code-panel *,
+.code-block-wrapper,
+.code-block-wrapper *,
+.panel-body {
+	outline: none !important;
+	outline-style: none !important;
+	-moz-outline-style: none !important;
+}
+
 .cm-editor:focus,
-.cm-editor *:focus-visible,
-.cm-editor *:focus,
-.cm-content:focus-visible,
+.cm-editor:focus-visible,
+.cm-editor:focus-within,
 .cm-content:focus,
+.cm-content:focus-visible,
+.code-panel:focus,
 .code-panel:focus-visible,
 .code-panel:focus-within,
-.code-panel *:focus-visible,
-.code-panel *:focus,
+.code-block-wrapper:focus,
 .code-block-wrapper:focus-visible,
 .code-block-wrapper:focus-within,
-.code-block-wrapper *:focus-visible,
-.code-block-wrapper *:focus {
+.panel-body:focus,
+.panel-body:focus-visible,
+.panel-body:focus-within {
 	outline: none !important;
+	outline-style: none !important;
+	-moz-outline-style: none !important;
 }
 
 /* Skip link for accessibility */
