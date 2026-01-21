@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { base } from '$app/paths';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
 	import { apiData, type APIModule } from '$lib/api/generated';
@@ -44,7 +45,7 @@
 <Tooltip />
 
 <div class="hero">
-	<img src={pkg.logo} alt={pkg.name} class="hero-logo" />
+	<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
 	<p class="description">Complete API documentation for {pkg.name}.</p>
 </div>
 

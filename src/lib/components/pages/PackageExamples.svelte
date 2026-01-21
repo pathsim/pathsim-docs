@@ -66,7 +66,7 @@
 <Tooltip />
 
 <div class="hero">
-	<img src={pkg.logo} alt={pkg.name} class="hero-logo" />
+	<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
 	<p class="description">Interactive example notebooks for {pkg.name}.</p>
 </div>
 
