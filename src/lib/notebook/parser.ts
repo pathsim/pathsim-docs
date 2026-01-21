@@ -14,6 +14,9 @@ import type {
 	CellOutput
 } from './types';
 
+// Re-export types for convenience
+export type { NotebookData, CellData, CellOutput } from './types';
+
 /**
  * Normalize source to single string (can be string or string[])
  */

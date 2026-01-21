@@ -32,15 +32,8 @@ export interface ApiModule {
 	description: string;
 }
 
-export interface Example {
-	title: string;
-	description: string;
-}
-
-export interface ExamplesSection {
-	title: string;
-	items: Example[];
-}
+// Note: Examples are now loaded dynamically from manifest.json
+// See src/lib/notebook/manifest.ts
 
 export interface PackageConfig {
 	id: PackageId;
@@ -63,9 +56,6 @@ export interface PackageConfig {
 
 	// API page content
 	apiModules: ApiModule[];
-
-	// Examples page content
-	examplesSections: ExamplesSection[];
 }
 
 export const packages: Record<PackageId, PackageConfig> = {
@@ -121,24 +111,6 @@ scope.plot()`,
 			{ name: 'pathsim.blocks', description: 'Block library (Integrator, Amplifier, Scope, etc.)' },
 			{ name: 'pathsim.solvers', description: 'Numerical integrators' },
 			{ name: 'pathsim.events', description: 'Event handling' }
-		],
-		examplesSections: [
-			{
-				title: 'Getting Started',
-				items: [
-					{ title: 'Simple ODE', description: 'Exponential decay' },
-					{ title: 'Harmonic Oscillator', description: 'Spring-mass system' },
-					{ title: 'Van der Pol', description: 'Nonlinear oscillator' }
-				]
-			},
-			{
-				title: 'Advanced Topics',
-				items: [
-					{ title: 'Stiff Systems', description: 'Implicit solvers' },
-					{ title: 'Event Handling', description: 'Zero-crossing detection' },
-					{ title: 'Subsystems', description: 'Hierarchical models' }
-				]
-			}
 		]
 	},
 	chem: {
@@ -167,16 +139,6 @@ scope.plot()`,
 			{ name: 'pathsim_chem.heat', description: 'Heat exchangers, heaters, coolers' },
 			{ name: 'pathsim_chem.separation', description: 'Distillation, absorption columns' },
 			{ name: 'pathsim_chem.thermo', description: 'Thermodynamic property calculations' }
-		],
-		examplesSections: [
-			{
-				title: 'Reactor Examples',
-				items: [
-					{ title: 'CSTR', description: 'Continuous stirred tank reactor' },
-					{ title: 'PFR', description: 'Plug flow reactor' },
-					{ title: 'Batch', description: 'Batch reactor dynamics' }
-				]
-			}
 		]
 	},
 	vehicle: {
@@ -203,16 +165,6 @@ scope.plot()`,
 			{ name: 'pathsim_vehicle.suspension', description: 'Spring-damper systems' },
 			{ name: 'pathsim_vehicle.powertrain', description: 'Engine, transmission models' },
 			{ name: 'pathsim_vehicle.body', description: 'Multi-body vehicle dynamics' }
-		],
-		examplesSections: [
-			{
-				title: 'Vehicle Dynamics',
-				items: [
-					{ title: 'Quarter Car', description: 'Suspension dynamics' },
-					{ title: 'Tire Slip', description: 'Pacejka tire model' },
-					{ title: 'Full Vehicle', description: 'Complete vehicle simulation' }
-				]
-			}
 		]
 	}
 };
