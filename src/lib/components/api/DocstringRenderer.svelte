@@ -784,7 +784,7 @@
 	/* Inline code */
 	.docstring-content :global(code) {
 		font-family: var(--font-mono);
-		font-size: 0.9em;
+		font-size: var(--font-base);
 		background: var(--surface-raised);
 		padding: 1px 4px;
 		border-radius: var(--radius-sm);
@@ -808,29 +808,14 @@
 		color: var(--text-muted);
 	}
 
-	/* Cross-reference links */
-	.docstring-content :global(a.crossref) {
-		font-family: var(--font-mono);
-		font-weight: 500;
-		font-size: 0.9em;
-		color: var(--accent);
-		text-decoration: none;
-		transition: color var(--transition-fast);
-	}
-
-	.docstring-content :global(a.crossref:hover) {
-		text-decoration: underline;
-	}
-
+	/* Cross-reference links - base styles in app.css, only add hover effects for code */
 	.docstring-content :global(a.crossref code) {
-		font-weight: inherit;
-		color: inherit;
 		background: var(--accent-bg);
 		border-color: var(--accent);
 	}
 
 	.docstring-content :global(a.crossref:hover code) {
 		background: var(--accent);
-		color: var(--bg);
+		color: white;
 	}
 </style>

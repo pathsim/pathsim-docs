@@ -259,7 +259,7 @@ a:hover {
 a.crossref {
 	font-family: var(--font-mono);
 	font-weight: 500;
-	font-size: 0.9em;
+	font-size: var(--font-base);
 	color: var(--accent);
 	text-decoration: none;
 	transition: color var(--transition-fast);
