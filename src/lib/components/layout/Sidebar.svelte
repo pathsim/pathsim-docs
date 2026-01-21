@@ -5,8 +5,10 @@
 	import { getSidebarItems, type PackageId } from '$lib/config/packages';
 	import { apiModulesStore } from '$lib/stores/apiContext';
 	import { ApiToc } from '$lib/components/api';
+	import ExamplesToc from '$lib/components/examples/ExamplesToc.svelte';
 	import { search, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
+	import { exampleCategoriesStore } from '$lib/stores/examplesContext';
 
 	interface Props {
 		packageId: PackageId;
@@ -19,8 +21,9 @@
 	let searchResults = $derived(search(searchQuery, 15));
 	let showResults = $derived(searchQuery.length > 0);
 
-	// Check if we're on an API page
+	// Check if we're on an API page or examples listing page
 	let isApiPage = $derived($page.url.pathname.endsWith('/api'));
+	let isExamplesListPage = $derived($page.url.pathname.endsWith('/examples'));
 
 	function isActive(path: string): boolean {
 		return $page.url.pathname === path;
@@ -109,6 +112,10 @@
 	{#if !showResults && isApiPage && $apiModulesStore.length > 0}
 		<div class="sidebar-scrollable">
 			<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
+		</div>
+	{:else if !showResults && isExamplesListPage && $exampleCategoriesStore.length > 0}
+		<div class="sidebar-scrollable">
+			<ExamplesToc categories={$exampleCategoriesStore} />
 		</div>
 	{/if}
 </aside>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
@@ -10,6 +10,7 @@
 		type NotebookManifest,
 		type Category
 	} from '$lib/notebook/manifest';
+	import { exampleCategoriesStore } from '$lib/stores/examplesContext';
 
 	interface Props {
 		packageId: PackageId;
@@ -33,11 +34,20 @@
 	onMount(async () => {
 		try {
 			manifest = await loadManifest(packageId);
+			// Populate store for sidebar TOC
+			if (manifest) {
+				exampleCategoriesStore.set(manifest.categories);
+			}
 		} catch (e) {
 			error = e instanceof Error ? e.message : 'Failed to load examples';
 		} finally {
 			loading = false;
 		}
+	});
+
+	onDestroy(() => {
+		// Clear store when leaving page
+		exampleCategoriesStore.set([]);
 	});
 </script>
 
