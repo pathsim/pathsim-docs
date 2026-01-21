@@ -1,86 +1,296 @@
 /**
  * Notebook Execution Store
- * Tracks executed cells across all CodeBlock instances for prerequisite checking
+ * Manages cell registry, execution state, and prerequisite resolution
  */
 
 import { writable, get } from 'svelte/store';
 
+export type CellStatus = 'idle' | 'pending' | 'running' | 'success' | 'error';
+
+export interface CellState {
+	id: string;
+	status: CellStatus;
+	executionCount: number;
+	/** Function to execute this cell (registered by NotebookCell) */
+	execute: () => Promise<void>;
+	/** IDs of cells this cell depends on */
+	prerequisites: string[];
+}
+
 interface NotebookState {
-	/** Set of cell IDs that have been successfully executed */
-	executedCells: Set<string>;
+	/** Registry of all cells by ID */
+	cells: Map<string, CellState>;
 	/** Whether Pyodide is currently initializing */
-	pyodideLoading: boolean;
-	/** Progress message during Pyodide initialization */
+	pyodideInitializing: boolean;
+	/** Pyodide initialization progress message */
 	pyodideProgress: string;
+	/** Whether Pyodide has been initialized */
+	pyodideReady: boolean;
 }
 
 const initialState: NotebookState = {
-	executedCells: new Set(),
-	pyodideLoading: false,
-	pyodideProgress: ''
+	cells: new Map(),
+	pyodideInitializing: false,
+	pyodideProgress: '',
+	pyodideReady: false
 };
 
 function createNotebookStore() {
 	const { subscribe, set, update } = writable<NotebookState>(initialState);
 
+	/**
+	 * Detect circular dependencies using DFS
+	 */
+	function detectCircularDeps(
+		cellId: string,
+		cells: Map<string, CellState>,
+		visited: Set<string> = new Set(),
+		path: Set<string> = new Set()
+	): string[] | null {
+		if (path.has(cellId)) {
+			// Found cycle - return the cycle path
+			return [...path, cellId];
+		}
+		if (visited.has(cellId)) {
+			return null; // Already checked this branch
+		}
+
+		visited.add(cellId);
+		path.add(cellId);
+
+		const cell = cells.get(cellId);
+		if (cell) {
+			for (const prereqId of cell.prerequisites) {
+				const cycle = detectCircularDeps(prereqId, cells, visited, path);
+				if (cycle) return cycle;
+			}
+		}
+
+		path.delete(cellId);
+		return null;
+	}
+
+	/**
+	 * Get execution order for a cell and its prerequisites (topological sort)
+	 */
+	function getExecutionOrder(
+		cellId: string,
+		cells: Map<string, CellState>,
+		visited: Set<string> = new Set()
+	): string[] {
+		if (visited.has(cellId)) return [];
+		visited.add(cellId);
+
+		const cell = cells.get(cellId);
+		if (!cell) return [];
+
+		const order: string[] = [];
+
+		// First, add prerequisites (depth-first)
+		for (const prereqId of cell.prerequisites) {
+			order.push(...getExecutionOrder(prereqId, cells, visited));
+		}
+
+		// Then add this cell
+		order.push(cellId);
+
+		return order;
+	}
+
 	return {
 		subscribe,
 
 		/**
-		 * Mark a cell as executed
+		 * Register a cell with the store
 		 */
-		markExecuted(cellId: string) {
+		registerCell(
+			id: string,
+			execute: () => Promise<void>,
+			prerequisites: string[] = []
+		) {
 			update((state) => {
-				state.executedCells.add(cellId);
-				return { ...state, executedCells: new Set(state.executedCells) };
+				const cells = new Map(state.cells);
+				cells.set(id, {
+					id,
+					status: 'idle',
+					executionCount: 0,
+					execute,
+					prerequisites
+				});
+				return { ...state, cells };
 			});
 		},
 
 		/**
-		 * Check if a cell has been executed
+		 * Unregister a cell (on component destroy)
 		 */
-		isExecuted(cellId: string): boolean {
-			return get({ subscribe }).executedCells.has(cellId);
+		unregisterCell(id: string) {
+			update((state) => {
+				const cells = new Map(state.cells);
+				cells.delete(id);
+				return { ...state, cells };
+			});
 		},
 
 		/**
-		 * Check if all prerequisite cells have been executed
+		 * Update cell status
 		 */
-		checkPrerequisites(prerequisites: string[]): { satisfied: boolean; missing: string[] } {
+		setCellStatus(id: string, status: CellStatus) {
+			update((state) => {
+				const cells = new Map(state.cells);
+				const cell = cells.get(id);
+				if (cell) {
+					cells.set(id, { ...cell, status });
+				}
+				return { ...state, cells };
+			});
+		},
+
+		/**
+		 * Increment execution count for a cell
+		 */
+		incrementExecutionCount(id: string) {
+			update((state) => {
+				const cells = new Map(state.cells);
+				const cell = cells.get(id);
+				if (cell) {
+					cells.set(id, { ...cell, executionCount: cell.executionCount + 1 });
+				}
+				return { ...state, cells };
+			});
+		},
+
+		/**
+		 * Get cell state by ID
+		 */
+		getCell(id: string): CellState | undefined {
+			return get({ subscribe }).cells.get(id);
+		},
+
+		/**
+		 * Check if a cell has been successfully executed
+		 */
+		isExecuted(id: string): boolean {
+			const cell = get({ subscribe }).cells.get(id);
+			return cell?.status === 'success';
+		},
+
+		/**
+		 * Run a cell with automatic prerequisite execution
+		 * Returns list of cells that were run (in order)
+		 */
+		async runWithPrerequisites(cellId: string): Promise<{
+			success: boolean;
+			executedCells: string[];
+			error?: string;
+		}> {
 			const state = get({ subscribe });
-			const missing = prerequisites.filter((id) => !state.executedCells.has(id));
-			return {
-				satisfied: missing.length === 0,
-				missing
-			};
+			const cells = state.cells;
+
+			// Check for circular dependencies
+			const cycle = detectCircularDeps(cellId, cells);
+			if (cycle) {
+				return {
+					success: false,
+					executedCells: [],
+					error: `Circular dependency detected: ${cycle.join(' → ')}`
+				};
+			}
+
+			// Get execution order
+			const executionOrder = getExecutionOrder(cellId, cells);
+
+			// Filter to only cells that need to run
+			const cellsToRun = executionOrder.filter((id) => {
+				const cell = cells.get(id);
+				// Run if not yet successful, or if it's the target cell (always re-run target)
+				return cell && (cell.status !== 'success' || id === cellId);
+			});
+
+			// Mark all cells as pending
+			for (const id of cellsToRun) {
+				this.setCellStatus(id, 'pending');
+			}
+
+			const executedCells: string[] = [];
+
+			// Execute in order
+			for (const id of cellsToRun) {
+				const cell = get({ subscribe }).cells.get(id);
+				if (!cell) continue;
+
+				this.setCellStatus(id, 'running');
+
+				try {
+					await cell.execute();
+					// Status will be set to 'success' or 'error' by the cell itself
+					const updatedCell = get({ subscribe }).cells.get(id);
+					if (updatedCell?.status === 'error') {
+						// Stop execution chain on error
+						// Reset remaining pending cells to idle
+						for (const remainingId of cellsToRun) {
+							const remaining = get({ subscribe }).cells.get(remainingId);
+							if (remaining?.status === 'pending') {
+								this.setCellStatus(remainingId, 'idle');
+							}
+						}
+						return {
+							success: false,
+							executedCells,
+							error: `Cell "${id}" failed`
+						};
+					}
+					executedCells.push(id);
+				} catch (err) {
+					this.setCellStatus(id, 'error');
+					// Reset remaining pending cells
+					for (const remainingId of cellsToRun) {
+						const remaining = get({ subscribe }).cells.get(remainingId);
+						if (remaining?.status === 'pending') {
+							this.setCellStatus(remainingId, 'idle');
+						}
+					}
+					return {
+						success: false,
+						executedCells,
+						error: err instanceof Error ? err.message : String(err)
+					};
+				}
+			}
+
+			return { success: true, executedCells };
 		},
 
 		/**
-		 * Clear a specific cell's executed status
+		 * Set Pyodide initialization state
 		 */
-		clearCell(cellId: string) {
+		setPyodideState(initializing: boolean, progress: string = '', ready: boolean = false) {
+			update((state) => ({
+				...state,
+				pyodideInitializing: initializing,
+				pyodideProgress: progress,
+				pyodideReady: ready
+			}));
+		},
+
+		/**
+		 * Reset all cells (e.g., when navigating away)
+		 */
+		resetAllCells() {
 			update((state) => {
-				state.executedCells.delete(cellId);
-				return { ...state, executedCells: new Set(state.executedCells) };
+				const cells = new Map(state.cells);
+				for (const [id, cell] of cells) {
+					cells.set(id, { ...cell, status: 'idle', executionCount: 0 });
+				}
+				return { ...state, cells };
 			});
 		},
 
 		/**
-		 * Reset all notebook state (e.g., when navigating away)
+		 * Full reset (clears everything)
 		 */
 		reset() {
 			set(initialState);
-		},
-
-		/**
-		 * Set Pyodide loading state
-		 */
-		setPyodideLoading(loading: boolean, progress: string = '') {
-			update((state) => ({
-				...state,
-				pyodideLoading: loading,
-				pyodideProgress: progress
-			}));
 		}
 	};
 }
