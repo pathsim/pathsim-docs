@@ -110,6 +110,5 @@
 	.notebook-cells {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-lg);
 	}
 </style>

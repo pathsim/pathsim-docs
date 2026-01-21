@@ -39,8 +39,3 @@
 	/>
 </div>
 
-<style>
-	.code-cell-wrapper {
-		/* Spacing handled by parent .notebook-cells gap */
-	}
-</style>

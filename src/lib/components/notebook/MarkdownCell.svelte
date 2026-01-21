@@ -17,8 +17,3 @@
 	<MarkdownRenderer markdown={cell.source} />
 </div>
 
-<style>
-	.markdown-cell {
-		/* Spacing handled by parent .notebook-cells gap */
-	}
-</style>

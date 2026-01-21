@@ -24,8 +24,3 @@
 	</div>
 {/if}
 
-<style>
-	.raw-cell {
-		/* Spacing handled by parent .notebook-cells gap */
-	}
-</style>
