@@ -927,6 +927,7 @@ input::placeholder {
 /* Prose styling for documentation content */
 .prose {
 	max-width: var(--content-max-width);
+	min-width: 0;
 	line-height: 1.7;
 }
 

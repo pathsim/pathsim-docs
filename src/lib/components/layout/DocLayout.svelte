@@ -27,6 +27,7 @@
 		display: flex;
 		flex: 1;
 		min-height: 0;
+		min-width: 0;
 		overflow: hidden;
 	}
 
@@ -47,6 +48,7 @@
 
 	.doc-content {
 		flex: 1;
+		min-width: 0;
 		max-width: var(--content-max-width);
 		margin: 0 auto;
 		padding: var(--space-xl);

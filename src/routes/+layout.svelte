@@ -113,6 +113,7 @@
 		flex-direction: column;
 		overflow: hidden;
 		min-height: 0;
+		min-width: 0;
 	}
 
 	footer {
