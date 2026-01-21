@@ -69,14 +69,14 @@
 
 		<div class="tile-grid cols-3">
 			{#each notebooks as notebook}
-				<a href="/{packageId}/examples/{notebook.slug}" class="tile link-tile">
-					<div class="panel-header">
+				<a href="/{packageId}/examples/{notebook.slug}" class="tile notebook-tile">
+					<div class="notebook-header">
 						<span class="notebook-title">{notebook.title}</span>
 						{#if !notebook.executable}
 							<span class="badge warning">View Only</span>
 						{/if}
 					</div>
-					<div class="panel-body notebook-body">
+					<div class="notebook-body">
 						<p class="notebook-description">{notebook.description}</p>
 						<div class="notebook-footer">
 							<div class="notebook-tags">
@@ -100,7 +100,7 @@
 {/if}
 
 <style>
-	/* Loading state - extends global loading-centered */
+	/* Loading state */
 	.loading-centered {
 		gap: var(--space-md);
 	}
@@ -110,12 +110,8 @@
 	}
 
 	@keyframes spin {
-		from {
-			transform: rotate(0deg);
-		}
-		to {
-			transform: rotate(360deg);
-		}
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
 	}
 
 	/* Error state */
@@ -128,19 +124,40 @@
 		color: var(--error);
 	}
 
-	/* Notebook tile content */
+	/* Notebook tile */
+	.notebook-tile {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+		color: inherit;
+		background: var(--surface);
+	}
+
+	.notebook-tile:hover {
+		text-decoration: none;
+	}
+
+	.notebook-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm);
+		padding: var(--space-sm) var(--space-md);
+		background: var(--surface-raised);
+		border-bottom: 1px solid var(--border);
+	}
+
 	.notebook-title {
 		font-weight: 500;
 		color: var(--text);
-		text-transform: none;
-		letter-spacing: normal;
 		font-size: var(--font-sm);
 	}
 
 	.notebook-body {
 		display: flex;
 		flex-direction: column;
-		height: 100%;
+		flex: 1;
+		padding: var(--space-md);
 	}
 
 	.notebook-description {
@@ -184,7 +201,7 @@
 		transition: all var(--transition-fast);
 	}
 
-	.link-tile:hover .notebook-footer :global(svg) {
+	.notebook-tile:hover .notebook-footer :global(svg) {
 		color: var(--accent);
 		transform: translateX(4px);
 	}
