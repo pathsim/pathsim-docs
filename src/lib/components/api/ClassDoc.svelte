@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import type { APIClass } from '$lib/api/generated';
 	import FunctionDoc from './FunctionDoc.svelte';
 	import DocstringRenderer from './DocstringRenderer.svelte';
@@ -7,6 +7,7 @@
 	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
+	import { searchTarget, clearSearchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
 		cls: APIClass;
@@ -16,6 +17,7 @@
 	let { cls, expanded: initialExpanded = false }: Props = $props();
 	let isExpanded = $state(initialExpanded);
 	let viewMode = $state<'docs' | 'source'>('docs');
+	let tileElement: HTMLDivElement | undefined = $state();
 
 	// CodeMirror state
 	let editorContainer = $state<HTMLDivElement | undefined>(undefined);
@@ -28,7 +30,7 @@
 		cls.methods.filter((m) => m.name !== '__init__' && !m.name.startsWith('_'))
 	);
 
-	function toggleView(e: MouseEvent) {
+	function toggleView(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
 		viewMode = viewMode === 'docs' ? 'source' : 'docs';
 	}
@@ -74,12 +76,32 @@
 		}
 	});
 
+	// Watch for search navigation target
+	$effect(() => {
+		const target = $searchTarget;
+		if (!target) return;
+
+		// Direct class match
+		if (target.type === 'class' && target.name === cls.name) {
+			isExpanded = true;
+			clearSearchTarget();
+			tick().then(() => {
+				tileElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
+		}
+		// Method inside this class - expand so method can be found
+		else if (target.type === 'method' && target.parentClass === cls.name) {
+			isExpanded = true;
+			// Don't clear target - let FunctionDoc handle it
+		}
+	});
+
 	onDestroy(() => {
 		editorView?.destroy();
 	});
 </script>
 
-<div class="tile class-tile" id={cls.name}>
+<div class="tile class-tile" id={cls.name} bind:this={tileElement}>
 	<button class="panel-header class-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<div class="class-header-content">
 			<div class="class-header-top">
@@ -93,14 +115,16 @@
 			{/if}
 		</div>
 		{#if cls.source && isExpanded}
-			<button
+			<span
+				role="button"
+				tabindex="0"
 				class="icon-btn view-toggle-btn"
-				class:active={viewMode === 'source'}
 				onclick={toggleView}
+				onkeydown={(e) => e.key === 'Enter' && toggleView(e)}
 				use:tooltip={viewMode === 'docs' ? 'View source' : 'View docs'}
 			>
-				<Icon name={viewMode === 'docs' ? 'code' : 'book'} size={14} />
-			</button>
+				<Icon name={viewMode === 'docs' ? 'braces' : 'book'} size={14} />
+			</span>
 		{/if}
 	</button>
 
@@ -137,16 +161,10 @@
 		margin-bottom: var(--space-lg);
 	}
 
-	/* Disable tile hover effect */
-	.class-tile:hover {
-		border-color: var(--border);
-		box-shadow: none;
-	}
-
 	/* Override panel-header for class - make it clickable */
 	.class-header {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		justify-content: space-between;
 		gap: var(--space-sm);
 		width: 100%;
@@ -159,6 +177,10 @@
 		text-transform: none;
 		letter-spacing: normal;
 		font-size: var(--font-sm);
+	}
+
+	.class-header:hover {
+		background: var(--surface-raised);
 	}
 
 	.class-header.class-header.expanded {
@@ -207,10 +229,6 @@
 	/* View toggle button - inherits .icon-btn styles */
 	.view-toggle-btn {
 		flex-shrink: 0;
-	}
-
-	.view-toggle-btn.active {
-		color: var(--accent);
 	}
 
 	/* Source view - no padding, CodeMirror fills the space */

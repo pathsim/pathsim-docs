@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { getSidebarItems, type PackageId } from '$lib/config/packages';
 	import { apiModulesStore } from '$lib/stores/apiContext';
 	import { ApiToc } from '$lib/components/api';
+	import { search, type SearchResult } from '$lib/utils/search';
+	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
 		packageId: PackageId;
@@ -13,6 +16,8 @@
 
 	let items = $derived(getSidebarItems(packageId));
 	let searchQuery = $state('');
+	let searchResults = $derived(search(searchQuery, 15));
+	let showResults = $derived(searchQuery.length > 0);
 
 	// Check if we're on an API page
 	let isApiPage = $derived($page.url.pathname.endsWith('/api'));
@@ -28,8 +33,28 @@
 		}
 	}
 
+	function handleResultClick(result: SearchResult) {
+		searchQuery = '';
+		// Set the target element to expand/scroll to
+		searchTarget.set({
+			name: result.name,
+			type: result.type,
+			parentClass: result.parentClass
+		});
+		goto(result.path);
+	}
+
 	function handleTocNavigate(id: string) {
 		// Could track navigation for analytics or other purposes
+	}
+
+	function getTypeIcon(type: SearchResult['type']): string {
+		switch (type) {
+			case 'module': return 'package';
+			case 'class': return 'box';
+			case 'function': return 'zap';
+			case 'method': return 'code';
+		}
 	}
 </script>
 
@@ -50,19 +75,38 @@
 				</button>
 			{/if}
 		</div>
-		<nav class="sidebar-nav">
-			{#each items as item}
-				<a href={item.path} class="sidebar-item" class:active={isActive(item.path)}>
-					{#if item.icon}
-						<Icon name={item.icon} size={14} />
-					{/if}
-					<span>{item.title}</span>
-				</a>
-			{/each}
-		</nav>
+
+		{#if showResults}
+			<nav class="sidebar-nav search-results">
+				{#if searchResults.length > 0}
+					{#each searchResults as result}
+						<button class="search-result" onclick={() => handleResultClick(result)}>
+							<Icon name={getTypeIcon(result.type)} size={14} />
+							<div class="result-text">
+								<span class="result-name">{result.name}</span>
+								<span class="result-context">{result.parentClass || result.moduleName.split('.').pop()}</span>
+							</div>
+						</button>
+					{/each}
+				{:else}
+					<div class="no-results">No results found</div>
+				{/if}
+			</nav>
+		{:else}
+			<nav class="sidebar-nav">
+				{#each items as item}
+					<a href={item.path} class="sidebar-item" class:active={isActive(item.path)}>
+						{#if item.icon}
+							<Icon name={item.icon} size={14} />
+						{/if}
+						<span>{item.title}</span>
+					</a>
+				{/each}
+			</nav>
+		{/if}
 	</div>
 
-	{#if isApiPage && $apiModulesStore.length > 0}
+	{#if !showResults && isApiPage && $apiModulesStore.length > 0}
 		<div class="sidebar-scrollable">
 			<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
 		</div>
@@ -133,6 +177,58 @@
 
 	.clear-btn:hover {
 		color: var(--text);
+	}
+
+	.search-results {
+		overflow-y: auto;
+		max-height: calc(100vh - var(--header-height) - var(--header-height));
+	}
+
+	button.search-result {
+		display: flex;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: var(--space-sm);
+		padding: var(--space-sm);
+		background: none;
+		border: none;
+		border-radius: var(--radius-sm);
+		text-align: left;
+		cursor: pointer;
+		color: var(--text-muted);
+		transition: all var(--transition-fast);
+		width: 100%;
+	}
+
+	button.search-result:hover {
+		color: var(--text);
+		background: var(--surface-hover);
+	}
+
+	.search-result :global(svg) {
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.result-text {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.result-name {
+		font-size: var(--font-sm);
+	}
+
+	.result-context {
+		font-size: var(--font-xs);
+	}
+
+	.no-results {
+		padding: var(--space-lg);
+		text-align: center;
+		color: var(--text-muted);
+		font-size: var(--font-sm);
 	}
 
 	.sidebar-nav {

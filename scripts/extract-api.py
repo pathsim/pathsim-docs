@@ -493,9 +493,14 @@ class APIExtractor:
         skip_private = self.config.get("skip_private", True)
         all_modules = self.config.get("modules", [])
 
+        # Track what we've already extracted to avoid duplicates
+        extracted_classes = set()
+        extracted_functions = set()
+
         if not hasattr(obj, "members"):
             return module_data
 
+        # First, extract from the module's direct members (what's exported in __init__.py)
         for name, member in obj.members.items():
             if should_skip(name, skip_private):
                 continue
@@ -513,6 +518,7 @@ class APIExtractor:
                     class_data = self._extract_class(member)
                     if class_data:
                         module_data["classes"].append(class_data)
+                        extracted_classes.add(class_data["name"])
 
                 elif member.is_function:
                     # Skip functions that are just imported from modules we're also extracting
@@ -521,10 +527,82 @@ class APIExtractor:
                     func_data = self._extract_function(member)
                     if func_data:
                         module_data["functions"].append(func_data)
+                        extracted_functions.add(func_data["name"])
             except Exception:
                 continue
 
+        # Now, scan all .py files in the module directory to extract classes/functions
+        # that aren't exported in __init__.py
+        self._extract_from_submodule_files(
+            module_path, module_data, extracted_classes, extracted_functions
+        )
+
         return module_data
+
+    def _extract_from_submodule_files(
+        self,
+        module_path: str,
+        module_data: dict,
+        extracted_classes: set,
+        extracted_functions: set
+    ) -> None:
+        """Scan all .py files in a module directory and extract classes/functions."""
+        source_path = self.config["source_path"]
+        skip_private = self.config.get("skip_private", True)
+
+        # Convert module path to directory path
+        parts = module_path.split(".")
+        module_dir = source_path / Path(*parts)
+
+        if not module_dir.is_dir():
+            return
+
+        # Find all .py files (excluding __init__.py and private modules)
+        for py_file in module_dir.glob("*.py"):
+            if py_file.name == "__init__.py":
+                continue
+            if skip_private and py_file.stem.startswith("_"):
+                continue
+
+            submodule_name = f"{module_path}.{py_file.stem}"
+
+            try:
+                # Load the submodule using griffe
+                loader = GriffeLoader(
+                    search_paths=[str(source_path)],
+                    docstring_parser="numpy",
+                    allow_inspection=False,
+                )
+                submodule = loader.load(submodule_name)
+
+                # Extract classes and functions from this submodule
+                if hasattr(submodule, "members"):
+                    for name, member in submodule.members.items():
+                        if should_skip(name, skip_private):
+                            continue
+
+                        try:
+                            if member.is_class and name not in extracted_classes:
+                                class_data = self._extract_class(member)
+                                if class_data:
+                                    # Add source module info
+                                    class_data["source_module"] = py_file.stem
+                                    module_data["classes"].append(class_data)
+                                    extracted_classes.add(name)
+
+                            elif member.is_function and name not in extracted_functions:
+                                func_data = self._extract_function(member)
+                                if func_data:
+                                    # Add source module info
+                                    func_data["source_module"] = py_file.stem
+                                    module_data["functions"].append(func_data)
+                                    extracted_functions.add(name)
+                        except Exception:
+                            continue
+
+            except Exception as e:
+                # If we can't load the submodule, continue to next file
+                continue
 
     def _extract_class(self, cls: griffe.Class) -> dict | None:
         """Extract class documentation."""

@@ -1,14 +1,38 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, nav } from '$lib/config/packages';
+	import { search, type SearchResult } from '$lib/utils/search';
+	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	let searchQuery = $state('');
+	let searchResults = $derived(search(searchQuery, 8));
+	let showResults = $derived(searchQuery.length > 0);
 
 	function handleSearchKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape' && searchQuery) {
 			searchQuery = '';
 			event.stopPropagation();
+		}
+	}
+
+	function handleResultClick(result: SearchResult) {
+		searchQuery = '';
+		searchTarget.set({
+			name: result.name,
+			type: result.type,
+			parentClass: result.parentClass
+		});
+		goto(result.path);
+	}
+
+	function getTypeIcon(type: SearchResult['type']): string {
+		switch (type) {
+			case 'module': return 'package';
+			case 'class': return 'box';
+			case 'function': return 'zap';
+			case 'method': return 'code';
 		}
 	}
 </script>
@@ -29,17 +53,36 @@
 				API reference, tutorials, and examples for PathSim and its domain-specific toolboxes.
 			</p>
 			<div class="hero-search">
-				<Icon name="search" size={18} />
-				<input
-					type="text"
-					placeholder="Search documentation..."
-					bind:value={searchQuery}
-					onkeydown={handleSearchKeydown}
-				/>
-				{#if searchQuery}
-					<button class="clear-btn" onclick={() => (searchQuery = '')}>
-						<Icon name="x" size={14} />
-					</button>
+				<div class="search-box">
+					<Icon name="search" size={16} />
+					<input
+						type="text"
+						placeholder="Search the API..."
+						bind:value={searchQuery}
+						onkeydown={handleSearchKeydown}
+					/>
+					{#if searchQuery}
+						<button class="clear-btn" onclick={() => (searchQuery = '')}>
+							<Icon name="x" size={14} />
+						</button>
+					{/if}
+				</div>
+				{#if showResults}
+					<div class="search-results">
+						{#if searchResults.length > 0}
+							{#each searchResults as result}
+								<button class="search-result" onclick={() => handleResultClick(result)}>
+									<Icon name={getTypeIcon(result.type)} size={14} />
+									<div class="result-text">
+										<span class="result-name">{result.name}</span>
+										<span class="result-context">{result.parentClass || result.moduleName.split('.').pop()}</span>
+									</div>
+								</button>
+							{/each}
+						{:else}
+							<div class="no-results">No results found</div>
+						{/if}
+					</div>
 				{/if}
 			</div>
 			<div class="hero-actions">
@@ -188,50 +231,47 @@
 
 	.description {
 		font-size: var(--font-base);
-		color: var(--text);
-		margin-bottom: var(--space-lg);
+		color: var(--text-muted);
+		margin-bottom: var(--space-2xl);
 	}
 
 	.hero-search {
+		position: relative;
+		max-width: 400px;
+		margin: 0 auto var(--space-xl);
+	}
+
+	.search-box {
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
-		max-width: 480px;
-		margin: var(--space-2xl) auto var(--space-2xl);
 		padding: var(--space-md) var(--space-lg);
 		background: var(--surface-raised);
 		border: 1px solid var(--border);
-		border-radius: var(--radius-xl);
-		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-	}
-
-	.hero-search:focus-within {
-		border-color: var(--accent);
-		box-shadow: 0 0 0 3px var(--accent-bg);
-	}
-
-	.hero-search :global(svg) {
+		border-radius: 9999px;
 		color: var(--text-muted);
-		flex-shrink: 0;
 	}
 
-	.hero-search input {
+	.search-box:focus-within {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+	}
+
+	.search-box input {
 		flex: 1;
 		background: transparent;
 		border: none;
-		border-radius: 0;
+		box-shadow: none;
 		font-size: var(--font-base);
 		color: var(--text);
 		outline: none;
-		box-shadow: none;
-		padding: 0;
 	}
 
-	.hero-search input::placeholder {
+	.search-box input::placeholder {
 		color: var(--text-muted);
 	}
 
-	.hero-search .clear-btn {
+	.search-box .clear-btn {
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -242,8 +282,69 @@
 		cursor: pointer;
 	}
 
-	.hero-search .clear-btn:hover {
+	.search-box .clear-btn:hover {
 		color: var(--text);
+	}
+
+	.search-results {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		margin-top: var(--space-sm);
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
+		max-height: 400px;
+		overflow-y: auto;
+		z-index: 100;
+		padding: var(--space-sm) 0;
+	}
+
+	button.search-result {
+		display: flex;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: var(--space-sm);
+		padding: var(--space-sm) var(--space-md);
+		background: none;
+		border: none;
+		text-align: left;
+		cursor: pointer;
+		color: var(--text-muted);
+		transition: all var(--transition-fast);
+		width: 100%;
+	}
+
+	button.search-result:hover {
+		color: var(--text);
+		background: var(--surface-hover);
+	}
+
+	.search-result :global(svg) {
+		flex-shrink: 0;
+		margin-top: 2px;
+	}
+
+	.result-text {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.result-name {
+		font-size: var(--font-sm);
+	}
+
+	.result-context {
+		font-size: var(--font-xs);
+	}
+
+	.no-results {
+		padding: var(--space-lg);
+		text-align: center;
+		color: var(--text-muted);
+		font-size: var(--font-sm);
 	}
 
 	.hero-actions {

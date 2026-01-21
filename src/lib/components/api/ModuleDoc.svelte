@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import type { APIModule } from '$lib/api/generated';
 	import ClassDoc from './ClassDoc.svelte';
 	import FunctionDoc from './FunctionDoc.svelte';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import { searchTarget, clearSearchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
 		module: APIModule;
@@ -10,9 +12,23 @@
 	}
 
 	let { module, defaultExpanded = false }: Props = $props();
+	let sectionElement: HTMLElement | undefined = $state();
+
+	// Watch for search navigation target
+	$effect(() => {
+		const target = $searchTarget;
+		if (!target) return;
+
+		if (target.type === 'module' && target.name === module.name) {
+			clearSearchTarget();
+			tick().then(() => {
+				sectionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
+		}
+	});
 </script>
 
-<section class="api-module" id={module.name.replace(/\./g, '-')}>
+<section class="api-module" id={module.name.replace(/\./g, '-')} bind:this={sectionElement}>
 	<header class="api-module-header">
 		<h3 class="api-module-name">
 			<code>{module.name}</code>

@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
+	import { onDestroy, tick } from 'svelte';
 	import type { APIFunction, APIMethod } from '$lib/api/generated';
 	import DocstringRenderer from './DocstringRenderer.svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
+	import { searchTarget, clearSearchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
 		func: APIFunction | APIMethod;
@@ -16,6 +17,7 @@
 	let { func, isMethod = false, expanded: initialExpanded = false }: Props = $props();
 	let isExpanded = $state(initialExpanded);
 	let viewMode = $state<'docs' | 'source'>('docs');
+	let tileElement: HTMLDivElement | undefined = $state();
 
 	// CodeMirror state
 	let editorContainer = $state<HTMLDivElement | undefined>(undefined);
@@ -27,7 +29,7 @@
 	let methodType = $derived((func as APIMethod).method_type);
 	let showBadge = $derived(isMethod && methodType && methodType !== 'method');
 
-	function toggleView(e: MouseEvent) {
+	function toggleView(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
 		viewMode = viewMode === 'docs' ? 'source' : 'docs';
 	}
@@ -73,12 +75,27 @@
 		}
 	});
 
+	// Watch for search navigation target
+	$effect(() => {
+		const target = $searchTarget;
+		if (!target) return;
+
+		// Match function or method by name
+		if ((target.type === 'function' || target.type === 'method') && target.name === func.name) {
+			isExpanded = true;
+			clearSearchTarget();
+			tick().then(() => {
+				tileElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			});
+		}
+	});
+
 	onDestroy(() => {
 		editorView?.destroy();
 	});
 </script>
 
-<div class="tile method-tile" id={func.name}>
+<div class="tile method-tile" id={func.name} bind:this={tileElement}>
 	<button class="panel-header method-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<div class="method-header-content">
 			<code class="method-name">{func.name}</code>
@@ -90,14 +107,16 @@
 			{/if}
 		</div>
 		{#if func.source && isExpanded}
-			<button
+			<span
+				role="button"
+				tabindex="0"
 				class="icon-btn view-toggle-btn"
-				class:active={viewMode === 'source'}
 				onclick={toggleView}
+				onkeydown={(e) => e.key === 'Enter' && toggleView(e)}
 				use:tooltip={viewMode === 'docs' ? 'View source' : 'View docs'}
 			>
-				<Icon name={viewMode === 'docs' ? 'code' : 'book'} size={14} />
-			</button>
+				<Icon name={viewMode === 'docs' ? 'braces' : 'book'} size={14} />
+			</span>
 		{/if}
 	</button>
 
@@ -128,12 +147,6 @@
 </div>
 
 <style>
-	/* Disable tile hover effect */
-	.method-tile:hover {
-		border-color: var(--border);
-		box-shadow: none;
-	}
-
 	/* Override panel-header for method - clickable, no uppercase */
 	.method-header {
 		display: flex;
@@ -149,6 +162,10 @@
 		border-bottom: none;
 		text-align: left;
 		cursor: pointer;
+	}
+
+	.method-header:hover {
+		background: var(--surface-raised);
 	}
 
 	.method-header.method-header.expanded {
@@ -190,10 +207,6 @@
 	/* View toggle button - inherits .icon-btn styles */
 	.view-toggle-btn {
 		flex-shrink: 0;
-	}
-
-	.view-toggle-btn.active {
-		color: var(--accent);
 	}
 
 	.method-body {

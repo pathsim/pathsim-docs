@@ -392,7 +392,7 @@
 
 	.docstring-content :global(.code-copy-btn:hover) {
 		color: var(--text);
-		background: var(--surface);
+		background: var(--surface-hover);
 	}
 
 	.docstring-content :global(.code-copy-btn.copied) {
@@ -408,11 +408,6 @@
 		max-height: 300px;
 	}
 
-	.docstring-content :global(.cm-scroller) {
-		padding: var(--space-sm);
-	}
-
-	
 	/* Parameter/Attribute tables - panel style */
 	.docstring-content :global(.param-table-wrapper) {
 		margin: var(--space-md) 0;
