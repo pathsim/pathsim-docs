@@ -754,6 +754,9 @@
 
 	/* Cross-reference links */
 	.docstring-content :global(a.crossref) {
+		font-family: var(--font-mono);
+		font-weight: 500;
+		font-size: 0.9em;
 		color: var(--accent);
 		text-decoration: none;
 		transition: color var(--transition-fast);
@@ -764,6 +767,7 @@
 	}
 
 	.docstring-content :global(a.crossref code) {
+		font-weight: inherit;
 		color: inherit;
 		background: var(--accent-bg);
 		border-color: var(--accent);
