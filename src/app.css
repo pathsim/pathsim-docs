@@ -281,11 +281,6 @@ a.crossref code {
 	border-color: var(--accent);
 }
 
-a.crossref:hover code {
-	background: var(--accent);
-	color: var(--bg);
-}
-
 code {
 	font-family: var(--font-mono);
 	font-size: 0.9em;
