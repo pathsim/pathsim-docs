@@ -66,7 +66,7 @@
 
 	<div class="tile-grid {featureCols}">
 		{#each pkg.features as feature}
-			<div class="tile">
+			<div class="tile elevated">
 				<div class="panel-header">{feature.title}</div>
 				<div class="panel-body tile-body">{feature.description}</div>
 			</div>
@@ -79,7 +79,7 @@
 
 	<div class="install-grid">
 		{#each pkg.installation as option}
-			<button class="install-card" onclick={() => handleCopy(option.command, option.name)}>
+			<button class="install-card elevated" onclick={() => handleCopy(option.command, option.name)}>
 				<div class="panel-header">
 					<span>{option.name}</span>
 					<div class="header-actions">
