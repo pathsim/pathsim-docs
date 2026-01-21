@@ -93,7 +93,8 @@
 				const target = lookupRef(token);
 				if (target) {
 					const link = document.createElement('a');
-					link.href = target.path;
+					const fullPath = `${base}/${target.path}`;
+					link.href = fullPath;
 					link.className = 'type-link';
 					link.textContent = token;
 					link.addEventListener('click', (e) => {
@@ -102,7 +103,7 @@
 							name: target.name,
 							type: target.type as 'class' | 'function' | 'method' | 'module'
 						});
-						goto(target.path);
+						goto(fullPath);
 					});
 					span.appendChild(link);
 				} else {
