@@ -97,7 +97,7 @@
 	});
 </script>
 
-<div class="tile method-tile" id={func.name} bind:this={tileElement}>
+<div class="tile method-tile elevated" id={func.name} bind:this={tileElement}>
 	<button class="panel-header method-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<div class="method-header-content">
 			<code class="method-name">{func.name}</code>

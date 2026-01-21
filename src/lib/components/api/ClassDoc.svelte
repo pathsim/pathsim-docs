@@ -103,7 +103,7 @@
 	});
 </script>
 
-<div class="tile class-tile" id={cls.name} bind:this={tileElement}>
+<div class="tile class-tile elevated" id={cls.name} bind:this={tileElement}>
 	<button class="panel-header class-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<div class="class-header-content">
 			<div class="class-header-top">
