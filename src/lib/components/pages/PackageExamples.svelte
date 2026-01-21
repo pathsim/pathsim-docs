@@ -87,7 +87,7 @@
 		<div class="tile-grid cols-3">
 			{#each notebooks as notebook}
 				<div
-					class="tile example-tile"
+					class="tile example-tile elevated"
 					onclick={() => goto(`${base}/${packageId}/examples/${notebook.slug}`)}
 					onkeydown={(e) => e.key === 'Enter' && goto(`${base}/${packageId}/examples/${notebook.slug}`)}
 					role="button"
