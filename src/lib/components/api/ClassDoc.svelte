@@ -3,6 +3,7 @@
 	import type { APIClass } from '$lib/api/generated';
 	import FunctionDoc from './FunctionDoc.svelte';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import TypeRef from './TypeRef.svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
@@ -107,7 +108,7 @@
 			<div class="class-header-top">
 				<code class="class-name">{cls.name}</code>
 				{#if cls.bases && cls.bases.length > 0}
-					<span class="class-bases">({cls.bases.join(', ')})</span>
+					<span class="class-bases">({#each cls.bases as base, i}{#if i > 0}, {/if}<TypeRef type={base} />{/each})</span>
 				{/if}
 			</div>
 			{#if cls.description}

@@ -2,6 +2,7 @@
 	import { onDestroy, tick } from 'svelte';
 	import type { APIFunction, APIMethod } from '$lib/api/generated';
 	import DocstringRenderer from './DocstringRenderer.svelte';
+	import TypeRef from './TypeRef.svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
@@ -132,7 +133,7 @@
 				{#if func.returns}
 					<div class="method-returns">
 						<span class="label-uppercase">Returns</span>
-						<code>{func.returns}</code>
+						<TypeRef type={func.returns} />
 					</div>
 				{/if}
 			</div>
@@ -251,12 +252,8 @@
 		border-top: 1px solid var(--border);
 	}
 
-	.method-returns code {
-		font-family: var(--font-mono);
+	.method-returns :global(.type-ref) {
 		font-size: var(--font-sm);
 		color: var(--text);
-		background: none;
-		border: none;
-		padding: 0;
 	}
 </style>

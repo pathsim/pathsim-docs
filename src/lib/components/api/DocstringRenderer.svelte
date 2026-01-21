@@ -4,7 +4,7 @@
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
-	import { processCrossRefs } from '$lib/utils/crossref';
+	import { processCrossRefs, lookupRef } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
@@ -75,6 +75,45 @@
 		}
 	}
 
+	// Create a type span with cross-reference links for class names
+	function createTypeWithRefs(typeText: string): HTMLElement {
+		const span = document.createElement('span');
+		span.className = 'type-ref';
+
+		// Split by type syntax characters while preserving them
+		const tokens = typeText.split(/(\[|\]|,\s*|\s*\|\s*)/);
+
+		for (const token of tokens) {
+			if (!token) continue;
+
+			// Check if this token looks like a class name (PascalCase)
+			if (/^[A-Z][a-zA-Z0-9_]*$/.test(token)) {
+				const target = lookupRef(token);
+				if (target) {
+					const link = document.createElement('a');
+					link.href = target.path;
+					link.className = 'type-link';
+					link.textContent = token;
+					link.addEventListener('click', (e) => {
+						e.preventDefault();
+						searchTarget.set({
+							name: target.name,
+							type: target.type as 'class' | 'function' | 'method' | 'module'
+						});
+						goto(target.path);
+					});
+					span.appendChild(link);
+				} else {
+					span.appendChild(document.createTextNode(token));
+				}
+			} else {
+				span.appendChild(document.createTextNode(token));
+			}
+		}
+
+		return span;
+	}
+
 	// Transform definition lists to tables
 	function transformDefinitionListsToTables() {
 		if (!container) return;
@@ -133,14 +172,13 @@
 				nameCell.appendChild(nameCode);
 				row.appendChild(nameCell);
 
-				// Extract type from classifier span
+				// Extract type from classifier span and add cross-references
 				const typeCell = document.createElement('td');
 				typeCell.className = 'param-type';
 				const classifier = dt.querySelector('.classifier');
 				if (classifier) {
-					const typeCode = document.createElement('code');
-					typeCode.textContent = classifier.textContent || '';
-					typeCell.appendChild(typeCode);
+					const typeText = classifier.textContent || '';
+					typeCell.appendChild(createTypeWithRefs(typeText));
 				}
 				row.appendChild(typeCell);
 
@@ -528,6 +566,23 @@
 		background: none;
 		border: none;
 		padding: 0;
+	}
+
+	/* Type references in parameter tables */
+	.docstring-content :global(.param-table .type-ref) {
+		font-family: var(--font-mono);
+		font-size: var(--font-xs);
+		color: var(--text-muted);
+	}
+
+	.docstring-content :global(.param-table .type-link) {
+		color: var(--accent);
+		font-weight: 500;
+		text-decoration: none;
+	}
+
+	.docstring-content :global(.param-table .type-link:hover) {
+		text-decoration: underline;
 	}
 
 	.docstring-content :global(.param-table .param-desc) {
