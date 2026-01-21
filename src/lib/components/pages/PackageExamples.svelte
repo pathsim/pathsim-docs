@@ -7,7 +7,6 @@
 		loadManifest,
 		groupByCategory,
 		type NotebookManifest,
-		type NotebookMeta,
 		type Category
 	} from '$lib/notebook/manifest';
 
@@ -69,24 +68,14 @@
 
 		<div class="tile-grid cols-3">
 			{#each notebooks as notebook}
-				<a href="/{packageId}/examples/{notebook.slug}" class="tile notebook-tile">
+				<a href="/{packageId}/examples/{notebook.slug}" class="tile link-tile">
 					<div class="panel-header">
-						<span class="notebook-title">{notebook.title}</span>
+						<span>{notebook.title}</span>
 						{#if !notebook.executable}
 							<span class="badge warning">View Only</span>
 						{/if}
 					</div>
-					<div class="notebook-body">
-						<p class="notebook-description">{notebook.description}</p>
-						<div class="notebook-footer">
-							<div class="notebook-tags">
-								{#each notebook.tags.slice(0, 3) as tag}
-									<span class="notebook-tag">{tag}</span>
-								{/each}
-							</div>
-							<Icon name="arrow-right" size={16} />
-						</div>
-					</div>
+					<div class="panel-body tile-body">{notebook.description}</div>
 				</a>
 			{/each}
 		</div>
@@ -122,79 +111,5 @@
 		gap: var(--space-md);
 		padding: var(--space-xl);
 		color: var(--error);
-	}
-
-	/* Notebook tile */
-	.notebook-tile {
-		display: flex;
-		flex-direction: column;
-		text-decoration: none;
-		color: inherit;
-		background: var(--surface);
-	}
-
-	.notebook-tile:hover {
-		text-decoration: none;
-	}
-
-	/* Override panel-header uppercase for notebook titles */
-	.notebook-title {
-		text-transform: none;
-		letter-spacing: normal;
-		font-size: var(--font-sm);
-		color: var(--text);
-	}
-
-	.notebook-body {
-		display: flex;
-		flex-direction: column;
-		flex: 1;
-		padding: var(--space-md);
-	}
-
-	.notebook-description {
-		flex: 1;
-		margin: 0;
-		font-size: var(--font-sm);
-		color: var(--text-muted);
-		line-height: 1.5;
-		display: -webkit-box;
-		line-clamp: 2;
-		-webkit-line-clamp: 2;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.notebook-footer {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		margin-top: var(--space-md);
-		padding-top: var(--space-md);
-		border-top: 1px solid var(--border);
-	}
-
-	.notebook-tags {
-		display: flex;
-		gap: var(--space-xs);
-		flex-wrap: wrap;
-	}
-
-	.notebook-tag {
-		padding: 2px var(--space-sm);
-		font-size: var(--font-xs);
-		color: var(--text-disabled);
-		background: var(--surface-raised);
-		border-radius: var(--radius-sm);
-	}
-
-	.notebook-footer :global(svg) {
-		color: var(--text-disabled);
-		transition: all var(--transition-fast);
-	}
-
-	.notebook-tile:hover .notebook-footer :global(svg) {
-		color: var(--accent);
-		transform: translateX(4px);
 	}
 </style>
