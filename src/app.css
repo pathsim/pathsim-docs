@@ -1065,6 +1065,11 @@ input::placeholder {
 	border-radius: var(--radius-md);
 }
 
+.prose img.hero-logo,
+.prose img.page-logo {
+	border-radius: 0;
+}
+
 /* CodeMirror styling */
 .cm-editor {
 	height: 100%;
