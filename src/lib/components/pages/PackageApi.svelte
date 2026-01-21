@@ -1,17 +1,22 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { base } from '$app/paths';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
-	import { apiData, type APIModule } from '$lib/api/generated';
-	import { ModuleDoc } from '$lib/components/api';
+	import { apiData as staticApiData, type APIPackage, type APIModule } from '$lib/api/generated';
+	import { ModuleDoc, VersionSelector } from '$lib/components/api';
 	import { apiModulesStore } from '$lib/stores/apiContext';
+	import type { PackageManifest } from '$lib/api/versions';
 
 	interface Props {
 		packageId: PackageId;
+		// Optional versioned props - if not provided, uses static data (backward compat)
+		version?: string;
+		manifest?: PackageManifest;
+		apiData?: APIPackage;
 	}
 
-	let { packageId }: Props = $props();
+	let { packageId, version, manifest, apiData }: Props = $props();
 
 	let pkg = $derived(packages[packageId]);
 
@@ -22,9 +27,13 @@
 		vehicle: 'vehicle'
 	};
 
+	// Use provided apiData or fall back to static data
 	let apiKey = $derived(apiKeyMap[packageId]);
-	let apiPackage = $derived(apiData[apiKey]);
-	let modules = $derived(apiPackage ? Object.values(apiPackage.modules) : []);
+	let apiPackage = $derived(apiData ?? staticApiData[apiKey]);
+	let modules = $derived(apiPackage ? Object.values(apiPackage.modules) as APIModule[] : []);
+
+	// Whether we're in versioned mode
+	let hasVersioning = $derived(!!manifest && !!version);
 
 	// Update the store with modules for the sidebar TOC
 	$effect(() => {
@@ -38,14 +47,19 @@
 </script>
 
 <svelte:head>
-	<title>API Reference - {pkg.name}</title>
+	<title>API Reference{version ? ` v${version}` : ''} - {pkg.name}</title>
 	<meta name="description" content="{pkg.name} API reference documentation" />
 </svelte:head>
 
 <Tooltip />
 
 <div class="hero">
-	<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
+	<div class="hero-header">
+		<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
+		{#if hasVersioning && manifest}
+			<VersionSelector {packageId} currentVersion={version!} {manifest} />
+		{/if}
+	</div>
 	<p class="description">Complete API documentation for {pkg.name}.</p>
 </div>
 
@@ -67,6 +81,13 @@
 {/if}
 
 <style>
+	.hero-header {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-lg);
+	}
+
 	.api-content {
 		margin-top: var(--space-xl);
 		padding-bottom: var(--space-2xl);

@@ -31,12 +31,30 @@ jobs:
 
       - name: Clone PathSim repositories for API extraction
         run: |
-          git clone --depth 1 https://github.com/pathsim/pathsim.git ../pathsim
-          git clone --depth 1 https://github.com/pathsim/pathsim-chem.git ../pathsim-chem
-          git clone --depth 1 https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle
+          git clone https://github.com/pathsim/pathsim.git ../pathsim
+          git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem
+          git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle
 
-      - name: Extract API documentation
+      # Cache historical API versions (they don't change)
+      - name: Cache versioned API files
+        id: cache-versions
+        uses: actions/cache@v4
+        with:
+          path: static/api/versions
+          key: api-versions-v1
+
+      # Always extract latest API (for src/lib/api/generated/)
+      - name: Extract latest API
         run: python scripts/extract-api.py
+
+      # Extract historical versions on cache miss
+      - name: Extract versioned API
+        if: steps.cache-versions.outputs.cache-hit != 'true'
+        run: python scripts/extract-versions.py
+
+      # Always regenerate manifests (to pick up new versions)
+      - name: Generate version manifests
+        run: python scripts/generate-manifests.py
 
       - name: Prepare notebooks
         run: python scripts/prepare-notebooks.py

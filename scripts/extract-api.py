@@ -706,6 +706,21 @@ def main():
         default=SCRIPT_DIR.parent / "src" / "lib" / "api" / "generated",
         help="Output directory (default: src/lib/api/generated)"
     )
+    parser.add_argument(
+        "--version", "-v",
+        type=str,
+        help="Version label for output filename (e.g., '0.16')"
+    )
+    parser.add_argument(
+        "--versions-dir",
+        type=Path,
+        help="Output to versioned directory structure (static/api/versions/)"
+    )
+    parser.add_argument(
+        "--no-index",
+        action="store_true",
+        help="Skip generating TypeScript index file"
+    )
     args = parser.parse_args()
 
     print("PathSim API Documentation Extractor")
@@ -729,7 +744,17 @@ def main():
             extracted_packages.append(pkg_id)
 
             if not args.dry_run:
-                output_path = args.output / f"{pkg_id}.json"
+                # Determine output path based on versioning mode
+                if args.versions_dir and args.version:
+                    # Versioned output: static/api/versions/{package}/v{version}.json
+                    output_path = args.versions_dir / pkg_id / f"v{args.version}.json"
+                elif args.version:
+                    # Version in regular output dir
+                    output_path = args.output / f"{pkg_id}_v{args.version}.json"
+                else:
+                    # Default: src/lib/api/generated/{package}.json
+                    output_path = args.output / f"{pkg_id}.json"
+
                 write_json_output(data, output_path)
             else:
                 print(f"  Would write: {args.output / f'{pkg_id}.json'}")
@@ -739,8 +764,8 @@ def main():
                 total_functions = sum(len(m.get("functions", [])) for m in data["modules"].values())
                 print(f"  Classes: {total_classes}, Functions: {total_functions}")
 
-    # Write TypeScript index
-    if extracted_packages and not args.dry_run:
+    # Write TypeScript index (only for default mode, not versioned)
+    if extracted_packages and not args.dry_run and not args.no_index and not args.versions_dir:
         write_typescript_index(extracted_packages, args.output)
 
     print(f"\nDone! Extracted {len(extracted_packages)} package(s)")
