@@ -3,15 +3,12 @@
 	 * Notebook - Main container for rendering Jupyter notebooks
 	 * Parses .ipynb and renders all cell types with execution support
 	 */
-	import { onDestroy } from 'svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
-	import { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import MarkdownCell from './MarkdownCell.svelte';
 	import CodeCell from './CodeCell.svelte';
 	import RawCell from './RawCell.svelte';
 	import type { NotebookData, CodeCellData } from '$lib/notebook/types';
 	import { isCellHidden } from '$lib/notebook/parser';
-	import { notebookStore } from '$lib/stores/notebookStore';
 	import { pyodideState } from '$lib/stores/pyodideStore';
 
 	interface Props {
@@ -43,8 +40,7 @@
 		)
 	);
 
-	// Track execution state
-	let isRunningAll = $state(false);
+	// Track pyodide loading state
 	let pyodideLoading = $state(false);
 	let pyodideProgress = $state('');
 
@@ -56,76 +52,15 @@
 		});
 		return unsubscribe;
 	});
-
-	/**
-	 * Run all code cells in order
-	 */
-	async function runAll() {
-		if (isRunningAll || codeCells.length === 0) return;
-
-		isRunningAll = true;
-
-		// Run the last cell - it will auto-run all prerequisites
-		const lastCell = codeCells[codeCells.length - 1];
-		await notebookStore.runWithPrerequisites(lastCell.cell.id);
-
-		isRunningAll = false;
-	}
-
-	/**
-	 * Reset all cells
-	 */
-	async function resetAll() {
-		notebookStore.resetAllCells();
-
-		// Also reset Pyodide namespace
-		try {
-			const { reset } = await import('$lib/pyodide');
-			await reset();
-		} catch {
-			// Pyodide might not be loaded yet
-		}
-	}
-
-	// Clean up on destroy
-	onDestroy(() => {
-		// Don't reset the store here - other notebooks might be using it
-	});
 </script>
 
 <article class="notebook">
-	<header class="notebook-header">
-		<div class="notebook-actions">
-			{#if pyodideLoading}
-				<div class="pyodide-status">
-					<Icon name="loader" size={14} />
-					<span>{pyodideProgress || 'Loading Python...'}</span>
-				</div>
-			{/if}
-			<button
-				class="notebook-btn"
-				onclick={runAll}
-				disabled={isRunningAll || codeCells.length === 0}
-				use:tooltip={'Run all cells'}
-			>
-				{#if isRunningAll}
-					<Icon name="loader" size={14} />
-					<span>Running...</span>
-				{:else}
-					<Icon name="play" size={14} />
-					<span>Run All</span>
-				{/if}
-			</button>
-			<button
-				class="notebook-btn ghost"
-				onclick={resetAll}
-				use:tooltip={'Reset all cells'}
-			>
-				<Icon name="rotate" size={14} />
-				<span>Reset</span>
-			</button>
+	{#if pyodideLoading}
+		<div class="pyodide-status">
+			<Icon name="loader" size={14} />
+			<span>{pyodideProgress || 'Loading Python...'}</span>
 		</div>
-	</header>
+	{/if}
 
 	<div class="notebook-cells">
 		{#each notebook.cells as cell, index (cell.id)}
@@ -153,21 +88,6 @@
 		margin: 0 auto;
 	}
 
-	.notebook-header {
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-		gap: var(--space-lg);
-		margin-bottom: var(--space-md);
-	}
-
-	.notebook-actions {
-		display: flex;
-		align-items: center;
-		gap: var(--space-sm);
-		flex-shrink: 0;
-	}
-
 	.pyodide-status {
 		display: flex;
 		align-items: center;
@@ -175,56 +95,10 @@
 		font-size: var(--font-xs);
 		color: var(--text-muted);
 		padding: var(--space-xs) var(--space-sm);
+		margin-bottom: var(--space-md);
 	}
 
 	.pyodide-status :global(svg) {
-		animation: spin 1s linear infinite;
-	}
-
-	.notebook-btn {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		padding: var(--space-xs) var(--space-md);
-		font-size: var(--font-sm);
-		font-weight: 500;
-		background: var(--success);
-		color: white;
-		border: none;
-		border-radius: var(--radius-md);
-		cursor: pointer;
-		transition: all var(--transition-fast);
-	}
-
-	.notebook-btn:hover:not(:disabled) {
-		background: color-mix(in srgb, var(--success) 85%, white);
-	}
-
-	.notebook-btn:disabled {
-		opacity: 0.6;
-		cursor: not-allowed;
-	}
-
-	.notebook-btn.ghost {
-		background: transparent;
-		color: var(--text-muted);
-		border: 1px solid var(--border);
-	}
-
-	.notebook-btn.ghost:hover:not(:disabled) {
-		background: var(--surface-raised);
-		color: var(--text);
-	}
-
-	.notebook-btn :global(svg) {
-		flex-shrink: 0;
-	}
-
-	.notebook-btn:not(.ghost) :global(svg) {
-		animation: none;
-	}
-
-	.notebook-btn:disabled :global(svg) {
 		animation: spin 1s linear infinite;
 	}
 
@@ -236,29 +110,5 @@
 	.notebook-cells {
 		display: flex;
 		flex-direction: column;
-	}
-
-	/* Responsive */
-	@media (max-width: 600px) {
-		.notebook-header {
-			flex-direction: column;
-			align-items: stretch;
-		}
-
-		.notebook-actions {
-			justify-content: flex-end;
-		}
-
-		.notebook-btn span {
-			display: none;
-		}
-
-		.notebook-btn {
-			padding: var(--space-sm);
-		}
-
-		.pyodide-status span {
-			display: none;
-		}
 	}
 </style>
