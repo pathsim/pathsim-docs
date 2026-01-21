@@ -41,10 +41,12 @@
 			<Icon name="braces" size={20} />
 			<span class="action-label">API</span>
 		</a>
-		<a href={pkg.examples} class="action-card">
-			<Icon name="play" size={20} />
-			<span class="action-label">Examples</span>
-		</a>
+		{#if pkg.examples}
+			<a href={pkg.examples} class="action-card">
+				<Icon name="play" size={20} />
+				<span class="action-label">Examples</span>
+			</a>
+		{/if}
 		<a href={pkg.github} class="action-card">
 			<Icon name="github" size={20} />
 			<span class="action-label">GitHub</span>

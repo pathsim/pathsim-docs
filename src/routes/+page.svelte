@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { packages, nav } from '$lib/config/packages';
+	import { packages, packageOrder, nav } from '$lib/config/packages';
 	import { search, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
@@ -116,81 +116,38 @@
 		<section class="packages">
 		<h2>Packages</h2>
 		<div class="package-grid">
-			<div class="package-card">
-				<div class="panel-header">
-					<span>{packages.pathsim.shortName}</span>
-					<div class="header-actions">
-						<a href={packages.pathsim.api} class="icon-btn" use:tooltip={'API'}>
-							<Icon name="braces" size={14} />
-						</a>
-						<a href={packages.pathsim.docs} class="icon-btn" use:tooltip={'Docs'}>
-							<Icon name="book" size={14} />
-						</a>
-						<a href={packages.pathsim.pypi} class="icon-btn" use:tooltip={'PyPI'}>
-							<Icon name="package" size={14} />
-						</a>
-						<a href={packages.pathsim.examples} class="icon-btn" use:tooltip={'Examples'}>
-							<Icon name="play" size={14} />
-						</a>
-						<a href={packages.pathsim.github} class="icon-btn" use:tooltip={'GitHub'}>
-							<Icon name="github" size={14} />
-						</a>
+			{#each packageOrder as pkgId}
+				{@const pkg = packages[pkgId]}
+				<div class="package-card">
+					<div class="panel-header">
+						<span>{pkg.shortName}</span>
+						<div class="header-actions">
+							<a href={pkg.api} class="icon-btn" use:tooltip={'API'}>
+								<Icon name="braces" size={14} />
+							</a>
+							<a href={pkg.docs} class="icon-btn" use:tooltip={'Docs'}>
+								<Icon name="book" size={14} />
+							</a>
+							{#if pkg.pypi}
+								<a href={pkg.pypi} class="icon-btn" use:tooltip={'PyPI'}>
+									<Icon name="package" size={14} />
+								</a>
+							{/if}
+							{#if pkg.examples}
+								<a href={pkg.examples} class="icon-btn" use:tooltip={'Examples'}>
+									<Icon name="play" size={14} />
+								</a>
+							{/if}
+							<a href={pkg.github} class="icon-btn" use:tooltip={'GitHub'}>
+								<Icon name="github" size={14} />
+							</a>
+						</div>
 					</div>
+					<a href={pkg.docs} class="package-body">
+						<img src={pkg.logo} alt={pkg.name} />
+					</a>
 				</div>
-				<a href={packages.pathsim.docs} class="package-body">
-					<img src={packages.pathsim.logo} alt={packages.pathsim.name} />
-				</a>
-			</div>
-			<div class="package-card">
-				<div class="panel-header">
-					<span>{packages.chem.shortName}</span>
-					<div class="header-actions">
-						<a href={packages.chem.api} class="icon-btn" use:tooltip={'API'}>
-							<Icon name="braces" size={14} />
-						</a>
-						<a href={packages.chem.docs} class="icon-btn" use:tooltip={'Docs'}>
-							<Icon name="book" size={14} />
-						</a>
-						<a href={packages.chem.pypi} class="icon-btn" use:tooltip={'PyPI'}>
-							<Icon name="package" size={14} />
-						</a>
-						<a href={packages.chem.examples} class="icon-btn" use:tooltip={'Examples'}>
-							<Icon name="play" size={14} />
-						</a>
-						<a href={packages.chem.github} class="icon-btn" use:tooltip={'GitHub'}>
-							<Icon name="github" size={14} />
-						</a>
-					</div>
-				</div>
-				<a href={packages.chem.docs} class="package-body">
-					<img src={packages.chem.logo} alt={packages.chem.name} />
-				</a>
-			</div>
-			<div class="package-card">
-				<div class="panel-header">
-					<span>{packages.vehicle.shortName}</span>
-					<div class="header-actions">
-						<a href={packages.vehicle.api} class="icon-btn" use:tooltip={'API'}>
-							<Icon name="braces" size={14} />
-						</a>
-						<a href={packages.vehicle.docs} class="icon-btn" use:tooltip={'Docs'}>
-							<Icon name="book" size={14} />
-						</a>
-						<a href={packages.vehicle.pypi} class="icon-btn" use:tooltip={'PyPI'}>
-							<Icon name="package" size={14} />
-						</a>
-						<a href={packages.vehicle.examples} class="icon-btn" use:tooltip={'Examples'}>
-							<Icon name="play" size={14} />
-						</a>
-						<a href={packages.vehicle.github} class="icon-btn" use:tooltip={'GitHub'}>
-							<Icon name="github" size={14} />
-						</a>
-					</div>
-				</div>
-				<a href={packages.vehicle.docs} class="package-body">
-					<img src={packages.vehicle.logo} alt={packages.vehicle.name} />
-				</a>
-			</div>
+			{/each}
 		</div>
 		</section>
 	</main>
