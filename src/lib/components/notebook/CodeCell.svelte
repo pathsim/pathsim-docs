@@ -39,3 +39,8 @@
 	/>
 </div>
 
+<style>
+	.code-cell-wrapper {
+		margin: var(--space-md) 0;
+	}
+</style>
