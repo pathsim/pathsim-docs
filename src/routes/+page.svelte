@@ -69,23 +69,6 @@
 						</button>
 					{/if}
 				</div>
-				{#if showResults}
-					<div class="search-results">
-						{#if searchResults.length > 0}
-							{#each searchResults as result}
-								<button class="search-result" onclick={() => handleResultClick(result)}>
-									<Icon name={getTypeIcon(result.type)} size={14} />
-									<div class="result-text">
-										<span class="result-name">{result.name}</span>
-										<span class="result-context">{result.parentClass || result.moduleName.split('.').pop()}</span>
-									</div>
-								</button>
-							{/each}
-						{:else}
-							<div class="no-results">No results found</div>
-						{/if}
-					</div>
-				{/if}
 			</div>
 			<div class="hero-actions">
 				<a href={nav.home} class="action-card">
@@ -113,6 +96,33 @@
 	</main>
 
 	<div class="separator"></div>
+
+	{#if showResults}
+		<main>
+			<section class="search-results-section">
+				<h2>Search Results</h2>
+				{#if searchResults.length > 0}
+					<div class="results-grid">
+						{#each searchResults as result}
+							<button class="result-card elevated" onclick={() => handleResultClick(result)}>
+								<div class="result-icon">
+									<Icon name={getTypeIcon(result.type)} size={16} />
+								</div>
+								<div class="result-content">
+									<span class="result-name">{result.name}</span>
+									<span class="result-context">{result.parentClass || result.moduleName}</span>
+								</div>
+								<span class="result-type">{result.type}</span>
+							</button>
+						{/each}
+					</div>
+				{:else}
+					<div class="no-results">No results found for "{searchQuery}"</div>
+				{/if}
+			</section>
+		</main>
+		<div class="separator"></div>
+	{/if}
 
 	<main>
 		<section class="packages">
@@ -245,65 +255,90 @@
 		color: var(--text);
 	}
 
-	.search-results {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		right: 0;
-		margin-top: var(--space-sm);
-		background: var(--surface);
+	/* Search Results Section */
+	.search-results-section {
+		padding: var(--space-xl) 0;
+	}
+
+	.results-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-md);
+	}
+
+	@media (max-width: 600px) {
+		.results-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.result-card {
+		display: flex;
+		align-items: center;
+		gap: var(--space-md);
+		padding: var(--space-md) var(--space-lg);
+		background: var(--surface-raised);
 		border: 1px solid var(--border);
 		border-radius: var(--radius-lg);
-		max-height: 400px;
-		overflow-y: auto;
-		z-index: 100;
-		padding: var(--space-sm) 0;
-	}
-
-	button.search-result {
-		display: flex;
-		align-items: flex-start;
-		justify-content: flex-start;
-		gap: var(--space-sm);
-		padding: var(--space-sm) var(--space-md);
-		background: none;
-		border: none;
-		text-align: left;
 		cursor: pointer;
-		color: var(--text-muted);
-		transition: all var(--transition-fast);
-		width: 100%;
+		text-align: left;
+		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 	}
 
-	button.search-result:hover {
-		color: var(--text);
-		background: var(--surface-hover);
+	.result-card:hover {
+		border-color: var(--accent);
+		box-shadow: var(--shadow-md), 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 	}
 
-	.search-result :global(svg) {
+	.result-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		background: var(--accent-bg);
+		border-radius: var(--radius-md);
+		color: var(--accent);
 		flex-shrink: 0;
-		margin-top: 2px;
 	}
 
-	.result-text {
+	.result-content {
+		flex: 1;
+		min-width: 0;
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
+		gap: 2px;
 	}
 
 	.result-name {
 		font-size: var(--font-base);
+		font-weight: 600;
+		color: var(--text);
 	}
 
 	.result-context {
 		font-size: var(--font-base);
+		color: var(--text-muted);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.result-type {
+		font-size: var(--font-base);
+		color: var(--text-muted);
+		text-transform: capitalize;
+		flex-shrink: 0;
 	}
 
 	.no-results {
-		padding: var(--space-lg);
+		padding: var(--space-xl);
 		text-align: center;
 		color: var(--text-muted);
 		font-size: var(--font-base);
+		background: var(--surface-raised);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-lg);
 	}
 
 	.hero-actions {
