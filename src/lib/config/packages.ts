@@ -45,7 +45,7 @@ export interface PackageConfig {
 	// Links
 	docs: string;
 	api: string;
-	examples: string;
+	examples: string | null;  // null if no examples
 	pypi: string | null;  // null if not yet on PyPI
 	github: string;
 
@@ -121,7 +121,7 @@ scope.plot()`,
 		logo: '/pathsim_chem_logo.png',
 		docs: '/chem',
 		api: '/chem/api',
-		examples: '/chem/examples',
+		examples: null,
 		pypi: `${external.pypi}/pathsim-chem`,
 		github: `${external.github}/pathsim-chem`,
 		features: [
@@ -149,7 +149,7 @@ scope.plot()`,
 		logo: '/pathsim_vehicle_logo.png',
 		docs: '/vehicle',
 		api: '/vehicle/api',
-		examples: '/vehicle/examples',
+		examples: null,
 		pypi: null,
 		github: `${external.github}/pathsim-vehicle`,
 		features: [
@@ -181,11 +181,14 @@ export interface SidebarItem {
 
 export function getSidebarItems(packageId: PackageId): SidebarItem[] {
 	const pkg = packages[packageId];
-	return [
+	const items: SidebarItem[] = [
 		{ title: 'Overview', path: pkg.docs, icon: 'home' },
-		{ title: 'API Reference', path: pkg.api, icon: 'braces' },
-		{ title: 'Examples', path: pkg.examples, icon: 'play' }
+		{ title: 'API Reference', path: pkg.api, icon: 'braces' }
 	];
+	if (pkg.examples) {
+		items.push({ title: 'Examples', path: pkg.examples, icon: 'play' });
+	}
+	return items;
 }
 
 // Navigation links

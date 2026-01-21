@@ -8,6 +8,7 @@
 		loadManifest,
 		groupByCategory,
 		type NotebookManifest,
+		type NotebookMeta,
 		type Category
 	} from '$lib/notebook/manifest';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
