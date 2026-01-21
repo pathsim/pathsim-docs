@@ -31,106 +31,83 @@
 		breaks: false
 	});
 
+	// Placeholder for protected math blocks
+	const mathPlaceholders = new Map<string, { content: string; isDisplay: boolean }>();
+
+	/**
+	 * Protect math blocks from marked processing
+	 * Replaces $$...$$ and $...$ with placeholders, restores after marked
+	 */
+	function protectMath(text: string): string {
+		mathPlaceholders.clear();
+		let counter = 0;
+
+		// Protect display math first ($$...$$) - can span multiple lines
+		text = text.replace(/\$\$([\s\S]*?)\$\$/g, (_, content) => {
+			const id = `__MATH_DISPLAY_${counter++}__`;
+			mathPlaceholders.set(id, { content: content.trim(), isDisplay: true });
+			return id;
+		});
+
+		// Protect inline math ($...$) - single line only
+		text = text.replace(/\$([^\s$][^$]*[^\s$]|\S)\$/g, (_, content) => {
+			const id = `__MATH_INLINE_${counter++}__`;
+			mathPlaceholders.set(id, { content: content.trim(), isDisplay: false });
+			return id;
+		});
+
+		return text;
+	}
+
+	/**
+	 * Restore math placeholders with KaTeX-rendered HTML
+	 */
+	async function restoreMath(html: string): Promise<string> {
+		if (mathPlaceholders.size === 0) return html;
+
+		const k = await loadKatex();
+
+		for (const [id, { content, isDisplay }] of mathPlaceholders) {
+			try {
+				const rendered = k.default.renderToString(content, {
+					displayMode: isDisplay,
+					throwOnError: false,
+					strict: false,
+					trust: true
+				});
+
+				const wrapper = isDisplay
+					? `<div class="katex-display">${rendered}</div>`
+					: `<span class="katex-inline">${rendered}</span>`;
+
+				html = html.replace(id, wrapper);
+			} catch (e) {
+				console.warn('KaTeX error for:', content, e);
+				html = html.replace(id, `<code class="katex-error">${content}</code>`);
+			}
+		}
+
+		return html;
+	}
+
 	// Convert markdown to HTML, then process cross-references
 	let html = $derived.by(() => {
 		if (!markdown?.trim()) return '';
-		const rawHtml = marked.parse(markdown, { async: false }) as string;
+		// Protect math blocks before marked processes them
+		const protected_ = protectMath(markdown);
+		const rawHtml = marked.parse(protected_, { async: false }) as string;
 		return processCrossRefs(rawHtml);
 	});
 
 	/**
-	 * Render math with KaTeX - finds $...$ and $$...$$ patterns in text nodes
+	 * Render math by restoring placeholders with KaTeX HTML
 	 */
 	async function renderMath() {
 		if (!container) return;
 
-		const k = await loadKatex();
-
-		// Process text nodes to find math patterns
-		const walker = document.createTreeWalker(
-			container,
-			NodeFilter.SHOW_TEXT,
-			null
-		);
-
-		const textNodes: Text[] = [];
-		let node: Text | null;
-		while ((node = walker.nextNode() as Text | null)) {
-			if (node.textContent && node.textContent.includes('$')) {
-				textNodes.push(node);
-			}
-		}
-
-		for (const textNode of textNodes) {
-			const text = textNode.textContent || '';
-
-			// Skip if inside code/pre elements
-			let parent = textNode.parentElement;
-			let inCode = false;
-			while (parent && parent !== container) {
-				if (parent.tagName === 'CODE' || parent.tagName === 'PRE') {
-					inCode = true;
-					break;
-				}
-				parent = parent.parentElement;
-			}
-			if (inCode) continue;
-
-			// Find and replace math patterns
-			const fragment = document.createDocumentFragment();
-			let lastIndex = 0;
-			let hasMatch = false;
-
-			// Combined regex for display ($$...$$) and inline ($...$) math
-			const mathRegex = /\$\$([\s\S]*?)\$\$|\$([^\s$](?:[^$]*[^\s$])?)\$/g;
-			let match;
-
-			while ((match = mathRegex.exec(text)) !== null) {
-				hasMatch = true;
-
-				if (match.index > lastIndex) {
-					fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
-				}
-
-				const isDisplay = match[1] !== undefined;
-				const latex = (match[1] || match[2]).trim();
-
-				try {
-					const rendered = k.default.renderToString(latex, {
-						displayMode: isDisplay,
-						throwOnError: false,
-						strict: false
-					});
-
-					if (isDisplay) {
-						const div = document.createElement('div');
-						div.className = 'katex-display';
-						div.innerHTML = rendered;
-						fragment.appendChild(div);
-					} else {
-						const span = document.createElement('span');
-						span.className = 'katex-inline';
-						span.innerHTML = rendered;
-						fragment.appendChild(span);
-					}
-				} catch (e) {
-					console.warn('KaTeX error for:', latex, e);
-					const code = document.createElement('code');
-					code.className = 'katex-error';
-					code.textContent = latex;
-					fragment.appendChild(code);
-				}
-
-				lastIndex = match.index + match[0].length;
-			}
-
-			if (hasMatch) {
-				if (lastIndex < text.length) {
-					fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
-				}
-				textNode.parentNode?.replaceChild(fragment, textNode);
-			}
-		}
+		// Restore math placeholders in the container's HTML
+		const restoredHtml = await restoreMath(container.innerHTML);
+		container.innerHTML = restoredHtml;
 	}
 
 	/**
