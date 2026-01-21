@@ -80,9 +80,20 @@
 			await initPyodide();
 			notebookStore.setPyodideState(false, '', true);
 
-			// Execute the code
-			const result = await execute(codeToRun);
+			// Execute with streaming callbacks for real-time output
+			const result = await execute(codeToRun, {
+				onStdout: (text) => {
+					stdout = stdout ? stdout + '\n' + text : text;
+				},
+				onStderr: (text) => {
+					stderr = stderr ? stderr + '\n' + text : text;
+				},
+				onPlot: (data) => {
+					plots = [...plots, data];
+				}
+			});
 
+			// Final result (in case any output was missed)
 			stdout = result.stdout;
 			stderr = result.stderr;
 			plots = result.plots;

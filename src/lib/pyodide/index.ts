@@ -10,6 +10,13 @@ import type { WorkerRequest, WorkerResponse, ExecutionResult } from './types';
 let worker: Worker | null = null;
 let initPromise: Promise<void> | null = null;
 
+// Streaming callbacks for real-time output
+export interface StreamCallbacks {
+	onStdout?: (text: string) => void;
+	onStderr?: (text: string) => void;
+	onPlot?: (data: string) => void;
+}
+
 // Pending execution promises keyed by execution ID
 const pendingExecutions = new Map<
 	string,
@@ -20,6 +27,7 @@ const pendingExecutions = new Map<
 		stderr: string[];
 		plots: string[];
 		startTime: number;
+		callbacks?: StreamCallbacks;
 	}
 >();
 
@@ -55,6 +63,7 @@ function handleWorkerMessage(event: MessageEvent<WorkerResponse>): void {
 			const pending = pendingExecutions.get(response.id);
 			if (pending) {
 				pending.stdout.push(response.text);
+				pending.callbacks?.onStdout?.(response.text);
 			}
 			break;
 		}
@@ -63,6 +72,7 @@ function handleWorkerMessage(event: MessageEvent<WorkerResponse>): void {
 			const pending = pendingExecutions.get(response.id);
 			if (pending) {
 				pending.stderr.push(response.text);
+				pending.callbacks?.onStderr?.(response.text);
 			}
 			break;
 		}
@@ -71,6 +81,7 @@ function handleWorkerMessage(event: MessageEvent<WorkerResponse>): void {
 			const pending = pendingExecutions.get(response.id);
 			if (pending) {
 				pending.plots.push(response.data);
+				pending.callbacks?.onPlot?.(response.data);
 			}
 			break;
 		}
@@ -185,22 +196,27 @@ export async function initPyodide(): Promise<void> {
 /**
  * Execute Python code
  * Returns stdout, stderr, plots, and any error
+ * Optionally accepts callbacks for streaming output
  */
-export async function execute(code: string): Promise<ExecutionResult> {
+export async function execute(
+	code: string,
+	callbacks?: StreamCallbacks
+): Promise<ExecutionResult> {
 	// Ensure initialized
 	await initPyodide();
 
 	const id = generateId();
 
 	return new Promise<ExecutionResult>((resolve, reject) => {
-		// Store pending execution
+		// Store pending execution with callbacks
 		pendingExecutions.set(id, {
 			resolve,
 			reject,
 			stdout: [],
 			stderr: [],
 			plots: [],
-			startTime: Date.now()
+			startTime: Date.now(),
+			callbacks
 		});
 
 		// Set timeout
