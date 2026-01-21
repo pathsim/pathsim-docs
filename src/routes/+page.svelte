@@ -112,7 +112,6 @@
 									<span class="result-name">{result.name}</span>
 									<span class="result-context">{result.parentClass || result.moduleName}</span>
 								</div>
-								<span class="result-type">{result.type}</span>
 							</button>
 						{/each}
 					</div>
@@ -327,13 +326,6 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-	}
-
-	.result-type {
-		font-size: var(--font-base);
-		color: var(--text-muted);
-		text-transform: capitalize;
-		flex-shrink: 0;
 	}
 
 	.no-results {
