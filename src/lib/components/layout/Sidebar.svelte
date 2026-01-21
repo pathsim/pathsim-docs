@@ -23,7 +23,8 @@
 	let showResults = $derived(searchQuery.length > 0);
 
 	// Check if we're on an API page or examples listing page
-	let isApiPage = $derived($page.url.pathname.endsWith('/api'));
+	// API pages can be /api, /api/latest, or /api/v0.16
+	let isApiPage = $derived($page.url.pathname.includes('/api'));
 	let isExamplesListPage = $derived($page.url.pathname.endsWith('/examples'));
 
 	function isActive(path: string): boolean {
