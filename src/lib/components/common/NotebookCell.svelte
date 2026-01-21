@@ -205,7 +205,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre>{stdout}</pre>
+						<pre class="output-text">{stdout}</pre>
 					</div>
 				</div>
 			{/if}
@@ -221,7 +221,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre>{stderr}</pre>
+						<pre class="output-text">{stderr}</pre>
 					</div>
 				</div>
 			{/if}
@@ -307,7 +307,7 @@
 		padding: 0;
 	}
 
-	.output-panel .panel-body pre {
+	.output-text {
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
@@ -360,7 +360,7 @@
 		color: var(--warning);
 	}
 
-	.output-panel.warning pre {
+	.output-panel.warning .output-text {
 		color: var(--warning);
 	}
 
