@@ -63,8 +63,6 @@
 		<p class="description">Complete API documentation for {pkg.name}.</p>
 	</div>
 
-	<h2 id="modules">Modules</h2>
-
 	{#if modules.length === 0}
 		<div class="tile placeholder-tile">
 			<div class="panel-body tile-body">
