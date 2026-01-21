@@ -36,6 +36,25 @@
 				} else {
 					result.push({ text: token, isLink: false });
 				}
+			}
+			// Check if this is a full module path like pathsim.connection.Connection
+			else if (/^[a-z][a-z0-9_]*(\.[a-z_][a-z0-9_]*)*\.[A-Z][a-zA-Z0-9_]*$/.test(token)) {
+				// Try lookup by full path first
+				let target = lookupRef(token);
+				if (!target) {
+					// Extract class name (last part) and try that
+					const className = token.split('.').pop();
+					if (className) {
+						target = lookupRef(className);
+					}
+				}
+				// Display just the class name but link to the full reference
+				const displayName = token.split('.').pop() || token;
+				if (target) {
+					result.push({ text: displayName, isLink: true, target });
+				} else {
+					result.push({ text: displayName, isLink: false });
+				}
 			} else {
 				result.push({ text: token, isLink: false });
 			}
