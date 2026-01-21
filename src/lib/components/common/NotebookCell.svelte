@@ -165,7 +165,7 @@
 	});
 </script>
 
-<div class="notebook-cell" class:running={isRunning} class:pending={isPending} class:has-output={hasOutput}>
+<div class="notebook-cell elevated" class:running={isRunning} class:pending={isPending} class:has-output={hasOutput}>
 	<CodeBlock
 		bind:this={codeBlockRef}
 		{code}
