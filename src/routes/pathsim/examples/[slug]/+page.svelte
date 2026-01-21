@@ -15,7 +15,7 @@
 
 <Tooltip />
 
-<div class="prose">
+<div class="notebook-page">
 	{#if !data.meta.executable}
 		<div class="notebook-notice">
 			<span class="badge warning">View Only</span>
@@ -36,6 +36,10 @@
 </div>
 
 <style>
+	.notebook-page {
+		max-width: var(--content-max-width);
+	}
+
 	.notebook-notice {
 		margin-bottom: var(--space-lg);
 	}

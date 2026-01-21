@@ -204,28 +204,41 @@
 		border-bottom: 1px solid var(--border);
 	}
 
-	.markdown-content :global(h2) {
-		font-size: var(--font-xl);
-		font-weight: 600;
-		color: var(--text);
-		margin-top: var(--space-xl);
-		margin-bottom: var(--space-md);
-	}
-
-	.markdown-content :global(h3) {
-		font-size: var(--font-lg);
-		font-weight: 600;
-		color: var(--text);
-		margin-top: var(--space-lg);
-		margin-bottom: var(--space-sm);
-	}
-
+	/* Section headers - matches DocstringRenderer pattern */
+	.markdown-content :global(h2),
+	.markdown-content :global(h3),
 	.markdown-content :global(h4) {
-		font-size: var(--font-base);
+		font-family: var(--font-ui);
+		font-size: var(--font-xs);
 		font-weight: 600;
-		color: var(--text);
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		margin: 0 0 var(--space-sm) 0;
+		padding: 0;
+		border: none;
+	}
+
+	/* Section containers with separator */
+	.markdown-content :global(h2) {
+		position: relative;
+		margin-top: var(--space-lg);
+		padding-top: var(--space-lg);
+	}
+
+	.markdown-content :global(h2::before) {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background: var(--border);
+	}
+
+	.markdown-content :global(h3),
+	.markdown-content :global(h4) {
 		margin-top: var(--space-md);
-		margin-bottom: var(--space-xs);
 	}
 
 	/* Inline code - matches DocstringRenderer */
