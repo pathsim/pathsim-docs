@@ -10,7 +10,7 @@
 		type NotebookManifest,
 		type Category
 	} from '$lib/notebook/manifest';
-	import { exampleCategoriesStore } from '$lib/stores/examplesContext';
+	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 
 	interface Props {
 		packageId: PackageId;
@@ -34,9 +34,14 @@
 	onMount(async () => {
 		try {
 			manifest = await loadManifest(packageId);
-			// Populate store for sidebar TOC
+			// Populate store for sidebar TOC with grouped data
 			if (manifest) {
-				exampleCategoriesStore.set(manifest.categories);
+				const grouped = groupByCategory(manifest.notebooks, manifest.categories);
+				const groups = [...grouped.entries()].map(([category, notebooks]) => ({
+					category,
+					notebooks
+				}));
+				exampleGroupsStore.set(groups);
 			}
 		} catch (e) {
 			error = e instanceof Error ? e.message : 'Failed to load examples';
@@ -47,7 +52,7 @@
 
 	onDestroy(() => {
 		// Clear store when leaving page
-		exampleCategoriesStore.set([]);
+		exampleGroupsStore.set([]);
 	});
 </script>
 

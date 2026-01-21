@@ -8,7 +8,7 @@
 	import ExamplesToc from '$lib/components/examples/ExamplesToc.svelte';
 	import { search, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
-	import { exampleCategoriesStore } from '$lib/stores/examplesContext';
+	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 
 	interface Props {
 		packageId: PackageId;
@@ -113,9 +113,9 @@
 		<div class="sidebar-scrollable">
 			<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
 		</div>
-	{:else if !showResults && isExamplesListPage && $exampleCategoriesStore.length > 0}
+	{:else if !showResults && isExamplesListPage && $exampleGroupsStore.length > 0}
 		<div class="sidebar-scrollable">
-			<ExamplesToc categories={$exampleCategoriesStore} />
+			<ExamplesToc groups={$exampleGroupsStore} {packageId} />
 		</div>
 	{/if}
 </aside>

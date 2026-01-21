@@ -1,20 +1,35 @@
 <script lang="ts">
 	/**
 	 * ExamplesToc - Table of contents for examples page
-	 * Shows categories for quick navigation
+	 * Shows categories with nested examples
 	 */
-	import type { Category } from '$lib/notebook/manifest';
+	import Icon from '$lib/components/common/Icon.svelte';
+	import type { GroupedExamples } from '$lib/stores/examplesContext';
 
 	interface Props {
-		categories: Category[];
+		groups: GroupedExamples[];
+		packageId: string;
 	}
 
-	let { categories }: Props = $props();
+	let { groups, packageId }: Props = $props();
 
-	// Track active category from scroll position
+	// Track expanded categories
+	let expandedCategories = $state<Set<string>>(new Set(groups.map((g) => g.category.id)));
+
+	// Track active item from scroll position
 	let activeId = $state<string | null>(null);
 
-	function scrollToCategory(id: string) {
+	function toggleCategory(id: string) {
+		const newExpanded = new Set(expandedCategories);
+		if (newExpanded.has(id)) {
+			newExpanded.delete(id);
+		} else {
+			newExpanded.add(id);
+		}
+		expandedCategories = newExpanded;
+	}
+
+	function scrollTo(id: string) {
 		const element = document.getElementById(id);
 		if (element) {
 			element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -40,10 +55,10 @@
 			}
 		);
 
-		// Observe all category headings
-		for (const category of categories) {
-			const el = document.getElementById(category.id);
-			if (el) observer.observe(el);
+		// Observe all category headings and example tiles
+		for (const group of groups) {
+			const catEl = document.getElementById(group.category.id);
+			if (catEl) observer.observe(catEl);
 		}
 
 		return () => observer.disconnect();
@@ -53,14 +68,36 @@
 <div class="examples-toc">
 	<div class="label-uppercase toc-header">On this page</div>
 	<nav class="toc-nav">
-		{#each categories as category}
-			<button
-				class="toc-item"
-				class:active={activeId === category.id}
-				onclick={() => scrollToCategory(category.id)}
-			>
-				{category.title}
-			</button>
+		{#each groups as group}
+			{@const isExpanded = expandedCategories.has(group.category.id)}
+			<div class="toc-group">
+				<button
+					class="toc-category"
+					class:active={activeId === group.category.id}
+					onclick={() => {
+						scrollTo(group.category.id);
+						toggleCategory(group.category.id);
+					}}
+				>
+					<span class="toc-icon" class:expanded={isExpanded}>
+						<Icon name="chevron-down" size={12} />
+					</span>
+					<span>{group.category.title}</span>
+				</button>
+
+				{#if isExpanded}
+					<div class="toc-examples">
+						{#each group.notebooks as notebook}
+							<a
+								href="/{packageId}/examples/{notebook.slug}"
+								class="toc-example"
+							>
+								{notebook.title}
+							</a>
+						{/each}
+					</div>
+				{/if}
+			</div>
 		{/each}
 	</nav>
 </div>
@@ -80,17 +117,22 @@
 	.toc-nav {
 		display: flex;
 		flex-direction: column;
-		gap: 2px;
+		gap: 1px;
 	}
 
-	.toc-item {
+	.toc-group {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.toc-category {
 		display: flex;
 		align-items: center;
+		gap: var(--space-xs);
 		width: 100%;
-		padding: var(--space-xs) var(--space-sm);
+		padding: var(--space-xs) 0;
 		background: none;
 		border: none;
-		border-radius: var(--radius-sm);
 		font-size: var(--font-sm);
 		color: var(--text-muted);
 		text-align: left;
@@ -98,13 +140,44 @@
 		transition: all var(--transition-fast);
 	}
 
-	.toc-item:hover {
+	.toc-category:hover {
 		color: var(--text);
-		background: var(--surface-hover);
 	}
 
-	.toc-item.active {
+	.toc-category.active {
 		color: var(--accent);
-		background: var(--accent-bg);
+	}
+
+	.toc-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transform: rotate(-90deg);
+		transition: transform var(--transition-fast);
+	}
+
+	.toc-icon.expanded {
+		transform: rotate(0deg);
+	}
+
+	.toc-examples {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		padding-left: calc(12px + var(--space-xs));
+	}
+
+	.toc-example {
+		display: block;
+		padding: var(--space-xs) 0;
+		font-size: var(--font-xs);
+		color: var(--text-muted);
+		text-decoration: none;
+		transition: color var(--transition-fast);
+	}
+
+	.toc-example:hover {
+		color: var(--text);
+		text-decoration: none;
 	}
 </style>
