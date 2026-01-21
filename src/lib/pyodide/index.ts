@@ -81,8 +81,8 @@ function handleWorkerMessage(event: MessageEvent<WorkerResponse>): void {
 				pendingExecutions.delete(response.id);
 				const duration = Date.now() - pending.startTime;
 				pending.resolve({
-					stdout: pending.stdout.join(''),
-					stderr: pending.stderr.join(''),
+					stdout: pending.stdout.join('\n'),
+					stderr: pending.stderr.join('\n'),
 					plots: pending.plots,
 					duration
 				});
@@ -97,8 +97,8 @@ function handleWorkerMessage(event: MessageEvent<WorkerResponse>): void {
 					pendingExecutions.delete(response.id);
 					const duration = Date.now() - pending.startTime;
 					pending.resolve({
-						stdout: pending.stdout.join(''),
-						stderr: pending.stderr.join(''),
+						stdout: pending.stdout.join('\n'),
+						stderr: pending.stderr.join('\n'),
 						plots: pending.plots,
 						error: {
 							message: response.error,
