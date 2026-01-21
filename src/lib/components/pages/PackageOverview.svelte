@@ -99,3 +99,11 @@
 	<CodeBlock code={pkg.quickstart.code} title={pkg.quickstart.title || 'Example'} />
 {/if}
 
+<div class="page-bottom-spacer"></div>
+
+<style>
+	.page-bottom-spacer {
+		height: var(--space-2xl);
+	}
+</style>
+

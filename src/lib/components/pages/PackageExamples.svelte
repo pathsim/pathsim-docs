@@ -105,7 +105,12 @@
 	{/if}
 {/if}
 
+<div class="page-bottom-spacer"></div>
+
 <style>
+	.page-bottom-spacer {
+		height: var(--space-2xl);
+	}
 	/* Loading state */
 	.loading-centered {
 		gap: var(--space-md);
