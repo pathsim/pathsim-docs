@@ -880,8 +880,12 @@ input::placeholder {
 
 /* Remove focus outline from CodeMirror (has its own cursor) */
 .cm-editor:focus-visible,
-.cm-editor *:focus-visible {
-	outline: none;
+.cm-editor:focus,
+.cm-editor *:focus-visible,
+.cm-editor *:focus,
+.cm-content:focus-visible,
+.cm-content:focus {
+	outline: none !important;
 }
 
 /* Skip link for accessibility */
