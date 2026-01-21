@@ -16,39 +16,34 @@
 
 <Tooltip />
 
-<div class="notebook-page">
-	<nav class="breadcrumb">
-		<a href="/{data.packageId}/examples">
+<div class="prose">
+	<nav class="notebook-nav">
+		<a href="/{data.packageId}/examples" class="nav-link">
 			<Icon name="arrow-left" size={16} />
 			<span>Examples</span>
 		</a>
 		{#if !data.meta.executable}
-			<span class="badge view-only">View Only</span>
+			<span class="badge warning">View Only</span>
 		{/if}
 	</nav>
 
 	<Notebook notebook={data.notebook} {basePath} showStaticOutputs={true} />
 
 	<footer class="notebook-footer">
-		<a href="/{data.packageId}/examples" class="back-link">
+		<a href="/{data.packageId}/examples" class="nav-link">
 			<Icon name="arrow-left" size={16} />
 			<span>Back to Examples</span>
 		</a>
-		<div class="tags">
+		<div class="notebook-tags">
 			{#each data.meta.tags as tag}
-				<span class="tag">{tag}</span>
+				<span class="notebook-tag">{tag}</span>
 			{/each}
 		</div>
 	</footer>
 </div>
 
 <style>
-	.notebook-page {
-		max-width: var(--content-max-width);
-		margin: 0 auto;
-	}
-
-	.breadcrumb {
+	.notebook-nav {
 		display: flex;
 		align-items: center;
 		gap: var(--space-md);
@@ -57,7 +52,7 @@
 		border-bottom: 1px solid var(--border);
 	}
 
-	.breadcrumb a {
+	.nav-link {
 		display: flex;
 		align-items: center;
 		gap: var(--space-xs);
@@ -67,20 +62,9 @@
 		transition: color var(--transition-fast);
 	}
 
-	.breadcrumb a:hover {
+	.nav-link:hover {
 		color: var(--accent);
-	}
-
-	.badge {
-		padding: var(--space-xs) var(--space-sm);
-		font-size: var(--font-xs);
-		font-weight: 500;
-		border-radius: var(--radius-sm);
-	}
-
-	.badge.view-only {
-		background: var(--warning-bg);
-		color: var(--warning);
+		text-decoration: none;
 	}
 
 	.notebook-footer {
@@ -92,27 +76,13 @@
 		border-top: 1px solid var(--border);
 	}
 
-	.back-link {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		color: var(--text-muted);
-		text-decoration: none;
-		font-size: var(--font-sm);
-		transition: color var(--transition-fast);
-	}
-
-	.back-link:hover {
-		color: var(--accent);
-	}
-
-	.tags {
+	.notebook-tags {
 		display: flex;
 		gap: var(--space-xs);
 		flex-wrap: wrap;
 	}
 
-	.tag {
+	.notebook-tag {
 		padding: 2px var(--space-sm);
 		font-size: var(--font-xs);
 		color: var(--text-disabled);
