@@ -8,6 +8,8 @@
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
 	import { notebookStore, type CellStatus } from '$lib/stores/notebookStore';
+	import CellOutput from '$lib/components/notebook/CellOutput.svelte';
+	import type { CellOutput as CellOutputType } from '$lib/notebook/types';
 
 	interface Props {
 		/** Unique cell ID (required for prerequisite tracking) */
@@ -20,6 +22,8 @@
 		editable?: boolean;
 		/** IDs of cells that must execute first (will auto-run) */
 		prerequisites?: string[];
+		/** Static outputs from notebook file (shown before execution) */
+		staticOutputs?: CellOutputType[];
 	}
 
 	let {
@@ -27,7 +31,8 @@
 		code,
 		title = 'Code',
 		editable = false,
-		prerequisites = []
+		prerequisites = [],
+		staticOutputs = []
 	}: Props = $props();
 
 	// Reference to CodeBlock for getting current code
@@ -49,7 +54,9 @@
 	// Computed states
 	let isRunning = $derived(cellState.status === 'running');
 	let isPending = $derived(cellState.status === 'pending');
-	let hasOutput = $derived(stdout || stderr || plots.length > 0 || error);
+	let hasLiveOutput = $derived(stdout || stderr || plots.length > 0 || error);
+	let showStaticOutputs = $derived(!hasLiveOutput && staticOutputs.length > 0);
+	let hasOutput = $derived(hasLiveOutput || showStaticOutputs);
 
 	/**
 	 * Execute this cell's code (called by store during prerequisite chain)
@@ -242,6 +249,10 @@
 						{/each}
 					</div>
 				</div>
+			{/if}
+
+			{#if showStaticOutputs}
+				<CellOutput outputs={staticOutputs} />
 			{/if}
 		</div>
 	{/if}
