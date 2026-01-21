@@ -85,6 +85,32 @@
 	--sidebar-width: 280px;
 	--toc-width: 220px;
 	--content-max-width: 800px;
+
+	/* ===== BREAKPOINTS =====
+	 * Note: CSS custom properties cannot be used in @media queries.
+	 * These values serve as documentation for consistent breakpoint usage:
+	 * - 600px: Mobile - single column layouts, simplified UI
+	 * - 768px: Tablet - sidebar collapses, responsive navigation
+	 * - 900px: Desktop - multi-column grids, full layout
+	 */
+	--bp-mobile: 600px;
+	--bp-tablet: 768px;
+	--bp-desktop: 900px;
+
+	/* ===== Z-INDEX ===== */
+	--z-dropdown: 100;
+	--z-sticky: 200;
+	--z-modal: 1000;
+	--z-tooltip: 1100;
+
+	/* ===== TIMING ===== */
+	--duration-toast: 2000ms;
+	--duration-copy-feedback: 2000ms;
+
+	/* ===== CODE EDITOR ===== */
+	--editor-max-height-sm: 300px;
+	--editor-max-height-md: 400px;
+	--editor-max-height-lg: 600px;
 }
 
 /* Light Theme */
@@ -1096,4 +1122,120 @@ input::placeholder {
 /* API module sections - scroll target */
 .api-module {
 	scroll-margin-top: var(--space-lg);
+}
+
+/* ============================================
+   CLICKABLE HEADER
+   Used for expandable panels (ClassDoc, FunctionDoc, etc.)
+   ============================================ */
+
+/* Clickable header base - extends .panel-header for expandable content */
+.clickable-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-sm);
+	width: 100%;
+	border-radius: 0;
+	border-bottom: none;
+	text-align: left;
+	cursor: pointer;
+	transition: background var(--transition-fast);
+	/* Override panel-header uppercase */
+	text-transform: none;
+	letter-spacing: normal;
+	font-size: var(--font-sm);
+}
+
+.clickable-header:hover {
+	background: var(--surface-raised);
+}
+
+/* Expanded state - add border bottom */
+.clickable-header.expanded {
+	border-bottom: 1px solid var(--border);
+}
+
+/* ============================================
+   SOURCE PANEL
+   CodeMirror source view inside tiles
+   ============================================ */
+
+.source-panel {
+	padding: 0;
+}
+
+.source-panel :global(.cm-editor) {
+	height: auto;
+	border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+.source-panel.source-panel-sm :global(.cm-editor) {
+	max-height: var(--editor-max-height-sm);
+}
+
+.source-panel.source-panel-md :global(.cm-editor) {
+	max-height: var(--editor-max-height-md);
+}
+
+.source-panel.source-panel-lg :global(.cm-editor) {
+	max-height: var(--editor-max-height-lg);
+}
+
+/* ============================================
+   LOADING INDICATOR
+   Centered loading state for async content
+   ============================================ */
+
+.loading-centered {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 200px;
+	color: var(--text-muted);
+	font-size: var(--font-sm);
+	background: var(--surface);
+}
+
+/* ============================================
+   FLEX UTILITIES
+   Common flexbox patterns
+   ============================================ */
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-between {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-1 {
+	flex: 1;
+	min-width: 0;
+}
+
+.gap-xs {
+	gap: var(--space-xs);
+}
+
+.gap-sm {
+	gap: var(--space-sm);
+}
+
+.gap-md {
+	gap: var(--space-md);
+}
+
+.gap-lg {
+	gap: var(--space-lg);
 }

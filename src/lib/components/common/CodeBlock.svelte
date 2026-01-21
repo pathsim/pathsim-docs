@@ -4,6 +4,7 @@
 	import { tooltip } from './Tooltip.svelte';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
+	import { copyToClipboard as copy } from '$lib/utils/clipboard';
 
 	interface Props {
 		code: string;
@@ -18,10 +19,8 @@
 	let cmModules: CodeMirrorModules | null = null;
 	let loading = $state(true);
 
-	function copyToClipboard() {
-		navigator.clipboard.writeText(code);
-		copied = true;
-		setTimeout(() => (copied = false), 2000);
+	function handleCopy() {
+		copy(code, () => (copied = true), () => (copied = false));
 	}
 
 	onMount(() => {
@@ -65,7 +64,7 @@
 	<div class="panel-header">
 		<span>{title}</span>
 		<div class="header-actions">
-			<button class="icon-btn" onclick={copyToClipboard} use:tooltip={copied ? 'Copied!' : 'Copy'}>
+			<button class="icon-btn" onclick={handleCopy} use:tooltip={copied ? 'Copied!' : 'Copy'}>
 				<Icon name={copied ? 'check' : 'copy'} size={14} />
 			</button>
 		</div>

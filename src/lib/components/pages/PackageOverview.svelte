@@ -3,6 +3,7 @@
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import CodeBlock from '$lib/components/common/CodeBlock.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
+	import { copyToClipboard } from '$lib/utils/clipboard';
 
 	interface Props {
 		packageId: PackageId;
@@ -16,12 +17,12 @@
 	// Track copy state for each install option
 	let copiedStates = $state<Record<string, boolean>>({});
 
-	async function copyToClipboard(command: string, name: string) {
-		await navigator.clipboard.writeText(command);
-		copiedStates[name] = true;
-		setTimeout(() => {
-			copiedStates[name] = false;
-		}, 2000);
+	function handleCopy(command: string, name: string) {
+		copyToClipboard(
+			command,
+			() => (copiedStates[name] = true),
+			() => (copiedStates[name] = false)
+		);
 	}
 </script>
 
@@ -73,7 +74,7 @@
 
 	<div class="install-grid">
 		{#each pkg.installation as option}
-			<button class="install-card" onclick={() => copyToClipboard(option.command, option.name)}>
+			<button class="install-card" onclick={() => handleCopy(option.command, option.name)}>
 				<div class="panel-header">
 					<span>{option.name}</span>
 					<div class="header-actions">

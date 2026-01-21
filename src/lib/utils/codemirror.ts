@@ -162,3 +162,59 @@ export function createEditorExtensions(
 
 	return extensions;
 }
+
+/**
+ * Editor lifecycle manager - handles creation, theme updates, and cleanup
+ * Reduces boilerplate in components that use CodeMirror
+ */
+export class EditorManager {
+	private view: import('@codemirror/view').EditorView | null = null;
+	private modules: CodeMirrorModules | null = null;
+	private options: EditorOptions;
+
+	constructor(options: EditorOptions = {}) {
+		this.options = options;
+	}
+
+	/** Initialize the editor with the given content and container */
+	async init(content: string, container: HTMLElement, isDark: boolean): Promise<void> {
+		this.modules = await loadCodeMirrorModules();
+		this.view = new this.modules.EditorView({
+			doc: content,
+			extensions: createEditorExtensions(this.modules, isDark, this.options),
+			parent: container
+		});
+	}
+
+	/** Update the editor theme (recreates editor with new extensions) */
+	updateTheme(content: string, container: HTMLElement, isDark: boolean): void {
+		if (!this.modules) return;
+		this.view?.destroy();
+		this.view = new this.modules.EditorView({
+			doc: content,
+			extensions: createEditorExtensions(this.modules, isDark, this.options),
+			parent: container
+		});
+	}
+
+	/** Get the current document content */
+	getContent(): string {
+		return this.view?.state.doc.toString() ?? '';
+	}
+
+	/** Destroy the editor */
+	destroy(): void {
+		this.view?.destroy();
+		this.view = null;
+	}
+
+	/** Check if editor is initialized */
+	get isInitialized(): boolean {
+		return this.view !== null;
+	}
+
+	/** Get the underlying EditorView (for advanced use) */
+	get editorView(): import('@codemirror/view').EditorView | null {
+		return this.view;
+	}
+}
