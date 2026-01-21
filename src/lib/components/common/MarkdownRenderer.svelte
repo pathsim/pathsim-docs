@@ -31,9 +31,6 @@
 		breaks: false
 	});
 
-	// Store for math blocks extracted from markdown
-	let mathBlocks = $state<Map<string, { content: string; isDisplay: boolean }>>(new Map());
-
 	/**
 	 * Protect math blocks from marked processing
 	 * Replaces $$...$$ and $...$ with placeholders, returns map of placeholders
@@ -59,15 +56,29 @@
 		return { text, blocks };
 	}
 
-	// Convert markdown to HTML, then process cross-references
-	let html = $derived.by(() => {
-		if (!markdown?.trim()) return '';
+	// Convert markdown to HTML and extract math blocks
+	let processedMarkdown = $derived.by(() => {
+		if (!markdown?.trim()) return { html: '', mathBlocks: new Map<string, { content: string; isDisplay: boolean }>() };
 		// Protect math blocks before marked processes them
 		const { text: protected_, blocks } = protectMath(markdown);
-		mathBlocks = blocks;
 		const rawHtml = marked.parse(protected_, { async: false }) as string;
-		return processCrossRefs(rawHtml);
+		return { html: processCrossRefs(rawHtml), mathBlocks: blocks };
 	});
+
+	let html = $derived(processedMarkdown.html);
+	let mathBlocks = $derived(processedMarkdown.mathBlocks);
+
+	/**
+	 * Convert LaTeX environments not well-supported by KaTeX
+	 */
+	function preprocessLatex(latex: string): string {
+		// Convert eqnarray to aligned (KaTeX doesn't support eqnarray well)
+		latex = latex.replace(/\\begin\{eqnarray\*?\}/g, '\\begin{aligned}');
+		latex = latex.replace(/\\end\{eqnarray\*?\}/g, '\\end{aligned}');
+		// Convert =& to &= for aligned environment
+		latex = latex.replace(/=&/g, '&=');
+		return latex;
+	}
 
 	/**
 	 * Render math by replacing placeholders with KaTeX HTML
@@ -81,9 +92,12 @@
 
 		for (const [id, { content, isDisplay }] of mathBlocks) {
 			try {
-				const rendered = k.default.renderToString(content, {
+				// Preprocess LaTeX for KaTeX compatibility
+				const processedContent = preprocessLatex(content);
+
+				const rendered = k.default.renderToString(processedContent, {
 					displayMode: isDisplay,
-					throwOnError: false,
+					throwOnError: true,
 					strict: false,
 					trust: true
 				});
@@ -96,7 +110,9 @@
 				innerHTML = innerHTML.replace(new RegExp(`(<p>)?${id}(</p>)?`, 'g'), wrapper);
 			} catch (e) {
 				console.warn('KaTeX error for:', content, e);
-				innerHTML = innerHTML.replace(new RegExp(`(<p>)?${id}(</p>)?`, 'g'), `<code class="katex-error">${content}</code>`);
+				// Show error with the original content
+				const escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+				innerHTML = innerHTML.replace(new RegExp(`(<p>)?${id}(</p>)?`, 'g'), `<code class="katex-error">${escaped}</code>`);
 			}
 		}
 
