@@ -1,7 +1,8 @@
 import { apiData, type APIPackage, type APIModule, type APIClass, type APIFunction, type APIMethod } from '$lib/api/generated';
 import type { NotebookManifest } from '$lib/notebook/manifest';
+import { packages, packageOrder, type PackageId } from '$lib/config/packages';
 
-export type SearchResultType = 'module' | 'class' | 'function' | 'method' | 'example';
+export type SearchResultType = 'page' | 'module' | 'class' | 'function' | 'method' | 'example';
 
 export interface SearchResult {
 	type: SearchResultType;
@@ -27,10 +28,59 @@ let manifestsLoaded = false;
 let exampleResults: SearchResult[] = [];
 
 /**
+ * Build page-level search results for navigation pages
+ */
+function buildPageResults(): SearchResult[] {
+	const results: SearchResult[] = [];
+
+	for (const packageId of packageOrder) {
+		const pkg = packages[packageId];
+
+		// Overview page
+		results.push({
+			type: 'page',
+			name: pkg.name,
+			description: pkg.description,
+			path: `${packageId}`,
+			packageId,
+			moduleName: '',
+			tags: ['overview', 'documentation', 'docs']
+		});
+
+		// API page
+		results.push({
+			type: 'page',
+			name: `${pkg.name} API`,
+			description: `API reference for ${pkg.name}`,
+			path: `${packageId}/api`,
+			packageId,
+			moduleName: '',
+			tags: ['api', 'reference', 'documentation']
+		});
+
+		// Examples page
+		results.push({
+			type: 'page',
+			name: `${pkg.name} Examples`,
+			description: `Example notebooks for ${pkg.name}`,
+			path: `${packageId}/examples`,
+			packageId,
+			moduleName: '',
+			tags: ['examples', 'tutorials', 'notebooks']
+		});
+	}
+
+	return results;
+}
+
+/**
  * Build the search index from all API data
  */
 function buildSearchIndex(): SearchResult[] {
 	const results: SearchResult[] = [];
+
+	// Add page-level results first
+	results.push(...buildPageResults());
 
 	for (const [packageId, pkg] of Object.entries(apiData)) {
 		const basePath = `${packageId}/api`;
@@ -197,10 +247,11 @@ export function search(query: string, limit: number = 20): SearchResult[] {
 				}
 			}
 
-			// Boost classes and functions over methods
+			// Boost by type (pages highest, then classes, examples, functions)
+			if (result.type === 'page') score *= 1.5;
 			if (result.type === 'class') score *= 1.2;
-			if (result.type === 'function') score *= 1.1;
 			if (result.type === 'example') score *= 1.15;
+			if (result.type === 'function') score *= 1.1;
 
 			return { result, score };
 		})
@@ -217,6 +268,7 @@ export function search(query: string, limit: number = 20): SearchResult[] {
  */
 export function getTypeLabel(type: SearchResultType): string {
 	switch (type) {
+		case 'page': return 'Page';
 		case 'module': return 'Module';
 		case 'class': return 'Class';
 		case 'function': return 'Function';

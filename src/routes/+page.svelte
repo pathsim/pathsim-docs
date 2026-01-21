@@ -30,6 +30,7 @@
 
 	function getTypeIcon(type: SearchResult['type']): string {
 		switch (type) {
+			case 'page': return 'file';
 			case 'module': return 'package';
 			case 'class': return 'box';
 			case 'function': return 'zap';
