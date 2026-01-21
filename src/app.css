@@ -935,9 +935,9 @@ input::placeholder {
 }
 
 .hero-logo {
-	height: 140px;
+	height: 80px;
 	width: auto;
-	margin-bottom: var(--space-xl);
+	margin-bottom: var(--space-lg);
 }
 
 .hero .description {
