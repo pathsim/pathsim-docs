@@ -266,13 +266,19 @@
 		gap: var(--space-md);
 	}
 
-	@media (max-width: 900px) {
+	@media (max-width: 1024px) {
+		.results-grid {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	@media (max-width: 768px) {
 		.results-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
 	}
 
-	@media (max-width: 600px) {
+	@media (max-width: 480px) {
 		.results-grid {
 			grid-template-columns: 1fr;
 		}
