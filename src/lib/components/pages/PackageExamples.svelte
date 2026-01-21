@@ -88,8 +88,8 @@
 			{#each notebooks as notebook}
 				<div
 					class="tile example-tile"
-					onclick={() => goto(`/${packageId}/examples/${notebook.slug}`)}
-					onkeydown={(e) => e.key === 'Enter' && goto(`/${packageId}/examples/${notebook.slug}`)}
+					onclick={() => goto(`${base}/${packageId}/examples/${notebook.slug}`)}
+					onkeydown={(e) => e.key === 'Enter' && goto(`${base}/${packageId}/examples/${notebook.slug}`)}
 					role="button"
 					tabindex="0"
 				>

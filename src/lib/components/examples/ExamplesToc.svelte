@@ -3,6 +3,7 @@
 	 * ExamplesToc - Table of contents for examples page
 	 * Shows categories with nested examples (styled like ApiToc)
 	 */
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import type { GroupedExamples } from '$lib/stores/examplesContext';
 
@@ -89,7 +90,7 @@
 					<div class="examples-toc-children">
 						{#each group.notebooks as notebook}
 							<a
-								href="/{packageId}/examples/{notebook.slug}"
+								href="{base}/{packageId}/examples/{notebook.slug}"
 								class="examples-toc-example"
 							>
 								{notebook.title}
