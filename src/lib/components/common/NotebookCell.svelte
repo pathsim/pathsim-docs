@@ -205,7 +205,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre class="output-text" style="white-space: pre-wrap; color: var(--text); font-size: var(--font-sm); font-family: var(--font-mono); line-height: 1.5; margin: 0; padding: var(--space-md);">{stdout}</pre>
+						<pre class="output-text" style="white-space: pre-wrap; color: var(--text-muted); font-size: var(--font-sm); font-family: var(--font-mono); line-height: 1.5; margin: 0; padding: var(--space-md);">{stdout}</pre>
 					</div>
 				</div>
 			{/if}
@@ -313,7 +313,7 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
 		line-height: 1.5;
-		color: var(--text);
+		color: var(--text-muted);
 		white-space: pre-wrap;
 		word-break: break-word;
 		overflow-x: auto;

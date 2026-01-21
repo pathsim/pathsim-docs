@@ -1187,7 +1187,7 @@ pre.output-text {
 	font-family: var(--font-mono) !important;
 	font-size: var(--font-sm) !important;
 	line-height: 1.5 !important;
-	color: var(--text) !important;
+	color: var(--text-muted) !important;
 	white-space: pre-wrap !important;
 	word-break: break-word !important;
 	background: transparent !important;
