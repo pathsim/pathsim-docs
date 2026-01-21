@@ -536,38 +536,7 @@
 		color: var(--text-muted);
 	}
 
-	/* Section headers */
-	.rst-content h2,
-	.rst-content h3,
-	.rst-content h4,
-	.rst-content h5,
-	.rst-content h6 {
-		color: var(--text);
-		font-weight: 600;
-		margin-top: var(--space-xl);
-		margin-bottom: var(--space-md);
-		line-height: 1.3;
-	}
-
-	.rst-content h2:first-child,
-	.rst-content h3:first-child,
-	.rst-content h4:first-child {
-		margin-top: 0;
-	}
-
-	.rst-content h2 {
-		font-size: var(--font-lg);
-	}
-
-	.rst-content h3 {
-		font-size: var(--font-base);
-	}
-
-	.rst-content h4,
-	.rst-content h5,
-	.rst-content h6 {
-		font-size: var(--font-sm);
-	}
+	/* Section headers styled via global app.css rules for .rst-content h2-h4 */
 
 	.rst-content :global(p) {
 		margin-bottom: 0.75em;
