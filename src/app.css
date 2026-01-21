@@ -1181,18 +1181,18 @@ input::placeholder {
 }
 
 /* Notebook cell output text (live execution) */
-.output-text {
-	margin: 0;
-	padding: var(--space-md);
-	font-family: var(--font-mono);
-	font-size: var(--font-sm);
-	line-height: 1.5;
-	color: var(--text);
-	white-space: pre-wrap;
-	word-break: break-word;
-	background: transparent;
-	border: none;
-	border-radius: 0;
+pre.output-text {
+	margin: 0 !important;
+	padding: var(--space-md) !important;
+	font-family: var(--font-mono) !important;
+	font-size: var(--font-sm) !important;
+	line-height: 1.5 !important;
+	color: var(--text) !important;
+	white-space: pre-wrap !important;
+	word-break: break-word !important;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
 }
 
 .execution-count {
