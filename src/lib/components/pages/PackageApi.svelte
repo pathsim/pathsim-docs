@@ -47,7 +47,7 @@
 </script>
 
 <svelte:head>
-	<title>API Reference{version ? ` v${version}` : ''} - {pkg.name}</title>
+	<title>{pkg.name} - API{version ? ` v${version}` : ''}</title>
 	<meta name="description" content="{pkg.name} API reference documentation" />
 </svelte:head>
 

@@ -59,7 +59,7 @@
 </script>
 
 <svelte:head>
-	<title>Examples - {pkg.name}</title>
+	<title>{pkg.name} - Examples</title>
 	<meta name="description" content="{pkg.name} example notebooks" />
 </svelte:head>
 

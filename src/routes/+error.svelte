@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Error - PathSim Documentation</title>
+	<title>PathSim Docs - Error</title>
 </svelte:head>
 
 <main class="error-page">

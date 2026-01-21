@@ -10,7 +10,7 @@
 </script>
 
 <svelte:head>
-	<title>{data.meta.title} - PathSim Examples</title>
+	<title>PathSim - {data.meta.title}</title>
 	<meta name="description" content={data.meta.description} />
 </svelte:head>
 

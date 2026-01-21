@@ -40,7 +40,7 @@
 </script>
 
 <svelte:head>
-	<title>PathSim Documentation</title>
+	<title>PathSim Docs</title>
 	<meta name="description" content="Documentation for PathSim - A Python framework for simulating dynamical systems" />
 </svelte:head>
 

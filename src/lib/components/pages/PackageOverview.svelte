@@ -28,7 +28,7 @@
 </script>
 
 <svelte:head>
-	<title>{pkg.name} Documentation</title>
+	<title>{pkg.name}</title>
 	<meta name="description" content="{pkg.name} - {pkg.description}" />
 </svelte:head>
 
