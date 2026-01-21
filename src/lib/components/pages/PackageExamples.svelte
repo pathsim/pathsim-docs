@@ -113,13 +113,20 @@
 		color: var(--error);
 	}
 
-	/* Example tile - clickable link */
+	/* Example tile - clickable card link */
 	.example-tile {
+		display: block;
 		text-decoration: none;
-		color: inherit;
+		/* Reset link colors for entire tile */
+		color: var(--text-muted);
 	}
 
 	.example-tile:hover {
 		text-decoration: none;
+		color: var(--text-muted);
+	}
+
+	.example-tile :global(.panel-header) {
+		color: var(--text-muted);
 	}
 </style>
