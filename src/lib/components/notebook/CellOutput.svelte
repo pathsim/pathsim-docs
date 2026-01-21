@@ -105,7 +105,6 @@
 
 <style>
 	.cell-outputs {
-		border-top: 1px solid var(--border);
 		background: var(--surface);
 	}
 
@@ -115,11 +114,13 @@
 		padding: var(--space-md);
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
+		line-height: 1.5;
 		white-space: pre-wrap;
 		word-break: break-word;
 		background: transparent;
 		border: none;
 		border-radius: 0;
+		color: var(--text-muted);
 	}
 
 	.output-stream.stderr {
@@ -135,6 +136,7 @@
 		padding: var(--space-md);
 		display: flex;
 		justify-content: center;
+		background: var(--surface);
 	}
 
 	.output-image img {
@@ -155,10 +157,33 @@
 		height: auto;
 	}
 
-	/* HTML output */
+	/* HTML output - styled like docstring content */
 	.output-html {
 		padding: var(--space-md);
 		overflow-x: auto;
+		font-size: var(--font-sm);
+		line-height: 1.7;
+		color: var(--text-muted);
+	}
+
+	/* Tables in HTML output */
+	.output-html :global(table) {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: var(--font-sm);
+	}
+
+	.output-html :global(th),
+	.output-html :global(td) {
+		padding: var(--space-xs) var(--space-sm);
+		border: 1px solid var(--border);
+		text-align: left;
+	}
+
+	.output-html :global(th) {
+		background: var(--surface-raised);
+		font-weight: 600;
+		color: var(--text-muted);
 	}
 
 	/* Plain text output */
@@ -167,6 +192,7 @@
 		padding: var(--space-md);
 		font-family: var(--font-mono);
 		font-size: var(--font-sm);
+		line-height: 1.5;
 		white-space: pre-wrap;
 		word-break: break-word;
 		background: transparent;
@@ -198,6 +224,7 @@
 		padding-top: 0;
 		font-family: var(--font-mono);
 		font-size: var(--font-xs);
+		line-height: 1.5;
 		white-space: pre-wrap;
 		word-break: break-word;
 		color: var(--text-muted);
