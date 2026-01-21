@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import Icon from './Icon.svelte';
-	import { tooltip } from './Tooltip.svelte';
 
 	let visible = $state(false);
 	let scrollContainer: HTMLElement | null = null;
@@ -36,7 +35,6 @@
 	<button
 		class="scroll-to-top elevated"
 		onclick={scrollToTop}
-		use:tooltip={'Scroll to top'}
 		aria-label="Scroll to top"
 	>
 		<Icon name="chevron-up" size={18} />
