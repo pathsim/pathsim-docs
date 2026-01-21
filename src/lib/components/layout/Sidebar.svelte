@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -21,6 +22,22 @@
 	let searchQuery = $state('');
 	let searchResults = $derived(search(searchQuery, 15));
 	let showResults = $derived(searchQuery.length > 0);
+	let searchInput = $state<HTMLInputElement | null>(null);
+
+	function handleGlobalKeydown(event: KeyboardEvent) {
+		if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+			event.preventDefault();
+			searchInput?.focus();
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', handleGlobalKeydown);
+	});
+
+	onDestroy(() => {
+		window.removeEventListener('keydown', handleGlobalKeydown);
+	});
 
 	// Check if we're on an API page or examples listing page
 	// API pages can be /api, /api/latest, or /api/v0.16
@@ -32,8 +49,12 @@
 	}
 
 	function handleSearchKeydown(event: KeyboardEvent) {
-		if (event.key === 'Escape' && searchQuery) {
-			searchQuery = '';
+		if (event.key === 'Escape') {
+			if (searchQuery) {
+				searchQuery = '';
+			} else {
+				searchInput?.blur();
+			}
 			event.stopPropagation();
 		}
 	}
@@ -55,6 +76,7 @@
 
 	function getTypeIcon(type: SearchResult['type']): string {
 		switch (type) {
+			case 'page': return 'file';
 			case 'module': return 'package';
 			case 'class': return 'box';
 			case 'function': return 'zap';
@@ -72,6 +94,7 @@
 				type="text"
 				placeholder="Search docs..."
 				bind:value={searchQuery}
+				bind:this={searchInput}
 				class="search-input"
 				onkeydown={handleSearchKeydown}
 			/>
@@ -151,6 +174,11 @@
 		height: var(--header-height);
 		padding: 0 var(--space-md);
 		border-bottom: 1px solid var(--border);
+		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+	}
+
+	.search-container:focus-within {
+		box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 	}
 
 	.search-icon {

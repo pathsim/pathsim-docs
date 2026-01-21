@@ -26,6 +26,7 @@ let searchIndex: SearchIndex = { results: [], built: false };
 // Cache for loaded manifests
 let manifestsLoaded = false;
 let exampleResults: SearchResult[] = [];
+let packagesWithExamples: Set<string> = new Set();
 
 /**
  * Build page-level search results for navigation pages
@@ -58,16 +59,18 @@ function buildPageResults(): SearchResult[] {
 			tags: ['api', 'reference', 'documentation']
 		});
 
-		// Examples page
-		results.push({
-			type: 'page',
-			name: `${pkg.name} Examples`,
-			description: `Example notebooks for ${pkg.name}`,
-			path: `${packageId}/examples`,
-			packageId,
-			moduleName: '',
-			tags: ['examples', 'tutorials', 'notebooks']
-		});
+		// Examples page (only if package has examples)
+		if (packagesWithExamples.has(packageId)) {
+			results.push({
+				type: 'page',
+				name: `${pkg.name} Examples`,
+				description: `Example notebooks for ${pkg.name}`,
+				path: `${packageId}/examples`,
+				packageId,
+				moduleName: '',
+				tags: ['examples', 'tutorials', 'notebooks']
+			});
+		}
 	}
 
 	return results;
@@ -157,6 +160,10 @@ async function loadExampleManifests(): Promise<SearchResult[]> {
 
 			const manifest: NotebookManifest = await response.json();
 
+			if (manifest.notebooks.length > 0) {
+				packagesWithExamples.add(packageId);
+			}
+
 			for (const notebook of manifest.notebooks) {
 				results.push({
 					type: 'example',
@@ -175,6 +182,10 @@ async function loadExampleManifests(): Promise<SearchResult[]> {
 
 	exampleResults = results;
 	manifestsLoaded = true;
+
+	// Rebuild search index now that we know which packages have examples
+	searchIndex.built = false;
+
 	return results;
 }
 

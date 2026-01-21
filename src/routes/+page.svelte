@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
@@ -10,10 +11,30 @@
 	let searchQuery = $state('');
 	let searchResults = $derived(search(searchQuery, 8));
 	let showResults = $derived(searchQuery.length > 0);
+	let searchInput = $state<HTMLInputElement | null>(null);
+
+	function handleGlobalKeydown(event: KeyboardEvent) {
+		if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
+			event.preventDefault();
+			searchInput?.focus();
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', handleGlobalKeydown);
+	});
+
+	onDestroy(() => {
+		window.removeEventListener('keydown', handleGlobalKeydown);
+	});
 
 	function handleSearchKeydown(event: KeyboardEvent) {
-		if (event.key === 'Escape' && searchQuery) {
-			searchQuery = '';
+		if (event.key === 'Escape') {
+			if (searchQuery) {
+				searchQuery = '';
+			} else {
+				searchInput?.blur();
+			}
 			event.stopPropagation();
 		}
 	}
@@ -62,6 +83,7 @@
 						type="text"
 						placeholder="Search the API..."
 						bind:value={searchQuery}
+						bind:this={searchInput}
 						onkeydown={handleSearchKeydown}
 					/>
 					{#if searchQuery}
