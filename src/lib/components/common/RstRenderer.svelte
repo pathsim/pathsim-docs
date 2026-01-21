@@ -55,11 +55,18 @@
 		content: string;
 	}
 
+	interface SectionHeader {
+		type: 'section';
+		level: number;
+		title: string;
+	}
+
 	type ParsedBlock =
 		| ImageDirective
 		| AdmonitionDirective
 		| CodeBlockDirective
 		| MathDirective
+		| SectionHeader
 		| { type: 'paragraph'; content: string }
 		| { type: 'hidden' };
 
@@ -71,6 +78,37 @@
 		const lines = source.split('\n');
 		let i = 0;
 
+		// RST underline characters and their heading levels (order of first appearance)
+		const underlineChars = ['=', '-', '~', '^', '"', "'", '`', '*', '+', '#'];
+		const seenUnderlines: string[] = [];
+
+		/**
+		 * Check if a line is an RST underline (all same character, at least 3 chars)
+		 */
+		function isUnderline(line: string): string | null {
+			const trimmed = line.trim();
+			if (trimmed.length < 3) return null;
+			const char = trimmed[0];
+			if (!underlineChars.includes(char)) return null;
+			if (trimmed.split('').every((c) => c === char)) {
+				return char;
+			}
+			return null;
+		}
+
+		/**
+		 * Get heading level for an underline character
+		 */
+		function getHeadingLevel(char: string): number {
+			let idx = seenUnderlines.indexOf(char);
+			if (idx === -1) {
+				seenUnderlines.push(char);
+				idx = seenUnderlines.length - 1;
+			}
+			// Return 2-6 (h1 reserved for page titles)
+			return Math.min(idx + 2, 6);
+		}
+
 		while (i < lines.length) {
 			const line = lines[i];
 			const trimmed = line.trim();
@@ -79,6 +117,19 @@
 			if (!trimmed) {
 				i++;
 				continue;
+			}
+
+			// Check for RST section header (title followed by underline)
+			if (i + 1 < lines.length) {
+				const nextLine = lines[i + 1];
+				const underlineChar = isUnderline(nextLine);
+				// Title must not start with directive syntax and underline must be at least as long as title
+				if (underlineChar && !trimmed.startsWith('..') && nextLine.trim().length >= trimmed.length) {
+					const level = getHeadingLevel(underlineChar);
+					blocks.push({ type: 'section', level, title: trimmed });
+					i += 2; // Skip both title and underline
+					continue;
+				}
 			}
 
 			// Check for image directive
@@ -441,7 +492,19 @@
 		{@html content}
 	{:else}
 		{#each parsedBlocks as block}
-			{#if block.type === 'paragraph'}
+			{#if block.type === 'section'}
+				{#if block.level === 2}
+					<h2>{block.title}</h2>
+				{:else if block.level === 3}
+					<h3>{block.title}</h3>
+				{:else if block.level === 4}
+					<h4>{block.title}</h4>
+				{:else if block.level === 5}
+					<h5>{block.title}</h5>
+				{:else}
+					<h6>{block.title}</h6>
+				{/if}
+			{:else if block.type === 'paragraph'}
 				<p>{@html block.content}</p>
 			{:else if block.type === 'image'}
 				<div class="image-block" style:text-align={block.align || 'center'}>
@@ -471,6 +534,39 @@
 		font-size: var(--font-sm);
 		line-height: 1.7;
 		color: var(--text-muted);
+	}
+
+	/* Section headers */
+	.rst-content h2,
+	.rst-content h3,
+	.rst-content h4,
+	.rst-content h5,
+	.rst-content h6 {
+		color: var(--text);
+		font-weight: 600;
+		margin-top: var(--space-xl);
+		margin-bottom: var(--space-md);
+		line-height: 1.3;
+	}
+
+	.rst-content h2:first-child,
+	.rst-content h3:first-child,
+	.rst-content h4:first-child {
+		margin-top: 0;
+	}
+
+	.rst-content h2 {
+		font-size: var(--font-lg);
+	}
+
+	.rst-content h3 {
+		font-size: var(--font-base);
+	}
+
+	.rst-content h4,
+	.rst-content h5,
+	.rst-content h6 {
+		font-size: var(--font-sm);
 	}
 
 	.rst-content :global(p) {
