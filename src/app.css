@@ -601,9 +601,9 @@ input::placeholder {
 	box-shadow: none;
 }
 
-/* Elevated modifier - adds blur shadow to any panel/tile/card */
+/* Elevated modifier - adds subtle shadow to any panel/tile/card */
 .elevated {
-	box-shadow: var(--shadow-lg);
+	box-shadow: var(--shadow-md);
 }
 
 /* Tile grid layouts */
