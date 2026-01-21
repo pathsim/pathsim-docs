@@ -33,6 +33,7 @@
 			case 'class': return 'box';
 			case 'function': return 'zap';
 			case 'method': return 'code';
+			case 'example': return 'play';
 		}
 	}
 </script>
@@ -202,7 +203,7 @@
 		display: flex;
 		align-items: center;
 		gap: var(--space-sm);
-		padding: var(--space-md) var(--space-lg);
+		padding: var(--space-sm) var(--space-md);
 		background: var(--surface-raised);
 		border: 1px solid var(--border);
 		border-radius: 9999px;

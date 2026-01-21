@@ -32,8 +32,8 @@
 					<Icon name="menu" size={14} />
 				</button>
 			{/if}
-			<a href="/" class="logo" use:tooltip={'Docs Home'}>
-				<img src="/favicon.png" alt="PathSim" />
+			<a href="/" class="icon-btn" use:tooltip={'Docs Home'}>
+				<img src="/favicon.png" alt="PathSim" class="logo-icon" />
 			</a>
 			<nav class="package-tabs">
 				{#each packageOrder as id}
@@ -76,8 +76,6 @@
 
 	.header-content {
 		height: 100%;
-		max-width: 1400px;
-		margin: 0 auto;
 		padding: 0 var(--space-lg);
 		display: flex;
 		align-items: center;
@@ -106,14 +104,9 @@
 		}
 	}
 
-	.logo {
-		display: flex;
-		align-items: center;
-	}
-
-	.logo img {
-		height: 24px;
-		width: auto;
+	.logo-icon {
+		height: 14px;
+		width: 14px;
 	}
 
 	.package-tabs {

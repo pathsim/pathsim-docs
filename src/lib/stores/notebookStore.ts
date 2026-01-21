@@ -20,19 +20,10 @@ export interface CellState {
 interface NotebookState {
 	/** Registry of all cells by ID */
 	cells: Map<string, CellState>;
-	/** Whether Pyodide is currently initializing */
-	pyodideInitializing: boolean;
-	/** Pyodide initialization progress message */
-	pyodideProgress: string;
-	/** Whether Pyodide has been initialized */
-	pyodideReady: boolean;
 }
 
 const initialState: NotebookState = {
-	cells: new Map(),
-	pyodideInitializing: false,
-	pyodideProgress: '',
-	pyodideReady: false
+	cells: new Map()
 };
 
 function createNotebookStore() {
@@ -259,18 +250,6 @@ function createNotebookStore() {
 			}
 
 			return { success: true, executedCells };
-		},
-
-		/**
-		 * Set Pyodide initialization state
-		 */
-		setPyodideState(initializing: boolean, progress: string = '', ready: boolean = false) {
-			update((state) => ({
-				...state,
-				pyodideInitializing: initializing,
-				pyodideProgress: progress,
-				pyodideReady: ready
-			}));
 		},
 
 		/**

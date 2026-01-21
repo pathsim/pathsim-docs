@@ -2,13 +2,6 @@
   "package": "pathsim_chem",
   "display_name": "PathSim-Chem",
   "modules": {
-    "pathsim_chem": {
-      "name": "pathsim_chem",
-      "description": "PathSim-Chem: Chemical Engineering Blocks for PathSim",
-      "docstring_html": "<p>PathSim-Chem: Chemical Engineering Blocks for PathSim</p>\n<p>A toolbox providing specialized blocks for chemical engineering simulations\nin the PathSim framework.</p>\n",
-      "classes": [],
-      "functions": []
-    },
     "pathsim_chem.tritium.bubbler": {
       "name": "pathsim_chem.tritium.bubbler",
       "description": "",
@@ -111,8 +104,8 @@
     },
     "pathsim_chem.tritium.glc": {
       "name": "pathsim_chem.tritium.glc",
-      "description": "Bubble column gas-liquid contactor model solver.",
-      "docstring_html": "<p>Bubble column gas-liquid contactor model solver.</p>\n<p>This module solves the coupled, non-linear, second-order ordinary differential\nequations that describe tritium transport in a counter-current bubble column,\nbased on the model by C. Malara (1995).</p>\n",
+      "description": "",
+      "docstring_html": "",
       "classes": [
         {
           "name": "GLC",

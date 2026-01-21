@@ -188,22 +188,3 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 
 	return html;
 }
-
-/**
- * Get all classes in a package (for "See Also" suggestions)
- */
-export function getPackageClasses(packageId: string): CrossRefTarget[] {
-	const index = getCrossRefIndex();
-	const classes: CrossRefTarget[] = [];
-
-	for (const target of index.values()) {
-		if (target.packageId === packageId && target.type === 'class') {
-			// Avoid duplicates (since we index by multiple keys)
-			if (!classes.find(c => c.name === target.name && c.moduleName === target.moduleName)) {
-				classes.push(target);
-			}
-		}
-	}
-
-	return classes.sort((a, b) => a.name.localeCompare(b.name));
-}

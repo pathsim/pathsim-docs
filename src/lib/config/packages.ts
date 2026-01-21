@@ -124,12 +124,7 @@ scope.plot()`,
 		examples: null,
 		pypi: `${external.pypi}/pathsim-chem`,
 		github: `${external.github}/pathsim-chem`,
-		features: [
-			{ title: 'Reactor Models', description: 'CSTR, PFR, batch reactors' },
-			{ title: 'Heat Transfer', description: 'Heat exchangers, heaters, coolers' },
-			{ title: 'Separation', description: 'Distillation, absorption columns' },
-			{ title: 'Thermodynamics', description: 'Property calculations' }
-		],
+		features: [],
 		installation: [
 			{ name: 'pip', command: 'pip install pathsim-chem' }
 		],
@@ -152,12 +147,7 @@ scope.plot()`,
 		examples: null,
 		pypi: null,
 		github: `${external.github}/pathsim-vehicle`,
-		features: [
-			{ title: 'Tire Models', description: 'Pacejka magic formula, linear tire' },
-			{ title: 'Suspension', description: 'Spring-damper systems' },
-			{ title: 'Powertrain', description: 'Engine, transmission models' },
-			{ title: 'Vehicle Body', description: 'Multi-body dynamics' }
-		],
+		features: [],
 		installation: [],
 		quickstart: null,
 		apiModules: [

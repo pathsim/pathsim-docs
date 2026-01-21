@@ -357,7 +357,8 @@ class APIExtractor:
 
                 try:
                     module_data = self._extract_module(module_path)
-                    if module_data and (module_data["classes"] or module_data["functions"] or module_data["docstring_html"]):
+                    # Only include modules that have classes or functions (not just docstrings)
+                    if module_data and (module_data["classes"] or module_data["functions"]):
                         result["modules"][module_path] = module_data
                         class_count = len(module_data["classes"])
                         func_count = len(module_data["functions"])
@@ -419,12 +420,11 @@ class APIExtractor:
 
     def _extract_module_obj(self, obj: griffe.Object, module_path: str) -> dict | None:
         """Extract module data from griffe object - only items defined here."""
-        docstring = obj.docstring.value if obj.docstring else ""
-
+        # Skip module-level docstrings - only extract classes and functions
         module_data = {
             "name": module_path,
-            "description": extract_first_line(docstring),
-            "docstring_html": rst_to_html(docstring),
+            "description": "",
+            "docstring_html": "",
             "classes": [],
             "functions": [],
         }

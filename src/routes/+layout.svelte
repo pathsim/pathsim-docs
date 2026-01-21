@@ -6,6 +6,7 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
 	import { packageOrder, footer, type PackageId } from '$lib/config/packages';
+	import { initExamplesSearch } from '$lib/utils/search';
 
 	let { children } = $props();
 
@@ -31,6 +32,9 @@
 			theme = 'light';
 		}
 		document.documentElement.setAttribute('data-theme', theme);
+
+		// Initialize examples in search index
+		initExamplesSearch();
 
 		const handleKeydown = (e: KeyboardEvent) => {
 			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -86,10 +90,6 @@
 			<a href={footer.github} class="footer-link">
 				<Icon name="github" size={14} />
 				<span>GitHub</span>
-			</a>
-			<a href={footer.pypi} class="footer-link">
-				<Icon name="package" size={14} />
-				<span>PyPI</span>
 			</a>
 			<span class="footer-text">MIT License</span>
 		</div>

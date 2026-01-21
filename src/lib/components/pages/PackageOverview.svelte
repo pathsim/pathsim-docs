@@ -60,16 +60,18 @@
 	</div>
 </div>
 
-<h2 id="key-features">Key Features</h2>
+{#if pkg.features.length > 0}
+	<h2 id="key-features">Key Features</h2>
 
-<div class="tile-grid {featureCols}">
-	{#each pkg.features as feature}
-		<div class="tile">
-			<div class="panel-header">{feature.title}</div>
-			<div class="panel-body tile-body">{feature.description}</div>
-		</div>
-	{/each}
-</div>
+	<div class="tile-grid {featureCols}">
+		{#each pkg.features as feature}
+			<div class="tile">
+				<div class="panel-header">{feature.title}</div>
+				<div class="panel-body tile-body">{feature.description}</div>
+			</div>
+		{/each}
+	</div>
+{/if}
 
 {#if pkg.installation.length > 0}
 	<h2 id="installation">Installation</h2>

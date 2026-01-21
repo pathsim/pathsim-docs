@@ -11,7 +11,7 @@
 	import { theme } from '$lib/stores/themeStore';
 	import { processCrossRefs } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
-	import { COPY_FEEDBACK_DURATION } from '$lib/config/timing';
+	import { createCopyButton } from '$lib/utils/copyButton';
 
 	interface Props {
 		/** RST source or pre-processed HTML */
@@ -350,32 +350,6 @@
 	}
 
 	/**
-	 * Create copy button
-	 */
-	function createCopyButton(code: string): HTMLButtonElement {
-		const button = document.createElement('button');
-		button.className = 'code-copy-btn';
-		button.title = 'Copy to clipboard';
-		button.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
-
-		button.addEventListener('click', async () => {
-			try {
-				await navigator.clipboard.writeText(code);
-				button.classList.add('copied');
-				button.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-				setTimeout(() => {
-					button.classList.remove('copied');
-					button.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
-				}, COPY_FEEDBACK_DURATION);
-			} catch (e) {
-				console.warn('Failed to copy:', e);
-			}
-		});
-
-		return button;
-	}
-
-	/**
 	 * Render code blocks with CodeMirror
 	 */
 	async function renderCodeBlocks() {
@@ -521,7 +495,7 @@
 					<img
 						src={resolveImagePath(block.src)}
 						alt={block.alt || 'Image'}
-						style:max-width={block.width ? `${block.width}px` : '100%'}
+						style:max-width={block.width ? `min(${block.width}px, 100%)` : '100%'}
 					/>
 				</div>
 			{:else if block.type === 'admonition'}
@@ -556,53 +530,7 @@
 		margin-bottom: 0;
 	}
 
-	/* Code block wrapper */
-	.rst-content :global(.code-block-wrapper) {
-		margin: var(--space-md) 0;
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		overflow: hidden;
-	}
-
-	.rst-content :global(.code-block-header) {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: var(--space-xs) var(--space-md);
-		background: var(--surface-raised);
-		border-bottom: 1px solid var(--border);
-	}
-
-	.rst-content :global(.code-copy-btn) {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: var(--space-xs);
-		background: transparent;
-		border: none;
-		border-radius: var(--radius-sm);
-		color: var(--text-muted);
-		cursor: pointer;
-		transition: color var(--transition-fast), background var(--transition-fast);
-	}
-
-	.rst-content :global(.code-copy-btn:hover) {
-		color: var(--text);
-		background: var(--surface-hover);
-	}
-
-	.rst-content :global(.code-copy-btn.copied) {
-		color: var(--success, #22c55e);
-	}
-
-	.rst-content :global(.cm-container) {
-		background: var(--surface);
-	}
-
-	.rst-content :global(.cm-editor) {
-		font-size: var(--font-base);
-		max-height: 300px;
-	}
+	/* Code block styles are in app.css */
 
 	/* Fallback pre for code blocks before CodeMirror */
 	.rst-content :global(pre.code-block) {

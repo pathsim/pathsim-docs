@@ -1,6 +1,7 @@
 import { apiData, type APIPackage, type APIModule, type APIClass, type APIFunction, type APIMethod } from '$lib/api/generated';
+import type { NotebookManifest } from '$lib/notebook/manifest';
 
-export type SearchResultType = 'module' | 'class' | 'function' | 'method';
+export type SearchResultType = 'module' | 'class' | 'function' | 'method' | 'example';
 
 export interface SearchResult {
 	type: SearchResultType;
@@ -10,6 +11,7 @@ export interface SearchResult {
 	packageId: string;
 	moduleName: string;
 	parentClass?: string;
+	tags?: string[];
 }
 
 interface SearchIndex {
@@ -19,6 +21,10 @@ interface SearchIndex {
 
 // Cached search index
 let searchIndex: SearchIndex = { results: [], built: false };
+
+// Cache for loaded manifests
+let manifestsLoaded = false;
+let exampleResults: SearchResult[] = [];
 
 /**
  * Build the search index from all API data
@@ -84,6 +90,43 @@ function buildSearchIndex(): SearchResult[] {
 }
 
 /**
+ * Load example manifests and build example search results
+ */
+async function loadExampleManifests(): Promise<SearchResult[]> {
+	if (manifestsLoaded) return exampleResults;
+
+	const results: SearchResult[] = [];
+	const packageIds = ['pathsim', 'chem', 'vehicle'];
+
+	for (const packageId of packageIds) {
+		try {
+			const response = await fetch(`/notebooks/${packageId}/manifest.json`);
+			if (!response.ok) continue;
+
+			const manifest: NotebookManifest = await response.json();
+
+			for (const notebook of manifest.notebooks) {
+				results.push({
+					type: 'example',
+					name: notebook.title,
+					description: notebook.description || '',
+					path: `/${packageId}/examples/${notebook.slug}`,
+					packageId,
+					moduleName: notebook.category,
+					tags: notebook.tags
+				});
+			}
+		} catch {
+			// Manifest doesn't exist for this package
+		}
+	}
+
+	exampleResults = results;
+	manifestsLoaded = true;
+	return results;
+}
+
+/**
  * Get or build the search index
  */
 function getSearchIndex(): SearchResult[] {
@@ -95,12 +138,20 @@ function getSearchIndex(): SearchResult[] {
 }
 
 /**
- * Search the API index
+ * Initialize examples in the search index (call once on app load)
+ */
+export async function initExamplesSearch(): Promise<void> {
+	await loadExampleManifests();
+}
+
+/**
+ * Search the API and examples index
  */
 export function search(query: string, limit: number = 20): SearchResult[] {
 	if (!query.trim()) return [];
 
-	const index = getSearchIndex();
+	// Combine API results with cached example results
+	const index = [...getSearchIndex(), ...exampleResults];
 	const lowerQuery = query.toLowerCase();
 	const terms = lowerQuery.split(/\s+/).filter(Boolean);
 
@@ -125,7 +176,7 @@ export function search(query: string, limit: number = 20): SearchResult[] {
 				else if (lowerName.includes(term)) {
 					score += 30;
 				}
-				// Module contains term
+				// Module/category contains term
 				else if (lowerModule.includes(term)) {
 					score += 15;
 				}
@@ -137,11 +188,16 @@ export function search(query: string, limit: number = 20): SearchResult[] {
 				else if (result.parentClass?.toLowerCase().includes(term)) {
 					score += 20;
 				}
+				// Tags contain term (for examples)
+				else if (result.tags?.some(tag => tag.toLowerCase().includes(term))) {
+					score += 25;
+				}
 			}
 
 			// Boost classes and functions over methods
 			if (result.type === 'class') score *= 1.2;
 			if (result.type === 'function') score *= 1.1;
+			if (result.type === 'example') score *= 1.15;
 
 			return { result, score };
 		})
@@ -162,5 +218,6 @@ export function getTypeLabel(type: SearchResultType): string {
 		case 'class': return 'Class';
 		case 'function': return 'Function';
 		case 'method': return 'Method';
+		case 'example': return 'Example';
 	}
 }

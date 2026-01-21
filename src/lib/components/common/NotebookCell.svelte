@@ -8,6 +8,7 @@
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
 	import { notebookStore, type CellStatus } from '$lib/stores/notebookStore';
+	import { pyodideState } from '$lib/stores/pyodideStore';
 	import CellOutput from '$lib/components/notebook/CellOutput.svelte';
 	import type { CellOutput as CellOutputType } from '$lib/notebook/types';
 
@@ -76,9 +77,9 @@
 			const { execute, initPyodide } = await import('$lib/pyodide');
 
 			// Ensure Pyodide is initialized
-			notebookStore.setPyodideState(true, 'Initializing Python...');
+			pyodideState.setLoading('Initializing Python...');
 			await initPyodide();
-			notebookStore.setPyodideState(false, '', true);
+			pyodideState.setReady();
 
 			// Execute with streaming callbacks for real-time output
 			const result = await execute(codeToRun, {

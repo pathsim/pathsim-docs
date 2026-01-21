@@ -3,7 +3,6 @@
 
 import pathsimData from './pathsim.json';
 import chemData from './chem.json';
-import vehicleData from './vehicle.json';
 
 export interface APIParameter {
   name: string;
@@ -68,7 +67,6 @@ export interface APIPackage {
 export const apiData: Record<string, APIPackage> = {
   pathsim: pathsimData as APIPackage,
   chem: chemData as APIPackage,
-  vehicle: vehicleData as APIPackage,
 };
 
 export default apiData;

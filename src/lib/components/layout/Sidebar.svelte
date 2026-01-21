@@ -57,6 +57,7 @@
 			case 'class': return 'box';
 			case 'function': return 'zap';
 			case 'method': return 'code';
+			case 'example': return 'play';
 		}
 	}
 </script>
@@ -251,7 +252,9 @@
 		gap: var(--space-sm);
 		padding: var(--space-sm) var(--space-md);
 		font-size: var(--font-base);
+		font-weight: 500;
 		color: var(--text-muted);
+		text-transform: uppercase;
 		text-decoration: none;
 		border-radius: var(--radius-sm);
 		transition: all var(--transition-fast);

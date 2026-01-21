@@ -306,6 +306,14 @@ pre {
 	padding: var(--space-md);
 }
 
+/* Notebook images - ensure responsive scaling */
+.notebook img,
+.notebook-cells img,
+.cell-outputs img {
+	max-width: 100%;
+	height: auto;
+}
+
 pre code {
 	background: none;
 	padding: 0;
@@ -1362,4 +1370,56 @@ pre.output-text {
 
 .gap-lg {
 	gap: var(--space-lg);
+}
+
+/* ============================================
+   CODE BLOCK SHARED STYLES
+   Used by MarkdownRenderer, RstRenderer, DocstringRenderer
+   ============================================ */
+
+.code-block-wrapper {
+	margin: var(--space-md) 0;
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+}
+
+.code-block-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: var(--space-xs) var(--space-md);
+	background: var(--surface-raised);
+	border-bottom: 1px solid var(--border);
+}
+
+.code-copy-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-xs);
+	background: transparent;
+	border: none;
+	border-radius: var(--radius-sm);
+	color: var(--text-muted);
+	cursor: pointer;
+	transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.code-copy-btn:hover {
+	color: var(--text);
+	background: var(--surface-hover);
+}
+
+.code-copy-btn.copied {
+	color: var(--success);
+}
+
+.cm-container {
+	background: var(--surface);
+}
+
+.cm-container .cm-editor {
+	font-size: var(--font-base);
+	max-height: 300px;
 }
