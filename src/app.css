@@ -878,13 +878,21 @@ input::placeholder {
 	outline-offset: 2px;
 }
 
-/* Remove focus outline from CodeMirror (has its own cursor) */
+/* Remove focus outline from CodeMirror and code blocks (editor has its own cursor) */
 .cm-editor:focus-visible,
 .cm-editor:focus,
 .cm-editor *:focus-visible,
 .cm-editor *:focus,
 .cm-content:focus-visible,
-.cm-content:focus {
+.cm-content:focus,
+.code-panel:focus-visible,
+.code-panel:focus-within,
+.code-panel *:focus-visible,
+.code-panel *:focus,
+.code-block-wrapper:focus-visible,
+.code-block-wrapper:focus-within,
+.code-block-wrapper *:focus-visible,
+.code-block-wrapper *:focus {
 	outline: none !important;
 }
 
