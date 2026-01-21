@@ -1,14 +1,20 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
+	import { processCrossRefs } from '$lib/utils/crossref';
+	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
 		html: string;
 	}
 
 	let { html }: Props = $props();
+
+	// Process HTML for cross-references
+	let processedHtml = $derived(processCrossRefs(html));
 
 	let container: HTMLDivElement | undefined = $state();
 	let katexLoaded = $state(false);
@@ -337,10 +343,41 @@
 			});
 		}
 	});
+
+	// Handle clicks on cross-reference links
+	function handleCrossRefClick(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		const link = target.closest('a.crossref') as HTMLAnchorElement;
+
+		if (link) {
+			event.preventDefault();
+			const href = link.getAttribute('href');
+			if (!href) return;
+
+			// Extract the target name from the hash
+			const hashIndex = href.indexOf('#');
+			if (hashIndex >= 0) {
+				const targetName = href.slice(hashIndex + 1);
+				const linkType = link.classList.contains('crossref-class') ? 'class'
+					: link.classList.contains('crossref-function') ? 'function'
+					: link.classList.contains('crossref-method') ? 'method'
+					: 'module';
+
+				// Set search target to trigger expansion/scroll
+				searchTarget.set({
+					name: targetName,
+					type: linkType as 'class' | 'function' | 'method' | 'module'
+				});
+			}
+
+			// Navigate to the path
+			goto(href);
+		}
+	}
 </script>
 
-<div class="docstring-content" bind:this={container}>
-	{@html html}
+<div class="docstring-content" bind:this={container} onclick={handleCrossRefClick}>
+	{@html processedHtml}
 </div>
 
 <style>
@@ -713,5 +750,27 @@
 		padding-left: var(--space-md);
 		border-left: 3px solid var(--accent);
 		color: var(--text-muted);
+	}
+
+	/* Cross-reference links */
+	.docstring-content :global(a.crossref) {
+		color: var(--accent);
+		text-decoration: none;
+		transition: color var(--transition-fast);
+	}
+
+	.docstring-content :global(a.crossref:hover) {
+		text-decoration: underline;
+	}
+
+	.docstring-content :global(a.crossref code) {
+		color: inherit;
+		background: var(--accent-bg);
+		border-color: var(--accent);
+	}
+
+	.docstring-content :global(a.crossref:hover code) {
+		background: var(--accent);
+		color: var(--bg);
 	}
 </style>
