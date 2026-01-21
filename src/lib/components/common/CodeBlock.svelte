@@ -42,8 +42,8 @@
 	let cmModules: CodeMirrorModules | null = null;
 	let loading = $state(true);
 
-	// Track current code
-	let currentCode = $state(code);
+	// Track current code (IIFE to capture initial value without reactive warning)
+	let currentCode = $state((() => code)());
 
 	function handleCopy() {
 		copy(getCurrentCode(), () => (copied = true), () => (copied = false));

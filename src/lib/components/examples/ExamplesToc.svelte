@@ -15,7 +15,8 @@
 	let { groups, packageId }: Props = $props();
 
 	// Track expanded categories (all expanded by default)
-	let expandedCategories = $state<Set<string>>(new Set(groups.map((g) => g.category.id)));
+	// Use IIFE to capture initial value without triggering reactive warning
+	let expandedCategories = $state<Set<string>>((() => new Set(groups.map((g) => g.category.id)))());
 
 	// Track active item from scroll position
 	let activeId = $state<string | null>(null);
@@ -92,6 +93,7 @@
 							<a
 								href="{base}/{packageId}/examples/{notebook.slug}"
 								class="examples-toc-example"
+								class:active={activeId === notebook.slug}
 							>
 								{notebook.title}
 							</a>

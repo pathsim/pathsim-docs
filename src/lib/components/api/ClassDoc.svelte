@@ -15,8 +15,9 @@
 		expanded?: boolean;
 	}
 
-	let { cls, expanded: initialExpanded = false }: Props = $props();
-	let isExpanded = $state(initialExpanded);
+	let { cls, expanded = false }: Props = $props();
+	// Use IIFE to capture initial value without triggering reactive warning
+	let isExpanded = $state((() => expanded)());
 	let viewMode = $state<'docs' | 'source'>('docs');
 	let tileElement: HTMLDivElement | undefined = $state();
 
