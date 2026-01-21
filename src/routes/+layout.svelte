@@ -101,6 +101,7 @@
 <style>
 	.app {
 		height: 100vh;
+		min-width: var(--app-min-width);
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
