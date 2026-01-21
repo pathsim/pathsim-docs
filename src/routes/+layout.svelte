@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
@@ -17,7 +18,7 @@
 	let currentPackage = $derived.by(() => {
 		const path = $page.url.pathname;
 		for (const id of packageOrder) {
-			if (path.startsWith(`/${id}`)) {
+			if (path.startsWith(`${base}/${id}`)) {
 				return id;
 			}
 		}
@@ -34,7 +35,7 @@
 		document.documentElement.setAttribute('data-theme', theme);
 
 		// Initialize examples in search index
-		initExamplesSearch();
+		initExamplesSearch(base);
 
 		const handleKeydown = (e: KeyboardEvent) => {
 			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {

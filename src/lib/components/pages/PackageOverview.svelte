@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import NotebookCell from '$lib/components/common/NotebookCell.svelte';
@@ -34,15 +35,15 @@
 <Tooltip />
 
 <div class="hero">
-	<img src={pkg.logo} alt={pkg.name} class="hero-logo" />
+	<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
 	<p class="description">{pkg.description}</p>
 	<div class="hero-actions">
-		<a href={pkg.api} class="action-card">
+		<a href="{base}/{pkg.api}" class="action-card">
 			<Icon name="braces" size={20} />
 			<span class="action-label">API</span>
 		</a>
 		{#if pkg.examples}
-			<a href={pkg.examples} class="action-card">
+			<a href="{base}/{pkg.examples}" class="action-card">
 				<Icon name="play" size={20} />
 				<span class="action-label">Examples</span>
 			</a>

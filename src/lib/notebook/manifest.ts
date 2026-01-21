@@ -41,8 +41,8 @@ export interface NotebookManifest {
 /**
  * Load manifest for a package.
  */
-export async function loadManifest(packageId: string): Promise<NotebookManifest> {
-	const response = await fetch(`/notebooks/${packageId}/manifest.json`);
+export async function loadManifest(packageId: string, basePath: string = ''): Promise<NotebookManifest> {
+	const response = await fetch(`${basePath}/notebooks/${packageId}/manifest.json`);
 	if (!response.ok) {
 		throw new Error(`Failed to load manifest for ${packageId}: ${response.status}`);
 	}
@@ -52,8 +52,8 @@ export async function loadManifest(packageId: string): Promise<NotebookManifest>
 /**
  * Load a notebook JSON file.
  */
-export async function loadNotebook(packageId: string, filename: string): Promise<unknown> {
-	const response = await fetch(`/notebooks/${packageId}/${filename}`);
+export async function loadNotebook(packageId: string, filename: string, basePath: string = ''): Promise<unknown> {
+	const response = await fetch(`${basePath}/notebooks/${packageId}/${filename}`);
 	if (!response.ok) {
 		throw new Error(`Failed to load notebook ${filename}: ${response.status}`);
 	}

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
@@ -34,7 +35,7 @@
 
 	onMount(async () => {
 		try {
-			manifest = await loadManifest(packageId);
+			manifest = await loadManifest(packageId, base);
 			// Populate store for sidebar TOC with grouped data
 			if (manifest) {
 				const grouped = groupByCategory(manifest.notebooks, manifest.categories);

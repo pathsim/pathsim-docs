@@ -2,6 +2,7 @@ import type { PageLoad } from './$types';
 import type { NotebookManifest, NotebookMeta } from '$lib/notebook/manifest';
 import { parseNotebook, type NotebookData } from '$lib/notebook/parser';
 import { error } from '@sveltejs/kit';
+import { base } from '$app/paths';
 
 const PACKAGE_ID = 'pathsim';
 
@@ -9,7 +10,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 	const { slug } = params;
 
 	// Load manifest to find notebook metadata (use SvelteKit's fetch for SSR)
-	const manifestResponse = await fetch(`/notebooks/${PACKAGE_ID}/manifest.json`);
+	const manifestResponse = await fetch(`${base}/notebooks/${PACKAGE_ID}/manifest.json`);
 	if (!manifestResponse.ok) {
 		throw error(500, { message: 'Failed to load manifest' });
 	}
@@ -23,7 +24,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
 	}
 
 	// Load the actual notebook file
-	const response = await fetch(`/notebooks/${PACKAGE_ID}/${notebookMeta.file}`);
+	const response = await fetch(`${base}/notebooks/${PACKAGE_ID}/${notebookMeta.file}`);
 	if (!response.ok) {
 		throw error(404, {
 			message: `Failed to load notebook file: ${notebookMeta.file}`

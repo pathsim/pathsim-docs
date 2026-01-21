@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
@@ -26,7 +27,7 @@
 	let isExamplesListPage = $derived($page.url.pathname.endsWith('/examples'));
 
 	function isActive(path: string): boolean {
-		return $page.url.pathname === path;
+		return $page.url.pathname === `${base}/${path}`;
 	}
 
 	function handleSearchKeydown(event: KeyboardEvent) {
@@ -44,7 +45,7 @@
 			type: result.type,
 			parentClass: result.parentClass
 		});
-		goto(result.path);
+		goto(`${base}/${result.path}`);
 	}
 
 	function handleTocNavigate(id: string) {
@@ -99,7 +100,7 @@
 		{:else}
 			<nav class="sidebar-nav">
 				{#each items as item}
-					<a href={item.path} class="sidebar-item" class:active={isActive(item.path)}>
+					<a href="{base}/{item.path}" class="sidebar-item" class:active={isActive(item.path)}>
 						{#if item.icon}
 							<Icon name={item.icon} size={14} />
 						{/if}

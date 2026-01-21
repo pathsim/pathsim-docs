@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
@@ -24,7 +25,7 @@
 			type: result.type,
 			parentClass: result.parentClass
 		});
-		goto(result.path);
+		goto(`${base}/${result.path}`);
 	}
 
 	function getTypeIcon(type: SearchResult['type']): string {
@@ -48,7 +49,7 @@
 <div class="page-wrapper">
 	<main>
 		<header class="hero">
-			<img src="/pathsim_logo.png" alt="PathSim" class="hero-logo" />
+			<img src="{base}/pathsim_logo.png" alt="PathSim" class="hero-logo" />
 			<p class="tagline">Documentation for the PathSim ecosystem</p>
 			<p class="description">
 				API reference, tutorials, and examples for PathSim and its domain-specific toolboxes.
@@ -123,10 +124,10 @@
 					<div class="panel-header">
 						<span>{pkg.shortName}</span>
 						<div class="header-actions">
-							<a href={pkg.api} class="icon-btn" use:tooltip={'API'}>
+							<a href="{base}/{pkg.api}" class="icon-btn" use:tooltip={'API'}>
 								<Icon name="braces" size={14} />
 							</a>
-							<a href={pkg.docs} class="icon-btn" use:tooltip={'Docs'}>
+							<a href="{base}/{pkg.docs}" class="icon-btn" use:tooltip={'Docs'}>
 								<Icon name="book" size={14} />
 							</a>
 							{#if pkg.pypi}
@@ -135,7 +136,7 @@
 								</a>
 							{/if}
 							{#if pkg.examples}
-								<a href={pkg.examples} class="icon-btn" use:tooltip={'Examples'}>
+								<a href="{base}/{pkg.examples}" class="icon-btn" use:tooltip={'Examples'}>
 									<Icon name="play" size={14} />
 								</a>
 							{/if}
@@ -144,8 +145,8 @@
 							</a>
 						</div>
 					</div>
-					<a href={pkg.docs} class="package-body">
-						<img src={pkg.logo} alt={pkg.name} />
+					<a href="{base}/{pkg.docs}" class="package-body">
+						<img src="{base}/{pkg.logo}" alt={pkg.name} />
 					</a>
 				</div>
 			{/each}

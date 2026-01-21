@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Sidebar from './Sidebar.svelte';
 	import { packages, packageOrder, type PackageId } from '$lib/config/packages';
@@ -48,7 +49,7 @@
 				{#each packageOrder as id}
 					{@const pkg = packages[id]}
 					<a
-						href={pkg.docs}
+						href="{base}/{pkg.docs}"
 						class="mobile-package-link"
 						class:active={packageId === id}
 						onclick={onClose}

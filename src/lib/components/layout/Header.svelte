@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { tooltip } from '$lib/components/common/Tooltip.svelte';
@@ -16,7 +17,7 @@
 	let activePackage = $derived.by(() => {
 		const path = $page.url.pathname;
 		for (const id of packageOrder) {
-			if (path.startsWith(`/${id}`)) {
+			if (path.startsWith(`${base}/${id}`)) {
 				return id;
 			}
 		}
@@ -32,14 +33,14 @@
 					<Icon name="menu" size={14} />
 				</button>
 			{/if}
-			<a href="/" class="icon-btn" use:tooltip={'Docs Home'}>
-				<img src="/favicon.png" alt="PathSim" class="logo-icon" />
+			<a href="{base}/" class="icon-btn" use:tooltip={'Docs Home'}>
+				<img src="{base}/favicon.png" alt="PathSim" class="logo-icon" />
 			</a>
 			<nav class="package-tabs">
 				{#each packageOrder as id}
 					{@const pkg = packages[id]}
 					<a
-						href={pkg.docs}
+						href="{base}/{pkg.docs}"
 						class="package-tab"
 						class:active={activePackage === id}
 						use:tooltip={pkg.name}

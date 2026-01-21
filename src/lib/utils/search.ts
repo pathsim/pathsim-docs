@@ -33,7 +33,7 @@ function buildSearchIndex(): SearchResult[] {
 	const results: SearchResult[] = [];
 
 	for (const [packageId, pkg] of Object.entries(apiData)) {
-		const basePath = `/${packageId}/api`;
+		const basePath = `${packageId}/api`;
 
 		for (const [moduleName, module] of Object.entries(pkg.modules)) {
 			// Add module
@@ -89,6 +89,9 @@ function buildSearchIndex(): SearchResult[] {
 	return results;
 }
 
+// Base path for fetching, set via initExamplesSearch
+let basePath = '';
+
 /**
  * Load example manifests and build example search results
  */
@@ -100,7 +103,7 @@ async function loadExampleManifests(): Promise<SearchResult[]> {
 
 	for (const packageId of packageIds) {
 		try {
-			const response = await fetch(`/notebooks/${packageId}/manifest.json`);
+			const response = await fetch(`${basePath}/notebooks/${packageId}/manifest.json`);
 			if (!response.ok) continue;
 
 			const manifest: NotebookManifest = await response.json();
@@ -110,7 +113,7 @@ async function loadExampleManifests(): Promise<SearchResult[]> {
 					type: 'example',
 					name: notebook.title,
 					description: notebook.description || '',
-					path: `/${packageId}/examples/${notebook.slug}`,
+					path: `${packageId}/examples/${notebook.slug}`,
 					packageId,
 					moduleName: notebook.category,
 					tags: notebook.tags
@@ -140,7 +143,8 @@ function getSearchIndex(): SearchResult[] {
 /**
  * Initialize examples in the search index (call once on app load)
  */
-export async function initExamplesSearch(): Promise<void> {
+export async function initExamplesSearch(base: string = ''): Promise<void> {
+	basePath = base;
 	await loadExampleManifests();
 }
 
