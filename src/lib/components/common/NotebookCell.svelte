@@ -9,7 +9,6 @@
 	import { tooltip } from './Tooltip.svelte';
 	import { notebookStore, type CellStatus } from '$lib/stores/notebookStore';
 	import CellOutput from '$lib/components/notebook/CellOutput.svelte';
-	import OutputViewer from '$lib/components/notebook/OutputViewer.svelte';
 	import type { CellOutput as CellOutputType } from '$lib/notebook/types';
 
 	interface Props {
@@ -223,8 +222,8 @@
 							</button>
 						</div>
 					</div>
-					<div class="panel-body output-body">
-						<OutputViewer content={stdout} />
+					<div class="panel-body">
+						<pre style="font-size: 12px; font-weight: 500; font-family: var(--font-mono); margin: 0; padding: var(--space-md); color: var(--text-muted); white-space: pre-wrap;">{stdout}</pre>
 					</div>
 				</div>
 			{/if}
@@ -239,8 +238,8 @@
 							</button>
 						</div>
 					</div>
-					<div class="panel-body output-body">
-						<OutputViewer content={stderr} color="var(--warning)" />
+					<div class="panel-body">
+						<pre style="font-size: 12px; font-weight: 500; font-family: var(--font-mono); margin: 0; padding: var(--space-md); color: var(--warning); white-space: pre-wrap;">{stderr}</pre>
 					</div>
 				</div>
 			{/if}

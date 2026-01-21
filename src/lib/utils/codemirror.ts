@@ -164,60 +164,6 @@ export function createEditorExtensions(
 }
 
 /**
- * Create minimal CodeMirror extensions for read-only output display
- * No syntax highlighting, no line numbers, just consistent font styling
- */
-export function createOutputExtensions(
-	modules: CodeMirrorModules,
-	isDark: boolean
-): import('@codemirror/state').Extension[] {
-	const { EditorView, EditorState, oneDark } = modules;
-
-	const extensions: import('@codemirror/state').Extension[] = [
-		EditorState.readOnly.of(true),
-		EditorView.editable.of(false),
-		EditorView.lineWrapping,
-		// Minimal theme - hide gutters, match output styling
-		EditorView.theme({
-			'&': {
-				backgroundColor: 'transparent',
-				fontSize: '12px'
-			},
-			'.cm-scroller': {
-				fontFamily: 'var(--font-mono)',
-				fontWeight: '500',
-				lineHeight: '1.5',
-				padding: 'var(--space-md)',
-				overflow: 'auto'
-			},
-			'.cm-content': {
-				padding: '0',
-				caretColor: 'transparent'
-			},
-			'.cm-line': {
-				padding: '0'
-			},
-			'.cm-gutters': {
-				display: 'none'
-			},
-			'.cm-activeLineGutter': {
-				display: 'none'
-			},
-			'.cm-cursor': {
-				display: 'none'
-			}
-		})
-	];
-
-	// Dark theme chrome
-	if (isDark) {
-		extensions.push(oneDark);
-	}
-
-	return extensions;
-}
-
-/**
  * Editor lifecycle manager - handles creation, theme updates, and cleanup
  * Reduces boilerplate in components that use CodeMirror
  */
