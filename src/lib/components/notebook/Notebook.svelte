@@ -87,7 +87,6 @@
 		max-width: var(--content-max-width);
 		margin: 0 auto;
 		min-width: 0;
-		overflow: hidden;
 	}
 
 	.pyodide-status {

@@ -29,7 +29,6 @@
 	.notebook-page {
 		max-width: var(--content-max-width);
 		min-width: 0;
-		overflow: hidden;
 	}
 
 	.notebook-notice {
