@@ -31,25 +31,35 @@ jobs:
 
       - name: Clone PathSim repositories for API extraction
         run: |
-          git clone https://github.com/pathsim/pathsim.git ../pathsim
-          git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem
-          git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle
+          git clone https://github.com/pathsim/pathsim.git ../pathsim || { echo "Failed to clone pathsim"; exit 1; }
+          git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem || { echo "Failed to clone pathsim-chem"; exit 1; }
+          git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle || { echo "Failed to clone pathsim-vehicle"; exit 1; }
 
-      # Cache historical API versions (they don't change)
+      - name: Verify repository clones
+        run: |
+          for repo in pathsim pathsim-chem pathsim-vehicle; do
+            if [ ! -d "../$repo/.git" ]; then
+              echo "Error: Repository $repo not properly cloned"
+              exit 1
+            fi
+            echo "✓ $repo cloned successfully ($(git -C ../$repo describe --tags --always 2>/dev/null || echo 'no tags'))"
+          done
+
+      # Cache historical API versions (reduces extraction time)
       - name: Cache versioned API files
-        id: cache-versions
         uses: actions/cache@v4
         with:
           path: static/api/versions
-          key: api-versions-v1
+          key: api-versions-v2-${{ hashFiles('scripts/extract-versions.py') }}
+          restore-keys: |
+            api-versions-v2-
 
       # Always extract latest API (for src/lib/api/generated/)
       - name: Extract latest API
         run: python scripts/extract-api.py
 
-      # Extract historical versions on cache miss
+      # Smart extraction: only missing versions + always re-extract latest
       - name: Extract versioned API
-        if: steps.cache-versions.outputs.cache-hit != 'true'
         run: python scripts/extract-versions.py
 
       # Always regenerate manifests (to pick up new versions)

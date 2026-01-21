@@ -5,10 +5,15 @@ PathSim Multi-Version API Extractor
 Extracts API documentation for multiple versions of PathSim packages by checking out
 historical git tags and running the extraction script.
 
+Smart extraction mode (default):
+- Only extracts versions that are missing from cache
+- Always re-extracts the latest version
+- Respects minimum supported version per package
+
 Usage:
-    python scripts/extract-versions.py              # Extract all versions
+    python scripts/extract-versions.py              # Smart extract (missing + latest)
+    python scripts/extract-versions.py --all        # Force extract all versions
     python scripts/extract-versions.py --package pathsim  # Single package
-    python scripts/extract-versions.py --limit 3   # Only latest 3 minor versions
     python scripts/extract-versions.py --dry-run   # Preview without extraction
 """
 
@@ -37,6 +42,14 @@ PACKAGE_GIT_NAMES = {
     "pathsim": "pathsim",
     "chem": "pathsim-chem",
     "vehicle": "pathsim-vehicle",
+}
+
+# Minimum supported versions per package
+# Only versions >= this will be extracted and documented
+MIN_SUPPORTED_VERSIONS = {
+    "pathsim": "0.5",      # First stable API
+    "chem": "0.1",         # Initial release
+    "vehicle": "0.1",      # Initial release
 }
 
 
@@ -68,6 +81,33 @@ def get_minor_version(tag: str) -> str:
     """Extract minor version string from tag (e.g., 'v0.16.4' -> '0.16')."""
     major, minor, _ = parse_version(tag)
     return f"{major}.{minor}"
+
+
+def parse_minor_version(version: str) -> tuple[int, int]:
+    """Parse minor version string into (major, minor) tuple."""
+    match = re.match(r"^(\d+)\.(\d+)$", version)
+    if not match:
+        return (0, 0)
+    return (int(match.group(1)), int(match.group(2)))
+
+
+def version_gte(version: str, min_version: str) -> bool:
+    """Check if version >= min_version."""
+    return parse_minor_version(version) >= parse_minor_version(min_version)
+
+
+def get_cached_versions(package_id: str) -> set[str]:
+    """Get set of already cached version strings for a package."""
+    package_dir = VERSIONS_DIR / package_id
+    if not package_dir.exists():
+        return set()
+
+    cached = set()
+    for f in package_dir.glob("v*.json"):
+        match = re.match(r"^v(\d+\.\d+)\.json$", f.name)
+        if match:
+            cached.add(match.group(1))
+    return cached
 
 
 def group_by_minor_version(tags: list[str]) -> dict[str, str]:
@@ -138,10 +178,14 @@ def run_extraction(package_id: str, version: str, versions_dir: Path) -> bool:
 
 def extract_package_versions(
     package_id: str,
-    limit: int | None = None,
+    extract_all: bool = False,
     dry_run: bool = False,
 ) -> list[dict[str, str]]:
-    """Extract all versions for a single package."""
+    """Extract versions for a single package.
+
+    Smart mode (default): Only extracts missing versions + always re-extracts latest.
+    All mode: Extracts all versions from minimum supported version.
+    """
     repo_path = PACKAGE_REPOS.get(package_id)
     if not repo_path or not repo_path.exists():
         print(f"  Repository not found: {repo_path}")
@@ -150,6 +194,10 @@ def extract_package_versions(
     print(f"\n{'='*40}")
     print(f"Processing {package_id}")
     print(f"{'='*40}")
+
+    # Get minimum supported version
+    min_version = MIN_SUPPORTED_VERSIONS.get(package_id, "0.1")
+    print(f"  Minimum supported version: {min_version}")
 
     # Get all tags
     all_tags = get_git_tags(repo_path)
@@ -161,33 +209,67 @@ def extract_package_versions(
 
     # Group by minor version
     minor_versions = group_by_minor_version(all_tags)
-    print(f"  {len(minor_versions)} minor versions: {sorted(minor_versions.keys(), reverse=True)}")
+
+    # Filter to supported versions only
+    supported_versions = {
+        v: tag for v, tag in minor_versions.items()
+        if version_gte(v, min_version)
+    }
+
+    if not supported_versions:
+        print(f"  No versions >= {min_version} found")
+        return []
+
+    print(f"  {len(supported_versions)} supported versions: {sorted(supported_versions.keys(), key=parse_minor_version, reverse=True)}")
 
     # Sort by version (newest first)
     sorted_versions = sorted(
-        minor_versions.items(),
-        key=lambda x: parse_version(x[1]),
+        supported_versions.items(),
+        key=lambda x: parse_minor_version(x[0]),
         reverse=True,
     )
 
-    # Apply limit
-    if limit:
-        sorted_versions = sorted_versions[:limit]
-        print(f"  Limited to {limit} versions")
+    # Determine which versions to extract
+    cached = get_cached_versions(package_id)
+    latest_version = sorted_versions[0][0] if sorted_versions else None
+
+    if extract_all:
+        versions_to_extract = sorted_versions
+        print(f"  Mode: Extract ALL ({len(versions_to_extract)} versions)")
+    else:
+        # Smart mode: only missing + latest
+        versions_to_extract = []
+        for minor_version, tag in sorted_versions:
+            is_latest = minor_version == latest_version
+            is_cached = minor_version in cached
+
+            if is_latest or not is_cached:
+                versions_to_extract.append((minor_version, tag))
+
+        missing_count = len([v for v, _ in versions_to_extract if v != latest_version and v not in cached])
+        print(f"  Mode: Smart extraction")
+        print(f"    Cached: {len(cached)} versions")
+        print(f"    Missing: {missing_count} versions")
+        print(f"    Latest ({latest_version}): will {'re-' if latest_version in cached else ''}extract")
+        print(f"    Total to extract: {len(versions_to_extract)} versions")
 
     extracted = []
     output_dir = VERSIONS_DIR / package_id
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    for minor_version, tag in sorted_versions:
-        print(f"\n  Version {minor_version} (tag: {tag})")
+    for minor_version, tag in versions_to_extract:
+        is_latest = minor_version == latest_version
+        is_cached = minor_version in cached
+        status = "LATEST" if is_latest else ("NEW" if not is_cached else "cached")
+
+        print(f"\n  Version {minor_version} (tag: {tag}) [{status}]")
 
         if dry_run:
             print(f"    Would extract to: {output_dir / f'v{minor_version}.json'}")
             extracted.append({
                 "version": minor_version,
                 "tag": tag,
-                "released": "",  # Would need git log for this
+                "released": "",
             })
             continue
 
@@ -202,9 +284,9 @@ def extract_package_versions(
                 "tag": tag,
                 "released": get_tag_date(repo_path, tag),
             })
-            print(f"    Extracted successfully")
+            print(f"    ✓ Extracted successfully")
         else:
-            print(f"    Extraction failed")
+            print(f"    ✗ Extraction failed")
 
     # Return to main branch
     if not dry_run:
@@ -234,6 +316,17 @@ def main():
     parser = argparse.ArgumentParser(
         description="Extract API documentation for multiple package versions",
         formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Minimum supported versions:
+  pathsim: %(pathsim)s
+  chem:    %(chem)s
+  vehicle: %(vehicle)s
+
+By default, uses smart extraction:
+  - Only extracts versions that are missing from cache
+  - Always re-extracts the latest version
+  - Respects minimum supported versions
+        """ % MIN_SUPPORTED_VERSIONS
     )
     parser.add_argument(
         "--package", "-p",
@@ -241,9 +334,10 @@ def main():
         help="Extract single package (default: all)"
     )
     parser.add_argument(
-        "--limit", "-l",
-        type=int,
-        help="Maximum number of minor versions to extract per package"
+        "--all", "-a",
+        action="store_true",
+        dest="extract_all",
+        help="Force extract all versions (ignore cache)"
     )
     parser.add_argument(
         "--dry-run", "-n",
@@ -254,6 +348,10 @@ def main():
 
     print("PathSim Multi-Version API Extractor")
     print("=" * 40)
+    if args.extract_all:
+        print("Mode: EXTRACT ALL (ignoring cache)")
+    else:
+        print("Mode: SMART (missing + latest only)")
 
     packages = [args.package] if args.package else list(PACKAGE_REPOS.keys())
     all_results = {}
@@ -261,7 +359,7 @@ def main():
     for pkg_id in packages:
         results = extract_package_versions(
             pkg_id,
-            limit=args.limit,
+            extract_all=args.extract_all,
             dry_run=args.dry_run,
         )
         if results:
@@ -271,7 +369,7 @@ def main():
     print("Summary")
     print("=" * 40)
     for pkg_id, versions in all_results.items():
-        print(f"  {pkg_id}: {len(versions)} versions")
+        print(f"  {pkg_id}: {len(versions)} versions extracted")
 
     if not args.dry_run:
         print(f"\nOutput directory: {VERSIONS_DIR}")
