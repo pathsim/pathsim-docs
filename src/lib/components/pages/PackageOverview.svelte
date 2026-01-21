@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import CodeBlock from '$lib/components/common/CodeBlock.svelte';
+	import NotebookCell from '$lib/components/common/NotebookCell.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
 	import { copyToClipboard } from '$lib/utils/clipboard';
 
@@ -94,14 +94,23 @@
 {#if pkg.quickstart}
 	<h2 id="quick-start">Quick Start</h2>
 
-	<p>{pkg.quickstart.description}</p>
+	<p class="quickstart-description">{pkg.quickstart.description}</p>
 
-	<CodeBlock code={pkg.quickstart.code} title={pkg.quickstart.title || 'Example'} />
+	<NotebookCell
+		id="quickstart"
+		code={pkg.quickstart.code}
+		title={pkg.quickstart.title || 'Python'}
+		editable={true}
+	/>
 {/if}
 
 <div class="page-bottom-spacer"></div>
 
 <style>
+	.quickstart-description {
+		color: var(--text-muted);
+	}
+
 	.page-bottom-spacer {
 		height: var(--space-2xl);
 	}
