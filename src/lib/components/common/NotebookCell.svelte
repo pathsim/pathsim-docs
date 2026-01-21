@@ -223,7 +223,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre class="output-text" style="white-space: pre-wrap; color: var(--text-muted); font-size: var(--font-sm); font-family: var(--font-mono); line-height: 1.5; margin: 0; padding: var(--space-md);">{stdout}</pre>
+						<pre class="output-text">{stdout}</pre>
 					</div>
 				</div>
 			{/if}
@@ -239,7 +239,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre class="output-text" style="white-space: pre-wrap; color: var(--warning); font-size: var(--font-sm); font-family: var(--font-mono); line-height: 1.5; margin: 0; padding: var(--space-md);">{stderr}</pre>
+						<pre class="output-text">{stderr}</pre>
 					</div>
 				</div>
 			{/if}
@@ -333,7 +333,7 @@
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: 12px; /* Match CodeMirror editor */
 		line-height: 1.5;
 		color: var(--text-muted);
 		white-space: pre-wrap;
