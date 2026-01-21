@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { lookupRef } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
@@ -52,12 +53,13 @@
 			type: target.type as 'class' | 'function' | 'method' | 'module'
 		});
 
-		goto(target.path);
+		// target.path is absolute like /pathsim/api#ClassName, prepend base for deployment
+		goto(`${base}${target.path}`);
 	}
 </script>
 
 <span class="type-ref">{#each parts as part}{#if part.isLink && part.target}<a
-		href={part.target.path}
+		href="{base}{part.target.path}"
 		class="type-link"
 		onclick={(e) => handleClick(e, part.target)}
 	>{part.text}</a>{:else}{part.text}{/if}{/each}</span>

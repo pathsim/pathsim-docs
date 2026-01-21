@@ -18,39 +18,40 @@ let crossRefIndex: Map<string, CrossRefTarget> | null = null;
 
 /**
  * Build the cross-reference index from all API data
+ * Paths are stored as absolute (starting with /) for single source of truth
  */
 function buildCrossRefIndex(): Map<string, CrossRefTarget> {
 	const index = new Map<string, CrossRefTarget>();
 
 	for (const [packageId, pkg] of Object.entries(apiData)) {
-		const basePath = `${packageId}/api`;
+		// Absolute path from site root
+		const apiPath = `/${packageId}/api`;
 
 		for (const [moduleName, module] of Object.entries(pkg.modules)) {
 			// Add module
-			const moduleShortName = moduleName.split('.').pop() || moduleName;
 			index.set(moduleName, {
 				name: moduleName,
 				type: 'module',
 				packageId,
 				moduleName,
-				path: `${basePath}#${moduleName.replace(/\./g, '-')}`
+				path: `${apiPath}#${moduleName.replace(/\./g, '-')}`
 			});
 
 			// Add classes
 			for (const cls of module.classes) {
 				// Full path: pathsim.blocks.integrator.Integrator
-				const fullPath = `${moduleName}.${cls.name}`;
+				const fullModulePath = `${moduleName}.${cls.name}`;
 				const target: CrossRefTarget = {
 					name: cls.name,
 					type: 'class',
 					packageId,
 					moduleName,
-					path: `${basePath}#${cls.name}`
+					path: `${apiPath}#${cls.name}`
 				};
 
 				// Index by multiple keys for flexible lookup
 				index.set(cls.name, target); // Just class name
-				index.set(fullPath, target); // Full path
+				index.set(fullModulePath, target); // Full path
 				index.set(`${packageId}.${cls.name}`, target); // package.ClassName
 
 				// Add methods
@@ -63,7 +64,7 @@ function buildCrossRefIndex(): Map<string, CrossRefTarget> {
 						packageId,
 						moduleName,
 						parentClass: cls.name,
-						path: `${basePath}#${method.name}`
+						path: `${apiPath}#${method.name}`
 					};
 
 					// Index by ClassName.method_name
@@ -73,17 +74,17 @@ function buildCrossRefIndex(): Map<string, CrossRefTarget> {
 
 			// Add functions
 			for (const func of module.functions) {
-				const fullPath = `${moduleName}.${func.name}`;
+				const fullModulePath = `${moduleName}.${func.name}`;
 				const target: CrossRefTarget = {
 					name: func.name,
 					type: 'function',
 					packageId,
 					moduleName,
-					path: `${basePath}#${func.name}`
+					path: `${apiPath}#${func.name}`
 				};
 
 				index.set(func.name, target);
-				index.set(fullPath, target);
+				index.set(fullModulePath, target);
 			}
 		}
 	}
@@ -121,11 +122,9 @@ export function lookupRef(name: string): CrossRefTarget | undefined {
 export function processCrossRefs(html: string, basePath: string = '', currentPackageId?: string): string {
 	const index = getCrossRefIndex();
 
-	// Helper to build full path with base - ensure it starts with /
-	const fullPath = (path: string) => {
-		const full = `${basePath}/${path}`;
-		return full.startsWith('/') ? full : `/${full}`;
-	};
+	// Helper to build full URL: basePath (deployment prefix) + path (absolute from site root)
+	// path is already absolute like /pathsim/api#ClassName
+	const fullPath = (path: string) => `${basePath}${path}`;
 
 	// 1. Handle RST role syntax: :class:`Name`, :func:`Name`, :meth:`Name`, :mod:`Name`
 	// These often get converted to various forms by docutils
