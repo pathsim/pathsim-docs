@@ -70,7 +70,7 @@
 		<div class="tile-grid cols-3">
 			{#each notebooks as notebook}
 				<a href="/{packageId}/examples/{notebook.slug}" class="tile notebook-tile">
-					<div class="notebook-header">
+					<div class="panel-header">
 						<span class="notebook-title">{notebook.title}</span>
 						{#if !notebook.executable}
 							<span class="badge warning">View Only</span>
@@ -137,20 +137,12 @@
 		text-decoration: none;
 	}
 
-	.notebook-header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-sm);
-		padding: var(--space-sm) var(--space-md);
-		background: var(--surface-raised);
-		border-bottom: 1px solid var(--border);
-	}
-
+	/* Override panel-header uppercase for notebook titles */
 	.notebook-title {
-		font-weight: 500;
-		color: var(--text);
+		text-transform: none;
+		letter-spacing: normal;
 		font-size: var(--font-sm);
+		color: var(--text);
 	}
 
 	.notebook-body {
