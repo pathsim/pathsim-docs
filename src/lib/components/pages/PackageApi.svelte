@@ -60,7 +60,7 @@
 
 	<div class="hero">
 		<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
-		<p class="description">Complete API documentation for {pkg.name}.</p>
+		<p class="description">Click any class or function to expand its documentation. Use the sidebar to navigate between modules.</p>
 	</div>
 
 	<div class="separator"></div>
