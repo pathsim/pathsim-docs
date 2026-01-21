@@ -1027,13 +1027,18 @@ input::placeholder {
 }
 
 .cm-scroller {
-	font-family: var(--font-mono);
+	font-family: var(--font-mono) !important;
 	font-weight: 500;
 }
 
 .cm-content {
 	padding: 8px 0;
 	caret-color: var(--accent);
+	font-family: var(--font-mono) !important;
+}
+
+.cm-line {
+	font-family: var(--font-mono) !important;
 }
 
 .cm-cursor {
