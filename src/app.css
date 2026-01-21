@@ -382,6 +382,10 @@ button.ghost:hover {
 	color: var(--text);
 }
 
+.icon-btn.copied {
+	color: var(--accent);
+}
+
 /* Header actions - inline buttons */
 .header-actions {
 	display: flex;
@@ -710,6 +714,10 @@ input::placeholder {
 .code-panel .panel-header .icon-btn {
 	width: 24px;
 	height: 24px;
+}
+
+.code-panel .panel-header .icon-btn.copied {
+	color: var(--accent);
 }
 
 .code-panel .panel-body {

@@ -78,7 +78,7 @@
 				<div class="panel-header">
 					<span>{option.name}</span>
 					<div class="header-actions">
-						<span class="icon-btn" use:tooltip={copiedStates[option.name] ? 'Copied!' : 'Copy'}>
+						<span class="icon-btn" class:copied={copiedStates[option.name]} use:tooltip={copiedStates[option.name] ? 'Copied!' : 'Copy'}>
 							<Icon name={copiedStates[option.name] ? 'check' : 'copy'} size={14} />
 						</span>
 					</div>

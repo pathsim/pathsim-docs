@@ -148,7 +148,7 @@
 			{#if headerActions}
 				{@render headerActions()}
 			{/if}
-			<button class="icon-btn" onclick={handleCopy} use:tooltip={copied ? 'Copied!' : 'Copy'}>
+			<button class="icon-btn" class:copied onclick={handleCopy} use:tooltip={copied ? 'Copied!' : 'Copy'}>
 				<Icon name={copied ? 'check' : 'copy'} size={14} />
 			</button>
 		</div>
