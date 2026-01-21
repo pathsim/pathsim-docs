@@ -1205,6 +1205,22 @@ pre.output-text {
 	border-radius: 0 !important;
 }
 
+/* Static notebook cell outputs (from CellOutput component) */
+.cell-outputs pre {
+	margin: 0 !important;
+	padding: var(--space-md) !important;
+	font-family: var(--font-mono) !important;
+	font-size: 12px !important;
+	font-weight: 500 !important;
+	line-height: 1.5 !important;
+	color: var(--text-muted) !important;
+	white-space: pre-wrap !important;
+	word-break: break-word !important;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+}
+
 .execution-count {
 	font-family: var(--font-mono);
 	font-size: var(--font-xs);

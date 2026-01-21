@@ -5,6 +5,7 @@
 	 */
 	import type { CellOutput } from '$lib/notebook/types';
 	import { getOutputText } from '$lib/notebook/parser';
+	import OutputViewer from './OutputViewer.svelte';
 
 	interface Props {
 		outputs: CellOutput[];
@@ -71,7 +72,10 @@
 		{#each outputs as output}
 			{#if output.output_type === 'stream'}
 				<div class="output-stream" class:stderr={output.name === 'stderr'}>
-					<pre>{getOutputText(output.text)}</pre>
+					<OutputViewer
+						content={getOutputText(output.text)}
+						color={output.name === 'stderr' ? 'var(--warning)' : 'var(--text-muted)'}
+					/>
 				</div>
 			{:else if output.output_type === 'execute_result' || output.output_type === 'display_data'}
 				{#if output.data['image/png']}
@@ -88,7 +92,7 @@
 					</div>
 				{:else if output.data['text/plain']}
 					<div class="output-text">
-						<pre>{getOutputText(output.data['text/plain'])}</pre>
+						<OutputViewer content={getOutputText(output.data['text/plain'])} />
 					</div>
 				{/if}
 			{:else if output.output_type === 'error'}
@@ -109,27 +113,8 @@
 	}
 
 	/* Stream output (stdout/stderr) */
-	.output-stream pre {
-		margin: 0;
-		padding: var(--space-md);
-		font-family: var(--font-mono);
-		font-size: 12px;
-		font-weight: 500; /* Match CodeMirror */
-		line-height: 1.5;
-		white-space: pre-wrap;
-		word-break: break-word;
-		background: transparent;
-		border: none;
-		border-radius: 0;
-		color: var(--text-muted);
-	}
-
 	.output-stream.stderr {
 		background: var(--warning-bg);
-	}
-
-	.output-stream.stderr pre {
-		color: var(--warning);
 	}
 
 	/* Image output */
@@ -184,22 +169,6 @@
 	.output-html :global(th) {
 		background: var(--surface-raised);
 		font-weight: 600;
-		color: var(--text-muted);
-	}
-
-	/* Plain text output */
-	.output-text pre {
-		margin: 0;
-		padding: var(--space-md);
-		font-family: var(--font-mono);
-		font-size: 12px;
-		font-weight: 500; /* Match CodeMirror */
-		line-height: 1.5;
-		white-space: pre-wrap;
-		word-break: break-word;
-		background: transparent;
-		border: none;
-		border-radius: 0;
 		color: var(--text-muted);
 	}
 
