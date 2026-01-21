@@ -418,6 +418,7 @@
 	/* Parameter/Attribute tables - panel style */
 	.docstring-content :global(.param-table-wrapper) {
 		margin: var(--space-md) 0;
+		overflow-x: auto;
 	}
 
 	.docstring-content :global(.param-table) {
@@ -425,6 +426,7 @@
 		border-collapse: separate;
 		border-spacing: 0;
 		font-size: var(--font-base);
+		table-layout: auto;
 	}
 
 	/* Header styled like panel-header */
@@ -472,7 +474,6 @@
 	}
 
 	.docstring-content :global(.param-table .param-name) {
-		width: 1%;
 		white-space: nowrap;
 	}
 
@@ -487,7 +488,6 @@
 	}
 
 	.docstring-content :global(.param-table .param-type) {
-		width: 1%;
 		white-space: nowrap;
 	}
 
