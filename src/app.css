@@ -184,6 +184,67 @@ h4 {
 	font-size: var(--font-lg);
 }
 
+/* Content section headers - for docstrings, markdown cells, and RST cells
+   These should be small, uppercase section labels (not big page headers) */
+.docstring-content h2,
+.docstring-content h3,
+.docstring-content h4,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.rst-content h2,
+.rst-content h3,
+.rst-content h4 {
+	font-family: var(--font-ui);
+	font-size: var(--font-xs);
+	font-weight: 600;
+	color: var(--text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	line-height: 1.4;
+	margin: 0 0 var(--space-sm) 0;
+	padding: 0;
+	border: none;
+}
+
+/* Section separators above h2 in content areas */
+.markdown-content h2,
+.rst-content h2 {
+	position: relative;
+	margin-top: var(--space-lg);
+	padding-top: var(--space-lg);
+}
+
+.markdown-content h2::before,
+.rst-content h2::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 1px;
+	background: var(--border);
+}
+
+/* First h2 in content - no separator */
+.markdown-content h2:first-child,
+.rst-content h2:first-child {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.markdown-content h2:first-child::before,
+.rst-content h2:first-child::before {
+	display: none;
+}
+
+.markdown-content h3,
+.markdown-content h4,
+.rst-content h3,
+.rst-content h4 {
+	margin-top: var(--space-md);
+}
+
 p {
 	margin-bottom: 1em;
 }
@@ -197,6 +258,32 @@ a {
 a:hover {
 	color: var(--accent-hover);
 	text-decoration: underline;
+}
+
+/* Cross-reference links in content areas (docstrings, markdown, RST) */
+a.crossref {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-size: 0.9em;
+	color: var(--accent);
+	text-decoration: none;
+	transition: color var(--transition-fast);
+}
+
+a.crossref:hover {
+	text-decoration: underline;
+}
+
+a.crossref code {
+	font-weight: inherit;
+	color: inherit;
+	background: var(--accent-bg);
+	border-color: var(--accent);
+}
+
+a.crossref:hover code {
+	background: var(--accent);
+	color: var(--bg);
 }
 
 code {

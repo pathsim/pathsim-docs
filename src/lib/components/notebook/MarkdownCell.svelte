@@ -22,15 +22,15 @@
 		padding: var(--space-md) 0;
 	}
 
-	/* H1 styling specific to notebooks (title) - override MarkdownRenderer */
+	/* H1 styling specific to notebooks (title) - override global styles */
 	.markdown-cell :global(.markdown-content h1) {
-		font-size: var(--font-2xl);
-		font-weight: 600;
-		color: var(--text);
-		text-transform: none;
-		letter-spacing: -0.02em;
-		margin-bottom: var(--space-lg);
-		padding-bottom: var(--space-sm);
-		border-bottom: 1px solid var(--border);
+		font-size: var(--font-2xl) !important;
+		font-weight: 600 !important;
+		color: var(--text) !important;
+		text-transform: none !important;
+		letter-spacing: -0.02em !important;
+		margin-bottom: var(--space-lg) !important;
+		padding-bottom: var(--space-sm) !important;
+		border-bottom: 1px solid var(--border) !important;
 	}
 </style>

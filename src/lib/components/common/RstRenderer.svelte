@@ -5,9 +5,12 @@
 	 * For full RST rendering, content should be pre-processed to HTML
 	 */
 	import { onMount, tick } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
+	import { processCrossRefs } from '$lib/utils/crossref';
+	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { COPY_FEEDBACK_DURATION } from '$lib/config/timing';
 
 	interface Props {
@@ -181,7 +184,7 @@
 				i++;
 			}
 
-			// Clean up Sphinx cross-refs
+			// Clean up Sphinx cross-refs and convert to HTML
 			para = para
 				.replace(/:class:`\.?([^`]+)`/g, '<code>$1</code>')
 				.replace(/:func:`\.?([^`]+)`/g, '<code>$1()</code>')
@@ -192,10 +195,46 @@
 				.replace(/\*([^*]+)\*/g, '<em>$1</em>')
 				.replace(/``([^`]+)``/g, '<code>$1</code>');
 
+			// Process cross-references for class/function names
+			para = processCrossRefs(para);
+
 			blocks.push({ type: 'paragraph', content: para });
 		}
 
 		return blocks;
+	}
+
+	/**
+	 * Handle clicks on cross-reference links
+	 */
+	function handleCrossRefClick(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		const link = target.closest('a.crossref') as HTMLAnchorElement;
+
+		if (link) {
+			event.preventDefault();
+			const href = link.getAttribute('href');
+			if (!href) return;
+
+			// Extract the target name from the hash
+			const hashIndex = href.indexOf('#');
+			if (hashIndex >= 0) {
+				const targetName = href.slice(hashIndex + 1);
+				const linkType = link.classList.contains('crossref-class') ? 'class'
+					: link.classList.contains('crossref-function') ? 'function'
+					: link.classList.contains('crossref-method') ? 'method'
+					: 'module';
+
+				// Set search target to trigger expansion/scroll
+				searchTarget.set({
+					name: targetName,
+					type: linkType as 'class' | 'function' | 'method' | 'module'
+				});
+			}
+
+			// Navigate to the path
+			goto(href);
+		}
 	}
 
 	// Parse RST if not already HTML
@@ -397,7 +436,7 @@
 	});
 </script>
 
-<div class="rst-content" bind:this={container}>
+<div class="rst-content" bind:this={container} onclick={handleCrossRefClick}>
 	{#if isHtml}
 		{@html content}
 	{:else}
@@ -589,4 +628,6 @@
 	.rst-content :global(em) {
 		font-style: italic;
 	}
+
+	/* Header and cross-reference link styles are in app.css for consistency */
 </style>

@@ -1,13 +1,16 @@
 <script lang="ts">
 	/**
 	 * MarkdownRenderer - Renders markdown content with same styling as DocstringRenderer
-	 * Mirrors DocstringRenderer functionality: KaTeX math, CodeMirror code blocks
+	 * Mirrors DocstringRenderer functionality: KaTeX math, CodeMirror code blocks, cross-refs
 	 */
 	import { onMount, tick } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { marked } from 'marked';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
+	import { processCrossRefs } from '$lib/utils/crossref';
+	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { COPY_FEEDBACK_DURATION } from '$lib/config/timing';
 
 	interface Props {
@@ -28,10 +31,11 @@
 		breaks: false
 	});
 
-	// Convert markdown to HTML
+	// Convert markdown to HTML, then process cross-references
 	let html = $derived.by(() => {
 		if (!markdown?.trim()) return '';
-		return marked.parse(markdown, { async: false }) as string;
+		const rawHtml = marked.parse(markdown, { async: false }) as string;
+		return processCrossRefs(rawHtml);
 	});
 
 	/**
@@ -259,6 +263,39 @@
 		}
 	}
 
+	/**
+	 * Handle clicks on cross-reference links
+	 */
+	function handleCrossRefClick(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		const link = target.closest('a.crossref') as HTMLAnchorElement;
+
+		if (link) {
+			event.preventDefault();
+			const href = link.getAttribute('href');
+			if (!href) return;
+
+			// Extract the target name from the hash
+			const hashIndex = href.indexOf('#');
+			if (hashIndex >= 0) {
+				const targetName = href.slice(hashIndex + 1);
+				const linkType = link.classList.contains('crossref-class') ? 'class'
+					: link.classList.contains('crossref-function') ? 'function'
+					: link.classList.contains('crossref-method') ? 'method'
+					: 'module';
+
+				// Set search target to trigger expansion/scroll
+				searchTarget.set({
+					name: targetName,
+					type: linkType as 'class' | 'function' | 'method' | 'module'
+				});
+			}
+
+			// Navigate to the path
+			goto(href);
+		}
+	}
+
 	let hasRendered = false;
 
 	onMount(() => {
@@ -301,7 +338,7 @@
 	});
 </script>
 
-<div class="markdown-content" bind:this={container}>
+<div class="markdown-content" bind:this={container} onclick={handleCrossRefClick}>
 	{@html html}
 </div>
 
@@ -381,42 +418,7 @@
 		margin-bottom: var(--space-xs);
 	}
 
-	/* Section headers - h2, h3, h4 styled like DocstringRenderer */
-	.markdown-content :global(h2),
-	.markdown-content :global(h3),
-	.markdown-content :global(h4) {
-		font-family: var(--font-ui);
-		font-size: var(--font-xs);
-		font-weight: 600;
-		color: var(--text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.5px;
-		margin: 0 0 var(--space-sm) 0;
-		padding: 0;
-		border: none;
-	}
-
-	/* H2 with separator above */
-	.markdown-content :global(h2) {
-		position: relative;
-		margin-top: var(--space-lg);
-		padding-top: var(--space-lg);
-	}
-
-	.markdown-content :global(h2::before) {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 1px;
-		background: var(--border);
-	}
-
-	.markdown-content :global(h3),
-	.markdown-content :global(h4) {
-		margin-top: var(--space-md);
-	}
+	/* Header and crossref styles are in app.css for consistency */
 
 	/* Tables */
 	.markdown-content :global(table) {
@@ -506,4 +508,6 @@
 		font-size: var(--font-sm);
 		color: var(--text-muted);
 	}
+
+	/* Cross-reference link styles are in app.css for consistency */
 </style>
