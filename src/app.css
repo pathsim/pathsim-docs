@@ -938,6 +938,7 @@ input::placeholder {
 	height: 80px;
 	width: auto;
 	margin-bottom: var(--space-lg);
+	border-radius: 0;
 }
 
 .hero .description {
@@ -957,6 +958,7 @@ input::placeholder {
 	height: 80px;
 	width: auto;
 	margin-bottom: var(--space-lg);
+	border-radius: 0;
 }
 
 /* Lead paragraph - prominent intro text */
