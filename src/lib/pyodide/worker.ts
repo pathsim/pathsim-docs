@@ -102,7 +102,7 @@ print(f"${pkg.import} {${pkg.import}.__version__} loaded successfully")
 		}
 	}
 
-	// Setup matplotlib backend for plot capture
+	// Setup matplotlib backend and apply PathSim docs style
 	await pyodide.runPythonAsync(`
 import matplotlib
 matplotlib.use('Agg')  # Non-interactive backend
@@ -110,13 +110,86 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
+# Apply PathSim documentation style
+plt.rcParams.update({
+    # Figure
+    'figure.figsize': (8, 4),
+    'figure.dpi': 150,
+    'figure.facecolor': 'none',
+    'figure.edgecolor': 'none',
+    'savefig.facecolor': 'none',
+    'savefig.edgecolor': 'none',
+    'savefig.transparent': True,
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.1,
+
+    # Axes
+    'axes.facecolor': 'none',
+    'axes.edgecolor': '#7F7F7F',
+    'axes.linewidth': 1.8,
+    'axes.grid': False,
+    'axes.axisbelow': True,
+    'axes.labelsize': 11,
+    'axes.titlesize': 12,
+    'axes.labelcolor': '#7F7F7F',
+    'axes.titleweight': 'bold',
+    'axes.spines.top': False,
+    'axes.spines.right': False,
+    'axes.prop_cycle': plt.cycler('color', ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00']),
+
+    # Grid
+    'grid.color': '#7F7F7F',
+    'grid.linestyle': '--',
+    'grid.linewidth': 0.8,
+    'grid.alpha': 0.6,
+
+    # Lines
+    'lines.linewidth': 2.0,
+    'lines.markersize': 8,
+    'lines.markeredgewidth': 1.5,
+    'lines.antialiased': True,
+
+    # Patches
+    'patch.linewidth': 1.0,
+    'patch.facecolor': '#4C72B0',
+    'patch.edgecolor': 'none',
+    'patch.antialiased': True,
+
+    # Font
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['DejaVu Sans', 'Arial', 'Helvetica', 'sans-serif'],
+    'font.size': 10,
+    'text.color': '#7F7F7F',
+
+    # Legend
+    'legend.frameon': False,
+    'legend.framealpha': 0.0,
+    'legend.fancybox': False,
+    'legend.facecolor': 'none',
+    'legend.edgecolor': 'none',
+    'legend.fontsize': 10,
+    'legend.loc': 'best',
+
+    # Ticks
+    'xtick.labelsize': 10,
+    'ytick.labelsize': 10,
+    'xtick.color': '#7F7F7F',
+    'ytick.color': '#7F7F7F',
+    'xtick.direction': 'out',
+    'ytick.direction': 'out',
+    'xtick.major.width': 1.8,
+    'ytick.major.width': 1.8,
+    'xtick.minor.width': 1.2,
+    'ytick.minor.width': 1.2,
+})
+
 def _capture_plots():
     """Capture all open matplotlib figures as base64 PNGs."""
     plots = []
     for fig_num in plt.get_fignums():
         fig = plt.figure(fig_num)
         buf = io.BytesIO()
-        fig.savefig(buf, format='png', bbox_inches='tight', dpi=100)
+        fig.savefig(buf, format='png', bbox_inches='tight', dpi=150)
         buf.seek(0)
         plots.append(base64.b64encode(buf.read()).decode('utf-8'))
         plt.close(fig)
