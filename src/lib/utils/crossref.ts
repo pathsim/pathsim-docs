@@ -116,6 +116,7 @@ export function lookupRef(name: string): CrossRefTarget | undefined {
  * - RST role syntax: :class:`ClassName`, :func:`function_name`, :meth:`method_name`
  * - Plain backtick code: `ClassName`, `function_name`
  * - Title tag references from docutils: <cite>ClassName</cite>
+ * - Single-quoted class names in text: 'ClassName'
  */
 export function processCrossRefs(html: string, currentPackageId?: string): string {
 	const index = getCrossRefIndex();
@@ -167,6 +168,19 @@ export function processCrossRefs(html: string, currentPackageId?: string): strin
 			const target = index.get(title) || index.get(text);
 			if (target) {
 				return `<a href="${target.path}" class="crossref crossref-${target.type}">${text}</a>`;
+			}
+			return match;
+		}
+	);
+
+	// 5. Handle single-quoted class names in plain text: 'ClassName'
+	// Only match PascalCase names (likely class names)
+	html = html.replace(
+		/'([A-Z][a-zA-Z0-9_]*)'/g,
+		(match, name) => {
+			const target = index.get(name);
+			if (target && target.type === 'class') {
+				return `<a href="${target.path}" class="crossref crossref-class">'${name}'</a>`;
 			}
 			return match;
 		}
