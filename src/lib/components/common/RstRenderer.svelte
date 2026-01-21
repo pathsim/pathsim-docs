@@ -203,16 +203,24 @@
 			// Check for math directive
 			const mathMatch = trimmed.match(/^\.\.\s+math::/);
 			if (mathMatch) {
-				let mathContent = '';
+				const mathLines: string[] = [];
 				i++;
+				// Collect all indented lines (preserve structure for multiline LaTeX)
 				while (i < lines.length && (lines[i].startsWith('   ') || lines[i].trim() === '')) {
-					if (lines[i].trim()) {
-						mathContent += (mathContent ? '\n' : '') + lines[i].trim();
+					// Preserve the line content (remove 3-space RST indent but keep LaTeX structure)
+					if (lines[i].startsWith('   ')) {
+						mathLines.push(lines[i].slice(3));
+					} else {
+						mathLines.push(''); // Preserve empty lines within math block
 					}
 					i++;
 				}
-				if (mathContent) {
-					blocks.push({ type: 'math', content: mathContent });
+				// Trim leading/trailing empty lines but preserve internal structure
+				while (mathLines.length > 0 && mathLines[0].trim() === '') mathLines.shift();
+				while (mathLines.length > 0 && mathLines[mathLines.length - 1].trim() === '') mathLines.pop();
+
+				if (mathLines.length > 0) {
+					blocks.push({ type: 'math', content: mathLines.join('\n') });
 				}
 				continue;
 			}
@@ -316,10 +324,12 @@
 			if (!latex.trim()) continue;
 
 			try {
+				// Preserve multiline structure - only trim outer whitespace
 				const rendered = k.default.renderToString(latex.trim(), {
 					displayMode: true,
 					throwOnError: false,
-					strict: false
+					strict: false,
+					trust: true
 				});
 				el.innerHTML = rendered;
 				el.classList.add('katex-rendered');
