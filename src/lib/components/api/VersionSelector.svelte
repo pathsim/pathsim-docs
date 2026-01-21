@@ -56,11 +56,9 @@
 </script>
 
 <div class="version-selector" bind:this={dropdownRef}>
-	<button class="version-button" onclick={toggleDropdown} aria-expanded={isOpen}>
-		<span class="version-label">v{currentVersion}</span>
-		<span class="chevron" class:open={isOpen}>
-			<Icon name="chevron-down" size={12} />
-		</span>
+	<button class="version-trigger" onclick={toggleDropdown} aria-expanded={isOpen}>
+		<span class="version-text">v{currentVersion}</span>
+		<Icon name="chevron-down" size={10} />
 	</button>
 
 	{#if isOpen}
@@ -75,7 +73,7 @@
 				>
 					<span class="dropdown-version">v{v.version}</span>
 					{#if isLatest}
-						<span class="badge accent">latest</span>
+						<span class="latest-badge">latest</span>
 					{/if}
 				</button>
 			{/each}
@@ -85,52 +83,39 @@
 
 <style>
 	.version-selector {
-		position: relative;
-		display: inline-block;
+		position: absolute;
+		top: var(--space-lg);
+		right: 0;
+		z-index: var(--z-dropdown);
 	}
 
-	.version-button {
+	.version-trigger {
 		display: inline-flex;
 		align-items: center;
-		gap: var(--space-xs);
-		padding: var(--space-xs) var(--space-md);
-		background: var(--surface-raised);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-md);
-		color: var(--text);
+		gap: 2px;
+		padding: 0;
+		background: transparent;
+		border: none;
+		color: var(--text-muted);
 		font-family: var(--font-mono);
 		font-size: var(--font-base);
-		font-weight: 500;
 		cursor: pointer;
-		transition: all var(--transition-fast);
+		transition: color var(--transition-fast);
 	}
 
-	.version-button:hover {
-		border-color: var(--accent);
-		background: var(--surface-hover);
-	}
-
-	.chevron {
-		display: flex;
-		align-items: center;
-		color: var(--text-muted);
-		transition: transform var(--transition-fast);
-	}
-
-	.chevron.open {
-		transform: rotate(180deg);
+	.version-trigger:hover {
+		color: var(--text);
 	}
 
 	.dropdown {
 		position: absolute;
 		top: calc(100% + var(--space-xs));
 		right: 0;
-		min-width: 140px;
+		min-width: 100px;
 		background: var(--surface-raised);
 		border: 1px solid var(--border);
 		border-radius: var(--radius-md);
 		box-shadow: var(--shadow-md);
-		z-index: var(--z-dropdown);
 		overflow: hidden;
 	}
 
@@ -140,28 +125,31 @@
 		justify-content: space-between;
 		gap: var(--space-sm);
 		width: 100%;
-		padding: var(--space-sm) var(--space-md);
+		padding: var(--space-xs) var(--space-md);
 		background: transparent;
 		border: none;
 		border-radius: 0;
-		color: var(--text);
+		color: var(--text-muted);
 		font-family: var(--font-mono);
 		font-size: var(--font-base);
 		text-align: left;
 		cursor: pointer;
-		transition: background var(--transition-fast);
+		transition: all var(--transition-fast);
 	}
 
 	.dropdown-item:hover {
 		background: var(--surface-hover);
+		color: var(--text);
 	}
 
 	.dropdown-item.selected {
-		background: var(--accent-bg);
 		color: var(--accent);
 	}
 
-	.dropdown-version {
-		flex: 1;
+	.latest-badge {
+		font-size: 10px;
+		color: var(--text-disabled);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
 	}
 </style>

@@ -53,39 +53,36 @@
 
 <Tooltip />
 
-<div class="hero">
-	<div class="hero-header">
+<div class="api-page">
+	{#if hasVersioning && manifest}
+		<VersionSelector {packageId} currentVersion={version!} {manifest} />
+	{/if}
+
+	<div class="hero">
 		<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
-		{#if hasVersioning && manifest}
-			<VersionSelector {packageId} currentVersion={version!} {manifest} />
-		{/if}
+		<p class="description">Complete API documentation for {pkg.name}.</p>
 	</div>
-	<p class="description">Complete API documentation for {pkg.name}.</p>
+
+	<h2 id="modules">Modules</h2>
+
+	{#if modules.length === 0}
+		<div class="tile placeholder-tile">
+			<div class="panel-body tile-body">
+				No API documentation available yet. Run <code>npm run extract</code> to generate.
+			</div>
+		</div>
+	{:else}
+		<div class="api-content">
+			{#each modules as module}
+				<ModuleDoc {module} />
+			{/each}
+		</div>
+	{/if}
 </div>
 
-<h2 id="modules">Modules</h2>
-
-{#if modules.length === 0}
-	<div class="tile placeholder-tile">
-		<div class="panel-body tile-body">
-			No API documentation available yet. Run <code>npm run extract</code> to generate.
-		</div>
-	</div>
-{:else}
-	<!-- Module documentation -->
-	<div class="api-content">
-		{#each modules as module}
-			<ModuleDoc {module} />
-		{/each}
-	</div>
-{/if}
-
 <style>
-	.hero-header {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-lg);
+	.api-page {
+		position: relative;
 	}
 
 	.api-content {
