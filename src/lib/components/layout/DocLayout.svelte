@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Sidebar } from './index';
+	import ScrollToTop from '$lib/components/common/ScrollToTop.svelte';
 	import type { PackageId } from '$lib/config/packages';
 	import type { Snippet } from 'svelte';
 
@@ -20,6 +21,7 @@
 			</article>
 		</div>
 	</div>
+	<ScrollToTop />
 </div>
 
 <style>
