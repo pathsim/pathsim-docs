@@ -329,20 +329,7 @@
 		padding: 0;
 	}
 
-	.output-text {
-		margin: 0;
-		padding: var(--space-md);
-		font-family: var(--font-mono);
-		font-size: 12px; /* Match CodeMirror editor */
-		line-height: 1.5;
-		color: var(--text-muted);
-		white-space: pre-wrap;
-		word-break: break-word;
-		overflow-x: auto;
-		background: transparent;
-		border: none;
-		border-radius: 0;
-	}
+	/* output-text styles are in app.css global rules */
 
 	/* Duration in header */
 	.output-panel .duration {

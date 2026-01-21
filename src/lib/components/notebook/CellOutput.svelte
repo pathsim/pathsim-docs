@@ -113,7 +113,8 @@
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: 12px;
+		font-weight: 500; /* Match CodeMirror */
 		line-height: 1.5;
 		white-space: pre-wrap;
 		word-break: break-word;
@@ -191,7 +192,8 @@
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: 12px;
+		font-weight: 500; /* Match CodeMirror */
 		line-height: 1.5;
 		white-space: pre-wrap;
 		word-break: break-word;
