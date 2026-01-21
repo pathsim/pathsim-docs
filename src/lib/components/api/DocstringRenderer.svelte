@@ -488,7 +488,7 @@
 	}
 
 	.docstring-content :global(.param-table .param-type) {
-		white-space: nowrap;
+		word-break: break-word;
 	}
 
 	.docstring-content :global(.param-table .param-type code) {
@@ -498,6 +498,7 @@
 		background: none;
 		border: none;
 		padding: 0;
+		word-break: break-word;
 	}
 
 	/* Type references in parameter tables */
@@ -505,6 +506,7 @@
 		font-family: var(--font-mono);
 		font-size: var(--font-base);
 		color: var(--text-muted);
+		word-break: break-word;
 	}
 
 	.docstring-content :global(.param-table .type-link) {
