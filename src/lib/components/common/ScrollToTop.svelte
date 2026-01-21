@@ -46,7 +46,7 @@
 <style>
 	.scroll-to-top {
 		position: fixed;
-		bottom: var(--space-xl);
+		bottom: calc(var(--header-height) + var(--space-xl));
 		right: var(--space-xl);
 		width: 40px;
 		height: 40px;
