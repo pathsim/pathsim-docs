@@ -121,8 +121,11 @@ export function lookupRef(name: string): CrossRefTarget | undefined {
 export function processCrossRefs(html: string, basePath: string = '', currentPackageId?: string): string {
 	const index = getCrossRefIndex();
 
-	// Helper to build full path with base
-	const fullPath = (path: string) => `${basePath}/${path}`;
+	// Helper to build full path with base - ensure it starts with /
+	const fullPath = (path: string) => {
+		const full = `${basePath}/${path}`;
+		return full.startsWith('/') ? full : `/${full}`;
+	};
 
 	// 1. Handle RST role syntax: :class:`Name`, :func:`Name`, :meth:`Name`, :mod:`Name`
 	// These often get converted to various forms by docutils
