@@ -110,17 +110,70 @@
 </script>
 
 <script lang="ts">
-	let state = $state<TooltipState>({ text: '', x: 0, y: 0, visible: false, position: 'bottom' });
+	import { tick } from 'svelte';
 
-	tooltipStore.subscribe((s) => {
+	let state = $state<TooltipState>({ text: '', x: 0, y: 0, visible: false, position: 'bottom' });
+	let tooltipEl: HTMLDivElement | undefined = $state();
+	let adjustment = $state({ x: 0, y: 0 });
+
+	tooltipStore.subscribe(async (s) => {
 		state = s;
+		adjustment = { x: 0, y: 0 }; // Reset adjustment
+		if (s.visible) {
+			// Wait for DOM update, then check viewport collision
+			await tick();
+			adjustPosition();
+		}
+	});
+
+	function adjustPosition() {
+		if (!tooltipEl) return;
+
+		const rect = tooltipEl.getBoundingClientRect();
+		const padding = 8;
+		let adjustX = 0;
+		let adjustY = 0;
+
+		// Check horizontal overflow
+		if (rect.left < padding) {
+			adjustX = padding - rect.left;
+		} else if (rect.right > window.innerWidth - padding) {
+			adjustX = window.innerWidth - padding - rect.right;
+		}
+
+		// Check vertical overflow
+		if (rect.top < padding) {
+			adjustY = padding - rect.top;
+		} else if (rect.bottom > window.innerHeight - padding) {
+			adjustY = window.innerHeight - padding - rect.bottom;
+		}
+
+		adjustment = { x: adjustX, y: adjustY };
+	}
+
+	// Compute full transform based on position and adjustment
+	let transform = $derived.by(() => {
+		const { x, y } = adjustment;
+		const adj = (x !== 0 || y !== 0) ? ` translate(${x}px, ${y}px)` : '';
+		switch (state.position) {
+			case 'top':
+				return `translateX(-50%) translateY(-100%)${adj}`;
+			case 'left':
+				return `translateX(-100%) translateY(-50%)${adj}`;
+			case 'right':
+				return `translateY(-50%)${adj}`;
+			case 'bottom':
+			default:
+				return `translateX(-50%)${adj}`;
+		}
 	});
 </script>
 
 {#if state.visible}
 	<div
-		class="tooltip tooltip-{state.position}"
-		style="left: {state.x}px; top: {state.y}px;{state.maxWidth ? ` max-width: ${state.maxWidth}px;` : ''}"
+		bind:this={tooltipEl}
+		class="tooltip"
+		style="left: {state.x}px; top: {state.y}px; transform: {transform};{state.maxWidth ? ` max-width: ${state.maxWidth}px;` : ''}"
 	>
 		<span class="text">{state.text}</span>
 		{#if state.shortcut}
@@ -153,22 +206,6 @@
 		font-size: var(--font-base);
 		color: var(--text-disabled);
 		white-space: nowrap;
-	}
-
-	.tooltip-bottom {
-		transform: translateX(-50%);
-	}
-
-	.tooltip-top {
-		transform: translateX(-50%) translateY(-100%);
-	}
-
-	.tooltip-left {
-		transform: translateX(-100%) translateY(-50%);
-	}
-
-	.tooltip-right {
-		transform: translateY(-50%);
 	}
 
 	@keyframes fadeIn {
