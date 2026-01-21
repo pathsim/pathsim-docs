@@ -350,6 +350,7 @@
 		font-size: 11px;
 		font-weight: 600;
 		letter-spacing: 0.05em;
+		text-transform: none;
 		color: var(--text-muted);
 	}
 
