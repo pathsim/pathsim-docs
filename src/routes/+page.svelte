@@ -262,8 +262,14 @@
 
 	.results-grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 		gap: var(--space-md);
+	}
+
+	@media (max-width: 900px) {
+		.results-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
 	}
 
 	@media (max-width: 600px) {
@@ -291,14 +297,7 @@
 	}
 
 	.result-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		background: var(--accent-bg);
-		border-radius: var(--radius-md);
-		color: var(--accent);
+		color: var(--text-muted);
 		flex-shrink: 0;
 	}
 
