@@ -23,16 +23,6 @@
 	{/if}
 
 	<Notebook notebook={data.notebook} {basePath} showStaticOutputs={true} />
-
-	{#if data.meta.tags.length > 0}
-		<footer class="notebook-footer">
-			<div class="notebook-tags">
-				{#each data.meta.tags as tag}
-					<span class="notebook-tag">{tag}</span>
-				{/each}
-			</div>
-		</footer>
-	{/if}
 </div>
 
 <style>
@@ -42,25 +32,5 @@
 
 	.notebook-notice {
 		margin-bottom: var(--space-lg);
-	}
-
-	.notebook-footer {
-		margin-top: var(--space-xl);
-		padding-top: var(--space-lg);
-		border-top: 1px solid var(--border);
-	}
-
-	.notebook-tags {
-		display: flex;
-		gap: var(--space-xs);
-		flex-wrap: wrap;
-	}
-
-	.notebook-tag {
-		padding: 2px var(--space-sm);
-		font-size: var(--font-xs);
-		color: var(--text-disabled);
-		background: var(--surface-raised);
-		border-radius: var(--radius-sm);
 	}
 </style>
