@@ -41,6 +41,7 @@
 		flex: 1;
 		display: flex;
 		min-width: 0;
+		min-height: 0;
 		background: var(--surface);
 		overflow-x: hidden; /* Clip separators at content area edge */
 		overflow-y: auto; /* This is the main scrollable area */
