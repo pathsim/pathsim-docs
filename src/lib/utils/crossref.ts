@@ -18,14 +18,14 @@ let crossRefIndex: Map<string, CrossRefTarget> | null = null;
 
 /**
  * Build the cross-reference index from all API data
- * Paths are stored as absolute (starting with /) for single source of truth
+ * Paths are stored without leading slash, joined with base path at render time
  */
 function buildCrossRefIndex(): Map<string, CrossRefTarget> {
 	const index = new Map<string, CrossRefTarget>();
 
 	for (const [packageId, pkg] of Object.entries(apiData)) {
-		// Absolute path from site root
-		const apiPath = `/${packageId}/api`;
+		// Path without leading slash (base path handles the prefix)
+		const apiPath = `${packageId}/api`;
 
 		for (const [moduleName, module] of Object.entries(pkg.modules)) {
 			// Add module
@@ -120,9 +120,12 @@ export function lookupRef(name: string): CrossRefTarget | undefined {
 export function processCrossRefs(html: string, basePath: string = '', currentPackageId?: string): string {
 	const index = getCrossRefIndex();
 
-	// Helper to build full URL: basePath (deployment prefix) + path (absolute from site root)
-	// path is already absolute like /pathsim/api#ClassName
-	const fullPath = (path: string) => `${basePath}${path}`;
+	// Helper to build full URL: basePath (deployment prefix) + / + path
+	// Handles edge cases with trailing/leading slashes
+	const fullPath = (path: string) => {
+		const base = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath;
+		return `${base}/${path}`;
+	};
 
 	// 1. Handle RST role syntax: :class:`Name`, :func:`Name`, :meth:`Name`, :mod:`Name`
 	// These often get converted to various forms by docutils
