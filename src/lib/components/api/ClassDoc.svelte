@@ -177,7 +177,7 @@
 		/* Override panel-header uppercase */
 		text-transform: none;
 		letter-spacing: normal;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.class-header:hover {
@@ -206,7 +206,7 @@
 
 	.class-name {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		font-weight: 600;
 		color: var(--accent);
 		background: none;
@@ -216,13 +216,13 @@
 
 	.class-bases {
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 	}
 
 	.class-desc {
 		font-family: var(--font-ui);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		line-height: 1.5;
 	}
@@ -249,7 +249,7 @@
 		justify-content: center;
 		height: 200px;
 		color: var(--text-muted);
-		font-size: 12px;
+		font-size: var(--font-base);
 		background: var(--surface);
 	}
 

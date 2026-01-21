@@ -223,7 +223,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre style="font-size: 12px; font-weight: 500; font-family: var(--font-mono); margin: 0; padding: var(--space-md); color: var(--text-muted); white-space: pre-wrap;">{stdout}</pre>
+						<div class="output-text">{stdout}</div>
 					</div>
 				</div>
 			{/if}
@@ -239,7 +239,7 @@
 						</div>
 					</div>
 					<div class="panel-body">
-						<pre style="font-size: 12px; font-weight: 500; font-family: var(--font-mono); margin: 0; padding: var(--space-md); color: var(--warning); white-space: pre-wrap;">{stderr}</pre>
+						<div class="output-text stderr">{stderr}</div>
 					</div>
 				</div>
 			{/if}
@@ -334,7 +334,7 @@
 	/* Duration in header */
 	.output-panel .duration {
 		font-family: var(--font-ui);
-		font-size: 11px;
+		font-size: var(--font-base);
 		font-weight: 600;
 		letter-spacing: 0.05em;
 		text-transform: none;
@@ -357,7 +357,7 @@
 
 	.output-panel.error .error-traceback {
 		color: var(--text-muted);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		border-top: 1px solid var(--border);
 	}
 
@@ -388,5 +388,22 @@
 		height: auto;
 		border-radius: var(--radius-sm);
 		background: transparent;
+	}
+
+	/* Output text styling */
+	.output-text {
+		font-family: var(--font-mono);
+		font-size: var(--font-base);
+		font-weight: 400;
+		line-height: 1.5;
+		margin: 0;
+		padding: var(--space-md);
+		color: var(--text-muted);
+		white-space: pre-wrap;
+		word-break: break-word;
+	}
+
+	.output-text.stderr {
+		color: var(--warning);
 	}
 </style>

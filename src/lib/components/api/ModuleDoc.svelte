@@ -101,7 +101,7 @@
 
 	.api-module-name code {
 		font-family: var(--font-mono);
-		font-size: var(--font-xl);
+		font-size: var(--font-md);
 		font-weight: 600;
 		color: var(--accent);
 		background: none;

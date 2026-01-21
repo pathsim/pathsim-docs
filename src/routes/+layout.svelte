@@ -135,7 +135,7 @@
 		align-items: center;
 		gap: var(--space-xs);
 		color: var(--text-muted);
-		font-size: 11px;
+		font-size: var(--font-base);
 		font-weight: 500;
 		text-decoration: none;
 	}
@@ -147,7 +147,7 @@
 
 	.footer-text {
 		color: var(--text-muted);
-		font-size: 11px;
+		font-size: var(--font-base);
 		font-weight: 500;
 	}
 </style>

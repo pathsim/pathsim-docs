@@ -140,7 +140,7 @@
 		background: var(--surface);
 		border: 1px solid var(--border);
 		border-radius: var(--radius-md);
-		font-size: 11px;
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		pointer-events: none;
 		z-index: 10000;
@@ -150,7 +150,7 @@
 
 	.shortcut {
 		font-family: var(--font-mono);
-		font-size: 10px;
+		font-size: var(--font-base);
 		color: var(--text-disabled);
 		white-space: nowrap;
 	}

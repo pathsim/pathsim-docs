@@ -62,16 +62,10 @@
 	--radius-xl: 20px;
 
 	/* ===== FONT SIZES ===== */
-	--font-xs: 11px;
-	--font-sm: 12px;
-	--font-base: 14px;
-	--font-md: 16px;
-	--font-lg: 18px;
-	--font-xl: 20px;
-	--font-2xl: 24px;
-	--font-3xl: 32px;
-	--font-4xl: 48px;
-	--font-5xl: 64px;
+	/* Three-tier system: 12px (body) → 14px (headers) → 16px (titles) */
+	--font-base: 12px;  /* Body text, code, buttons, most UI */
+	--font-md: 14px;    /* Section headers, panel headers, labels */
+	--font-lg: 16px;    /* Page titles (h1) only */
 
 	/* ===== ICON SIZES ===== */
 	--icon-xs: 12px;
@@ -172,22 +166,16 @@ h6 {
 }
 
 h1 {
-	font-size: var(--font-3xl);
-}
-h2 {
-	font-size: var(--font-2xl);
-}
-h3 {
-	font-size: var(--font-xl);
-}
-h4 {
 	font-size: var(--font-lg);
+}
+h2, h3, h4 {
+	font-size: var(--font-md);
 }
 
 /* Content h1 titles - match page section header style */
 .markdown-content h1,
 .rst-content h1 {
-	font-size: var(--font-xl);
+	font-size: var(--font-md);
 	text-transform: uppercase;
 }
 
@@ -203,7 +191,7 @@ h4 {
 .rst-content h3,
 .rst-content h4 {
 	font-family: var(--font-ui);
-	font-size: var(--font-xs);
+	font-size: var(--font-base);
 	font-weight: 600;
 	color: var(--text-muted);
 	text-transform: uppercase;
@@ -296,13 +284,23 @@ code {
 
 pre {
 	font-family: var(--font-mono);
-	font-size: 12px;
-	font-weight: 500; /* Match CodeMirror */
+	font-size: var(--font-base);
+	font-weight: 500;
 	line-height: 1.5;
 	color: var(--text);
 	white-space: pre-wrap;
 	word-break: break-word;
 	margin: 0;
+}
+
+/* Cell output text - must match CodeMirror exactly */
+.cell-outputs pre {
+	font-family: var(--font-mono);
+	font-size: var(--font-base);
+	font-weight: 500;
+	line-height: 1.5;
+	color: var(--text-muted);
+	padding: var(--space-md);
 }
 
 pre code {
@@ -321,7 +319,7 @@ button {
 	padding: var(--space-sm) var(--space-lg);
 	border-radius: var(--radius-md);
 	font-family: var(--font-ui);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 	font-weight: 500;
 	transition: all var(--transition-fast);
 	display: inline-flex;
@@ -428,7 +426,7 @@ button.ghost:hover {
 }
 
 .action-card .action-label {
-	font-size: 11px;
+	font-size: var(--font-base);
 	font-weight: 500;
 }
 
@@ -440,7 +438,7 @@ button.ghost:hover {
 	padding: var(--space-sm) var(--space-lg);
 	background: var(--surface-raised);
 	border-bottom: 1px solid var(--border);
-	font-size: 11px;
+	font-size: var(--font-base);
 	font-weight: 600;
 	color: var(--text-muted);
 	text-transform: uppercase;
@@ -513,7 +511,7 @@ textarea {
 	padding: var(--space-sm) var(--space-md);
 	border-radius: var(--radius-md);
 	font-family: var(--font-ui);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 	transition: all var(--transition-fast);
 }
 
@@ -651,7 +649,7 @@ input::placeholder {
 /* Tile body text */
 .tile-body {
 	color: var(--text-muted);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 }
 
 /* Install cards - copyable installation commands */
@@ -696,7 +694,7 @@ input::placeholder {
 	background: none;
 	border: none;
 	padding: 0;
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 }
 
 /* Code panel - for CodeMirror blocks */
@@ -731,7 +729,7 @@ input::placeholder {
 	justify-content: center;
 	padding: var(--space-lg);
 	color: var(--text-muted);
-	font-size: 12px;
+	font-size: var(--font-base);
 }
 
 /* Editor adjusts to content with max ~20 lines before scrolling */
@@ -745,7 +743,7 @@ input::placeholder {
 	display: inline-flex;
 	align-items: center;
 	padding: 2px 8px;
-	font-size: var(--font-xs);
+	font-size: var(--font-base);
 	font-weight: 500;
 	border-radius: var(--radius-sm);
 	background: var(--surface-raised);
@@ -797,7 +795,7 @@ input::placeholder {
 /* Uppercase label - used for section headers, panel labels */
 .label-uppercase {
 	font-family: var(--font-ui);
-	font-size: 11px;
+	font-size: var(--font-base);
 	font-weight: 600;
 	color: var(--text-muted);
 	text-transform: uppercase;
@@ -919,7 +917,7 @@ input::placeholder {
 
 /* Lead paragraph - prominent intro text */
 .lead {
-	font-size: var(--font-lg);
+	font-size: var(--font-md);
 	color: var(--text-muted);
 	margin-bottom: var(--space-xl);
 }
@@ -1023,7 +1021,7 @@ input::placeholder {
 /* CodeMirror styling */
 .cm-editor {
 	height: 100%;
-	font-size: 12px;
+	font-size: var(--font-base);
 	background: var(--surface);
 	border-radius: var(--radius-md);
 }
@@ -1112,7 +1110,7 @@ input::placeholder {
 /* API documentation specific styles */
 .api-signature {
 	font-family: var(--font-mono);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 	background: var(--surface);
 	padding: var(--space-md) var(--space-lg);
 	border-radius: var(--radius-md);
@@ -1139,21 +1137,21 @@ input::placeholder {
 .api-param-table th {
 	font-weight: 600;
 	color: var(--text-muted);
-	font-size: var(--font-xs);
+	font-size: var(--font-base);
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 }
 
 .api-param-table td:first-child {
 	font-family: var(--font-mono);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 	color: var(--accent);
 	white-space: nowrap;
 }
 
 .api-param-table td:nth-child(2) {
 	font-family: var(--font-mono);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 	color: var(--text-muted);
 }
 
@@ -1175,7 +1173,7 @@ input::placeholder {
 	padding: var(--space-xs) var(--space-md);
 	background: var(--surface-raised);
 	border-bottom: 1px solid var(--border);
-	font-size: var(--font-xs);
+	font-size: var(--font-base);
 	color: var(--text-muted);
 }
 
@@ -1194,7 +1192,7 @@ pre.output-text {
 	margin: 0 !important;
 	padding: var(--space-md) !important;
 	font-family: var(--font-mono) !important;
-	font-size: 12px !important;
+	font-size: var(--font-base) !important;
 	font-weight: 500 !important; /* Match CodeMirror */
 	line-height: 1.5 !important;
 	color: var(--text-muted) !important;
@@ -1207,7 +1205,7 @@ pre.output-text {
 
 .execution-count {
 	font-family: var(--font-mono);
-	font-size: var(--font-xs);
+	font-size: var(--font-base);
 	color: var(--text-disabled);
 	min-width: 32px;
 }
@@ -1261,7 +1259,7 @@ pre.output-text {
 	/* Override panel-header uppercase */
 	text-transform: none;
 	letter-spacing: normal;
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 }
 
 .clickable-header:hover {
@@ -1310,7 +1308,7 @@ pre.output-text {
 	justify-content: center;
 	height: 200px;
 	color: var(--text-muted);
-	font-size: var(--font-sm);
+	font-size: var(--font-base);
 	background: var(--surface);
 }
 

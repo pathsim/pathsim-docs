@@ -157,7 +157,7 @@
 		padding: var(--space-sm) var(--space-md);
 		text-transform: none;
 		letter-spacing: normal;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		width: 100%;
 		border-radius: 0;
 		border-bottom: none;
@@ -184,7 +184,7 @@
 
 	.method-name {
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		font-weight: 600;
 		color: var(--accent);
 		background: none;
@@ -195,7 +195,7 @@
 
 	.method-signature {
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		background: none;
 		border: none;
@@ -216,7 +216,7 @@
 
 	.method-desc {
 		font-family: var(--font-ui);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		margin: 0;
 		line-height: 1.5;
@@ -239,7 +239,7 @@
 		justify-content: center;
 		height: 100px;
 		color: var(--text-muted);
-		font-size: 12px;
+		font-size: var(--font-base);
 		background: var(--surface);
 	}
 
@@ -253,7 +253,7 @@
 	}
 
 	.method-returns :global(.type-ref) {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text);
 	}
 </style>

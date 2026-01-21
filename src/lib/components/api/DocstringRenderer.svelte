@@ -421,7 +421,7 @@
 
 <style>
 	.docstring-content {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		line-height: 1.7;
 		color: var(--text-muted);
 	}
@@ -480,7 +480,7 @@
 	}
 
 	.docstring-content :global(.cm-editor) {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		max-height: 300px;
 	}
 
@@ -493,14 +493,14 @@
 		width: 100%;
 		border-collapse: separate;
 		border-spacing: 0;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	/* Header styled like panel-header */
 	.docstring-content :global(.param-table thead th) {
 		padding: var(--space-xs) var(--space-md);
 		background: var(--surface-raised);
-		font-size: 11px;
+		font-size: var(--font-base);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
@@ -547,7 +547,7 @@
 
 	.docstring-content :global(.param-table .param-name code) {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		font-weight: 500;
 		color: var(--accent);
 		background: none;
@@ -562,7 +562,7 @@
 
 	.docstring-content :global(.param-table .param-type code) {
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		background: none;
 		border: none;
@@ -572,7 +572,7 @@
 	/* Type references in parameter tables */
 	.docstring-content :global(.param-table .type-ref) {
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 	}
 
@@ -598,7 +598,7 @@
 
 	.docstring-content :global(dl:not(.docutils) dt) {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--accent);
 		margin-top: var(--space-sm);
 		font-weight: 500;
@@ -651,7 +651,7 @@
 	.docstring-content :global(h3),
 	.docstring-content :global(h4) {
 		font-family: var(--font-ui);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
@@ -665,7 +665,7 @@
 	.docstring-content :global(p:has(> strong:only-child)) {
 		position: relative;
 		font-family: var(--font-ui);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		font-weight: 600;
 		color: var(--text-muted);
 		text-transform: uppercase;
@@ -750,7 +750,7 @@
 	.docstring-content :global(.katex-error),
 	.docstring-content :global(.math:not(.katex-rendered)) {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 	}
 
@@ -765,7 +765,7 @@
 		width: 100%;
 		border-collapse: collapse;
 		margin: var(--space-md) 0;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.docstring-content :global(th),

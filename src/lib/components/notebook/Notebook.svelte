@@ -92,7 +92,7 @@
 		display: flex;
 		align-items: center;
 		gap: var(--space-xs);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		padding: var(--space-xs) var(--space-sm);
 		margin-bottom: var(--space-md);

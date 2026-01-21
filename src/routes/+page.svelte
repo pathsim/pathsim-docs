@@ -333,18 +333,18 @@
 	}
 
 	.result-name {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.result-context {
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 	}
 
 	.no-results {
 		padding: var(--space-lg);
 		text-align: center;
 		color: var(--text-muted);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.hero-actions {

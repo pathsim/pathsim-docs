@@ -135,7 +135,7 @@
 		gap: 6px;
 		height: 24px;
 		padding: 0 10px;
-		font-size: 10px;
+		font-size: var(--font-base);
 		font-weight: 500;
 		background: var(--surface);
 		border: 1px solid var(--border);

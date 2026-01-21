@@ -331,7 +331,7 @@
 <style>
 	/* Base styling - matches DocstringRenderer exactly */
 	.markdown-content {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		line-height: 1.7;
 		color: var(--text-muted);
 	}
@@ -389,7 +389,7 @@
 	}
 
 	.markdown-content :global(.cm-editor) {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		max-height: 300px;
 	}
 
@@ -411,7 +411,7 @@
 		width: 100%;
 		border-collapse: collapse;
 		margin: var(--space-md) 0;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.markdown-content :global(th),
@@ -478,7 +478,7 @@
 
 	.markdown-content :global(.katex-error) {
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 	}
 

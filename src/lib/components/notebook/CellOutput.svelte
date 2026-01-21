@@ -113,7 +113,7 @@
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
-		font-size: 12px;
+		font-size: var(--font-base); /* TEST: smaller to verify styles apply */
 		font-weight: 500; /* Match CodeMirror */
 		line-height: 1.5;
 		white-space: pre-wrap;
@@ -162,7 +162,7 @@
 	.output-html {
 		padding: var(--space-md);
 		overflow-x: auto;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		line-height: 1.7;
 		color: var(--text-muted);
 	}
@@ -171,7 +171,7 @@
 	.output-html :global(table) {
 		width: 100%;
 		border-collapse: collapse;
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.output-html :global(th),
@@ -192,7 +192,7 @@
 		margin: 0;
 		padding: var(--space-md);
 		font-family: var(--font-mono);
-		font-size: 12px;
+		font-size: var(--font-base);
 		font-weight: 500; /* Match CodeMirror */
 		line-height: 1.5;
 		white-space: pre-wrap;
@@ -211,7 +211,7 @@
 	.error-header {
 		padding: var(--space-sm) var(--space-md);
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--error);
 		font-weight: 600;
 	}
@@ -225,7 +225,7 @@
 		padding: var(--space-md);
 		padding-top: 0;
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		line-height: 1.5;
 		white-space: pre-wrap;
 		word-break: break-word;

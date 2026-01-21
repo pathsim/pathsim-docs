@@ -30,7 +30,7 @@
 	}
 
 	p {
-		font-size: var(--font-xl);
+		font-size: var(--font-md);
 		color: var(--text-muted);
 		margin-bottom: var(--space-xl);
 	}

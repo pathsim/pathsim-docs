@@ -109,7 +109,7 @@
 	}
 
 	.drawer-title {
-		font-size: 11px;
+		font-size: var(--font-base);
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.5px;
@@ -136,7 +136,7 @@
 	.mobile-package-link {
 		display: block;
 		padding: var(--space-sm) var(--space-md);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		font-weight: 500;
 		color: var(--text-muted);
 		text-decoration: none;

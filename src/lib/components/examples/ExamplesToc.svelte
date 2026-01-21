@@ -135,7 +135,7 @@
 		background: none;
 		border: none;
 		border-radius: var(--radius-sm);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		text-align: left;
 		cursor: pointer;
@@ -165,7 +165,7 @@
 	}
 
 	.examples-toc-name {
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 	}
 
 	.examples-toc-children {
@@ -183,7 +183,7 @@
 		background: none;
 		border: none;
 		border-radius: var(--radius-sm);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		text-align: left;
 		text-decoration: none;

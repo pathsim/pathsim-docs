@@ -541,7 +541,7 @@
 <style>
 	/* Base styling - matches DocstringRenderer exactly */
 	.rst-content {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		line-height: 1.7;
 		color: var(--text-muted);
 	}
@@ -600,7 +600,7 @@
 	}
 
 	.rst-content :global(.cm-editor) {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		max-height: 300px;
 	}
 
@@ -612,7 +612,7 @@
 		border: 1px solid var(--border);
 		border-radius: var(--radius-lg);
 		font-family: var(--font-mono);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		overflow-x: auto;
 	}
 
@@ -660,7 +660,7 @@
 		font-weight: 600;
 		text-transform: capitalize;
 		margin-bottom: var(--space-xs);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 	}
 
 	.note .admonition-title { color: var(--accent); }
@@ -670,7 +670,7 @@
 	.important .admonition-title { color: var(--error); }
 
 	.admonition-body {
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 	}
 

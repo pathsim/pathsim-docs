@@ -246,7 +246,7 @@
 		background: none;
 		border: none;
 		border-radius: var(--radius-sm);
-		font-size: var(--font-sm);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		text-align: left;
 		cursor: pointer;
@@ -281,7 +281,7 @@
 
 	.api-toc-name {
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 	}
 
 	.api-toc-children {
@@ -301,7 +301,7 @@
 		border: none;
 		border-radius: var(--radius-sm);
 		font-family: var(--font-mono);
-		font-size: var(--font-xs);
+		font-size: var(--font-base);
 		color: var(--text-muted);
 		text-align: left;
 		cursor: pointer;
