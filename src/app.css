@@ -297,11 +297,11 @@ code {
 pre {
 	font-family: var(--font-mono);
 	font-size: var(--font-sm);
-	background: var(--surface-raised);
-	padding: var(--space-lg);
-	border-radius: var(--radius-md);
-	border: 1px solid var(--border);
-	overflow-x: auto;
+	line-height: 1.5;
+	color: var(--text);
+	white-space: pre-wrap;
+	word-break: break-word;
+	margin: 0;
 }
 
 pre code {
