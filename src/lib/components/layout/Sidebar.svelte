@@ -70,10 +70,6 @@
 		goto(`${base}/${result.path}`);
 	}
 
-	function handleTocNavigate(id: string) {
-		// Could track navigation for analytics or other purposes
-	}
-
 	function getTypeIcon(type: SearchResult['type']): string {
 		switch (type) {
 			case 'page': return 'file';
@@ -137,7 +133,7 @@
 
 	{#if !showResults && isApiPage && $apiModulesStore.length > 0}
 		<div class="sidebar-scrollable">
-			<ApiToc modules={$apiModulesStore} onNavigate={handleTocNavigate} />
+			<ApiToc modules={$apiModulesStore} />
 		</div>
 	{:else if !showResults && isExamplesListPage && $exampleGroupsStore.length > 0}
 		<div class="sidebar-scrollable">

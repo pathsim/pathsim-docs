@@ -5,6 +5,21 @@
 
 import searchIndex from '$lib/api/generated/search-index.json';
 
+// Scoring weights for search relevance
+const SCORE_EXACT_MATCH = 100;
+const SCORE_PREFIX_MATCH = 50;
+const SCORE_CONTAINS = 30;
+const SCORE_MODULE_CONTAINS = 15;
+const SCORE_DESCRIPTION = 10;
+const SCORE_PARENT_CLASS = 20;
+const SCORE_TAGS = 25;
+
+// Type boost multipliers
+const BOOST_PAGE = 1.5;
+const BOOST_CLASS = 1.2;
+const BOOST_EXAMPLE = 1.15;
+const BOOST_FUNCTION = 1.1;
+
 export type SearchResultType = 'page' | 'module' | 'class' | 'function' | 'method' | 'example';
 
 export interface SearchResult {
@@ -41,39 +56,39 @@ export function search(query: string, limit: number = 20): SearchResult[] {
 			for (const term of terms) {
 				// Exact name match (highest priority)
 				if (lowerName === term) {
-					score += 100;
+					score += SCORE_EXACT_MATCH;
 				}
 				// Name starts with term
 				else if (lowerName.startsWith(term)) {
-					score += 50;
+					score += SCORE_PREFIX_MATCH;
 				}
 				// Name contains term
 				else if (lowerName.includes(term)) {
-					score += 30;
+					score += SCORE_CONTAINS;
 				}
 				// Module/category contains term
 				else if (lowerModule.includes(term)) {
-					score += 15;
+					score += SCORE_MODULE_CONTAINS;
 				}
 				// Description contains term
 				else if (lowerDesc.includes(term)) {
-					score += 10;
+					score += SCORE_DESCRIPTION;
 				}
 				// Parent class contains term
 				else if (result.parentClass?.toLowerCase().includes(term)) {
-					score += 20;
+					score += SCORE_PARENT_CLASS;
 				}
 				// Tags contain term (for examples)
 				else if (result.tags?.some(tag => tag.toLowerCase().includes(term))) {
-					score += 25;
+					score += SCORE_TAGS;
 				}
 			}
 
 			// Boost by type (pages highest, then classes, examples, functions)
-			if (result.type === 'page') score *= 1.5;
-			if (result.type === 'class') score *= 1.2;
-			if (result.type === 'example') score *= 1.15;
-			if (result.type === 'function') score *= 1.1;
+			if (result.type === 'page') score *= BOOST_PAGE;
+			if (result.type === 'class') score *= BOOST_CLASS;
+			if (result.type === 'example') score *= BOOST_EXAMPLE;
+			if (result.type === 'function') score *= BOOST_FUNCTION;
 
 			return { result, score };
 		})

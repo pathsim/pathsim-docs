@@ -21,14 +21,17 @@
 	let parts = $derived.by(() => {
 		const result: TypePart[] = [];
 
-		// Regex to match potential class names (PascalCase or known types)
-		// Split by common type syntax characters while preserving them
+		// Tokenize type string by brackets, commas, and union operators
+		// Example: "list[ClassName]" → ["list", "[", "ClassName", "]"]
+		// Example: "Optional[int | str]" → ["Optional", "[", "int", " | ", "str", "]"]
 		const tokens = type.split(/(\[|\]|,\s*|\s*\|\s*)/);
 
 		for (const token of tokens) {
 			if (!token) continue;
 
-			// Check if this token looks like a class name (PascalCase)
+			// Match PascalCase class names (no dots)
+			// Matches: "Integrator", "V1", "MyClass"
+			// Does NOT match: "list", "pathsim.Connection"
 			if (/^[A-Z][a-zA-Z0-9_]*$/.test(token)) {
 				const target = lookupRef(token);
 				if (target) {
@@ -37,7 +40,10 @@
 					result.push({ text: token, isLink: false });
 				}
 			}
-			// Check if this is a full module path like pathsim.connection.Connection
+			// Match fully qualified module paths ending with class name
+			// Format: module.submodule.ClassName
+			// Matches: "pathsim.connection.Connection", "numpy.ndarray.ndarray"
+			// Does NOT match: "Connection", "pathsim.connection"
 			else if (/^[a-z][a-z0-9_]*(\.[a-z_][a-z0-9_]*)*\.[A-Z][a-zA-Z0-9_]*$/.test(token)) {
 				// Try lookup by full path first
 				let target = lookupRef(token);
