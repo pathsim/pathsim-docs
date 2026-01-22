@@ -97,7 +97,7 @@
 					<Icon name="home" size={20} />
 					<span class="action-label">Home</span>
 				</a>
-				<a href={packages.pathsim.docs} class="action-card">
+				<a href="{base}/{packages.pathsim.docs}" class="action-card">
 					<Icon name="zap" size={20} />
 					<span class="action-label">Get Started</span>
 				</a>
