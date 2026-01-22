@@ -6,7 +6,7 @@
       "slug": "harmonic-oscillator",
       "file": "harmonic_oscillator.ipynb",
       "title": "Harmonic Oscillator",
-      "description": "The equation of motion that defines the harmonic oscillator is given by",
+      "description": "In this example we have a look at the damped harmonic oscillator. A linear dynamical system that models a spring-mass-damper system.",
       "category": "getting-started",
       "tags": [
         "ode",
@@ -18,7 +18,7 @@
       "slug": "linear-feedback",
       "file": "linear_feedback.ipynb",
       "title": "Linear Feedback System",
-      "description": "Then lets define the system parameters such as the initial value  of the integrator, the linear feedback gain  and the time dependend source function .",
+      "description": "Here's a simple example of a linear feedback system, simulated with PathSim.",
       "category": "getting-started",
       "tags": [
         "ode",
@@ -30,7 +30,7 @@
       "slug": "pendulum",
       "file": "pendulum.ipynb",
       "title": "Pendulum",
-      "description": "Above we have both the mechanical mode, which is a weight dangling from a string with length  and diverted by some initial angle, as well as the block diagram representation of the equation of moti...",
+      "description": "In this example we have a look at the mathematical pendulum.",
       "category": "getting-started",
       "tags": [
         "ode",
@@ -43,7 +43,7 @@
       "slug": "vanderpol",
       "file": "vanderpol.ipynb",
       "title": "Van der Pol",
-      "description": "$$",
+      "description": "Here we cover a true classic from the world of dynamical systems. The Van der Pol system!",
       "category": "getting-started",
       "tags": [
         "ode",
@@ -55,7 +55,7 @@
       "slug": "abs-braking",
       "file": "abs_braking.ipynb",
       "title": "Anti-lock Braking System (ABS)",
-      "description": "The ABS system consists of coupled vehicle and wheel dynamics. The vehicle longitudinal motion is governed by:",
+      "description": "This example demonstrates an anti-lock braking system (ABS) using nonlinear tire dynamics and event-driven slip control. The system prevents wheel lockup during braking by modulating brake torque t...",
       "category": "control",
       "tags": [
         "hybrid",
@@ -68,7 +68,7 @@
       "slug": "cascade-controller",
       "file": "cascade_controller.ipynb",
       "title": "Cascade Controller",
-      "description": "The cascade controller consists of:",
+      "description": "In this example we demonstrate a cascade control architecture with a two-loop PID control system. Cascade control is widely used in process control when a fast inner loop can help improve the perfo...",
       "category": "control",
       "tags": [
         "cascade",
@@ -80,7 +80,7 @@
       "slug": "dcmotor-control",
       "file": "dcmotor_control.ipynb",
       "title": "DC Motor Speed Control",
-      "description": "A DC motor is a multi-domain electromechanical system where electrical energy is converted to mechanical rotation. The system consists of two coupled subsystems:",
+      "description": "This example demonstrates multi-domain modeling of a DC motor with PID speed control. The system combines electrical and mechanical dynamics with anti-windup control to handle voltage saturation.",
       "category": "control",
       "tags": [
         "motor",
@@ -92,7 +92,7 @@
       "slug": "kalman-filter",
       "file": "kalman_filter.ipynb",
       "title": "Kalman Filter",
-      "description": "First let's import the required classes and blocks:",
+      "description": "This example demonstrates the Kalman filter in PathSim for optimal state estimation of a linear dynamical system from noisy measurements. The filter recursively estimates the state of a moving obje...",
       "category": "control",
       "tags": [
         "estimation",
@@ -104,7 +104,7 @@
       "slug": "pid-controller",
       "file": "pid_controller.ipynb",
       "title": "PID Controller",
-      "description": "First let's import the required classes and blocks:",
+      "description": "This example demonstrates a PID (Proportional-Integral-Derivative) controller in PathSim, including automatic differentiation for sensitivity analysis. The system tracks a step-changing setpoint an...",
       "category": "control",
       "tags": [
         "pid",
@@ -116,7 +116,7 @@
       "slug": "thermostat",
       "file": "thermostat.ipynb",
       "title": "Thermostat",
-      "description": "With some algebraic manipulations we can translate the system equation into a block diagram that can be implemented in PathSim. Note the event manager, that watches the state of the integrator and ...",
+      "description": "In this example we have a look at a thermostat, which is a kind off discrete regulator. It switches a heating element on or of depending on defined upper and lower thresholds.",
       "category": "control",
       "tags": [
         "hybrid",
@@ -128,7 +128,7 @@
       "slug": "bouncing-ball",
       "file": "bouncing_ball.ipynb",
       "title": "Bouncing Ball",
-      "description": "Systems like this require the location and resolution of discrete events within the timestep and are not easily solved with standard numerical ODE solvers. PathSim implements an event management sy...",
+      "description": "This example demonstrates PathSim's event handling system. The classical example here is the bouncing ball. The ball accelerates downward due to gravity and once it hits the floor, it bounces back....",
       "category": "mechanics",
       "tags": [
         "events",
@@ -140,7 +140,7 @@
       "slug": "bouncing-pendulum",
       "file": "bouncing_pendulum.ipynb",
       "title": "Bouncing Pendulum",
-      "description": "The mathematical pendulum is governed by the nonlinear differential equation:",
+      "description": "This example demonstrates a hybrid system combining continuous pendulum dynamics with discrete bounce events. The pendulum swings until it hits the ground (zero angle), at which point it bounces ba...",
       "category": "mechanics",
       "tags": [
         "events",
@@ -152,7 +152,7 @@
       "slug": "coupled-oscillators",
       "file": "coupled_oscillators.ipynb",
       "title": "Coupled Oscillators",
-      "description": "As a block diagram it would look like this:",
+      "description": "This example demonstrates a system of two coupled damped harmonic oscillators using two ODE blocks.",
       "category": "mechanics",
       "tags": [
         "ode",
@@ -164,7 +164,7 @@
       "slug": "stick-slip",
       "file": "stick_slip.ipynb",
       "title": "Stick Slip",
-      "description": "This system has two possible states:",
+      "description": "In this example we simulate a mechanical system that exhibits stick-slip behaviour, typical for coulomb friction. Lets consider the setup below, where we have a box sitting on a driven conveyor bel...",
       "category": "mechanics",
       "tags": [
         "friction",
@@ -176,7 +176,7 @@
       "slug": "switched-bouncing-ball",
       "file": "switched_bouncing_ball.ipynb",
       "title": "Switched Bouncing Ball",
-      "description": "The ball experiences:",
+      "description": "This example demonstrates advanced event handling with multiple simultaneous events, event switching, and conditional event logic. The bouncing ball bounces on a table first, and then drops to the ...",
       "category": "mechanics",
       "tags": [
         "events",
@@ -188,7 +188,7 @@
       "slug": "delta-sigma-adc",
       "file": "delta_sigma_adc.ipynb",
       "title": "Delta-Sigma ADC",
-      "description": "A delta-sigma ADC works by:",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a first-order delta-sigma (\u0394\u03a3) ADC, a popular architecture for high-resolution analog-to-digital c...",
       "category": "electronics",
       "tags": [
         "adc",
@@ -200,7 +200,7 @@
       "slug": "diode-circuit",
       "file": "diode_circuit.ipynb",
       "title": "Diode Circuit",
-      "description": "Applying Kirchhoff's Voltage Law (KVL):",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a more complex application of algebraic loop solving: a diode circuit with nonlinear characteristi...",
       "category": "electronics",
       "tags": [
         "nonlinear",
@@ -224,7 +224,7 @@
       "slug": "sar-adc",
       "file": "sar_adc.ipynb",
       "title": "SAR ADC",
-      "description": "A SAR ADC converts analog signals to digital using a binary search algorithm:",
+      "description": "You can also find this example as a single file in the GitHub repository.This advanced example demonstrates a SAR ADC (Successive Approximation Register Analog-to-Digital Converter), one of the mos...",
       "category": "electronics",
       "tags": [
         "adc",
@@ -236,7 +236,7 @@
       "slug": "fmcw-radar",
       "file": "fmcw_radar.ipynb",
       "title": "FMCW Radar",
-      "description": "The figure below shows the block diagram of a very basic FMCW radar system consisting of a chirp source (sinusoid with a linearly time dependent frequency), a delay (to model the signal propagation...",
+      "description": "In this example we simulate a simple frequency modulated continuous wave (FMCW) radar system.",
       "category": "signal-processing",
       "tags": [
         "radar",
@@ -260,7 +260,7 @@
       "slug": "spectrum-analysis",
       "file": "spectrum_analysis.ipynb",
       "title": "Spectrum Analysis",
-      "description": "We'll create a simple signal chain:",
+      "description": "In this example we demonstrate frequency domain analysis using PathSim's spectrum block. We'll examine the frequency response of a Butterworth lowpass filter by analyzing its response to a Gaussian...",
       "category": "signal-processing",
       "tags": [
         "fft",
@@ -272,7 +272,7 @@
       "slug": "transfer-function",
       "file": "transfer_function.ipynb",
       "title": "Transfer Function",
-      "description": "The pole-residue-constant form represents a transfer function as:",
+      "description": "In this example we demonstrate how to use transfer functions in PathSim using the Pole-Residue-Constant (PRC) form. This representation is particularly convenient for transfer functions with comple...",
       "category": "signal-processing",
       "tags": [
         "frequency",
@@ -284,7 +284,7 @@
       "slug": "chemical-reactor",
       "file": "chemical_reactor.ipynb",
       "title": "Chemical Reactor",
-      "description": "We define the physical and chemical parameters for the reactor.",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a Continuous Stirred Tank Reactor (CSTR) with consecutive exothermic reactions. This is a classic ...",
       "category": "chemical",
       "tags": [
         "cstr",
@@ -296,7 +296,7 @@
       "slug": "algebraic-loop",
       "file": "algebraic_loop.ipynb",
       "title": "Algebraic Loop",
-      "description": "An algebraic loop occurs when the output of a block depends on its own input in the same timestep. This creates an implicit equation that must be solved:",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates PathSim's ability to handle algebraic loops - situations where a signal feeds back on itself insta...",
       "category": "advanced",
       "tags": [
         "algebraic",
@@ -308,7 +308,7 @@
       "slug": "lorenz-attractor",
       "file": "lorenz_attractor.ipynb",
       "title": "Lorenz Attractor",
-      "description": "We create blocks for each equation:",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates the famous Lorenz attractor, a system of ordinary differential equations that exhibits chaotic beh...",
       "category": "advanced",
       "tags": [
         "chaos",
@@ -320,7 +320,7 @@
       "slug": "nested-subsystems",
       "file": "nested_subsystems.ipynb",
       "title": "Nested Subsystems",
-      "description": "First, we create a subsystem that computes",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates PathSim's hierarchical modeling capabilities using nested subsystems. We'll build a complex Van de...",
       "category": "advanced",
       "tags": [
         "hierarchy",
@@ -331,8 +331,8 @@
     {
       "slug": "poincare-maps",
       "file": "poincare_maps.ipynb",
-      "title": "Poincaré Maps",
-      "description": "We'll use the compact ODE block formulation to define the Lorenz system, along with PathSim's event handling capabilities to detect surface crossings.",
+      "title": "Poincar\u00e9 Maps",
+      "description": "This example demonstrates how to use PathSim's event handling system to compute Poincar\u00e9 maps (or Poincar\u00e9 sections) of chaotic dynamical systems. A Poincar\u00e9 map is a powerful tool for analyzing th...",
       "category": "advanced",
       "tags": [
         "analysis",
@@ -344,7 +344,7 @@
       "slug": "fmu-cosimulation",
       "file": "fmu_cosimulation.ipynb",
       "title": "FMU Co-Simulation",
-      "description": "Note that FMPy must be installed to use FMU blocks:",
+      "description": "This example demonstrates how to integrate a Functional Mock-up Unit (FMU) as a PathSim block using the co-simulation interface. FMUs are standardized model exchange and co-simulation packages that...",
       "category": "fmu",
       "tags": [
         "fmu",

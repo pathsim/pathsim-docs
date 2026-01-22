@@ -139,36 +139,68 @@ def _extract_title(notebook: dict) -> str:
 
 
 def _extract_description(notebook: dict) -> str:
-    """Extract description from first paragraph after title."""
-    found_title = False
+    """Extract description from first paragraph after title.
 
+    Handles both cases:
+    - Title and description in same cell (# Title\\n\\nDescription...)
+    - Title in one cell, description in next markdown cell
+    """
     for cell in notebook.get("cells", []):
         if cell.get("cell_type") == "markdown":
             source = cell.get("source", [])
             if isinstance(source, list):
                 source = "".join(source)
 
-            if re.match(r"^#\s+.+\s*$", source.strip()):
-                found_title = True
+            # Check if cell starts with a title
+            title_match = re.match(r"^#\s+.+", source)
+            if title_match:
+                # Remove the title line and look for description in same cell
+                after_title = source[title_match.end():].strip()
+                if after_title:
+                    # Description is in same cell as title
+                    desc = _clean_description(after_title)
+                    if desc:
+                        return desc
+                # If no description after title in this cell, continue to next cell
                 continue
 
-            if found_title or not re.search(r"^#\s+", source):
-                # Remove markdown formatting
-                text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", source)
-                text = re.sub(r"`[^`]+`", "", text)
-                text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)
-                text = re.sub(r"\*([^*]+)\*", r"\1", text)
-                text = re.sub(r"^\s*#+\s+.+$", "", text, flags=re.MULTILINE)
-                text = re.sub(r"\$[^$]+\$", "", text)
-
-                lines = [l.strip() for l in text.split("\n") if l.strip()]
-                if lines:
-                    desc = lines[0]
-                    if len(desc) > 200:
-                        desc = desc[:197] + "..."
-                    return desc
+            # This is a markdown cell without a title - could be description
+            desc = _clean_description(source)
+            if desc:
+                return desc
 
     return "Example notebook"
+
+
+def _clean_description(text: str) -> str:
+    """Clean markdown text and extract first meaningful paragraph."""
+    # Remove markdown formatting
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)  # links
+    text = re.sub(r"`[^`]+`", "", text)  # inline code
+    text = re.sub(r"\*\*([^*]+)\*\*", r"\1", text)  # bold
+    text = re.sub(r"\*([^*]+)\*", r"\1", text)  # italic
+    text = re.sub(r"^\s*#+\s+.+$", "", text, flags=re.MULTILINE)  # headings
+    text = re.sub(r"\$\$[^$]*\$\$", "", text, flags=re.DOTALL)  # display math
+    text = re.sub(r"\$[^$]+\$", "", text)  # inline math
+    text = re.sub(r"^\s*[-*]\s+", "", text, flags=re.MULTILINE)  # list items
+    text = re.sub(r"^\s*\d+\.\s+", "", text, flags=re.MULTILINE)  # numbered lists
+
+    # Get first non-empty line that looks like a sentence
+    lines = [l.strip() for l in text.split("\n") if l.strip()]
+    for line in lines:
+        # Skip lines that look like code, equations, or fragments
+        if line.startswith(("import ", "from ", "```", ">>>")):
+            continue
+        if re.match(r"^[\W\d]+$", line):  # only symbols/numbers
+            continue
+        if len(line) < 10:  # too short to be meaningful
+            continue
+        # Found a good line
+        if len(line) > 200:
+            line = line[:197] + "..."
+        return line
+
+    return ""
 
 
 def generate_version_manifest(
