@@ -78,13 +78,13 @@
 			type: target.type as 'class' | 'function' | 'method' | 'module'
 		});
 
-		// target.path is absolute like /pathsim/api#ClassName, prepend base for deployment
-		goto(`${base}${target.path}`);
+		// target.path is relative like pathsim/api#ClassName, prepend base/ for absolute URL
+		goto(`${base}/${target.path}`);
 	}
 </script>
 
 <span class="type-ref">{#each parts as part}{#if part.isLink && part.target}<a
-		href="{base}{part.target.path}"
+		href="{base}/{part.target.path}"
 		class="type-link"
 		onclick={(e) => handleClick(e, part.target)}
 	>{part.text}</a>{:else}{part.text}{/if}{/each}</span>
