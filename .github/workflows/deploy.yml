@@ -79,14 +79,13 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Only commit API data and versioned cache (not full notebooks - they're regenerated from source)
+          # Commit API data, versioned cache, and notebooks
           git add src/lib/api/generated/ static/api/versions/
-          # Only commit notebook manifests, not full .ipynb files
-          git add static/notebooks/*/manifest.json 2>/dev/null || true
+          git add static/notebooks/ 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update generated API data and indexes [skip ci]"
+            git commit -m "Update generated API data and notebooks [skip ci]"
             git push
           fi
 
