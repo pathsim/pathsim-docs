@@ -6344,7 +6344,7 @@
   {
     "type": "example",
     "name": "Harmonic Oscillator",
-    "description": "The equation of motion that defines the harmonic oscillator is given by",
+    "description": "In this example we have a look at the damped harmonic oscillator. A linear dynamical system that models a spring-mass-damper system.",
     "path": "pathsim/v0.16.0/examples/harmonic-oscillator",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6356,7 +6356,7 @@
   {
     "type": "example",
     "name": "Linear Feedback System",
-    "description": "Then lets define the system parameters such as the initial value  of the integrator, the linear feedback gain  and the time dependend source function .",
+    "description": "Here's a simple example of a linear feedback system, simulated with PathSim.",
     "path": "pathsim/v0.16.0/examples/linear-feedback",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6368,7 +6368,7 @@
   {
     "type": "example",
     "name": "Pendulum",
-    "description": "Above we have both the mechanical mode, which is a weight dangling from a string with length  and diverted by some initial angle, as well as the block diagram representation of the equation of moti...",
+    "description": "In this example we have a look at the mathematical pendulum.",
     "path": "pathsim/v0.16.0/examples/pendulum",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6381,7 +6381,7 @@
   {
     "type": "example",
     "name": "Van der Pol",
-    "description": "$$",
+    "description": "Here we cover a true classic from the world of dynamical systems. The Van der Pol system!",
     "path": "pathsim/v0.16.0/examples/vanderpol",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6393,7 +6393,7 @@
   {
     "type": "example",
     "name": "Anti-lock Braking System (ABS)",
-    "description": "The ABS system consists of coupled vehicle and wheel dynamics. The vehicle longitudinal motion is governed by:",
+    "description": "This example demonstrates an anti-lock braking system (ABS) using nonlinear tire dynamics and event-driven slip control. The system prevents wheel lockup during braking by modulating brake torque t...",
     "path": "pathsim/v0.16.0/examples/abs-braking",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6406,7 +6406,7 @@
   {
     "type": "example",
     "name": "Cascade Controller",
-    "description": "The cascade controller consists of:",
+    "description": "In this example we demonstrate a cascade control architecture with a two-loop PID control system. Cascade control is widely used in process control when a fast inner loop can help improve the perfo...",
     "path": "pathsim/v0.16.0/examples/cascade-controller",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6418,7 +6418,7 @@
   {
     "type": "example",
     "name": "DC Motor Speed Control",
-    "description": "A DC motor is a multi-domain electromechanical system where electrical energy is converted to mechanical rotation. The system consists of two coupled subsystems:",
+    "description": "This example demonstrates multi-domain modeling of a DC motor with PID speed control. The system combines electrical and mechanical dynamics with anti-windup control to handle voltage saturation.",
     "path": "pathsim/v0.16.0/examples/dcmotor-control",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6430,7 +6430,7 @@
   {
     "type": "example",
     "name": "Kalman Filter",
-    "description": "First let's import the required classes and blocks:",
+    "description": "This example demonstrates the Kalman filter in PathSim for optimal state estimation of a linear dynamical system from noisy measurements. The filter recursively estimates the state of a moving obje...",
     "path": "pathsim/v0.16.0/examples/kalman-filter",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6442,7 +6442,7 @@
   {
     "type": "example",
     "name": "PID Controller",
-    "description": "First let's import the required classes and blocks:",
+    "description": "This example demonstrates a PID (Proportional-Integral-Derivative) controller in PathSim, including automatic differentiation for sensitivity analysis. The system tracks a step-changing setpoint an...",
     "path": "pathsim/v0.16.0/examples/pid-controller",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6454,7 +6454,7 @@
   {
     "type": "example",
     "name": "Thermostat",
-    "description": "With some algebraic manipulations we can translate the system equation into a block diagram that can be implemented in PathSim. Note the event manager, that watches the state of the integrator and ...",
+    "description": "In this example we have a look at a thermostat, which is a kind off discrete regulator. It switches a heating element on or of depending on defined upper and lower thresholds.",
     "path": "pathsim/v0.16.0/examples/thermostat",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6466,7 +6466,7 @@
   {
     "type": "example",
     "name": "Billards & Collisions",
-    "description": "The collision is detected using a zero-crossing event. The detection function computes the distance from the origin minus the boundary radius:",
+    "description": "You can also find this example as a standalone Python file in the GitHub repository.",
     "path": "pathsim/v0.16.0/examples/billards",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6478,7 +6478,7 @@
   {
     "type": "example",
     "name": "Bouncing Ball",
-    "description": "Systems like this require the location and resolution of discrete events within the timestep and are not easily solved with standard numerical ODE solvers. PathSim implements an event management sy...",
+    "description": "This example demonstrates PathSim's event handling system. The classical example here is the bouncing ball. The ball accelerates downward due to gravity and once it hits the floor, it bounces back....",
     "path": "pathsim/v0.16.0/examples/bouncing-ball",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6490,7 +6490,7 @@
   {
     "type": "example",
     "name": "Bouncing Pendulum",
-    "description": "The mathematical pendulum is governed by the nonlinear differential equation:",
+    "description": "This example demonstrates a hybrid system combining continuous pendulum dynamics with discrete bounce events. The pendulum swings until it hits the ground (zero angle), at which point it bounces ba...",
     "path": "pathsim/v0.16.0/examples/bouncing-pendulum",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6502,7 +6502,7 @@
   {
     "type": "example",
     "name": "Coupled Oscillators",
-    "description": "As a block diagram it would look like this:",
+    "description": "This example demonstrates a system of two coupled damped harmonic oscillators using two ODE blocks.",
     "path": "pathsim/v0.16.0/examples/coupled-oscillators",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6514,7 +6514,7 @@
   {
     "type": "example",
     "name": "Elastic Pendulum",
-    "description": "$$",
+    "description": "You can also find this example as a standalone Python file in the GitHub repository.",
     "path": "pathsim/v0.16.0/examples/elastic-pendulum",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6526,7 +6526,7 @@
   {
     "type": "example",
     "name": "Stick Slip",
-    "description": "This system has two possible states:",
+    "description": "In this example we simulate a mechanical system that exhibits stick-slip behaviour, typical for coulomb friction. Lets consider the setup below, where we have a box sitting on a driven conveyor bel...",
     "path": "pathsim/v0.16.0/examples/stick-slip",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6538,7 +6538,7 @@
   {
     "type": "example",
     "name": "Switched Bouncing Ball",
-    "description": "The ball experiences:",
+    "description": "This example demonstrates advanced event handling with multiple simultaneous events, event switching, and conditional event logic. The bouncing ball bounces on a table first, and then drops to the ...",
     "path": "pathsim/v0.16.0/examples/switched-bouncing-ball",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6550,7 +6550,7 @@
   {
     "type": "example",
     "name": "Delta-Sigma ADC",
-    "description": "A delta-sigma ADC works by:",
+    "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a first-order delta-sigma (ΔΣ) ADC, a popular architecture for high-resolution analog-to-digital c...",
     "path": "pathsim/v0.16.0/examples/delta-sigma-adc",
     "packageId": "pathsim",
     "moduleName": "electronics",
@@ -6562,7 +6562,7 @@
   {
     "type": "example",
     "name": "Diode Circuit",
-    "description": "Applying Kirchhoff's Voltage Law (KVL):",
+    "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a more complex application of algebraic loop solving: a diode circuit with nonlinear characteristi...",
     "path": "pathsim/v0.16.0/examples/diode-circuit",
     "packageId": "pathsim",
     "moduleName": "electronics",
@@ -6586,7 +6586,7 @@
   {
     "type": "example",
     "name": "SAR ADC",
-    "description": "A SAR ADC converts analog signals to digital using a binary search algorithm:",
+    "description": "You can also find this example as a single file in the GitHub repository.This advanced example demonstrates a SAR ADC (Successive Approximation Register Analog-to-Digital Converter), one of the mos...",
     "path": "pathsim/v0.16.0/examples/sar-adc",
     "packageId": "pathsim",
     "moduleName": "electronics",
@@ -6598,7 +6598,7 @@
   {
     "type": "example",
     "name": "FMCW Radar",
-    "description": "The figure below shows the block diagram of a very basic FMCW radar system consisting of a chirp source (sinusoid with a linearly time dependent frequency), a delay (to model the signal propagation...",
+    "description": "In this example we simulate a simple frequency modulated continuous wave (FMCW) radar system.",
     "path": "pathsim/v0.16.0/examples/fmcw-radar",
     "packageId": "pathsim",
     "moduleName": "signal-processing",
@@ -6622,7 +6622,7 @@
   {
     "type": "example",
     "name": "Spectrum Analysis",
-    "description": "We'll create a simple signal chain:",
+    "description": "In this example we demonstrate frequency domain analysis using PathSim's spectrum block. We'll examine the frequency response of a Butterworth lowpass filter by analyzing its response to a Gaussian...",
     "path": "pathsim/v0.16.0/examples/spectrum-analysis",
     "packageId": "pathsim",
     "moduleName": "signal-processing",
@@ -6634,7 +6634,7 @@
   {
     "type": "example",
     "name": "Transfer Function",
-    "description": "The pole-residue-constant form represents a transfer function as:",
+    "description": "In this example we demonstrate how to use transfer functions in PathSim using the Pole-Residue-Constant (PRC) form. This representation is particularly convenient for transfer functions with comple...",
     "path": "pathsim/v0.16.0/examples/transfer-function",
     "packageId": "pathsim",
     "moduleName": "signal-processing",
@@ -6646,7 +6646,7 @@
   {
     "type": "example",
     "name": "Chemical Reactor",
-    "description": "We define the physical and chemical parameters for the reactor.",
+    "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a Continuous Stirred Tank Reactor (CSTR) with consecutive exothermic reactions. This is a classic ...",
     "path": "pathsim/v0.16.0/examples/chemical-reactor",
     "packageId": "pathsim",
     "moduleName": "chemical",
@@ -6658,7 +6658,7 @@
   {
     "type": "example",
     "name": "Algebraic Loop",
-    "description": "An algebraic loop occurs when the output of a block depends on its own input in the same timestep. This creates an implicit equation that must be solved:",
+    "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates PathSim's ability to handle algebraic loops - situations where a signal feeds back on itself insta...",
     "path": "pathsim/v0.16.0/examples/algebraic-loop",
     "packageId": "pathsim",
     "moduleName": "advanced",
@@ -6670,7 +6670,7 @@
   {
     "type": "example",
     "name": "Lorenz Attractor",
-    "description": "We create blocks for each equation:",
+    "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates the famous Lorenz attractor, a system of ordinary differential equations that exhibits chaotic beh...",
     "path": "pathsim/v0.16.0/examples/lorenz-attractor",
     "packageId": "pathsim",
     "moduleName": "advanced",
@@ -6682,7 +6682,7 @@
   {
     "type": "example",
     "name": "Nested Subsystems",
-    "description": "First, we create a subsystem that computes",
+    "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates PathSim's hierarchical modeling capabilities using nested subsystems. We'll build a complex Van de...",
     "path": "pathsim/v0.16.0/examples/nested-subsystems",
     "packageId": "pathsim",
     "moduleName": "advanced",
@@ -6694,7 +6694,7 @@
   {
     "type": "example",
     "name": "Poincaré Maps",
-    "description": "We'll use the compact ODE block formulation to define the Lorenz system, along with PathSim's event handling capabilities to detect surface crossings.",
+    "description": "This example demonstrates how to use PathSim's event handling system to compute Poincaré maps (or Poincaré sections) of chaotic dynamical systems. A Poincaré map is a powerful tool for analyzing th...",
     "path": "pathsim/v0.16.0/examples/poincare-maps",
     "packageId": "pathsim",
     "moduleName": "advanced",
@@ -6706,7 +6706,7 @@
   {
     "type": "example",
     "name": "FMU Co-Simulation",
-    "description": "Note that FMPy must be installed to use FMU blocks:",
+    "description": "This example demonstrates how to integrate a Functional Mock-up Unit (FMU) as a PathSim block using the co-simulation interface. FMUs are standardized model exchange and co-simulation packages that...",
     "path": "pathsim/v0.16.0/examples/fmu-cosimulation",
     "packageId": "pathsim",
     "moduleName": "fmu",
@@ -6718,7 +6718,7 @@
   {
     "type": "example",
     "name": "FMU ME: Bouncing Ball",
-    "description": "Note that FMPy must be installed to use FMU blocks:",
+    "description": "This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...",
     "path": "pathsim/v0.16.0/examples/fmu-model-exchange-bouncing-ball",
     "packageId": "pathsim",
     "moduleName": "fmu",
@@ -6730,7 +6730,7 @@
   {
     "type": "example",
     "name": "FMU ME: Van der Pol",
-    "description": "We simulate with  for clear nonlinear oscillations:",
+    "description": "This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:",
     "path": "pathsim/v0.16.0/examples/fmu-model-exchange-vanderpol",
     "packageId": "pathsim",
     "moduleName": "fmu",
