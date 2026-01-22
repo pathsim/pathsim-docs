@@ -52,6 +52,9 @@
 	);
 	let isVersionedPage = $derived(isApiPage || $page.url.pathname.includes('/examples'));
 
+	// Check if we're on an overview page (no /api or /examples in path)
+	let isOverviewPage = $derived(!isApiPage && !$page.url.pathname.includes('/examples'));
+
 	function isActive(path: string): boolean {
 		return $page.url.pathname === `${base}/${path}`;
 	}
@@ -100,30 +103,33 @@
 		versionDropdownOpen = !versionDropdownOpen;
 	}
 
-	function selectVersion(tag: string) {
+	async function selectVersion(tag: string) {
 		versionDropdownOpen = false;
 
-		if (!currentTag) return;
+		// Update stored version preference
+		const { versionStore } = await import('$lib/stores/versionStore');
+		versionStore.setVersion(packageId, tag);
 
 		// Preserve current hash if it exists
 		const hash = typeof window !== 'undefined' ? window.location.hash : '';
 
-		// Get current page type (api or examples)
+		// Get current page type (api or examples or overview)
 		const pathname = $page.url.pathname;
-		let pageType = 'api';
-		let subPath = '';
 
 		if (pathname.includes('/examples/')) {
 			// We're on a specific example page
-			pageType = 'examples';
 			const match = pathname.match(/\/examples\/(.+)$/);
-			subPath = match ? `/${match[1]}` : '';
+			const subPath = match ? `/${match[1]}` : '';
+			goto(`${base}/${packageId}/${tag}/examples${subPath}${hash}`);
 		} else if (pathname.includes('/examples')) {
-			pageType = 'examples';
+			goto(`${base}/${packageId}/${tag}/examples${hash}`);
+		} else if (pathname.includes('/api')) {
+			goto(`${base}/${packageId}/${tag}/api${hash}`);
+		} else {
+			// On overview page - reload to pick up new version
+			const { invalidateAll } = await import('$app/navigation');
+			await invalidateAll();
 		}
-
-		// Navigate to the same page with new version
-		goto(`${base}/${packageId}/${tag}/${pageType}${subPath}${hash}`);
 	}
 
 	function handleVersionClickOutside(event: MouseEvent) {
@@ -188,8 +194,8 @@
 				{/if}
 			</nav>
 		{:else}
-			<!-- Version selector - only show on versioned pages -->
-			{#if isVersionedPage && manifest && currentTag}
+			<!-- Version selector - show whenever manifest is available -->
+			{#if manifest && currentTag}
 				<div class="version-selector-container" bind:this={versionDropdownRef}>
 					<button
 						class="version-selector-trigger"
