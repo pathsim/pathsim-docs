@@ -56,8 +56,9 @@
 </script>
 
 <div class="version-selector" bind:this={dropdownRef}>
+	{@const currentInfo = manifest.versions.find(v => v.version === currentVersion)}
 	<button class="version-trigger" onclick={toggleDropdown} aria-expanded={isOpen}>
-		<span class="version-text">v{currentVersion}</span>
+		<span class="version-text">{currentInfo?.tag ?? `v${currentVersion}`}</span>
 		<Icon name="chevron-down" size={10} />
 	</button>
 
@@ -71,7 +72,7 @@
 					class:selected={isSelected}
 					onclick={() => selectVersion(v.version)}
 				>
-					<span class="dropdown-version">v{v.version}</span>
+					<span class="dropdown-version">{v.tag}</span>
 					{#if isLatest}
 						<span class="latest-badge">latest</span>
 					{/if}
