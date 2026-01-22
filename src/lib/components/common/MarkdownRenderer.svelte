@@ -287,7 +287,8 @@
 				// Set search target to trigger expansion/scroll
 				searchTarget.set({
 					name: targetName,
-					type: linkType as 'class' | 'function' | 'method' | 'module'
+					type: linkType as 'class' | 'function' | 'method' | 'module',
+					source: 'crossref'
 				});
 			}
 

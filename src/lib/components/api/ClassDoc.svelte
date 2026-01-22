@@ -88,7 +88,7 @@
 			isExpanded = true;
 			clearSearchTarget();
 			tick().then(() => {
-				tileElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				tileElement?.scrollIntoView({ block: 'start' });
 			});
 		}
 		// Method inside this class - expand so method can be found

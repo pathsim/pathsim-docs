@@ -95,7 +95,7 @@
 			isExpanded = true;
 			clearSearchTarget();
 			tick().then(() => {
-				tileElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				tileElement?.scrollIntoView({ block: 'start' });
 			});
 		}
 	});

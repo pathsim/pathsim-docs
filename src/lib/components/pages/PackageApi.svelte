@@ -88,7 +88,8 @@
 				searchTarget.set({
 					name: ref.name,
 					type: ref.type as 'class' | 'function' | 'method' | 'module',
-					parentClass: ref.parentClass
+					parentClass: ref.parentClass,
+					source: 'url'
 				});
 			}
 		}

@@ -79,7 +79,8 @@
 
 		searchTarget.set({
 			name: target.name,
-			type: target.type as 'class' | 'function' | 'method' | 'module'
+			type: target.type as 'class' | 'function' | 'method' | 'module',
+			source: 'crossref'
 		});
 
 		// target.path is relative like pathsim/api#ClassName, prepend base/ for absolute URL

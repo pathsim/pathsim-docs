@@ -105,7 +105,8 @@
 						e.preventDefault();
 						searchTarget.set({
 							name: target.name,
-							type: target.type as 'class' | 'function' | 'method' | 'module'
+							type: target.type as 'class' | 'function' | 'method' | 'module',
+							source: 'crossref'
 						});
 						goto(fullPath);
 					});
@@ -387,7 +388,8 @@
 				// Set search target to trigger expansion/scroll
 				searchTarget.set({
 					name: targetName,
-					type: linkType as 'class' | 'function' | 'method' | 'module'
+					type: linkType as 'class' | 'function' | 'method' | 'module',
+					source: 'crossref'
 				});
 			}
 

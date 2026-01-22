@@ -22,7 +22,7 @@
 		if (target.type === 'module' && target.name === module.name) {
 			clearSearchTarget();
 			tick().then(() => {
-				sectionElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				sectionElement?.scrollIntoView({ block: 'start' });
 			});
 		}
 	});

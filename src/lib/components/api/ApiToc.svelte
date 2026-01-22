@@ -1,7 +1,30 @@
 <script lang="ts">
+	import { onDestroy } from 'svelte';
 	import type { APIModule } from '$lib/api/generated';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { searchTarget } from '$lib/stores/searchNavigation';
+
+	// Track navigation timeout for cleanup
+	let navigationTimeout: ReturnType<typeof setTimeout> | null = null;
+
+	function clearNavigationTimeout() {
+		if (navigationTimeout) {
+			clearTimeout(navigationTimeout);
+			navigationTimeout = null;
+		}
+	}
+
+	function setNavigationTimeout() {
+		clearNavigationTimeout();
+		navigationTimeout = setTimeout(() => {
+			isNavigating = false;
+			navigationTimeout = null;
+		}, 50); // Short delay for instant scroll
+	}
+
+	onDestroy(() => {
+		clearNavigationTimeout();
+	});
 
 	interface Props {
 		modules: APIModule[];
@@ -74,7 +97,7 @@
 	function scrollToElement(id: string) {
 		const element = document.getElementById(id);
 		if (element) {
-			element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			element.scrollIntoView({ block: 'start' });
 			activeId = id;
 			onNavigate?.(id);
 		}
@@ -86,11 +109,8 @@
 	function navigateToClass(className: string) {
 		isNavigating = true;
 		activeId = className; // Set immediately for visual feedback
-		searchTarget.set({ name: className, type: 'class' });
-		// Re-enable observer after scroll animation completes
-		setTimeout(() => {
-			isNavigating = false;
-		}, 500);
+		searchTarget.set({ name: className, type: 'class', source: 'toc' });
+		setNavigationTimeout();
 	}
 
 	/**
@@ -99,11 +119,8 @@
 	function navigateToFunction(funcName: string) {
 		isNavigating = true;
 		activeId = funcName; // Set immediately for visual feedback
-		searchTarget.set({ name: funcName, type: 'function' });
-		// Re-enable observer after scroll animation completes
-		setTimeout(() => {
-			isNavigating = false;
-		}, 500);
+		searchTarget.set({ name: funcName, type: 'function', source: 'toc' });
+		setNavigationTimeout();
 	}
 
 	function getModuleId(moduleName: string): string {
@@ -162,10 +179,13 @@
 		expandedGroups = newExpanded;
 	}
 
-	// Watch for search/crossref navigation and expand to reveal target
+	// Watch for external navigation (search, crossref, url) and expand TOC to reveal target
 	$effect(() => {
 		const target = $searchTarget;
 		if (!target) return;
+
+		// Skip TOC-initiated navigation (we already handled it)
+		if (target.source === 'toc') return;
 
 		// Find which module contains the target
 		let modulePath: string | null = null;
@@ -194,10 +214,7 @@
 				activeId = getModuleId(modulePath);
 			}
 
-			// Re-enable observer after scroll completes
-			setTimeout(() => {
-				isNavigating = false;
-			}, 500);
+			setNavigationTimeout();
 		}
 	});
 

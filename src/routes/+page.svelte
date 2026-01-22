@@ -53,7 +53,8 @@
 		searchTarget.set({
 			name: result.name,
 			type: result.type,
-			parentClass: result.parentClass
+			parentClass: result.parentClass,
+			source: 'search'
 		});
 		goto(`${base}/${result.path}`);
 	}
