@@ -116,18 +116,23 @@
 				<span class="class-desc">{cls.description}</span>
 			{/if}
 		</div>
-		{#if cls.source && isExpanded}
-			<span
-				role="button"
-				tabindex="0"
-				class="icon-btn view-toggle-btn"
-				onclick={toggleView}
-				onkeydown={(e) => e.key === 'Enter' && toggleView(e)}
-				use:tooltip={viewMode === 'docs' ? 'View source' : 'View docs'}
-			>
-				<Icon name={viewMode === 'docs' ? 'braces' : 'book'} size={14} />
+		<div class="header-actions">
+			{#if cls.source && isExpanded}
+				<span
+					role="button"
+					tabindex="0"
+					class="icon-btn view-toggle-btn"
+					onclick={toggleView}
+					onkeydown={(e) => e.key === 'Enter' && toggleView(e)}
+					use:tooltip={viewMode === 'docs' ? 'View source' : 'View docs'}
+				>
+					<Icon name={viewMode === 'docs' ? 'braces' : 'book'} size={14} />
+				</span>
+			{/if}
+			<span class="icon-btn chevron-btn">
+				<Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={14} />
 			</span>
-		{/if}
+		</div>
 	</button>
 
 	{#if isExpanded}
@@ -228,9 +233,23 @@
 		line-height: 1.5;
 	}
 
+	/* Header actions container */
+	.header-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		flex-shrink: 0;
+	}
+
 	/* View toggle button - inherits .icon-btn styles */
 	.view-toggle-btn {
 		flex-shrink: 0;
+	}
+
+	/* Chevron button */
+	.chevron-btn {
+		flex-shrink: 0;
+		pointer-events: none;
 	}
 
 	/* Source view - no padding, CodeMirror fills the space */
