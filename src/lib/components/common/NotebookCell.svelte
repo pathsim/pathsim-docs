@@ -7,6 +7,7 @@
 	import CodeBlock from './CodeBlock.svelte';
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
+	import ConsoleOutput, { type LogEntry } from './ConsoleOutput.svelte';
 	import { notebookStore, type CellStatus } from '$lib/stores/notebookStore';
 	import { pyodideState } from '$lib/stores/pyodideStore';
 	import CellOutput from '$lib/components/notebook/CellOutput.svelte';
@@ -40,8 +41,8 @@
 	let codeBlockRef = $state<{ getCurrentCode: () => string } | undefined>(undefined);
 
 	// Execution output state
-	let stdout = $state('');
-	let stderr = $state('');
+	let consoleLogs = $state<LogEntry[]>([]);
+	let nextLogId = 0;
 	let plots = $state<string[]>([]);
 	let error = $state<{ message: string; traceback?: string } | null>(null);
 	let duration = $state<number | null>(null);
@@ -55,9 +56,18 @@
 	// Computed states
 	let isRunning = $derived(cellState.status === 'running');
 	let isPending = $derived(cellState.status === 'pending');
-	let hasLiveOutput = $derived(stdout || stderr || plots.length > 0 || error);
+	let hasLiveOutput = $derived(consoleLogs.length > 0 || plots.length > 0 || error);
 	let showStaticOutputs = $derived(!hasLiveOutput && staticOutputs.length > 0);
 	let hasOutput = $derived(hasLiveOutput || showStaticOutputs);
+
+	function addLog(message: string, level: LogEntry['level']) {
+		consoleLogs = [...consoleLogs, { id: nextLogId++, level, message }];
+	}
+
+	function clearLogs() {
+		consoleLogs = [];
+		nextLogId = 0;
+	}
 
 	/**
 	 * Execute this cell's code (called by store during prerequisite chain)
@@ -66,8 +76,7 @@
 		const codeToRun = codeBlockRef?.getCurrentCode() ?? code;
 
 		// Clear previous output
-		stdout = '';
-		stderr = '';
+		clearLogs();
 		plots = [];
 		error = null;
 		duration = null;
@@ -84,19 +93,23 @@
 			// Execute with streaming callbacks for real-time output
 			const result = await execute(codeToRun, {
 				onStdout: (text) => {
-					stdout = stdout ? stdout + '\n' + text : text;
+					addLog(text, 'output');
 				},
 				onStderr: (text) => {
-					stderr = stderr ? stderr + '\n' + text : text;
+					addLog(text, 'warning');
 				},
 				onPlot: (data) => {
 					plots = [...plots, data];
 				}
 			});
 
-			// Final result (in case any output was missed)
-			stdout = result.stdout;
-			stderr = result.stderr;
+			// Final result - add any output that wasn't streamed
+			if (result.stdout && consoleLogs.every((log) => log.message !== result.stdout)) {
+				addLog(result.stdout, 'output');
+			}
+			if (result.stderr && consoleLogs.every((log) => log.message !== result.stderr)) {
+				addLog(result.stderr, 'warning');
+			}
 			plots = result.plots;
 			duration = result.duration;
 
@@ -133,8 +146,7 @@
 	}
 
 	function clearOutput() {
-		stdout = '';
-		stderr = '';
+		clearLogs();
 		plots = [];
 		error = null;
 		duration = null;
@@ -210,7 +222,7 @@
 				</div>
 			{/if}
 
-			{#if stdout}
+			{#if consoleLogs.length > 0}
 				<div class="output-panel">
 					<div class="panel-header">
 						<span>Output</span>
@@ -218,30 +230,12 @@
 							{#if duration !== null}
 								<span class="duration">{duration}ms</span>
 							{/if}
-							<button class="icon-btn" onclick={clearOutput} use:tooltip={'Clear'}>
+							<button class="icon-btn" onclick={clearLogs} use:tooltip={'Clear'}>
 								<Icon name="x" size={14} />
 							</button>
 						</div>
 					</div>
-					<div class="panel-body">
-						<div class="output-text">{stdout}</div>
-					</div>
-				</div>
-			{/if}
-
-			{#if stderr && !error}
-				<div class="output-panel warning">
-					<div class="panel-header">
-						<span>Stderr</span>
-						<div class="header-actions">
-							<button class="icon-btn" onclick={clearOutput} use:tooltip={'Clear'}>
-								<Icon name="x" size={14} />
-							</button>
-						</div>
-					</div>
-					<div class="panel-body">
-						<div class="output-text stderr">{stderr}</div>
-					</div>
+					<ConsoleOutput logs={consoleLogs} maxHeight={200} />
 				</div>
 			{/if}
 
@@ -331,8 +325,6 @@
 		padding: 0;
 	}
 
-	/* output-text styles are in app.css global rules */
-
 	/* Duration in header */
 	.output-panel .duration {
 		font-family: var(--font-ui);
@@ -363,20 +355,6 @@
 		border-top: 1px solid var(--border);
 	}
 
-	/* Warning panel (stderr) */
-	.output-panel.warning {
-		background: var(--warning-bg);
-	}
-
-	.output-panel.warning .panel-header {
-		background: transparent;
-		color: var(--warning);
-	}
-
-	.output-panel.warning .output-text {
-		color: var(--warning);
-	}
-
 	/* Plots */
 	.plots-body {
 		display: flex;
@@ -390,22 +368,5 @@
 		height: auto;
 		border-radius: var(--radius-sm);
 		background: transparent;
-	}
-
-	/* Output text styling */
-	.output-text {
-		font-family: var(--font-mono);
-		font-size: var(--font-base);
-		font-weight: 400;
-		line-height: 1.5;
-		margin: 0;
-		padding: var(--space-md);
-		color: var(--text-muted);
-		white-space: pre-wrap;
-		word-break: break-word;
-	}
-
-	.output-text.stderr {
-		color: var(--warning);
 	}
 </style>
