@@ -6,11 +6,15 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let basePath = $derived(`${base}/notebooks/${data.packageId}`);
+	// Base path for the version content
+	let versionBasePath = $derived(`${base}/${data.packageId}/${data.tag}`);
+
+	// Base path for figures: /{package}/{tag}/figures/
+	let figuresBasePath = $derived(`${versionBasePath}/figures`);
 </script>
 
 <svelte:head>
-	<title>PathSim - {data.meta.title}</title>
+	<title>{data.meta.title} - Example</title>
 	<meta name="description" content={data.meta.description} />
 </svelte:head>
 
@@ -23,7 +27,13 @@
 		</div>
 	{/if}
 
-	<Notebook notebook={data.notebook} {basePath} showStaticOutputs={true} />
+	<Notebook
+		notebook={data.notebook}
+		basePath={versionBasePath}
+		precomputedOutputs={data.outputs}
+		{figuresBasePath}
+		showStaticOutputs={true}
+	/>
 </div>
 
 <style>

@@ -10,9 +10,15 @@
 	interface Props {
 		groups: GroupedExamples[];
 		packageId: string;
+		currentTag?: string;
 	}
 
-	let { groups, packageId }: Props = $props();
+	let { groups, packageId, currentTag }: Props = $props();
+
+	// Build examples base path (versioned or not)
+	let examplesBasePath = $derived(
+		currentTag ? `${base}/${packageId}/${currentTag}/examples` : `${base}/${packageId}/examples`
+	);
 
 	// Track expanded categories (all expanded by default)
 	// Use IIFE to capture initial value without triggering reactive warning
@@ -91,7 +97,7 @@
 					<div class="examples-toc-children">
 						{#each group.notebooks as notebook}
 							<a
-								href="{base}/{packageId}/examples/{notebook.slug}"
+								href="{examplesBasePath}/{notebook.slug}"
 								class="examples-toc-example"
 								class:active={activeId === notebook.slug}
 							>

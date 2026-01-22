@@ -3,8 +3,8 @@
 	import { base } from '$app/paths';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packages, type PackageId } from '$lib/config/packages';
-	import { apiData as staticApiData, type APIPackage, type APIModule } from '$lib/api/generated';
-	import { ModuleDoc, VersionSelector } from '$lib/components/api';
+	import type { APIPackage, APIModule } from '$lib/api/generated';
+	import { ModuleDoc } from '$lib/components/api';
 	import { apiModulesStore } from '$lib/stores/apiContext';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { lookupRef } from '$lib/utils/crossref';
@@ -12,30 +12,17 @@
 
 	interface Props {
 		packageId: PackageId;
-		// Optional versioned props - if not provided, uses static data (backward compat)
-		tag?: string;
-		manifest?: PackageManifest;
-		apiData?: APIPackage;
+		tag: string;
+		manifest: PackageManifest;
+		apiData: APIPackage;
 	}
 
 	let { packageId, tag, manifest, apiData }: Props = $props();
 
 	let pkg = $derived(packages[packageId]);
 
-	// Map packageId to API data key
-	const apiKeyMap: Record<PackageId, string> = {
-		pathsim: 'pathsim',
-		chem: 'chem',
-		vehicle: 'vehicle'
-	};
-
-	// Use provided apiData or fall back to static data
-	let apiKey = $derived(apiKeyMap[packageId]);
-	let apiPackage = $derived(apiData ?? staticApiData[apiKey]);
-	let modules = $derived(apiPackage ? Object.values(apiPackage.modules) as APIModule[] : []);
-
-	// Whether we're in versioned mode
-	let hasVersioning = $derived(!!manifest && !!tag);
+	// Extract modules from API data
+	let modules = $derived(apiData ? Object.values(apiData.modules) as APIModule[] : []);
 
 	// Update the store with modules for the sidebar TOC
 	$effect(() => {
@@ -117,10 +104,6 @@
 <Tooltip />
 
 <div class="api-page">
-	{#if hasVersioning && manifest}
-		<VersionSelector {packageId} currentTag={tag!} {manifest} />
-	{/if}
-
 	<div class="hero">
 		<img src="{base}/{pkg.logo}" alt={pkg.name} class="hero-logo" />
 		<p class="description">Click any class or function to expand its documentation. Use the sidebar to navigate between modules.</p>

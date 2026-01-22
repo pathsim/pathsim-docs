@@ -1,9 +1,12 @@
 /**
- * Search functionality using pre-built search index.
- * Index is generated at build time by scripts/build-indexes.py
+ * Search functionality using dynamically loaded search indexes.
+ *
+ * Indexes are loaded per-version from static/{package}/{tag}/search-index.json
  */
 
-import searchIndex from '$lib/api/generated/search-index.json';
+import { writable, get } from 'svelte/store';
+import type { PackageId } from '$lib/config/packages';
+import { loadMergedSearchIndex } from './indexLoader';
 
 // Scoring weights for search relevance
 const SCORE_EXACT_MATCH = 100;
@@ -33,21 +36,65 @@ export interface SearchResult {
 	tags?: string[];
 }
 
-// Type assertion for imported JSON
-const index = searchIndex as SearchResult[];
+// Store for the active search index
+const searchIndexStore = writable<SearchResult[]>([]);
+
+// Track initialization state
+let initialized = false;
+let initPromise: Promise<void> | null = null;
 
 /**
- * Search the pre-built index
+ * Initialize search with indexes for specific package versions.
+ * Call this when entering a versioned context.
+ */
+export async function initializeSearch(
+	packages: Array<{ packageId: PackageId; tag: string }>,
+	customFetch: typeof globalThis.fetch = fetch
+): Promise<void> {
+	// Avoid duplicate initialization
+	if (initPromise) {
+		return initPromise;
+	}
+
+	initPromise = (async () => {
+		const merged = await loadMergedSearchIndex(packages, customFetch);
+		searchIndexStore.set(merged);
+		initialized = true;
+	})();
+
+	await initPromise;
+	initPromise = null;
+}
+
+/**
+ * Check if search is initialized
+ */
+export function isSearchInitialized(): boolean {
+	return initialized;
+}
+
+/**
+ * Get the current search index
+ */
+export function getSearchIndex(): SearchResult[] {
+	return get(searchIndexStore);
+}
+
+/**
+ * Search the loaded index
  */
 export function search(query: string, limit: number = 20): SearchResult[] {
 	if (!query.trim()) return [];
+
+	const index = get(searchIndexStore);
+	if (index.length === 0) return [];
 
 	const lowerQuery = query.toLowerCase();
 	const terms = lowerQuery.split(/\s+/).filter(Boolean);
 
 	// Score and filter results
 	const scored = index
-		.map(result => {
+		.map((result) => {
 			let score = 0;
 			const lowerName = result.name.toLowerCase();
 			const lowerDesc = result.description.toLowerCase();
@@ -79,7 +126,7 @@ export function search(query: string, limit: number = 20): SearchResult[] {
 					score += SCORE_PARENT_CLASS;
 				}
 				// Tags contain term (for examples)
-				else if (result.tags?.some(tag => tag.toLowerCase().includes(term))) {
+				else if (result.tags?.some((tag) => tag.toLowerCase().includes(term))) {
 					score += SCORE_TAGS;
 				}
 			}
@@ -105,11 +152,26 @@ export function search(query: string, limit: number = 20): SearchResult[] {
  */
 export function getTypeLabel(type: SearchResultType): string {
 	switch (type) {
-		case 'page': return 'Page';
-		case 'module': return 'Module';
-		case 'class': return 'Class';
-		case 'function': return 'Function';
-		case 'method': return 'Method';
-		case 'example': return 'Example';
+		case 'page':
+			return 'Page';
+		case 'module':
+			return 'Module';
+		case 'class':
+			return 'Class';
+		case 'function':
+			return 'Function';
+		case 'method':
+			return 'Method';
+		case 'example':
+			return 'Example';
 	}
+}
+
+/**
+ * Reset search state (for testing or cleanup)
+ */
+export function resetSearch(): void {
+	searchIndexStore.set([]);
+	initialized = false;
+	initPromise = null;
 }

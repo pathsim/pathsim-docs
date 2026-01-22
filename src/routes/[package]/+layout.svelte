@@ -13,10 +13,14 @@
 	// Get packageId from route params, validate it exists
 	let packageId = $derived($page.params.package as PackageId);
 	let isValidPackage = $derived(packageId in packages);
+
+	// Get version data from page.data (set by [version]/+layout.ts if on versioned page)
+	let manifest = $derived($page.data.manifest);
+	let currentTag = $derived($page.data.resolvedTag);
 </script>
 
 {#if isValidPackage}
-	<DocLayout {packageId}>
+	<DocLayout {packageId} {manifest} {currentTag}>
 		{@render children()}
 	</DocLayout>
 {:else}

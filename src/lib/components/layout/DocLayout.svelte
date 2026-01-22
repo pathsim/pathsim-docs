@@ -2,18 +2,21 @@
 	import { Sidebar } from './index';
 	import ScrollToTop from '$lib/components/common/ScrollToTop.svelte';
 	import type { PackageId } from '$lib/config/packages';
+	import type { PackageManifest } from '$lib/api/versions';
 	import type { Snippet } from 'svelte';
 
 	interface Props {
 		packageId: PackageId;
+		manifest?: PackageManifest;
+		currentTag?: string;
 		children: Snippet;
 	}
 
-	let { packageId, children }: Props = $props();
+	let { packageId, manifest, currentTag, children }: Props = $props();
 </script>
 
 <div class="doc-layout">
-	<Sidebar {packageId} />
+	<Sidebar {packageId} {manifest} {currentTag} />
 	<div class="doc-main">
 		<div class="doc-content">
 			<article class="prose">

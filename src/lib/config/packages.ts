@@ -169,15 +169,32 @@ export interface SidebarItem {
 	icon?: string;
 }
 
-export function getSidebarItems(packageId: PackageId): SidebarItem[] {
+/**
+ * Get sidebar navigation items for a package.
+ * When version is provided, API and Examples paths are versioned.
+ */
+export function getSidebarItems(packageId: PackageId, version?: string): SidebarItem[] {
 	const pkg = packages[packageId];
 	const items: SidebarItem[] = [
-		{ title: 'Overview', path: pkg.docs, icon: 'home' },
-		{ title: 'API Reference', path: pkg.api, icon: 'braces' }
+		{ title: 'Overview', path: pkg.docs, icon: 'home' }
 	];
-	if (pkg.examples) {
-		items.push({ title: 'Examples', path: pkg.examples, icon: 'play' });
+
+	// Add versioned API path
+	if (version) {
+		items.push({ title: 'API Reference', path: `${packageId}/${version}/api`, icon: 'braces' });
+	} else {
+		items.push({ title: 'API Reference', path: pkg.api, icon: 'braces' });
 	}
+
+	// Add versioned examples path if package has examples
+	if (pkg.examples) {
+		if (version) {
+			items.push({ title: 'Examples', path: `${packageId}/${version}/examples`, icon: 'play' });
+		} else {
+			items.push({ title: 'Examples', path: pkg.examples, icon: 'play' });
+		}
+	}
+
 	return items;
 }
 

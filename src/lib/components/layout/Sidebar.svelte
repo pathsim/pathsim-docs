@@ -11,18 +11,24 @@
 	import { search, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
+	import type { PackageManifest } from '$lib/api/versions';
+	import { isLatestTag } from '$lib/api/versions';
 
 	interface Props {
 		packageId: PackageId;
+		manifest?: PackageManifest;
+		currentTag?: string;
 	}
 
-	let { packageId }: Props = $props();
+	let { packageId, manifest, currentTag }: Props = $props();
 
-	let items = $derived(getSidebarItems(packageId));
+	let items = $derived(getSidebarItems(packageId, currentTag));
 	let searchQuery = $state('');
 	let searchResults = $derived(search(searchQuery, 15));
 	let showResults = $derived(searchQuery.length > 0);
 	let searchInput = $state<HTMLInputElement | null>(null);
+	let versionDropdownOpen = $state(false);
+	let versionDropdownRef = $state<HTMLDivElement | null>(null);
 
 	function handleGlobalKeydown(event: KeyboardEvent) {
 		if ((event.ctrlKey || event.metaKey) && event.key === 'f') {
@@ -39,9 +45,12 @@
 	});
 
 	// Check if we're on an API page or examples listing page
-	// API pages can be /api, /api/latest, or /api/v0.16
 	let isApiPage = $derived($page.url.pathname.includes('/api'));
-	let isExamplesListPage = $derived($page.url.pathname.endsWith('/examples'));
+	let isExamplesListPage = $derived(
+		$page.url.pathname.endsWith('/examples') ||
+			$page.url.pathname.match(/\/examples\/?$/)
+	);
+	let isVersionedPage = $derived(isApiPage || $page.url.pathname.includes('/examples'));
 
 	function isActive(path: string): boolean {
 		return $page.url.pathname === `${base}/${path}`;
@@ -71,14 +80,74 @@
 
 	function getTypeIcon(type: SearchResult['type']): string {
 		switch (type) {
-			case 'page': return 'file';
-			case 'module': return 'package';
-			case 'class': return 'box';
-			case 'function': return 'zap';
-			case 'method': return 'code';
-			case 'example': return 'play';
+			case 'page':
+				return 'file';
+			case 'module':
+				return 'package';
+			case 'class':
+				return 'box';
+			case 'function':
+				return 'zap';
+			case 'method':
+				return 'code';
+			case 'example':
+				return 'play';
 		}
 	}
+
+	// Version selector
+	function toggleVersionDropdown() {
+		versionDropdownOpen = !versionDropdownOpen;
+	}
+
+	function selectVersion(tag: string) {
+		versionDropdownOpen = false;
+
+		if (!currentTag) return;
+
+		// Preserve current hash if it exists
+		const hash = typeof window !== 'undefined' ? window.location.hash : '';
+
+		// Get current page type (api or examples)
+		const pathname = $page.url.pathname;
+		let pageType = 'api';
+		let subPath = '';
+
+		if (pathname.includes('/examples/')) {
+			// We're on a specific example page
+			pageType = 'examples';
+			const match = pathname.match(/\/examples\/(.+)$/);
+			subPath = match ? `/${match[1]}` : '';
+		} else if (pathname.includes('/examples')) {
+			pageType = 'examples';
+		}
+
+		// Navigate to the same page with new version
+		goto(`${base}/${packageId}/${tag}/${pageType}${subPath}${hash}`);
+	}
+
+	function handleVersionClickOutside(event: MouseEvent) {
+		if (versionDropdownRef && !versionDropdownRef.contains(event.target as Node)) {
+			versionDropdownOpen = false;
+		}
+	}
+
+	function handleVersionKeydown(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			versionDropdownOpen = false;
+		}
+	}
+
+	$effect(() => {
+		if (versionDropdownOpen) {
+			document.addEventListener('click', handleVersionClickOutside);
+			document.addEventListener('keydown', handleVersionKeydown);
+		}
+		return () => {
+			document.removeEventListener('click', handleVersionClickOutside);
+			document.removeEventListener('keydown', handleVersionKeydown);
+		};
+	});
 </script>
 
 <aside class="sidebar">
@@ -108,7 +177,9 @@
 							<Icon name={getTypeIcon(result.type)} size={14} />
 							<div class="result-text">
 								<span class="result-name">{result.name}</span>
-								<span class="result-context">{result.parentClass || result.moduleName.split('.').pop()}</span>
+								<span class="result-context"
+									>{result.parentClass || result.moduleName.split('.').pop()}</span
+								>
 							</div>
 						</button>
 					{/each}
@@ -117,6 +188,40 @@
 				{/if}
 			</nav>
 		{:else}
+			<!-- Version selector - only show on versioned pages -->
+			{#if isVersionedPage && manifest && currentTag}
+				<div class="version-selector-container" bind:this={versionDropdownRef}>
+					<button
+						class="version-selector-trigger"
+						onclick={toggleVersionDropdown}
+						aria-expanded={versionDropdownOpen}
+					>
+						<Icon name="git-branch" size={14} />
+						<span class="version-text">{currentTag}</span>
+						<Icon name="chevron-down" size={10} />
+					</button>
+
+					{#if versionDropdownOpen}
+						<div class="version-dropdown">
+							{#each manifest.versions as v}
+								{@const isSelected = v.tag === currentTag}
+								{@const isLatest = isLatestTag(v.tag, manifest)}
+								<button
+									class="version-item"
+									class:selected={isSelected}
+									onclick={() => selectVersion(v.tag)}
+								>
+									<span class="version-tag">{v.tag}</span>
+									{#if isLatest}
+										<span class="latest-badge">latest</span>
+									{/if}
+								</button>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			{/if}
+
 			<nav class="sidebar-nav">
 				{#each items as item}
 					<a href="{base}/{item.path}" class="sidebar-item" class:active={isActive(item.path)}>
@@ -136,7 +241,7 @@
 		</div>
 	{:else if !showResults && isExamplesListPage && $exampleGroupsStore.length > 0}
 		<div class="sidebar-scrollable">
-			<ExamplesToc groups={$exampleGroupsStore} {packageId} />
+			<ExamplesToc groups={$exampleGroupsStore} {packageId} currentTag={currentTag} />
 		</div>
 	{/if}
 </aside>
@@ -169,7 +274,9 @@
 		height: var(--header-height);
 		padding: 0 var(--space-md);
 		border-bottom: 1px solid var(--border);
-		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+		transition:
+			border-color var(--transition-fast),
+			box-shadow var(--transition-fast);
 	}
 
 	.search-container:focus-within {
@@ -262,6 +369,89 @@
 		text-align: center;
 		color: var(--text-muted);
 		font-size: var(--font-base);
+	}
+
+	/* Version selector */
+	.version-selector-container {
+		position: relative;
+		padding: var(--space-sm) var(--space-md);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.version-selector-trigger {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		width: 100%;
+		padding: var(--space-xs) var(--space-sm);
+		background: var(--surface-raised);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-sm);
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: var(--font-base);
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.version-selector-trigger:hover {
+		color: var(--text);
+		border-color: var(--border-hover);
+	}
+
+	.version-text {
+		flex: 1;
+		text-align: left;
+	}
+
+	.version-dropdown {
+		position: absolute;
+		top: 100%;
+		left: var(--space-md);
+		right: var(--space-md);
+		margin-top: var(--space-xs);
+		background: var(--surface-raised);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-md);
+		box-shadow: var(--shadow-md);
+		overflow: hidden;
+		z-index: var(--z-dropdown);
+		max-height: 300px;
+		overflow-y: auto;
+	}
+
+	.version-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm);
+		width: 100%;
+		padding: var(--space-xs) var(--space-md);
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: var(--font-base);
+		text-align: left;
+		cursor: pointer;
+		transition: all var(--transition-fast);
+	}
+
+	.version-item:hover {
+		background: var(--surface-hover);
+		color: var(--text);
+	}
+
+	.version-item.selected {
+		color: var(--accent);
+	}
+
+	.latest-badge {
+		font-size: 10px;
+		color: var(--text-disabled);
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
 	}
 
 	.sidebar-nav {
