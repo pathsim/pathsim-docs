@@ -1165,8 +1165,13 @@ input::placeholder {
 
 .katex-display {
 	margin: 1em 0;
-	overflow-x: auto;
 	padding: var(--space-sm) 0;
+}
+
+/* Hide equation numbers (from align, equation environments) */
+.katex .eqn-num,
+.katex .tag {
+	display: none;
 }
 
 /* API documentation specific styles */
