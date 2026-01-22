@@ -5,12 +5,18 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, packageOrder, nav } from '$lib/config/packages';
-	import { search, type SearchResult } from '$lib/utils/search';
+	import { search, searchIndexStore, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	let searchQuery = $state('');
 	let debouncedQuery = $state('');
-	let searchResults = $derived(search(debouncedQuery, 8));
+	// Subscribe to store for reactivity, then compute search results
+	let searchIndex = $derived($searchIndexStore);
+	let searchResults = $derived.by(() => {
+		// Depend on searchIndex to trigger re-computation when index loads
+		searchIndex;
+		return search(debouncedQuery, 8);
+	});
 	let showResults = $derived(searchQuery.length > 0);
 
 	// Debounce search query (150ms delay)

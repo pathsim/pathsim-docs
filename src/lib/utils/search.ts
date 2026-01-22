@@ -36,8 +36,8 @@ export interface SearchResult {
 	tags?: string[];
 }
 
-// Store for the active search index
-const searchIndexStore = writable<SearchResult[]>([]);
+// Store for the active search index (exported for reactive subscriptions)
+export const searchIndexStore = writable<SearchResult[]>([]);
 
 // Track initialization state and current version
 let initialized = false;

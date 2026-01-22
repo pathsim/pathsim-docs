@@ -6,6 +6,10 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
 	import { packageOrder, type PackageId } from '$lib/config/packages';
+	import { getPackageManifest } from '$lib/api/versions';
+	import { initializeSearch } from '$lib/utils/search';
+	import { initializeCrossref } from '$lib/utils/crossref';
+	import { versionStore } from '$lib/stores/versionStore';
 
 	let { children } = $props();
 
@@ -31,7 +35,35 @@
 			theme = 'light';
 		}
 		document.documentElement.setAttribute('data-theme', theme);
+
+		// Initialize version store from localStorage
+		versionStore.initialize();
+
+		// Initialize search indexes for all packages
+		initializeAllPackageIndexes();
 	});
+
+	async function initializeAllPackageIndexes() {
+		const packages: Array<{ packageId: PackageId; tag: string }> = [];
+
+		for (const pkgId of packageOrder) {
+			// Check stored version first, then fetch latest
+			let tag = versionStore.getVersion(pkgId);
+			if (!tag) {
+				try {
+					const manifest = await getPackageManifest(pkgId, fetch);
+					tag = manifest.latestTag;
+				} catch {
+					// Package might not have a manifest yet, skip it
+					continue;
+				}
+			}
+			packages.push({ packageId: pkgId, tag });
+		}
+
+		// Initialize search and crossref with all packages
+		await Promise.all([initializeSearch(packages), initializeCrossref(packages)]);
+	}
 
 	function toggleTheme() {
 		theme = theme === 'dark' ? 'light' : 'dark';
