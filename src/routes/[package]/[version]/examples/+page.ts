@@ -1,22 +1,23 @@
-import { error } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
+import { base } from '$app/paths';
 import type { PageLoad } from './$types';
-import { getVersionManifest, type VersionManifest } from '$lib/notebook/loader';
+import { getVersionManifest } from '$lib/notebook/loader';
 
 export const load: PageLoad = async ({ parent, fetch }) => {
 	const { packageId, resolvedTag, manifest } = await parent();
 
-	try {
-		// Load version manifest (notebook list)
-		const versionManifest = await getVersionManifest(packageId, resolvedTag, fetch);
+	// Load version manifest (notebook list)
+	const versionManifest = await getVersionManifest(packageId, resolvedTag, fetch);
 
-		return {
-			packageId,
-			resolvedTag,
-			manifest,
-			versionManifest
-		};
-	} catch (e) {
-		const message = e instanceof Error ? e.message : 'Failed to load examples';
-		throw error(404, message);
+	// If no notebooks, redirect up to overview
+	if (!versionManifest.notebooks || versionManifest.notebooks.length === 0) {
+		throw redirect(307, `${base}/${packageId}`);
 	}
+
+	return {
+		packageId,
+		resolvedTag,
+		manifest,
+		versionManifest
+	};
 };

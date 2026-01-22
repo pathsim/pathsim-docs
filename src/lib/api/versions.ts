@@ -5,6 +5,7 @@ import type { APIPackage } from './generated';
 export interface VersionInfo {
 	tag: string;
 	released: string;
+	hasExamples?: boolean;
 }
 
 export interface PackageManifest {
@@ -14,33 +15,34 @@ export interface PackageManifest {
 }
 
 /**
- * Fetch the version manifest for a package
+ * Fetch the package manifest (list of versions)
+ * Path: /{package}/manifest.json
  */
-export async function getVersionManifest(
+export async function getPackageManifest(
 	packageId: string,
 	fetch: typeof globalThis.fetch
 ): Promise<PackageManifest> {
-	const url = `${base}/api/versions/${packageId}/manifest.json`;
+	const url = `${base}/${packageId}/manifest.json`;
 	const response = await fetch(url);
 
 	if (!response.ok) {
-		throw new Error(`Failed to load version manifest for ${packageId}: ${response.status}`);
+		throw new Error(`Failed to load package manifest for ${packageId}: ${response.status}`);
 	}
 
 	return response.json();
 }
 
 /**
- * Fetch versioned API data for a specific package version tag
+ * Fetch API data for a specific package version
+ * Path: /{package}/{tag}/api.json
  */
-export async function getVersionedApiData(
+export async function getApiData(
 	packageId: string,
 	tag: string,
 	fetch: typeof globalThis.fetch
 ): Promise<APIPackage> {
-	// Ensure tag has 'v' prefix
-	const normalizedTag = tag.startsWith('v') ? tag : `v${tag}`;
-	const url = `${base}/api/versions/${packageId}/${normalizedTag}.json`;
+	const normalizedTag = normalizeTag(tag);
+	const url = `${base}/${packageId}/${normalizedTag}/api.json`;
 	const response = await fetch(url);
 
 	if (!response.ok) {
@@ -48,6 +50,13 @@ export async function getVersionedApiData(
 	}
 
 	return response.json();
+}
+
+/**
+ * Normalize a tag to have 'v' prefix
+ */
+export function normalizeTag(tag: string): string {
+	return tag.startsWith('v') ? tag : `v${tag}`;
 }
 
 /**
@@ -61,8 +70,7 @@ export function resolveTag(tagOrVersion: string | undefined, manifest: PackageMa
 		return manifest.latestTag;
 	}
 
-	// Normalize to have 'v' prefix
-	const normalized = tagOrVersion.startsWith('v') ? tagOrVersion : `v${tagOrVersion}`;
+	const normalized = normalizeTag(tagOrVersion);
 
 	// Validate the tag exists in manifest
 	const exists = manifest.versions.some((v) => v.tag === normalized);
@@ -77,8 +85,7 @@ export function resolveTag(tagOrVersion: string | undefined, manifest: PackageMa
  * Check if a tag is the latest tag
  */
 export function isLatestTag(tag: string, manifest: PackageManifest): boolean {
-	const normalized = tag.startsWith('v') ? tag : `v${tag}`;
-	return normalized === manifest.latestTag;
+	return normalizeTag(tag) === manifest.latestTag;
 }
 
 /**
@@ -89,4 +96,13 @@ export function getTagLabel(tag: string, manifest: PackageManifest): string {
 		return `${tag} (latest)`;
 	}
 	return tag;
+}
+
+/**
+ * Check if a version has examples
+ */
+export function versionHasExamples(tag: string, manifest: PackageManifest): boolean {
+	const normalized = normalizeTag(tag);
+	const version = manifest.versions.find((v) => v.tag === normalized);
+	return version?.hasExamples ?? false;
 }

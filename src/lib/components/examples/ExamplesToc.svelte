@@ -74,7 +74,6 @@
 </script>
 
 <div class="examples-toc">
-	<div class="label-uppercase examples-toc-header">On this page</div>
 	<nav class="examples-toc-nav">
 		{#each groups as group}
 			{@const isExpanded = expandedCategories.has(group.category.id)}
@@ -116,11 +115,7 @@
 		display: flex;
 		flex-direction: column;
 		padding: var(--space-md);
-		border-top: 1px solid var(--border);
-	}
-
-	.examples-toc-header {
-		margin-bottom: var(--space-sm);
+		padding-top: 0;
 	}
 
 	.examples-toc-nav {

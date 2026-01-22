@@ -27,7 +27,7 @@ npm run dev
 For production:
 
 ```bash
-npm run extract:all  # Extract API docs and build indexes
+python scripts/build.py --all  # Extract API docs, notebooks, and build indexes
 npm run build
 npm run preview
 ```
@@ -38,12 +38,8 @@ npm run preview
 src/
 ├── lib/
 │   ├── api/               # API data system
-│   │   ├── generated/     # Auto-generated from Python packages
-│   │   │   ├── pathsim.json
-│   │   │   ├── search-index.json
-│   │   │   ├── crossref-index.json
-│   │   │   └── index.ts   # TypeScript types
-│   │   └── versions.ts    # Version loading utilities
+│   │   ├── versions.ts    # Version loading utilities, manifest types
+│   │   └── generated/     # TypeScript types (index.ts)
 │   ├── components/
 │   │   ├── api/           # API documentation components
 │   │   │   ├── ModuleDoc.svelte
@@ -51,17 +47,17 @@ src/
 │   │   │   ├── FunctionDoc.svelte
 │   │   │   ├── DocstringRenderer.svelte
 │   │   │   ├── TypeRef.svelte
-│   │   │   └── VersionSelector.svelte
+│   │   │   └── ApiToc.svelte
 │   │   ├── common/        # Shared UI components
 │   │   │   ├── Icon.svelte
 │   │   │   ├── Tooltip.svelte
 │   │   │   ├── CodeBlock.svelte
+│   │   │   ├── NotebookCell.svelte
 │   │   │   ├── MarkdownRenderer.svelte
-│   │   │   ├── RstRenderer.svelte
-│   │   │   └── ScrollToTop.svelte
+│   │   │   └── RstRenderer.svelte
 │   │   ├── layout/        # Page layout
 │   │   │   ├── Header.svelte
-│   │   │   ├── Sidebar.svelte
+│   │   │   ├── Sidebar.svelte      # Includes version selector
 │   │   │   ├── MobileDrawer.svelte
 │   │   │   └── DocLayout.svelte
 │   │   ├── notebook/      # Jupyter notebook rendering
@@ -69,57 +65,85 @@ src/
 │   │   │   ├── CodeCell.svelte
 │   │   │   ├── MarkdownCell.svelte
 │   │   │   └── CellOutput.svelte
+│   │   ├── examples/      # Examples page components
+│   │   │   └── ExamplesToc.svelte
 │   │   └── pages/         # Full page components
 │   │       ├── PackageOverview.svelte
-│   │       ├── PackageApi.svelte
-│   │       └── PackageExamples.svelte
+│   │       └── PackageApi.svelte
 │   ├── config/            # Centralized configuration
-│   │   ├── packages.ts    # Package metadata, links, features
+│   │   ├── packages.ts    # Package metadata, links, features, installation
 │   │   ├── pyodide.ts     # Python runtime config
-│   │   └── cdn.ts         # External resource URLs
-│   ├── notebook/          # Notebook parsing
+│   │   └── links.ts       # External URLs
+│   ├── notebook/          # Notebook parsing and loading
 │   │   ├── types.ts
 │   │   ├── parser.ts
-│   │   └── manifest.ts
+│   │   └── loader.ts      # Version manifest and notebook loading
 │   ├── pyodide/           # Python execution (Web Worker)
+│   │   ├── index.ts       # Main thread bridge
+│   │   ├── worker.ts      # Web Worker implementation
+│   │   └── types.ts       # Message protocol types
 │   ├── stores/            # Svelte stores
 │   │   ├── apiContext.ts
 │   │   ├── examplesContext.ts
 │   │   ├── notebookStore.ts
 │   │   ├── pyodideStore.ts
-│   │   └── searchNavigation.ts
+│   │   ├── versionStore.ts        # Per-package version persistence
+│   │   ├── packageVersionsStore.ts # Pyodide package versions
+│   │   ├── searchNavigation.ts
+│   │   └── themeStore.ts
 │   └── utils/
-│       ├── search.ts      # Pre-built search index
+│       ├── search.ts      # Search with dynamic index loading
 │       ├── crossref.ts    # Cross-reference linking
 │       ├── codemirror.ts  # Editor setup
 │       └── clipboard.ts
 ├── routes/
 │   ├── +page.svelte       # Home (search, package cards)
 │   ├── +layout.svelte     # Root layout
-│   └── [package]/         # Dynamic package routes
-│       ├── +page.svelte   # Package overview
-│       ├── api/
-│       │   └── [[version]]/  # Versioned API docs
-│       └── examples/
-│           └── [slug]/    # Individual notebooks
+│   ├── pathsim/           # Static package routes (overview only)
+│   │   └── +page.svelte
+│   ├── chem/
+│   │   └── +page.svelte
+│   ├── vehicle/
+│   │   └── +page.svelte
+│   └── [package]/         # Dynamic versioned routes
+│       ├── +layout.ts     # Package layout loader
+│       ├── [version]/
+│       │   ├── +layout.ts     # Version validation, manifest loading
+│       │   ├── +layout.svelte # Version context provider
+│       │   ├── api/
+│       │   │   ├── +page.ts   # Load versioned API data
+│       │   │   └── +page.svelte
+│       │   └── examples/
+│       │       ├── +page.ts   # Load versioned notebook list
+│       │       ├── +page.svelte
+│       │       └── [slug]/
+│       │           ├── +page.ts   # Load versioned notebook
+│       │           └── +page.svelte
 └── app.css                # Global design system
 
 scripts/
-├── extract-api.py         # API extraction using Griffe
-├── build-indexes.py       # Search and crossref index generation
-├── extract-versions.py    # Historical version extraction
-├── prepare-notebooks.py   # Notebook processing
-└── generate-manifests.py  # Version manifest generation
+├── build.py               # Main build script (API, notebooks, indexes)
+├── build-indexes.py       # Standalone index generation
+├── requirements.txt
+└── lib/
+    ├── config.py          # Build configuration (min versions, paths)
+    ├── api.py             # API extraction using Griffe
+    ├── notebooks.py       # Notebook processing
+    ├── git.py             # Git operations (tags, checkout)
+    └── executor.py        # Parallel execution utilities
 
 static/
-├── api/versions/          # Versioned API JSON files
-│   ├── pathsim/
-│   ├── chem/
-│   └── vehicle/
-└── notebooks/             # Jupyter notebooks
-    ├── pathsim/
-    ├── chem/
-    └── vehicle/
+├── {package}/             # Per-package versioned content
+│   ├── manifest.json      # Package manifest (versions, latest)
+│   └── {tag}/             # Per-version content (e.g., v0.16.4)
+│       ├── api.json           # API documentation
+│       ├── manifest.json      # Notebook metadata
+│       ├── search-index.json  # Versioned search index
+│       ├── crossref-index.json # Versioned crossref index
+│       ├── notebooks/         # Jupyter notebook files
+│       ├── outputs/           # Pre-computed cell outputs
+│       └── figures/           # Pre-rendered figures
+└── *.png                  # Logo files
 ```
 
 ---
@@ -130,15 +154,20 @@ static/
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│ Python Packages │────>│ extract-api.py  │────>│ API JSON Files  │
-│ (pathsim, etc.) │     │ (Griffe)        │     │ (generated/)    │
+│ Python Packages │────>│ scripts/build.py│────>│ Per-Version     │
+│ (pathsim, etc.) │     │ (Griffe)        │     │ Static Files    │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
                                                         │
-                                                        v
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│ Search/Crossref │<────│ build-indexes.py│<────│ + Notebook      │
-│ Indexes (JSON)  │     │                 │     │   Manifests     │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
+                        For each git tag:               v
+                        ┌─────────────────────────────────────────┐
+                        │ static/{package}/{tag}/                 │
+                        │   ├── api.json                          │
+                        │   ├── manifest.json (notebooks)         │
+                        │   ├── search-index.json                 │
+                        │   ├── crossref-index.json               │
+                        │   ├── notebooks/                        │
+                        │   └── figures/                          │
+                        └─────────────────────────────────────────┘
 ```
 
 ### URL Scheme
@@ -147,67 +176,53 @@ static/
 |-----|------|
 | `/` | Home with search and package cards |
 | `/pathsim` | PathSim overview (features, installation) |
-| `/pathsim/api` | API reference (latest version) |
-| `/pathsim/api/0.16` | API reference (specific version) |
-| `/pathsim/examples` | Example notebooks gallery |
-| `/pathsim/examples/harmonic-oscillator` | Specific notebook |
+| `/pathsim/v0.16.4/api` | API reference (specific version) |
+| `/pathsim/v0.16.4/examples` | Example notebooks gallery |
+| `/pathsim/v0.16.4/examples/harmonic-oscillator` | Specific notebook |
 | `/chem`, `/vehicle` | Other packages (same structure) |
 
 ### Key Abstractions
 
 | Layer | Purpose | Key Files |
 |-------|---------|-----------|
-| **API Extraction** | Python → JSON documentation | `extract-api.py` |
-| **Index Building** | Pre-built search/crossref | `build-indexes.py` |
-| **Search** | Multi-term scoring algorithm | `search.ts` |
-| **Cross-refs** | Link resolution in docstrings | `crossref.ts`, `TypeRef.svelte` |
-| **Version Loader** | Fetch versioned API data | `versions.ts` |
-| **Notebook Parser** | .ipynb → renderable cells | `parser.ts` |
-| **Pyodide Worker** | Execute Python in browser | `pyodide/worker.ts` |
+| **Build Script** | Extract API, notebooks, indexes | `scripts/build.py` |
+| **Search** | Per-version search indexes | `search.ts`, `search-index.json` |
+| **Cross-refs** | Per-version link resolution | `crossref.ts`, `TypeRef.svelte` |
+| **Version Store** | Persist selected version per package | `versionStore.ts` |
+| **Notebook Loader** | Fetch versioned notebooks | `loader.ts` |
+| **Pyodide Worker** | Execute Python with versioned packages | `pyodide/worker.ts` |
 
 ---
 
-## API Extraction
+## Build System
 
-API documentation is extracted from Python packages using [Griffe](https://mkdocstrings.github.io/griffe/).
-
-### How It Works
-
-1. **Source**: Reads Python source code from cloned repositories
-2. **Parsing**: Griffe extracts modules, classes, functions, docstrings
-3. **Conversion**: RST docstrings → HTML (via docutils)
-4. **Output**: JSON files with structured API data
-
-### Running Extraction
+The main build script handles all content generation:
 
 ```bash
-# Extract latest API for all packages
-npm run extract
+# Build specific package (smart mode - only missing versions)
+python scripts/build.py --package pathsim
 
-# Or with specific package
-python scripts/extract-api.py --package pathsim
+# Rebuild all versions for all packages
+python scripts/build.py --all
+
+# Build indexes only (for existing content)
+python scripts/build-indexes.py
 ```
 
-### Output Format
+### What It Does
 
-```json
-{
-  "package": "pathsim",
-  "display_name": "PathSim",
-  "modules": {
-    "pathsim.blocks.integrator": {
-      "name": "pathsim.blocks.integrator",
-      "description": "Integrator block for ODE systems",
-      "classes": [{
-        "name": "Integrator",
-        "description": "...",
-        "bases": ["pathsim.blocks._block.Block"],
-        "methods": [...],
-        "parameters": [...]
-      }],
-      "functions": [...]
-    }
-  }
+1. **API Extraction**: Uses Griffe to extract from Python source
+2. **Notebook Processing**: Copies notebooks, extracts metadata
+3. **Index Generation**: Creates search and crossref indexes per version
+4. **Manifest Generation**: Creates package manifest with version list
+
+### Configuration (`scripts/lib/config.py`)
+
+```python
+MIN_SUPPORTED_VERSIONS = {
+    "pathsim": "0.7",
+    "pathsim-chem": "0.1",
+    "pathsim-vehicle": "0.1"
 }
 ```
 
@@ -215,12 +230,22 @@ python scripts/extract-api.py --package pathsim
 
 ## Search System
 
-Search uses pre-built indexes generated at build time, eliminating runtime index construction.
+Search uses per-version indexes loaded dynamically.
 
-### Index Generation
+### Index Structure
 
-```bash
-npm run build:indexes  # Generates search-index.json and crossref-index.json
+Each version has its own `search-index.json`:
+
+```json
+[
+  {
+    "name": "Integrator",
+    "type": "class",
+    "moduleName": "pathsim.blocks.integrator",
+    "path": "pathsim/v0.16.4/api#Integrator",
+    "description": "Integration block for ODE systems"
+  }
+]
 ```
 
 ### Search Features
@@ -229,17 +254,6 @@ npm run build:indexes  # Generates search-index.json and crossref-index.json
 - **Scoring hierarchy**: Exact match (100) > prefix (50) > contains (30) > description (10)
 - **Type boosting**: Pages 1.5x, classes 1.2x, examples 1.15x
 - **Keyboard shortcut**: Ctrl+F focuses search bar
-
-### Indexed Items
-
-| Type | Source | Example |
-|------|--------|---------|
-| `page` | Package config | "PathSim API" |
-| `module` | API JSON | "pathsim.blocks.integrator" |
-| `class` | API JSON | "Integrator" |
-| `method` | API JSON | "__init__" |
-| `function` | API JSON | "create_solver" |
-| `example` | Notebook manifest | "Harmonic Oscillator" |
 
 ---
 
@@ -255,76 +269,65 @@ Automatically links class/function names in docstrings to their API documentatio
 'Integrator'              # Single-quoted names
 ```
 
-### Lookup Keys
+### Per-Version Resolution
 
-Each class is indexed by multiple keys for flexible lookup:
+Cross-references resolve to the current version's API:
 
 ```
-Integrator                           # Class name only
-pathsim.blocks.integrator.Integrator # Full module path
-pathsim.Integrator                   # Package.ClassName
-```
-
-### Path Assembly
-
-Paths are stored without leading slash and joined at runtime:
-
-```typescript
-// Stored: "pathsim/api#Integrator"
-// Runtime: base + "/" + path → "/pathsim-docs/pathsim/api#Integrator"
+Integrator → /pathsim/v0.16.4/api#Integrator
 ```
 
 ---
 
 ## Versioned Documentation
 
-Each package maintains historical API versions.
+Each package maintains historical API versions with full content.
 
-### Version Extraction
+### Package Manifest
 
-```bash
-python scripts/extract-versions.py
-```
-
-The script:
-1. Lists git tags from each package repository
-2. Filters to supported versions (configurable minimum)
-3. Smart mode: only extracts missing versions + always re-extracts latest
-4. Outputs to `static/api/versions/{package}/v{X.Y}.json`
-
-### Version Manifest
+Located at `static/{package}/manifest.json`:
 
 ```json
 {
   "package": "pathsim",
-  "versions": ["0.16", "0.15", "0.14"],
-  "latest": "0.16"
+  "latestTag": "v0.16.4",
+  "versions": [
+    {
+      "tag": "v0.16.4",
+      "released": "2025-01-17",
+      "hasExamples": true
+    },
+    {
+      "tag": "v0.9.0",
+      "released": "2025-09-26",
+      "hasExamples": false
+    }
+  ]
 }
 ```
+
+### Version Selection
+
+- **Sidebar dropdown**: Shows all versions with "latest" badge
+- **Persistence**: Selected version stored in localStorage per package
+- **Smart navigation**: When switching to a version without examples, redirects to overview
 
 ---
 
 ## Interactive Notebooks
 
-Jupyter notebooks run in the browser via Pyodide.
-
-### Notebook Processing
-
-```bash
-python scripts/prepare-notebooks.py
-```
-
-1. Discovers notebooks from source repositories
-2. Extracts metadata (title, description, category, tags)
-3. Copies to `static/notebooks/{package}/`
-4. Generates `manifest.json` for each package
+Jupyter notebooks run in the browser via Pyodide with versioned package support.
 
 ### Execution
 
 - Pyodide runs in a Web Worker (non-blocking)
-- Packages installed via micropip at runtime
+- **Versioned packages**: Installs specific version matching the docs (e.g., `pathsim==0.16.4`)
 - Cell outputs rendered: text, images, HTML, errors
 - Math support via KaTeX
+
+### Version-Aware Execution
+
+When viewing `/pathsim/v0.14.0/examples/...`, Pyodide installs `pathsim==0.14.0` to ensure examples work correctly with that version's API.
 
 ---
 
@@ -337,13 +340,22 @@ Central source of truth for all package metadata:
 ```typescript
 export const packages = {
   pathsim: {
+    id: 'pathsim',
     name: 'PathSim',
     description: 'Block-diagram simulation framework',
-    logo: '/pathsim_logo.png',
-    links: { docs: '...', api: '...', github: '...' },
+    logo: 'pathsim_logo.png',
+    docs: 'pathsim',
+    api: 'pathsim/api',
+    examples: 'pathsim/examples',
+    pypi: 'https://pypi.org/project/pathsim',
+    conda: 'https://anaconda.org/conda-forge/pathsim',
+    github: 'https://github.com/pathsim/pathsim',
     features: [...],
-    installation: { pip: '...', conda: '...' },
-    quickstart: '...'
+    installation: [
+      { name: 'pip', command: 'pip install pathsim' },
+      { name: 'conda', command: 'conda install -c conda-forge pathsim', minVersion: '0.14.0' }
+    ],
+    quickstart: { ... }
   }
 };
 ```
@@ -351,12 +363,12 @@ export const packages = {
 ### Pyodide Configuration (`src/lib/config/pyodide.ts`)
 
 ```typescript
-export const pyodideConfig = {
-  version: '0.26.2',
-  packages: ['numpy', 'scipy', 'micropip'],
-  pythonPackages: ['pathsim', 'matplotlib'],
-  timeout: { init: 120000, cell: 60000 }
-};
+export const PYODIDE_VERSION = '0.26.2';
+export const PYTHON_PACKAGES = [
+  { pip: 'pathsim', required: true, pre: true, import: 'pathsim' },
+  { pip: 'matplotlib', required: true, pre: false, import: 'matplotlib' }
+];
+export const TIMEOUTS = { INIT: 120000, EXECUTION: 60000 };
 ```
 
 ---
@@ -369,9 +381,9 @@ export const pyodideConfig = {
 | `npm run build` | Production build |
 | `npm run preview` | Preview production build |
 | `npm run check` | TypeScript/Svelte type checking |
-| `npm run extract` | Extract API from Python packages |
-| `npm run build:indexes` | Generate search/crossref indexes |
-| `npm run extract:all` | Extract + build indexes (full pipeline) |
+| `python scripts/build.py` | Build all content (smart mode) |
+| `python scripts/build.py --all` | Rebuild all versions |
+| `python scripts/build-indexes.py` | Regenerate indexes only |
 
 ---
 
@@ -409,13 +421,9 @@ GitHub Pages deployment via GitHub Actions.
 ### Workflow
 
 1. Clone PathSim repositories
-2. Extract latest API (`extract-api.py`)
-3. Extract versioned APIs (`extract-versions.py`)
-4. Generate manifests (`generate-manifests.py`)
-5. Prepare notebooks (`prepare-notebooks.py`)
-6. Build search/crossref indexes (`build-indexes.py`)
-7. Build SvelteKit (`npm run build`)
-8. Deploy to GitHub Pages
+2. Run `python scripts/build.py --all` (extracts API, notebooks, builds indexes)
+3. Build SvelteKit (`npm run build`)
+4. Deploy to GitHub Pages
 
 ### Environment Variables
 

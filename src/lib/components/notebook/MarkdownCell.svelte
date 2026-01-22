@@ -8,12 +8,14 @@
 
 	interface Props {
 		cell: MarkdownCellData;
+		/** Base path for resolving relative image URLs */
+		basePath?: string;
 	}
 
-	let { cell }: Props = $props();
+	let { cell, basePath = '' }: Props = $props();
 </script>
 
 <div class="markdown-cell">
-	<MarkdownRenderer markdown={cell.source} />
+	<MarkdownRenderer markdown={cell.source} {basePath} />
 </div>
 

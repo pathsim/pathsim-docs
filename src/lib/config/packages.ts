@@ -6,6 +6,7 @@ export const external = {
 	view: 'https://view.pathsim.org',
 	github: 'https://github.com/pathsim',
 	pypi: 'https://pypi.org/project',
+	conda: 'https://anaconda.org/conda-forge',
 	sponsor: 'https://github.com/sponsors/milanofthe'
 };
 
@@ -19,6 +20,7 @@ export interface Feature {
 export interface InstallOption {
 	name: string;
 	command: string;
+	minVersion?: string; // Minimum version that supports this install method (e.g., "0.14.0")
 }
 
 export interface QuickStart {
@@ -47,6 +49,7 @@ export interface PackageConfig {
 	api: string;
 	examples: string | null;  // null if no examples
 	pypi: string | null;  // null if not yet on PyPI
+	conda: string | null;  // null if not on conda-forge
 	github: string;
 
 	// Content
@@ -69,6 +72,7 @@ export const packages: Record<PackageId, PackageConfig> = {
 		api: 'pathsim/api',
 		examples: 'pathsim/examples',
 		pypi: `${external.pypi}/pathsim`,
+		conda: `${external.conda}/pathsim`,
 		github: `${external.github}/pathsim`,
 		features: [
 			{ title: 'Block-based', description: 'Build systems by connecting reusable blocks' },
@@ -80,7 +84,7 @@ export const packages: Record<PackageId, PackageConfig> = {
 		],
 		installation: [
 			{ name: 'pip', command: 'pip install pathsim' },
-			{ name: 'conda', command: 'conda install -c conda-forge pathsim' }
+			{ name: 'conda', command: 'conda install -c conda-forge pathsim', minVersion: '0.14.0' }
 		],
 		quickstart: {
 			description: 'PathSim uses a block-diagram approach. Create blocks, connect them, and simulate.',
@@ -123,6 +127,7 @@ scope.plot()`,
 		api: 'chem/api',
 		examples: null,
 		pypi: `${external.pypi}/pathsim-chem`,
+		conda: null,
 		github: `${external.github}/pathsim-chem`,
 		features: [],
 		installation: [
@@ -146,6 +151,7 @@ scope.plot()`,
 		api: 'vehicle/api',
 		examples: null,
 		pypi: null,
+		conda: null,
 		github: `${external.github}/pathsim-vehicle`,
 		features: [],
 		installation: [],
@@ -204,10 +210,4 @@ export const nav = {
 	tryOnline: external.view,
 	github: `${external.github}/pathsim`,
 	sponsor: external.sponsor
-};
-
-export const footer = {
-	home: external.home,
-	github: `${external.github}/pathsim`,
-	pypi: `${external.pypi}/pathsim`
 };

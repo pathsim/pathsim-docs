@@ -1,0 +1,31 @@
+{
+  "cells": {
+    "14": {
+      "stdout": "14:29:59 - INFO - LOGGING (log: True)\n14:29:59 - INFO - BLOCKS (total: 6, dynamic: 1, static: 5, eventful: 0)\n14:29:59 - INFO - GRAPH (nodes: 6, edges: 7, alg. depth: 3, loop depth: 0, runtime: 0.038ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "16": {
+      "stdout": "14:29:59 - INFO - STARTING -> TRANSIENT (Duration: 30.00s)\n14:29:59 - INFO - --------------------   1% | 0.0s<0.1s | 9149.1 it/s\n14:29:59 - INFO - ####----------------  20% | 0.0s<0.0s | 13424.3 it/s\n14:29:59 - INFO - ########------------  40% | 0.0s<0.0s | 13353.4 it/s\n14:29:59 - INFO - ############--------  60% | 0.0s<0.0s | 13244.9 it/s\n14:29:59 - INFO - ################----  80% | 0.0s<0.0s | 13132.4 it/s\n14:29:59 - INFO - #################### 100% | 0.1s<--:-- | 12736.5 it/s\n14:29:59 - INFO - FINISHED -> TRANSIENT (total steps: 631, successful: 607, runtime: 54.23 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "18": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "thermostat_0.png"
+      ]
+    },
+    "20": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "thermostat_1.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:30:00.487643+00:00",
+  "duration": 3237,
+  "success": true
+}

@@ -239,7 +239,7 @@ def get_versions_to_build(
     if latest_tag:
         latest_exists = (output_dir / latest_tag).exists()
 
-        if not latest_exists:
+        if rebuild_all or not latest_exists:
             to_build.append(latest_tag)
 
             # If latest is not a .0 release, check if there's an old non-.0 to delete
@@ -368,13 +368,24 @@ def generate_package_manifest(package_id: str, dry_run: bool = False):
     version_tags.sort(key=parse_version, reverse=True)
     latest_tag = version_tags[0]
 
-    # Build versions list with release dates
+    # Build versions list with release dates and examples availability
     versions = []
     for tag in version_tags:
         released = get_tag_date(repo_path, tag)
+        # Check if this version has examples
+        version_manifest_path = output_dir / tag / "manifest.json"
+        has_examples = False
+        if version_manifest_path.exists():
+            try:
+                with open(version_manifest_path, "r", encoding="utf-8") as f:
+                    version_manifest = json.load(f)
+                    has_examples = len(version_manifest.get("notebooks", [])) > 0
+            except Exception:
+                pass
         versions.append({
             "tag": tag,
             "released": released,
+            "hasExamples": has_examples,
         })
 
     manifest = {

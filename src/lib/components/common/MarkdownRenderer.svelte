@@ -17,9 +17,44 @@
 	interface Props {
 		/** Markdown source to render */
 		markdown: string;
+		/** Base path for resolving relative image URLs */
+		basePath?: string;
 	}
 
-	let { markdown }: Props = $props();
+	let { markdown, basePath = '' }: Props = $props();
+
+	/**
+	 * Rewrite relative image URLs to use basePath
+	 * Handles both Markdown (![alt](url)) and RST (.. image:: url) syntax
+	 */
+	function rewriteImageUrls(text: string, basePath: string): string {
+		if (!basePath) return text;
+
+		// Helper to check if URL is absolute
+		const isAbsoluteUrl = (url: string) =>
+			url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/') || url.startsWith('data:');
+
+		// Match markdown images: ![alt](url)
+		let result = text.replace(
+			/!\[([^\]]*)\]\(([^)]+)\)/g,
+			(match, alt, url) => {
+				if (isAbsoluteUrl(url)) return match;
+				return `![${alt}](${basePath}/${url})`;
+			}
+		);
+
+		// Match RST image directives: .. image:: url
+		// Convert to Markdown and apply basePath
+		result = result.replace(
+			/\.\.\s+image::\s*(\S+)/g,
+			(match, url) => {
+				const fullUrl = isAbsoluteUrl(url) ? url : `${basePath}/${url}`;
+				return `![](${fullUrl})`;
+			}
+		);
+
+		return result;
+	}
 
 	let container: HTMLDivElement | undefined = $state();
 	let cmModules: CodeMirrorModules | null = null;
@@ -60,8 +95,10 @@
 	// Convert markdown to HTML and extract math blocks
 	let processedMarkdown = $derived.by(() => {
 		if (!markdown?.trim()) return { html: '', mathBlocks: new Map<string, { content: string; isDisplay: boolean }>() };
+		// Rewrite relative image URLs before processing
+		const rewritten = rewriteImageUrls(markdown, basePath);
 		// Protect math blocks before marked processes them
-		const { text: protected_, blocks } = protectMath(markdown);
+		const { text: protected_, blocks } = protectMath(rewritten);
 		const rawHtml = marked.parse(protected_, { async: false }) as string;
 		return { html: processCrossRefs(rawHtml, base), mathBlocks: blocks };
 	});

@@ -25,8 +25,8 @@ export const load: LayoutLoad = async ({ fetch }) => {
 		// Manifest not available, continue without version selector
 		return {
 			packageId: PACKAGE_ID,
-			manifest: null,
-			selectedTag: null
+			manifest: undefined,
+			selectedTag: undefined
 		};
 	}
 };

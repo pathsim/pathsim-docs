@@ -1,0 +1,20 @@
+{
+  "cells": {
+    "18": {
+      "stdout": "14:27:49 - INFO - LOGGING (log: True)\n14:27:49 - INFO - BLOCKS (total: 5, dynamic: 2, static: 3, eventful: 0)\n14:27:49 - INFO - GRAPH (nodes: 5, edges: 7, alg. depth: 2, loop depth: 0, runtime: 0.030ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "20": {
+      "stdout": "14:27:49 - INFO - STARTING -> TRANSIENT (Duration: 75.00s)\n14:27:49 - INFO - RESET (time: 0.0)\n14:27:49 - INFO - --------------------   1% | 0.0s<0.2s | 29927.2 it/s\n14:27:49 - INFO - ####----------------  20% | 0.1s<0.2s | 30292.7 it/s\n14:27:49 - INFO - ########------------  40% | 0.1s<0.1s | 30706.9 it/s\n14:27:49 - INFO - ############--------  60% | 0.2s<0.1s | 29483.6 it/s\n14:27:49 - INFO - ################----  80% | 0.2s<0.1s | 29527.9 it/s\n14:27:49 - INFO - #################### 100% | 0.3s<--:-- | 29745.0 it/s\n14:27:49 - INFO - FINISHED -> TRANSIENT (total steps: 7500, successful: 7500, runtime: 260.26 ms)\n",
+      "stderr": null,
+      "figures": [
+        "coupled_oscillators_0.png",
+        "coupled_oscillators_1.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:27:50.619071+00:00",
+  "duration": 3305,
+  "success": true
+}

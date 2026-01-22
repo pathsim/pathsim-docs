@@ -27,69 +27,42 @@ jobs:
           python-version: '3.11'
 
       - name: Install Python dependencies
-        run: pip install -r scripts/requirements.txt
+        run: |
+          pip install -r scripts/requirements.txt
+          python -m ipykernel install --user --name python3 --display-name "Python 3"
 
-      - name: Clone PathSim repositories for API extraction
+      - name: Clone PathSim repositories
         run: |
           git clone https://github.com/pathsim/pathsim.git ../pathsim || { echo "Failed to clone pathsim"; exit 1; }
           git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem || { echo "Failed to clone pathsim-chem"; exit 1; }
           git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle || { echo "Failed to clone pathsim-vehicle"; exit 1; }
 
-      - name: Fetch all tags and verify repos
+      - name: Fetch all tags
         run: |
           for repo in pathsim pathsim-chem pathsim-vehicle; do
-            if [ ! -d "../$repo/.git" ]; then
-              echo "Error: Repository $repo not properly cloned"
-              exit 1
-            fi
             git -C ../$repo fetch --tags
             latest_tag=$(git -C ../$repo describe --tags --abbrev=0 2>/dev/null || echo 'no tags')
-            echo "✓ $repo: branch=$(git -C ../$repo rev-parse --abbrev-ref HEAD), latest_tag=$latest_tag"
+            echo "✓ $repo: latest_tag=$latest_tag"
           done
 
-      # Always extract latest API (for src/lib/api/generated/)
-      - name: Extract latest API
-        run: python scripts/extract-api.py
+      # Build all versions (API, notebooks, outputs, figures)
+      # Uses smart caching: historical versions only built once, latest always rebuilt
+      - name: Build documentation
+        run: python scripts/build.py
 
-      # Prepare notebooks BEFORE version extraction (repos still on main)
-      - name: Prepare notebooks
-        run: python scripts/prepare-notebooks.py
-
-      # Execute notebooks to generate outputs (parallel)
-      - name: Execute notebooks
-        run: python scripts/execute-notebooks.py
-
-      # Smart extraction: only missing versions + always re-extract latest
-      # This checks out tags, so must run after notebook prep
-      - name: Extract versioned API
-        run: python scripts/extract-versions.py
-
-      # Ensure repos are back on main branch
-      - name: Restore repos to main branch
-        run: |
-          for repo in pathsim pathsim-chem pathsim-vehicle; do
-            git -C ../$repo checkout main 2>/dev/null || git -C ../$repo checkout master 2>/dev/null || true
-            echo "✓ $repo on $(git -C ../$repo rev-parse --abbrev-ref HEAD)"
-          done
-
-      # Always regenerate manifests (to pick up new versions)
-      - name: Generate version manifests
-        run: python scripts/generate-manifests.py
-
-      - name: Build search and crossref indexes
+      # Build global search and crossref indexes
+      - name: Build indexes
         run: python scripts/build-indexes.py
 
       - name: Commit generated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          # Commit API data, versioned cache, and notebooks
-          git add src/lib/api/generated/ static/api/versions/
-          git add static/notebooks/ 2>/dev/null || true
+          git add static/ src/lib/api/generated/
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "Update generated API data and notebooks [skip ci]"
+            git commit -m "Update generated content [skip ci]"
             git push
           fi
 

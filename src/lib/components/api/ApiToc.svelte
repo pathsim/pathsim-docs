@@ -204,7 +204,6 @@
 {/snippet}
 
 <div class="api-toc">
-	<div class="label-uppercase api-toc-header">On this page</div>
 	<nav class="api-toc-nav">
 		{#each getSortedChildren(moduleTree) as [, rootNode]}
 			{@render treeItem(rootNode, 0)}
@@ -217,11 +216,7 @@
 		display: flex;
 		flex-direction: column;
 		padding: var(--space-md);
-		border-top: 1px solid var(--border);
-	}
-
-	.api-toc-header {
-		margin-bottom: var(--space-sm);
+		padding-top: 0;
 	}
 
 	.api-toc-nav {

@@ -2,15 +2,27 @@
 	/**
 	 * CellOutput - Renders static output from notebook cells
 	 * Handles stream, execute_result, display_data, and error outputs
+	 * Supports both inline base64 images and external figure URLs
 	 */
 	import type { CellOutput } from '$lib/notebook/types';
 	import { getOutputText } from '$lib/notebook/parser';
 
 	interface Props {
 		outputs: CellOutput[];
+		/** URLs of figures from pre-computed outputs */
+		figureUrls?: string[];
+		/** Text output from pre-computed outputs */
+		precomputedStdout?: string | null;
+		/** Stderr from pre-computed outputs */
+		precomputedStderr?: string | null;
 	}
 
-	let { outputs }: Props = $props();
+	let { outputs, figureUrls = [], precomputedStdout, precomputedStderr }: Props = $props();
+
+	// Show pre-computed text outputs
+	let hasPrecomputedOutput = $derived(
+		precomputedStdout || precomputedStderr || figureUrls.length > 0
+	);
 
 	/**
 	 * Convert ANSI escape codes to HTML spans
@@ -66,8 +78,28 @@
 	}
 </script>
 
-{#if outputs.length > 0}
+{#if hasPrecomputedOutput || outputs.length > 0}
 	<div class="cell-outputs">
+		<!-- Pre-computed outputs (from separate outputs JSON) -->
+		{#if precomputedStdout}
+			<div class="output-stream">
+				<pre>{precomputedStdout}</pre>
+			</div>
+		{/if}
+
+		{#if precomputedStderr}
+			<div class="output-stream stderr">
+				<pre>{precomputedStderr}</pre>
+			</div>
+		{/if}
+
+		{#each figureUrls as figureUrl}
+			<div class="output-image">
+				<img src={figureUrl} alt="Output" />
+			</div>
+		{/each}
+
+		<!-- Inline notebook outputs (from notebook file) -->
 		{#each outputs as output}
 			{#if output.output_type === 'stream'}
 				<div class="output-stream" class:stderr={output.name === 'stderr'}>

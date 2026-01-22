@@ -1,0 +1,5547 @@
+[
+  {
+    "type": "module",
+    "name": "pathsim.connection",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-connection",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection"
+  },
+  {
+    "type": "class",
+    "name": "Connection",
+    "description": "Class to handle input-output relations of blocks by connecting them (directed graph)",
+    "path": "pathsim/v0.8.0/api#Connection",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Connection.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "_validate_dimensions",
+    "description": "Check the dimensions of the source and target ports,",
+    "path": "pathsim/v0.8.0/api#Connection._validate_dimensions",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "_validate_ports",
+    "description": "Check the existance of the input and output ports of",
+    "path": "pathsim/v0.8.0/api#Connection._validate_ports",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "get_blocks",
+    "description": "Returns all the unique internal source and target blocks",
+    "path": "pathsim/v0.8.0/api#Connection.get_blocks",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "on",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Connection.on",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "off",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Connection.off",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "overwrites",
+    "description": "Check if the connection 'self' overwrites the target port of",
+    "path": "pathsim/v0.8.0/api#Connection.overwrites",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "to_dict",
+    "description": "Convert connection to dictionary representation for serialization",
+    "path": "pathsim/v0.8.0/api#Connection.to_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Transfers data from the source block output port",
+    "path": "pathsim/v0.8.0/api#Connection.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Step the internal fixed-point accelerator forward by one iteration.",
+    "path": "pathsim/v0.8.0/api#Connection.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the internal fixed point accelerator which is used",
+    "path": "pathsim/v0.8.0/api#Connection.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Connection"
+  },
+  {
+    "type": "class",
+    "name": "Duplex",
+    "description": "Extension of the 'Connection' class, that defines bidirectional",
+    "path": "pathsim/v0.8.0/api#Duplex",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Duplex.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Duplex"
+  },
+  {
+    "type": "method",
+    "name": "to_dict",
+    "description": "Convert duplex to dictionary representation for serialization",
+    "path": "pathsim/v0.8.0/api#Duplex.to_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Duplex"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Transfers data between the two target blocks",
+    "path": "pathsim/v0.8.0/api#Duplex.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.connection",
+    "parentClass": "Duplex"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.simulation",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-simulation",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation"
+  },
+  {
+    "type": "class",
+    "name": "Simulation",
+    "description": "Class that performs transient analysis of the dynamical system, defined by the",
+    "path": "pathsim/v0.8.0/api#Simulation",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Simulation.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "size",
+    "description": "Get size information of the simulation, such as total number",
+    "path": "pathsim/v0.8.0/api#Simulation.size",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_initialize_logger",
+    "description": "setup and configure logging",
+    "path": "pathsim/v0.8.0/api#Simulation._initialize_logger",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_logger_info",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Simulation._logger_info",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_logger_error",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Simulation._logger_error",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_logger_warning",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Simulation._logger_warning",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "plot",
+    "description": "Plot the simulation results by calling all the blocks",
+    "path": "pathsim/v0.8.0/api#Simulation.plot",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "save",
+    "description": "Save the dictionary representation of the simulation instance",
+    "path": "pathsim/v0.8.0/api#Simulation.save",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "load",
+    "description": "Load and instantiate a Simulation from an external file",
+    "path": "pathsim/v0.8.0/api#Simulation.load",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "to_dict",
+    "description": "Convert simulation to a complete model representation as a dict",
+    "path": "pathsim/v0.8.0/api#Simulation.to_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "from_dict",
+    "description": "Create simulation from model data dict",
+    "path": "pathsim/v0.8.0/api#Simulation.from_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "add_block",
+    "description": "Adds a new block to the simulation, initializes its local solver",
+    "path": "pathsim/v0.8.0/api#Simulation.add_block",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "add_connection",
+    "description": "Adds a new connection to the simulaiton and checks if",
+    "path": "pathsim/v0.8.0/api#Simulation.add_connection",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "add_event",
+    "description": "Checks and adds a new event to the simulation.",
+    "path": "pathsim/v0.8.0/api#Simulation.add_event",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_assemble_graph",
+    "description": "Build the internal graph representation for fast system function",
+    "path": "pathsim/v0.8.0/api#Simulation._assemble_graph",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_check_blocks_are_managed",
+    "description": "Check whether the blocks that are part of the connections are",
+    "path": "pathsim/v0.8.0/api#Simulation._check_blocks_are_managed",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_set_solver",
+    "description": "Initialize all blocks with solver for numerical integration",
+    "path": "pathsim/v0.8.0/api#Simulation._set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the blocks to their initial state and the global time of",
+    "path": "pathsim/v0.8.0/api#Simulation.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the full system in the current simulation state",
+    "path": "pathsim/v0.8.0/api#Simulation.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "delinearize",
+    "description": "Revert the linearization of the full system.",
+    "path": "pathsim/v0.8.0/api#Simulation.delinearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_estimate_events",
+    "description": "Estimate the time until the next.",
+    "path": "pathsim/v0.8.0/api#Simulation._estimate_events",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_buffer_events",
+    "description": "Buffer states for event monitoring before the timestep",
+    "path": "pathsim/v0.8.0/api#Simulation._buffer_events",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_detected_events",
+    "description": "Check for possible (active) events and return them chronologically,",
+    "path": "pathsim/v0.8.0/api#Simulation._detected_events",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_update",
+    "description": "Distribute information within the system by evaluating the directed acyclic graph",
+    "path": "pathsim/v0.8.0/api#Simulation._update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_dag",
+    "description": "Update the directed acyclic graph components of the system.",
+    "path": "pathsim/v0.8.0/api#Simulation._dag",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_loops",
+    "description": "Perform the algebraic loop solve of the system using accelerated",
+    "path": "pathsim/v0.8.0/api#Simulation._loops",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_solve",
+    "description": "For implicit solvers, this method implements the solving step",
+    "path": "pathsim/v0.8.0/api#Simulation._solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "steadystate",
+    "description": "Find steady state solution (DC operating point) of the system",
+    "path": "pathsim/v0.8.0/api#Simulation.steadystate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_revert",
+    "description": "Revert simulation state to previous timestep for adaptive solvers",
+    "path": "pathsim/v0.8.0/api#Simulation._revert",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_sample",
+    "description": "Sample data from blocks that implement the 'sample' method such",
+    "path": "pathsim/v0.8.0/api#Simulation._sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_buffer_blocks",
+    "description": "Buffer internal states of blocks before the timestep is taken.",
+    "path": "pathsim/v0.8.0/api#Simulation._buffer_blocks",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "_step",
+    "description": "Performs the 'step' method for dynamical blocks with internal",
+    "path": "pathsim/v0.8.0/api#Simulation._step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "timestep_fixed_explicit",
+    "description": "Advances the simulation by one timestep 'dt' for explicit",
+    "path": "pathsim/v0.8.0/api#Simulation.timestep_fixed_explicit",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "timestep_fixed_implicit",
+    "description": "Advances the simulation by one timestep 'dt' for implicit",
+    "path": "pathsim/v0.8.0/api#Simulation.timestep_fixed_implicit",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "timestep_adaptive_explicit",
+    "description": "Advances the simulation by one timestep 'dt' for explicit",
+    "path": "pathsim/v0.8.0/api#Simulation.timestep_adaptive_explicit",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "timestep_adaptive_implicit",
+    "description": "Advances the simulation by one timestep 'dt' for implicit",
+    "path": "pathsim/v0.8.0/api#Simulation.timestep_adaptive_implicit",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "timestep",
+    "description": "Advances the transient simulation by one timestep 'dt'.",
+    "path": "pathsim/v0.8.0/api#Simulation.timestep",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Wraps 'Simulation.timestep' for backward compatibility",
+    "path": "pathsim/v0.8.0/api#Simulation.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "method",
+    "name": "run",
+    "description": "Perform multiple simulation timesteps for a given 'duration'.",
+    "path": "pathsim/v0.8.0/api#Simulation.run",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.simulation",
+    "parentClass": "Simulation"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.subsystem",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-subsystem",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem"
+  },
+  {
+    "type": "class",
+    "name": "Interface",
+    "description": "Bare-bone block that serves as a data interface for the 'Subsystem' class.",
+    "path": "pathsim/v0.8.0/api#Interface",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem"
+  },
+  {
+    "type": "class",
+    "name": "Subsystem",
+    "description": "Subsystem class that holds its own blocks and connecions and",
+    "path": "pathsim/v0.8.0/api#Subsystem",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Subsystem.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "_check_connections",
+    "description": "Check if connections are valid and if there is no input port",
+    "path": "pathsim/v0.8.0/api#Subsystem._check_connections",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "_assemble_graph",
+    "description": "Assemble internal graph of subsystem for fast",
+    "path": "pathsim/v0.8.0/api#Subsystem._assemble_graph",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "size",
+    "description": "Get size information from subsystem, recursively assembled",
+    "path": "pathsim/v0.8.0/api#Subsystem.size",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "plot",
+    "description": "Plot the simulation results by calling all the blocks",
+    "path": "pathsim/v0.8.0/api#Subsystem.plot",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the subsystem interface and all internal blocks",
+    "path": "pathsim/v0.8.0/api#Subsystem.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "on",
+    "description": "Activate the subsystem and all internal blocks, sets the boolean",
+    "path": "pathsim/v0.8.0/api#Subsystem.on",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "off",
+    "description": "Deactivate the subsystem and all internal blocks, sets the boolean",
+    "path": "pathsim/v0.8.0/api#Subsystem.off",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the algebraic and dynamic components of the internal blocks.",
+    "path": "pathsim/v0.8.0/api#Subsystem.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "delinearize",
+    "description": "Revert the linearization of the internal blocks.",
+    "path": "pathsim/v0.8.0/api#Subsystem.delinearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "to_dict",
+    "description": "Custom serialization for Subsystem",
+    "path": "pathsim/v0.8.0/api#Subsystem.to_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "from_dict",
+    "description": "Custom deserialization for Subsystem",
+    "path": "pathsim/v0.8.0/api#Subsystem.from_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "get_events",
+    "description": "Recursively collect and return events spawned by the",
+    "path": "pathsim/v0.8.0/api#Subsystem.get_events",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Update the internal connections again and sample data from",
+    "path": "pathsim/v0.8.0/api#Subsystem.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Update the instant time components of the internal blocks",
+    "path": "pathsim/v0.8.0/api#Subsystem.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "_dag",
+    "description": "Update the directed acyclic graph components of the system.",
+    "path": "pathsim/v0.8.0/api#Subsystem._dag",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "_loops",
+    "description": "Perform the algebraic loop solve of the system using accelerated",
+    "path": "pathsim/v0.8.0/api#Subsystem._loops",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Advance solution of implicit update equation",
+    "path": "pathsim/v0.8.0/api#Subsystem.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Explicit component of timestep for internal blocks",
+    "path": "pathsim/v0.8.0/api#Subsystem.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "Initialize all blocks with solver for numerical integration",
+    "path": "pathsim/v0.8.0/api#Subsystem.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "revert",
+    "description": "revert the internal blocks to the state",
+    "path": "pathsim/v0.8.0/api#Subsystem.revert",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "buffer internal states of blocks with",
+    "path": "pathsim/v0.8.0/api#Subsystem.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.subsystem",
+    "parentClass": "Subsystem"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks._block",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-_block",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block"
+  },
+  {
+    "type": "class",
+    "name": "Block",
+    "description": "Base 'Block' object that defines the inputs, outputs and the connect method.",
+    "path": "pathsim/v0.8.0/api#Block",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Block.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "size",
+    "description": "Get size information from block, such as",
+    "path": "pathsim/v0.8.0/api#Block.size",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "shape",
+    "description": "Get the number of input and output ports of the block",
+    "path": "pathsim/v0.8.0/api#Block.shape",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "plot",
+    "description": "Block specific visualization, enables plotting",
+    "path": "pathsim/v0.8.0/api#Block.plot",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "on",
+    "description": "Activate the block and all internal events, sets the boolean",
+    "path": "pathsim/v0.8.0/api#Block.on",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "off",
+    "description": "Deactivate the block and all internal events, sets the boolean",
+    "path": "pathsim/v0.8.0/api#Block.off",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the blocks inputs and outputs and also its internal solver,",
+    "path": "pathsim/v0.8.0/api#Block.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the algebraic and dynamic components of the block.",
+    "path": "pathsim/v0.8.0/api#Block.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "delinearize",
+    "description": "Revert the linearization of the blocks algebraic and dynamic components.",
+    "path": "pathsim/v0.8.0/api#Block.delinearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "get_events",
+    "description": "Return internal events of the block, for discrete time blocks",
+    "path": "pathsim/v0.8.0/api#Block.get_events",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "Initialize the numerical integration engine with local truncation error",
+    "path": "pathsim/v0.8.0/api#Block.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "revert",
+    "description": "Revert the block to the state of the previous timestep, if the",
+    "path": "pathsim/v0.8.0/api#Block.revert",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer current internal state of the block and the current timestep",
+    "path": "pathsim/v0.8.0/api#Block.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Samples the data of the blocks inputs or internal state when called.",
+    "path": "pathsim/v0.8.0/api#Block.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "get_all",
+    "description": "Retrieves and returns internal states of engine (if available)",
+    "path": "pathsim/v0.8.0/api#Block.get_all",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "The 'update' method is called iteratively for all blocks to evaluate the",
+    "path": "pathsim/v0.8.0/api#Block.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "The 'solve' method performes one iterative solution step that is required",
+    "path": "pathsim/v0.8.0/api#Block.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "The 'step' method is used in transient simulations and performs an action",
+    "path": "pathsim/v0.8.0/api#Block.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks._block",
+    "parentClass": "Block"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.adder",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-adder",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.adder"
+  },
+  {
+    "type": "class",
+    "name": "Adder",
+    "description": "Summs / adds up all input signals to a single output signal (MISO)",
+    "path": "pathsim/v0.8.0/api#Adder",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.adder"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Adder.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.adder",
+    "parentClass": "Adder"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation in fixed point loop for",
+    "path": "pathsim/v0.8.0/api#Adder.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.adder",
+    "parentClass": "Adder"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.amplifier",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-amplifier",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.amplifier"
+  },
+  {
+    "type": "class",
+    "name": "Amplifier",
+    "description": "Amplifies the input signal by",
+    "path": "pathsim/v0.8.0/api#Amplifier",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.amplifier"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Amplifier.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.amplifier",
+    "parentClass": "Amplifier"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation in fixed point loop",
+    "path": "pathsim/v0.8.0/api#Amplifier.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.amplifier",
+    "parentClass": "Amplifier"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.comparator",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-comparator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.comparator"
+  },
+  {
+    "type": "class",
+    "name": "Comparator",
+    "description": "Comparator block that sets the output to '1' it the input",
+    "path": "pathsim/v0.8.0/api#Comparator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.comparator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Comparator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.comparator",
+    "parentClass": "Comparator"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#Comparator.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.comparator",
+    "parentClass": "Comparator"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.converters",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-converters",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.converters"
+  },
+  {
+    "type": "class",
+    "name": "ADC",
+    "description": "Models an ideal Analog-to-Digital Converter (ADC).",
+    "path": "pathsim/v0.8.0/api#ADC",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.converters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ADC.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.converters",
+    "parentClass": "ADC"
+  },
+  {
+    "type": "class",
+    "name": "DAC",
+    "description": "Models an ideal Digital-to-Analog Converter (DAC).",
+    "path": "pathsim/v0.8.0/api#DAC",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.converters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#DAC.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.converters",
+    "parentClass": "DAC"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.counter",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-counter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter"
+  },
+  {
+    "type": "class",
+    "name": "Counter",
+    "description": "Counter block that counts the number of detected bidirectional",
+    "path": "pathsim/v0.8.0/api#Counter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Counter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter",
+    "parentClass": "Counter"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#Counter.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter",
+    "parentClass": "Counter"
+  },
+  {
+    "type": "class",
+    "name": "CounterUp",
+    "description": "Counter block that counts the number of detected unidirectional",
+    "path": "pathsim/v0.8.0/api#CounterUp",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#CounterUp.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter",
+    "parentClass": "CounterUp"
+  },
+  {
+    "type": "class",
+    "name": "CounterDown",
+    "description": "Counter block that counts the number of detected unidirectional",
+    "path": "pathsim/v0.8.0/api#CounterDown",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#CounterDown.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.counter",
+    "parentClass": "CounterDown"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.ctrl",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-ctrl",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl"
+  },
+  {
+    "type": "class",
+    "name": "PID",
+    "description": "Proportional-Integral-Differntiation (PID) controller.",
+    "path": "pathsim/v0.8.0/api#PID",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#PID.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl",
+    "parentClass": "PID"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "set the internal numerical integrator",
+    "path": "pathsim/v0.8.0/api#PID.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl",
+    "parentClass": "PID"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation fixed point loop, with convergence control",
+    "path": "pathsim/v0.8.0/api#PID.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl",
+    "parentClass": "PID"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance solution of implicit update equation",
+    "path": "pathsim/v0.8.0/api#PID.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl",
+    "parentClass": "PID"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute update step with integration engine",
+    "path": "pathsim/v0.8.0/api#PID.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl",
+    "parentClass": "PID"
+  },
+  {
+    "type": "class",
+    "name": "AntiWindupPID",
+    "description": "Proportional-Integral-Differntiation (PID) controller with tracking",
+    "path": "pathsim/v0.8.0/api#AntiWindupPID",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#AntiWindupPID.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ctrl",
+    "parentClass": "AntiWindupPID"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.delay",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-delay",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.delay"
+  },
+  {
+    "type": "class",
+    "name": "Delay",
+    "description": "Delays the input signal by a time constant 'tau' in seconds",
+    "path": "pathsim/v0.8.0/api#Delay",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.delay"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Delay.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.delay",
+    "parentClass": "Delay"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Delay.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.delay",
+    "parentClass": "Delay"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Evaluation of the buffer at different times",
+    "path": "pathsim/v0.8.0/api#Delay.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.delay",
+    "parentClass": "Delay"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample input values and time of sampling",
+    "path": "pathsim/v0.8.0/api#Delay.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.delay",
+    "parentClass": "Delay"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.differentiator",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-differentiator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator"
+  },
+  {
+    "type": "class",
+    "name": "Differentiator",
+    "description": "Differentiates the input signal (SISO) using a first order transfer function",
+    "path": "pathsim/v0.8.0/api#Differentiator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Differentiator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator",
+    "parentClass": "Differentiator"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "set the internal numerical integrator",
+    "path": "pathsim/v0.8.0/api#Differentiator.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator",
+    "parentClass": "Differentiator"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation fixed point loop,",
+    "path": "pathsim/v0.8.0/api#Differentiator.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator",
+    "parentClass": "Differentiator"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance solution of implicit update equation",
+    "path": "pathsim/v0.8.0/api#Differentiator.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator",
+    "parentClass": "Differentiator"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute update step with integration engine",
+    "path": "pathsim/v0.8.0/api#Differentiator.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.differentiator",
+    "parentClass": "Differentiator"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.filters",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-filters",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters"
+  },
+  {
+    "type": "class",
+    "name": "ButterworthLowpassFilter",
+    "description": "Direct implementation of a low pass butterworth filter block.",
+    "path": "pathsim/v0.8.0/api#ButterworthLowpassFilter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ButterworthLowpassFilter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters",
+    "parentClass": "ButterworthLowpassFilter"
+  },
+  {
+    "type": "class",
+    "name": "ButterworthHighpassFilter",
+    "description": "Direct implementation of a high pass butterworth filter block.",
+    "path": "pathsim/v0.8.0/api#ButterworthHighpassFilter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ButterworthHighpassFilter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters",
+    "parentClass": "ButterworthHighpassFilter"
+  },
+  {
+    "type": "class",
+    "name": "ButterworthBandpassFilter",
+    "description": "Direct implementation of a bandpass butterworth filter block.",
+    "path": "pathsim/v0.8.0/api#ButterworthBandpassFilter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ButterworthBandpassFilter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters",
+    "parentClass": "ButterworthBandpassFilter"
+  },
+  {
+    "type": "class",
+    "name": "ButterworthBandstopFilter",
+    "description": "Direct implementation of a bandstop butterworth filter block.",
+    "path": "pathsim/v0.8.0/api#ButterworthBandstopFilter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ButterworthBandstopFilter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters",
+    "parentClass": "ButterworthBandstopFilter"
+  },
+  {
+    "type": "class",
+    "name": "AllpassFilter",
+    "description": "Direct implementation of a first order allpass filter, or a cascade",
+    "path": "pathsim/v0.8.0/api#AllpassFilter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#AllpassFilter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.filters",
+    "parentClass": "AllpassFilter"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.fir",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-fir",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.fir"
+  },
+  {
+    "type": "class",
+    "name": "FIR",
+    "description": "Models a discrete-time Finite-Impulse-Response (FIR) filter.",
+    "path": "pathsim/v0.8.0/api#FIR",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.fir"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#FIR.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.fir",
+    "parentClass": "FIR"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Resets the filter state (buffer) and output.",
+    "path": "pathsim/v0.8.0/api#FIR.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.fir",
+    "parentClass": "FIR"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.function",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-function",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.function"
+  },
+  {
+    "type": "class",
+    "name": "Function",
+    "description": "Arbitrary MIMO function block, defined by a callable object,",
+    "path": "pathsim/v0.8.0/api#Function",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.function"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Function.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.function",
+    "parentClass": "Function"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Evaluate function block as part of algebraic component",
+    "path": "pathsim/v0.8.0/api#Function.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.function",
+    "parentClass": "Function"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.integrator",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-integrator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator"
+  },
+  {
+    "type": "class",
+    "name": "Integrator",
+    "description": "Integrates the input signal using a numerical integration engine like this:",
+    "path": "pathsim/v0.8.0/api#Integrator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Integrator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator",
+    "parentClass": "Integrator"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "set the internal numerical integrator",
+    "path": "pathsim/v0.8.0/api#Integrator.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator",
+    "parentClass": "Integrator"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation fixed point loop",
+    "path": "pathsim/v0.8.0/api#Integrator.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator",
+    "parentClass": "Integrator"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance solution of implicit update equation of the solver",
+    "path": "pathsim/v0.8.0/api#Integrator.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator",
+    "parentClass": "Integrator"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute timestep update with integration engine",
+    "path": "pathsim/v0.8.0/api#Integrator.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.integrator",
+    "parentClass": "Integrator"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.lti",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-lti",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti"
+  },
+  {
+    "type": "class",
+    "name": "StateSpace",
+    "description": "This block defines a linear time invariant (LTI) multi input multi output (MIMO)",
+    "path": "pathsim/v0.8.0/api#StateSpace",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#StateSpace.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "StateSpace"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "set the internal numerical integrator",
+    "path": "pathsim/v0.8.0/api#StateSpace.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "StateSpace"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance solution of implicit update equation of the solver",
+    "path": "pathsim/v0.8.0/api#StateSpace.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "StateSpace"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute timestep update with integration engine",
+    "path": "pathsim/v0.8.0/api#StateSpace.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "StateSpace"
+  },
+  {
+    "type": "class",
+    "name": "TransferFunctionPRC",
+    "description": "This block defines a LTI (MIMO for pole residue) transfer function.",
+    "path": "pathsim/v0.8.0/api#TransferFunctionPRC",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#TransferFunctionPRC.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "TransferFunctionPRC"
+  },
+  {
+    "type": "class",
+    "name": "TransferFunction",
+    "description": "Alias for `TransferFunctionPRC`.",
+    "path": "pathsim/v0.8.0/api#TransferFunction",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#TransferFunction.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "TransferFunction"
+  },
+  {
+    "type": "class",
+    "name": "TransferFunctionZPG",
+    "description": "This block defines a LTI (SISO) transfer function.",
+    "path": "pathsim/v0.8.0/api#TransferFunctionZPG",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#TransferFunctionZPG.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "TransferFunctionZPG"
+  },
+  {
+    "type": "class",
+    "name": "TransferFunctionNumDen",
+    "description": "This block defines a LTI (SISO) transfer function.",
+    "path": "pathsim/v0.8.0/api#TransferFunctionNumDen",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#TransferFunctionNumDen.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.lti",
+    "parentClass": "TransferFunctionNumDen"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.math",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-math",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "class",
+    "name": "Math",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Math",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update algebraic component of system equation",
+    "path": "pathsim/v0.8.0/api#Math.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Math"
+  },
+  {
+    "type": "class",
+    "name": "Sin",
+    "description": "Sine operator block.",
+    "path": "pathsim/v0.8.0/api#Sin",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Sin.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Sin"
+  },
+  {
+    "type": "class",
+    "name": "Cos",
+    "description": "Cosine operator block.",
+    "path": "pathsim/v0.8.0/api#Cos",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Cos.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Cos"
+  },
+  {
+    "type": "class",
+    "name": "Sqrt",
+    "description": "Square root operator block.",
+    "path": "pathsim/v0.8.0/api#Sqrt",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Sqrt.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Sqrt"
+  },
+  {
+    "type": "class",
+    "name": "Abs",
+    "description": "Absolute value operator block.",
+    "path": "pathsim/v0.8.0/api#Abs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Abs.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Abs"
+  },
+  {
+    "type": "class",
+    "name": "Pow",
+    "description": "Raise to power operator block.",
+    "path": "pathsim/v0.8.0/api#Pow",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Pow.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Pow"
+  },
+  {
+    "type": "class",
+    "name": "PowProd",
+    "description": "Power-Product operator block.",
+    "path": "pathsim/v0.8.0/api#PowProd",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#PowProd.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "PowProd"
+  },
+  {
+    "type": "class",
+    "name": "Exp",
+    "description": "Exponential operator block.",
+    "path": "pathsim/v0.8.0/api#Exp",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Exp.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Exp"
+  },
+  {
+    "type": "class",
+    "name": "Log",
+    "description": "Natural logarithm operator block.",
+    "path": "pathsim/v0.8.0/api#Log",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Log.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Log"
+  },
+  {
+    "type": "class",
+    "name": "Log10",
+    "description": "Base-10 logarithm operator block.",
+    "path": "pathsim/v0.8.0/api#Log10",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Log10.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Log10"
+  },
+  {
+    "type": "class",
+    "name": "Tan",
+    "description": "Tangent operator block.",
+    "path": "pathsim/v0.8.0/api#Tan",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Tan.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Tan"
+  },
+  {
+    "type": "class",
+    "name": "Sinh",
+    "description": "Hyperbolic sine operator block.",
+    "path": "pathsim/v0.8.0/api#Sinh",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Sinh.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Sinh"
+  },
+  {
+    "type": "class",
+    "name": "Cosh",
+    "description": "Hyperbolic cosine operator block.",
+    "path": "pathsim/v0.8.0/api#Cosh",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Cosh.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Cosh"
+  },
+  {
+    "type": "class",
+    "name": "Tanh",
+    "description": "Hyperbolic tangent operator block.",
+    "path": "pathsim/v0.8.0/api#Tanh",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Tanh.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Tanh"
+  },
+  {
+    "type": "class",
+    "name": "Atan",
+    "description": "Arctangent operator block.",
+    "path": "pathsim/v0.8.0/api#Atan",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Atan.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Atan"
+  },
+  {
+    "type": "class",
+    "name": "Norm",
+    "description": "Vector norm operator block.",
+    "path": "pathsim/v0.8.0/api#Norm",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Norm.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Norm"
+  },
+  {
+    "type": "class",
+    "name": "Mod",
+    "description": "Modulo operator block.",
+    "path": "pathsim/v0.8.0/api#Mod",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Mod.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Mod"
+  },
+  {
+    "type": "class",
+    "name": "Clip",
+    "description": "Clipping/saturation operator block.",
+    "path": "pathsim/v0.8.0/api#Clip",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Clip.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.math",
+    "parentClass": "Clip"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.multiplier",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-multiplier",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.multiplier"
+  },
+  {
+    "type": "class",
+    "name": "Multiplier",
+    "description": "Multiplies all signals from all input ports (MISO).",
+    "path": "pathsim/v0.8.0/api#Multiplier",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.multiplier"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Multiplier.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.multiplier",
+    "parentClass": "Multiplier"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation",
+    "path": "pathsim/v0.8.0/api#Multiplier.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.multiplier",
+    "parentClass": "Multiplier"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.noise",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-noise",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise"
+  },
+  {
+    "type": "class",
+    "name": "WhiteNoise",
+    "description": "White noise source with uniform spectral density. Samples from distribution",
+    "path": "pathsim/v0.8.0/api#WhiteNoise",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#WhiteNoise.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "WhiteNoise"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#WhiteNoise.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "WhiteNoise"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample from a normal distribution after successful timestep",
+    "path": "pathsim/v0.8.0/api#WhiteNoise.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "WhiteNoise"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#WhiteNoise.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "WhiteNoise"
+  },
+  {
+    "type": "class",
+    "name": "PinkNoise",
+    "description": "Pink noise (1/f) source using the Voss-McCartney algorithm.",
+    "path": "pathsim/v0.8.0/api#PinkNoise",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#PinkNoise.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "PinkNoise"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#PinkNoise.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "PinkNoise"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Generate a new pink noise sample at 't' using",
+    "path": "pathsim/v0.8.0/api#PinkNoise.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "PinkNoise"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#PinkNoise.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.noise",
+    "parentClass": "PinkNoise"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.ode",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-ode",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode"
+  },
+  {
+    "type": "class",
+    "name": "ODE",
+    "description": "This block implements an ordinary differential equation (ODE)",
+    "path": "pathsim/v0.8.0/api#ODE",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ODE.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode",
+    "parentClass": "ODE"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "set the internal numerical integrator",
+    "path": "pathsim/v0.8.0/api#ODE.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode",
+    "parentClass": "ODE"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#ODE.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode",
+    "parentClass": "ODE"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance solution of implicit update equation of the solver",
+    "path": "pathsim/v0.8.0/api#ODE.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode",
+    "parentClass": "ODE"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute timestep update with integration engine",
+    "path": "pathsim/v0.8.0/api#ODE.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.ode",
+    "parentClass": "ODE"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.rng",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-rng",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.rng"
+  },
+  {
+    "type": "class",
+    "name": "RNG",
+    "description": "Generates a random output value between -1 and 1",
+    "path": "pathsim/v0.8.0/api#RNG",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.rng"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RNG.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.rng",
+    "parentClass": "RNG"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RNG.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.rng",
+    "parentClass": "RNG"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample from a normal distribution after successful timestep.",
+    "path": "pathsim/v0.8.0/api#RNG.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.rng",
+    "parentClass": "RNG"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#RNG.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.rng",
+    "parentClass": "RNG"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.samplehold",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-samplehold",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.samplehold"
+  },
+  {
+    "type": "class",
+    "name": "SampleHold",
+    "description": "Sample and hold stage that samples the inputs",
+    "path": "pathsim/v0.8.0/api#SampleHold",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.samplehold"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SampleHold.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.samplehold",
+    "parentClass": "SampleHold"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.scope",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-scope",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope"
+  },
+  {
+    "type": "class",
+    "name": "Scope",
+    "description": "Block for recording time domain data with variable sampling sampling rate.",
+    "path": "pathsim/v0.8.0/api#Scope",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Scope.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Scope.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "read",
+    "description": "Return the recorded time domain data and the",
+    "path": "pathsim/v0.8.0/api#Scope.read",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample the data from all inputs, and overwrites existing timepoints,",
+    "path": "pathsim/v0.8.0/api#Scope.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "plot",
+    "description": "Directly create a plot of the recorded data for quick visualization and debugging.",
+    "path": "pathsim/v0.8.0/api#Scope.plot",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "plot2D",
+    "description": "Directly create a 2D plot of the recorded data for quick visualization and debugging.",
+    "path": "pathsim/v0.8.0/api#Scope.plot2D",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "plot3D",
+    "description": "Directly create a 3D plot of the recorded data for quick visualization.",
+    "path": "pathsim/v0.8.0/api#Scope.plot3D",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "save",
+    "description": "Save the recording of the scope to a csv file.",
+    "path": "pathsim/v0.8.0/api#Scope.save",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#Scope.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "Scope"
+  },
+  {
+    "type": "class",
+    "name": "RealtimeScope",
+    "description": "An extension of the 'Scope' block that also initializes a realtime plotter",
+    "path": "pathsim/v0.8.0/api#RealtimeScope",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimeScope.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "RealtimeScope"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample the data from all inputs, and overwrites existing timepoints,",
+    "path": "pathsim/v0.8.0/api#RealtimeScope.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.scope",
+    "parentClass": "RealtimeScope"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.sources",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-sources",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "class",
+    "name": "Constant",
+    "description": "Produces a constant output signal (SISO)",
+    "path": "pathsim/v0.8.0/api#Constant",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Constant.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Constant"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation fixed point loop",
+    "path": "pathsim/v0.8.0/api#Constant.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Constant"
+  },
+  {
+    "type": "class",
+    "name": "Source",
+    "description": "Source that produces an arbitrary time dependent output,",
+    "path": "pathsim/v0.8.0/api#Source",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Source.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Source"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation fixed point loop",
+    "path": "pathsim/v0.8.0/api#Source.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Source"
+  },
+  {
+    "type": "class",
+    "name": "TriangleWaveSource",
+    "description": "Source block that generates an analog triangle wave",
+    "path": "pathsim/v0.8.0/api#TriangleWaveSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#TriangleWaveSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "TriangleWaveSource"
+  },
+  {
+    "type": "method",
+    "name": "_triangle_wave",
+    "description": "triangle wave with amplitude '1' and frequency 'f'",
+    "path": "pathsim/v0.8.0/api#TriangleWaveSource._triangle_wave",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "TriangleWaveSource"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#TriangleWaveSource.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "TriangleWaveSource"
+  },
+  {
+    "type": "class",
+    "name": "SinusoidalSource",
+    "description": "Source block that generates a sinusoid wave",
+    "path": "pathsim/v0.8.0/api#SinusoidalSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalSource"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalSource.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalSource"
+  },
+  {
+    "type": "class",
+    "name": "GaussianPulseSource",
+    "description": "Source block that generates a gaussian pulse",
+    "path": "pathsim/v0.8.0/api#GaussianPulseSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GaussianPulseSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "GaussianPulseSource"
+  },
+  {
+    "type": "method",
+    "name": "_gaussian",
+    "description": "gaussian pulse with its maximum at t=0",
+    "path": "pathsim/v0.8.0/api#GaussianPulseSource._gaussian",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "GaussianPulseSource"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GaussianPulseSource.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "GaussianPulseSource"
+  },
+  {
+    "type": "class",
+    "name": "SinusoidalPhaseNoiseSource",
+    "description": "Sinusoidal source with cumulative and white phase noise",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample from a normal distribution after successful timestep.",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SinusoidalPhaseNoiseSource.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SinusoidalPhaseNoiseSource"
+  },
+  {
+    "type": "class",
+    "name": "ChirpPhaseNoiseSource",
+    "description": "Chirp source, sinusoid with frequency ramp up and ramp down.",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "_triangle_wave",
+    "description": "triangle wave with amplitude '1' and frequency 'f'",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource._triangle_wave",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "sample",
+    "description": "Sample from a normal distribution after successful timestep",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.sample",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update the block output, assebble phase and evaluate the sinusoid",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance implicit solver of implicit integration engine, evaluate",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute update step with integration engine, evaluate the triangle wave",
+    "path": "pathsim/v0.8.0/api#ChirpPhaseNoiseSource.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpPhaseNoiseSource"
+  },
+  {
+    "type": "class",
+    "name": "ChirpSource",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ChirpSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ChirpSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ChirpSource"
+  },
+  {
+    "type": "class",
+    "name": "PulseSource",
+    "description": "Generates a periodic pulse waveform with defined rise and fall times",
+    "path": "pathsim/v0.8.0/api#PulseSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#PulseSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "PulseSource"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Resets the block state.",
+    "path": "pathsim/v0.8.0/api#PulseSource.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "PulseSource"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Calculate the pulse output value based on the current phase.",
+    "path": "pathsim/v0.8.0/api#PulseSource.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "PulseSource"
+  },
+  {
+    "type": "class",
+    "name": "Pulse",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Pulse",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Pulse.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Pulse"
+  },
+  {
+    "type": "class",
+    "name": "ClockSource",
+    "description": "Discrete time clock source block.",
+    "path": "pathsim/v0.8.0/api#ClockSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ClockSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "ClockSource"
+  },
+  {
+    "type": "class",
+    "name": "Clock",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Clock",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Clock.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Clock"
+  },
+  {
+    "type": "class",
+    "name": "SquareWaveSource",
+    "description": "Discrete time square wave source.",
+    "path": "pathsim/v0.8.0/api#SquareWaveSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SquareWaveSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "SquareWaveSource"
+  },
+  {
+    "type": "class",
+    "name": "StepSource",
+    "description": "Discrete time unit step block.",
+    "path": "pathsim/v0.8.0/api#StepSource",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#StepSource.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "StepSource"
+  },
+  {
+    "type": "class",
+    "name": "Step",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Step.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.sources",
+    "parentClass": "Step"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.spectrum",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-spectrum",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum"
+  },
+  {
+    "type": "class",
+    "name": "Spectrum",
+    "description": "Block for fourier spectrum analysis (basically a spectrum analyzer), computes",
+    "path": "pathsim/v0.8.0/api#Spectrum",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Spectrum.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "_kernel",
+    "description": "Helper method that defines the kernel for the internal",
+    "path": "pathsim/v0.8.0/api#Spectrum._kernel",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "set_solver",
+    "description": "set the internal numerical integrator for the RFT",
+    "path": "pathsim/v0.8.0/api#Spectrum.set_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Spectrum.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "read",
+    "description": "Read the recorded spectrum",
+    "path": "pathsim/v0.8.0/api#Spectrum.read",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "advance solution of implicit update equation of the solver",
+    "path": "pathsim/v0.8.0/api#Spectrum.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute timestep update with integration engine",
+    "path": "pathsim/v0.8.0/api#Spectrum.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "plot",
+    "description": "Directly create a plot of the recorded data for visualization.",
+    "path": "pathsim/v0.8.0/api#Spectrum.plot",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "save",
+    "description": "Save the recording of the spectrum to a csv file",
+    "path": "pathsim/v0.8.0/api#Spectrum.save",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update system equation for fixed point loop,",
+    "path": "pathsim/v0.8.0/api#Spectrum.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "Spectrum"
+  },
+  {
+    "type": "class",
+    "name": "RealtimeSpectrum",
+    "description": "An extension of the 'Spectrum' block that also initializes a realtime plotter that",
+    "path": "pathsim/v0.8.0/api#RealtimeSpectrum",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimeSpectrum.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "RealtimeSpectrum"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "compute timestep update with integration engine",
+    "path": "pathsim/v0.8.0/api#RealtimeSpectrum.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.spectrum",
+    "parentClass": "RealtimeSpectrum"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.switch",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-switch",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.switch"
+  },
+  {
+    "type": "class",
+    "name": "Switch",
+    "description": "Switch block that selects between its inputs and copies",
+    "path": "pathsim/v0.8.0/api#Switch",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.switch"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Switch.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.switch",
+    "parentClass": "Switch"
+  },
+  {
+    "type": "method",
+    "name": "select",
+    "description": "This method is unique to the `Switch` block and intended",
+    "path": "pathsim/v0.8.0/api#Switch.select",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.switch",
+    "parentClass": "Switch"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Update switch output depending on inputs and switch state.",
+    "path": "pathsim/v0.8.0/api#Switch.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.switch",
+    "parentClass": "Switch"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.blocks.wrapper",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-blocks-wrapper",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.wrapper"
+  },
+  {
+    "type": "class",
+    "name": "Wrapper",
+    "description": "Wrapper block for discrete implementation and external code integration.",
+    "path": "pathsim/v0.8.0/api#Wrapper",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.wrapper"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Wrapper.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.wrapper",
+    "parentClass": "Wrapper"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Update system equation for fixed point loop.",
+    "path": "pathsim/v0.8.0/api#Wrapper.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.wrapper",
+    "parentClass": "Wrapper"
+  },
+  {
+    "type": "method",
+    "name": "dec",
+    "description": "decorator class for direct instance access from func",
+    "path": "pathsim/v0.8.0/api#Wrapper.dec",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.blocks.wrapper",
+    "parentClass": "Wrapper"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers._rungekutta",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-_rungekutta",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta"
+  },
+  {
+    "type": "class",
+    "name": "ExplicitRungeKutta",
+    "description": "Base class for explicit Runge-Kutta integrators which implements",
+    "path": "pathsim/v0.8.0/api#ExplicitRungeKutta",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ExplicitRungeKutta.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "ExplicitRungeKutta"
+  },
+  {
+    "type": "method",
+    "name": "error_controller",
+    "description": "Compute scaling factor for adaptive timestep based on",
+    "path": "pathsim/v0.8.0/api#ExplicitRungeKutta.error_controller",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "ExplicitRungeKutta"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Performs the (explicit) timestep at the intermediate RK stages",
+    "path": "pathsim/v0.8.0/api#ExplicitRungeKutta.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "ExplicitRungeKutta"
+  },
+  {
+    "type": "class",
+    "name": "DiagonallyImplicitRungeKutta",
+    "description": "Base class for diagonally implicit Runge-Kutta (DIRK) integrators",
+    "path": "pathsim/v0.8.0/api#DiagonallyImplicitRungeKutta",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#DiagonallyImplicitRungeKutta.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "DiagonallyImplicitRungeKutta"
+  },
+  {
+    "type": "method",
+    "name": "error_controller",
+    "description": "Compute scaling factor for adaptive timestep based on",
+    "path": "pathsim/v0.8.0/api#DiagonallyImplicitRungeKutta.error_controller",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "DiagonallyImplicitRungeKutta"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solves the implicit update equation using the optimizer of the engine.",
+    "path": "pathsim/v0.8.0/api#DiagonallyImplicitRungeKutta.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "DiagonallyImplicitRungeKutta"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "performs the (explicit) timestep at the intermediate RK stages",
+    "path": "pathsim/v0.8.0/api#DiagonallyImplicitRungeKutta.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._rungekutta",
+    "parentClass": "DiagonallyImplicitRungeKutta"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers._solver",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-_solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver"
+  },
+  {
+    "type": "class",
+    "name": "Solver",
+    "description": "Base skeleton class for solver definition. Defines the basic solver methods and",
+    "path": "pathsim/v0.8.0/api#Solver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Solver.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "stages",
+    "description": "Generator that yields the intermediate evaluation",
+    "path": "pathsim/v0.8.0/api#Solver.stages",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "get",
+    "description": "Returns current internal state of the solver.",
+    "path": "pathsim/v0.8.0/api#Solver.get",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "set",
+    "description": "Sets the internal state of the integration engine.",
+    "path": "pathsim/v0.8.0/api#Solver.set",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "\"Resets integration engine to initial value",
+    "path": "pathsim/v0.8.0/api#Solver.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Saves the current state to an internal state buffer which",
+    "path": "pathsim/v0.8.0/api#Solver.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "cast",
+    "description": "Cast the integration engine to the new type and initialize",
+    "path": "pathsim/v0.8.0/api#Solver.cast",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "error_controller",
+    "description": "Returns the estimated local truncation error (abs and rel) and scaling factor",
+    "path": "pathsim/v0.8.0/api#Solver.error_controller",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "revert",
+    "description": "Revert integration engine to previous timestep.",
+    "path": "pathsim/v0.8.0/api#Solver.revert",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Performs the explicit timestep for (t+dt) based",
+    "path": "pathsim/v0.8.0/api#Solver.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "method",
+    "name": "interpolate",
+    "description": "Interpolate solution after successful timestep as a ratio",
+    "path": "pathsim/v0.8.0/api#Solver.interpolate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "Solver"
+  },
+  {
+    "type": "class",
+    "name": "ExplicitSolver",
+    "description": "Base class for explicit solver definition.",
+    "path": "pathsim/v0.8.0/api#ExplicitSolver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ExplicitSolver.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ExplicitSolver"
+  },
+  {
+    "type": "method",
+    "name": "integrate_singlestep",
+    "description": "Directly integrate the function for a single timestep 'dt' with",
+    "path": "pathsim/v0.8.0/api#ExplicitSolver.integrate_singlestep",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ExplicitSolver"
+  },
+  {
+    "type": "method",
+    "name": "integrate",
+    "description": "Directly integrate the function 'func' from 'time_start'",
+    "path": "pathsim/v0.8.0/api#ExplicitSolver.integrate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ExplicitSolver"
+  },
+  {
+    "type": "class",
+    "name": "ImplicitSolver",
+    "description": "Base class for implicit solver definition.",
+    "path": "pathsim/v0.8.0/api#ImplicitSolver",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ImplicitSolver.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Saves the current state to an internal state buffer which",
+    "path": "pathsim/v0.8.0/api#ImplicitSolver.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Advances the solution of the implicit update equation of the solver",
+    "path": "pathsim/v0.8.0/api#ImplicitSolver.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver"
+  },
+  {
+    "type": "method",
+    "name": "integrate_singlestep",
+    "description": "Directly integrate the function 'func' for a single timestep 'dt' with",
+    "path": "pathsim/v0.8.0/api#ImplicitSolver.integrate_singlestep",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver"
+  },
+  {
+    "type": "method",
+    "name": "integrate",
+    "description": "Directly integrate the function 'func' from 'time_start'",
+    "path": "pathsim/v0.8.0/api#ImplicitSolver.integrate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers._solver",
+    "parentClass": "ImplicitSolver"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.bdf",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-bdf",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "class",
+    "name": "BDF",
+    "description": "Base class for the backward differentiation formula (BDF) integrators.",
+    "path": "pathsim/v0.8.0/api#BDF",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#BDF.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF"
+  },
+  {
+    "type": "method",
+    "name": "stages",
+    "description": "Generator that yields the intermediate evaluation",
+    "path": "pathsim/v0.8.0/api#BDF.stages",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "\"Resets integration engine to initial state.",
+    "path": "pathsim/v0.8.0/api#BDF.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "buffer the state for the multistep method",
+    "path": "pathsim/v0.8.0/api#BDF.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solves the implicit update equation using the optimizer of the engine.",
+    "path": "pathsim/v0.8.0/api#BDF.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Performs the explicit timestep for (t+dt) based",
+    "path": "pathsim/v0.8.0/api#BDF.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF"
+  },
+  {
+    "type": "class",
+    "name": "BDF2",
+    "description": "Fixed-step 2nd order Backward Differentiation Formula (BDF).",
+    "path": "pathsim/v0.8.0/api#BDF2",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#BDF2.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF2"
+  },
+  {
+    "type": "class",
+    "name": "BDF3",
+    "description": "Fixed-step 3rd order Backward Differentiation Formula (BDF).",
+    "path": "pathsim/v0.8.0/api#BDF3",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#BDF3.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF3"
+  },
+  {
+    "type": "class",
+    "name": "BDF4",
+    "description": "Fixed-step 4th order Backward Differentiation Formula (BDF).",
+    "path": "pathsim/v0.8.0/api#BDF4",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#BDF4.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF4"
+  },
+  {
+    "type": "class",
+    "name": "BDF5",
+    "description": "Fixed-step 5th order Backward Differentiation Formula (BDF).",
+    "path": "pathsim/v0.8.0/api#BDF5",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#BDF5.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF5"
+  },
+  {
+    "type": "class",
+    "name": "BDF6",
+    "description": "Fixed-step 6th order Backward Differentiation Formula (BDF).",
+    "path": "pathsim/v0.8.0/api#BDF6",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#BDF6.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.bdf",
+    "parentClass": "BDF6"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.dirk2",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-dirk2",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.dirk2"
+  },
+  {
+    "type": "class",
+    "name": "DIRK2",
+    "description": "Two-stage, 2nd order, Diagonally Implicit Runge-Kutta (DIRK) method.",
+    "path": "pathsim/v0.8.0/api#DIRK2",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.dirk2"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#DIRK2.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.dirk2",
+    "parentClass": "DIRK2"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.dirk3",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-dirk3",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.dirk3"
+  },
+  {
+    "type": "class",
+    "name": "DIRK3",
+    "description": "Four-stage, 3rd order, L-stable Diagonally Implicit Runge-Kutta (DIRK) method.",
+    "path": "pathsim/v0.8.0/api#DIRK3",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.dirk3"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#DIRK3.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.dirk3",
+    "parentClass": "DIRK3"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.esdirk32",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-esdirk32",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk32"
+  },
+  {
+    "type": "class",
+    "name": "ESDIRK32",
+    "description": "Four-stage, 3rd order Embedded Singly Diagonally Implicit Runge-Kutta (ESDIRK) method.",
+    "path": "pathsim/v0.8.0/api#ESDIRK32",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk32"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ESDIRK32.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk32",
+    "parentClass": "ESDIRK32"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.esdirk4",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-esdirk4",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk4"
+  },
+  {
+    "type": "class",
+    "name": "ESDIRK4",
+    "description": "Six-stage, 4th order Singly Diagonally Implicit Runge-Kutta (ESDIRK) method.",
+    "path": "pathsim/v0.8.0/api#ESDIRK4",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk4"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ESDIRK4.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk4",
+    "parentClass": "ESDIRK4"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.esdirk43",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-esdirk43",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk43"
+  },
+  {
+    "type": "class",
+    "name": "ESDIRK43",
+    "description": "Six-stage, 4th order Embedded Singly Diagonally Implicit Runge-Kutta (ESDIRK) method.",
+    "path": "pathsim/v0.8.0/api#ESDIRK43",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk43"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ESDIRK43.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk43",
+    "parentClass": "ESDIRK43"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.esdirk54",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-esdirk54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk54"
+  },
+  {
+    "type": "class",
+    "name": "ESDIRK54",
+    "description": "Seven-stage, 5th order, L-stable, stiffly accurate Embedded Singly Diagonally",
+    "path": "pathsim/v0.8.0/api#ESDIRK54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk54"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ESDIRK54.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk54",
+    "parentClass": "ESDIRK54"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.esdirk85",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-esdirk85",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk85"
+  },
+  {
+    "type": "class",
+    "name": "ESDIRK85",
+    "description": "Sixteen-stage, 8th order, L-stable, stiffly accurate Embedded Singly Diagonally",
+    "path": "pathsim/v0.8.0/api#ESDIRK85",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk85"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ESDIRK85.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.esdirk85",
+    "parentClass": "ESDIRK85"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.euler",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-euler",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.euler"
+  },
+  {
+    "type": "class",
+    "name": "EUF",
+    "description": "Explicit Forward Euler (FE) integration method.",
+    "path": "pathsim/v0.8.0/api#EUF",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.euler"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "performs the explicit forward timestep for (t+dt)",
+    "path": "pathsim/v0.8.0/api#EUF.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.euler",
+    "parentClass": "EUF"
+  },
+  {
+    "type": "class",
+    "name": "EUB",
+    "description": "Implicit Backward Euler (BE) integration method.",
+    "path": "pathsim/v0.8.0/api#EUB",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.euler"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solves the implicit update equation",
+    "path": "pathsim/v0.8.0/api#EUB.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.euler",
+    "parentClass": "EUB"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.gear",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-gear",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "class",
+    "name": "GEAR",
+    "description": "Base class for GEAR-type integrators that defines the universal methods.",
+    "path": "pathsim/v0.8.0/api#GEAR",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GEAR.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "stages",
+    "description": "Generator that yields the intermediate evaluation",
+    "path": "pathsim/v0.8.0/api#GEAR.stages",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "\"Resets integration engine to initial state.",
+    "path": "pathsim/v0.8.0/api#GEAR.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer the state and timestep. Dynamically precompute",
+    "path": "pathsim/v0.8.0/api#GEAR.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "revert",
+    "description": "Revert integration engine to previous timestep, this is only",
+    "path": "pathsim/v0.8.0/api#GEAR.revert",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "error_controller",
+    "description": "Compute scaling factor for adaptive timestep based on absolute and",
+    "path": "pathsim/v0.8.0/api#GEAR.error_controller",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solves the implicit update equation using the optimizer of the engine.",
+    "path": "pathsim/v0.8.0/api#GEAR.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Finalizes the timestep by resetting the solver for the implicit",
+    "path": "pathsim/v0.8.0/api#GEAR.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR"
+  },
+  {
+    "type": "class",
+    "name": "GEAR21",
+    "description": "Adaptive-step GEAR integrator using 2nd order BDF for timestepping",
+    "path": "pathsim/v0.8.0/api#GEAR21",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GEAR21.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR21"
+  },
+  {
+    "type": "class",
+    "name": "GEAR32",
+    "description": "Adaptive-step GEAR integrator using 3rd order BDF for timestepping",
+    "path": "pathsim/v0.8.0/api#GEAR32",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GEAR32.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR32"
+  },
+  {
+    "type": "class",
+    "name": "GEAR43",
+    "description": "Adaptive-step GEAR integrator using 4th order BDF for timestepping",
+    "path": "pathsim/v0.8.0/api#GEAR43",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GEAR43.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR43"
+  },
+  {
+    "type": "class",
+    "name": "GEAR54",
+    "description": "Adaptive-step GEAR integrator using 5th order BDF for timestepping",
+    "path": "pathsim/v0.8.0/api#GEAR54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GEAR54.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR54"
+  },
+  {
+    "type": "class",
+    "name": "GEAR52A",
+    "description": "Adaptive-order, adaptive-stepsize GEAR integrator (Variable-Step Variable-Order BDF).",
+    "path": "pathsim/v0.8.0/api#GEAR52A",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#GEAR52A.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR52A"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer the state and timestep. Dynamically precompute",
+    "path": "pathsim/v0.8.0/api#GEAR52A.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR52A"
+  },
+  {
+    "type": "method",
+    "name": "error_controller",
+    "description": "Compute scaling factor for adaptive timestep based on absolute and",
+    "path": "pathsim/v0.8.0/api#GEAR52A.error_controller",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR52A"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solves the implicit update equation using the optimizer of the engine.",
+    "path": "pathsim/v0.8.0/api#GEAR52A.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR52A"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Finalizes the timestep by resetting the solver for the implicit",
+    "path": "pathsim/v0.8.0/api#GEAR52A.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear",
+    "parentClass": "GEAR52A"
+  },
+  {
+    "type": "function",
+    "name": "compute_bdf_coefficients",
+    "description": "Computes the coefficients for backward differentiation formulas for a given order.",
+    "path": "pathsim/v0.8.0/api#compute_bdf_coefficients",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.gear"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rk4",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rk4",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rk4"
+  },
+  {
+    "type": "class",
+    "name": "RK4",
+    "description": "Classical four-stage, 4th order explicit Runge-Kutta method.",
+    "path": "pathsim/v0.8.0/api#RK4",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rk4"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RK4.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rk4",
+    "parentClass": "RK4"
+  },
+  {
+    "type": "method",
+    "name": "interpolate",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RK4.interpolate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rk4",
+    "parentClass": "RK4"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkbs32",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkbs32",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkbs32"
+  },
+  {
+    "type": "class",
+    "name": "RKBS32",
+    "description": "Four-stage, 3rd order explicit Runge-Kutta method by Bogacki and Shampine.",
+    "path": "pathsim/v0.8.0/api#RKBS32",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkbs32"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKBS32.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkbs32",
+    "parentClass": "RKBS32"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkck54",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkck54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkck54"
+  },
+  {
+    "type": "class",
+    "name": "RKCK54",
+    "description": "Six-stage, 5th order explicit Runge-Kutta method by Cash and Karp.",
+    "path": "pathsim/v0.8.0/api#RKCK54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkck54"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKCK54.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkck54",
+    "parentClass": "RKCK54"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkdp54",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkdp54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkdp54"
+  },
+  {
+    "type": "class",
+    "name": "RKDP54",
+    "description": "Seven-stage, 5th order explicit Runge-Kutta method by Dormand and Prince (DOPRI5(4)).",
+    "path": "pathsim/v0.8.0/api#RKDP54",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkdp54"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKDP54.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkdp54",
+    "parentClass": "RKDP54"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkdp87",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkdp87",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkdp87"
+  },
+  {
+    "type": "class",
+    "name": "RKDP87",
+    "description": "Thirteen-stage, 8th order explicit Runge-Kutta method by Dormand and Prince (DOP8(7)).",
+    "path": "pathsim/v0.8.0/api#RKDP87",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkdp87"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKDP87.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkdp87",
+    "parentClass": "RKDP87"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkf21",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkf21",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf21"
+  },
+  {
+    "type": "class",
+    "name": "RKF21",
+    "description": "3-stage 2-nd order embedded Runge-Kutta-Fehlberg method",
+    "path": "pathsim/v0.8.0/api#RKF21",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf21"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKF21.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf21",
+    "parentClass": "RKF21"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkf45",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkf45",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf45"
+  },
+  {
+    "type": "class",
+    "name": "RKF45",
+    "description": "Six-stage, 4th order explicit Runge-Kutta method by Fehlberg.",
+    "path": "pathsim/v0.8.0/api#RKF45",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf45"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKF45.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf45",
+    "parentClass": "RKF45"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkf78",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkf78",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf78"
+  },
+  {
+    "type": "class",
+    "name": "RKF78",
+    "description": "Thirteen-stage, 8th order explicit Runge-Kutta method by Fehlberg.",
+    "path": "pathsim/v0.8.0/api#RKF78",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf78"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKF78.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkf78",
+    "parentClass": "RKF78"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.rkv65",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-rkv65",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkv65"
+  },
+  {
+    "type": "class",
+    "name": "RKV65",
+    "description": "9-stage 6-th order with embedded 5-th order Runge-Kutta method from Verner",
+    "path": "pathsim/v0.8.0/api#RKV65",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkv65"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RKV65.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.rkv65",
+    "parentClass": "RKV65"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.ssprk22",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-ssprk22",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk22"
+  },
+  {
+    "type": "class",
+    "name": "SSPRK22",
+    "description": "Two-stage, 2nd order, Strong Stability Preserving (SSP) explicit Runge-Kutta method.",
+    "path": "pathsim/v0.8.0/api#SSPRK22",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk22"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SSPRK22.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk22",
+    "parentClass": "SSPRK22"
+  },
+  {
+    "type": "method",
+    "name": "interpolate",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SSPRK22.interpolate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk22",
+    "parentClass": "SSPRK22"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.ssprk33",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-ssprk33",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk33"
+  },
+  {
+    "type": "class",
+    "name": "SSPRK33",
+    "description": "Three-stage, 3rd order, Strong Stability Preserving (SSP) explicit",
+    "path": "pathsim/v0.8.0/api#SSPRK33",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk33"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SSPRK33.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk33",
+    "parentClass": "SSPRK33"
+  },
+  {
+    "type": "method",
+    "name": "interpolate",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SSPRK33.interpolate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk33",
+    "parentClass": "SSPRK33"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.ssprk34",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-ssprk34",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk34"
+  },
+  {
+    "type": "class",
+    "name": "SSPRK34",
+    "description": "Four-stage, 3rd order, Strong Stability Preserving (SSP) explicit Runge-Kutta method.",
+    "path": "pathsim/v0.8.0/api#SSPRK34",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk34"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#SSPRK34.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.ssprk34",
+    "parentClass": "SSPRK34"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.solvers.steadystate",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-solvers-steadystate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.steadystate"
+  },
+  {
+    "type": "class",
+    "name": "SteadyState",
+    "description": "Pseudo-solver that finds the time-independent steady-state solution (DC operating point).",
+    "path": "pathsim/v0.8.0/api#SteadyState",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.steadystate"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solve for steady state by finding x where f(x,u,t) = 0",
+    "path": "pathsim/v0.8.0/api#SteadyState.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.solvers.steadystate",
+    "parentClass": "SteadyState"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events._event",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-events-_event",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event"
+  },
+  {
+    "type": "class",
+    "name": "Event",
+    "description": "This is the base class of the event handling system.",
+    "path": "pathsim/v0.8.0/api#Event",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Event.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "on",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Event.on",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "off",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Event.off",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the recorded event times. Resetting the history is not",
+    "path": "pathsim/v0.8.0/api#Event.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer the event function evaluation before the timestep is",
+    "path": "pathsim/v0.8.0/api#Event.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "estimate",
+    "description": "Estimate the time of the next event, based on history or internal schedule.",
+    "path": "pathsim/v0.8.0/api#Event.estimate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and decide if an event has occured.",
+    "path": "pathsim/v0.8.0/api#Event.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "method",
+    "name": "resolve",
+    "description": "Resolve the event and record the time (t) at which it occurs.",
+    "path": "pathsim/v0.8.0/api#Event.resolve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events._event",
+    "parentClass": "Event"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events.condition",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-events-condition",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition"
+  },
+  {
+    "type": "class",
+    "name": "Condition",
+    "description": "Subclass of base 'Event' that triggers if the event function evaluates to 'True',",
+    "path": "pathsim/v0.8.0/api#Condition",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check if condition is satisfied.",
+    "path": "pathsim/v0.8.0/api#Condition.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition",
+    "parentClass": "Condition"
+  },
+  {
+    "type": "method",
+    "name": "resolve",
+    "description": "Resolve the event and record the time (t) at which it occurs.",
+    "path": "pathsim/v0.8.0/api#Condition.resolve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.condition",
+    "parentClass": "Condition"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events.schedule",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-events-schedule",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule"
+  },
+  {
+    "type": "class",
+    "name": "Schedule",
+    "description": "Subclass of base 'Event' that triggers dependent on the evaluation time.",
+    "path": "pathsim/v0.8.0/api#Schedule",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Schedule.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "_next",
+    "description": "return the next period break",
+    "path": "pathsim/v0.8.0/api#Schedule._next",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "estimate",
+    "description": "Estimate the time until the next scheduled event.",
+    "path": "pathsim/v0.8.0/api#Schedule.estimate",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "buffer",
+    "description": "Buffer the current time to history",
+    "path": "pathsim/v0.8.0/api#Schedule.buffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Check if the event condition is satisfied, i.e. if the",
+    "path": "pathsim/v0.8.0/api#Schedule.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "Schedule"
+  },
+  {
+    "type": "class",
+    "name": "ScheduleList",
+    "description": "Subclass of base 'Schedule' that triggers dependent on the evaluation time.",
+    "path": "pathsim/v0.8.0/api#ScheduleList",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ScheduleList.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "ScheduleList"
+  },
+  {
+    "type": "method",
+    "name": "_next",
+    "description": "return the next event from the event time list by index",
+    "path": "pathsim/v0.8.0/api#ScheduleList._next",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "ScheduleList"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Check if the event condition is satisfied, i.e. if the",
+    "path": "pathsim/v0.8.0/api#ScheduleList.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.schedule",
+    "parentClass": "ScheduleList"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.events.zerocrossing",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-events-zerocrossing",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "class",
+    "name": "ZeroCrossing",
+    "description": "Subclass of base 'Event' that triggers if the event function crosses zero.",
+    "path": "pathsim/v0.8.0/api#ZeroCrossing",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check for zero-crossings",
+    "path": "pathsim/v0.8.0/api#ZeroCrossing.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing",
+    "parentClass": "ZeroCrossing"
+  },
+  {
+    "type": "class",
+    "name": "ZeroCrossingUp",
+    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
+    "path": "pathsim/v0.8.0/api#ZeroCrossingUp",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check for zero-crossings",
+    "path": "pathsim/v0.8.0/api#ZeroCrossingUp.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing",
+    "parentClass": "ZeroCrossingUp"
+  },
+  {
+    "type": "class",
+    "name": "ZeroCrossingDown",
+    "description": "Modification of standard 'ZeroCrossing' event where events are only triggered",
+    "path": "pathsim/v0.8.0/api#ZeroCrossingDown",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing"
+  },
+  {
+    "type": "method",
+    "name": "detect",
+    "description": "Evaluate the event function and check for zero-crossings",
+    "path": "pathsim/v0.8.0/api#ZeroCrossingDown.detect",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.events.zerocrossing",
+    "parentClass": "ZeroCrossingDown"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.anderson",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-optim-anderson",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson"
+  },
+  {
+    "type": "class",
+    "name": "Anderson",
+    "description": "Class for accelerated fixed-point iteration through anderson acceleration.",
+    "path": "pathsim/v0.8.0/api#Anderson",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Anderson.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solve the function 'func' with initial",
+    "path": "pathsim/v0.8.0/api#Anderson.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "reset the anderson accelerator",
+    "path": "pathsim/v0.8.0/api#Anderson.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Perform one iteration on the fixed-point solution.",
+    "path": "pathsim/v0.8.0/api#Anderson.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "Anderson"
+  },
+  {
+    "type": "class",
+    "name": "NewtonAnderson",
+    "description": "Modified class for hybrid anderson acceleration that can use a jacobian 'jac' of",
+    "path": "pathsim/v0.8.0/api#NewtonAnderson",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson"
+  },
+  {
+    "type": "method",
+    "name": "solve",
+    "description": "Solve the function 'func' with initial value 'x0' up to a certain tolerance.",
+    "path": "pathsim/v0.8.0/api#NewtonAnderson.solve",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "NewtonAnderson"
+  },
+  {
+    "type": "method",
+    "name": "_newton",
+    "description": "Newton step on solution, where 'f=g-x' is the",
+    "path": "pathsim/v0.8.0/api#NewtonAnderson._newton",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "NewtonAnderson"
+  },
+  {
+    "type": "method",
+    "name": "step",
+    "description": "Perform one iteration on the fixed-point solution.",
+    "path": "pathsim/v0.8.0/api#NewtonAnderson.step",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.anderson",
+    "parentClass": "NewtonAnderson"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.numerical",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-optim-numerical",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.numerical"
+  },
+  {
+    "type": "function",
+    "name": "num_jac",
+    "description": "Numerically computes the jacobian of the function 'func'",
+    "path": "pathsim/v0.8.0/api#num_jac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.numerical"
+  },
+  {
+    "type": "function",
+    "name": "num_autojac",
+    "description": "Wraps a function object such that it computes the jacobian",
+    "path": "pathsim/v0.8.0/api#num_autojac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.numerical"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.operator",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-optim-operator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator"
+  },
+  {
+    "type": "class",
+    "name": "Operator",
+    "description": "Operator class for function evaluation and linearization.",
+    "path": "pathsim/v0.8.0/api#Operator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Operator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "method",
+    "name": "jac",
+    "description": "Compute the Jacobian matrix at point x.",
+    "path": "pathsim/v0.8.0/api#Operator.jac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the function at point x.",
+    "path": "pathsim/v0.8.0/api#Operator.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the linearization.",
+    "path": "pathsim/v0.8.0/api#Operator.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "Operator"
+  },
+  {
+    "type": "class",
+    "name": "DynamicOperator",
+    "description": "Operator class for dynamic system function evaluation and linearization.",
+    "path": "pathsim/v0.8.0/api#DynamicOperator",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#DynamicOperator.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "jac_x",
+    "description": "Compute the Jacobian matrix with respect to x.",
+    "path": "pathsim/v0.8.0/api#DynamicOperator.jac_x",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "jac_u",
+    "description": "Compute the Jacobian matrix with respect to u.",
+    "path": "pathsim/v0.8.0/api#DynamicOperator.jac_u",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "linearize",
+    "description": "Linearize the function at point (x, u, t).",
+    "path": "pathsim/v0.8.0/api#DynamicOperator.linearize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Reset the linearization.",
+    "path": "pathsim/v0.8.0/api#DynamicOperator.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.operator",
+    "parentClass": "DynamicOperator"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.optim.value",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-optim-value",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "class",
+    "name": "Value",
+    "description": "Dual number 'Value' definition for small autograd framework.",
+    "path": "pathsim/v0.8.0/api#Value",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Value.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value",
+    "parentClass": "Value"
+  },
+  {
+    "type": "method",
+    "name": "numeric",
+    "description": "Cast an array with value objects to an array of numeric values.",
+    "path": "pathsim/v0.8.0/api#Value.numeric",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value",
+    "parentClass": "Value"
+  },
+  {
+    "type": "method",
+    "name": "array",
+    "description": "Cast an array or list to an array of value objects.",
+    "path": "pathsim/v0.8.0/api#Value.array",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value",
+    "parentClass": "Value"
+  },
+  {
+    "type": "method",
+    "name": "der",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Value.der",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value",
+    "parentClass": "Value"
+  },
+  {
+    "type": "method",
+    "name": "jac",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Value.jac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value",
+    "parentClass": "Value"
+  },
+  {
+    "type": "method",
+    "name": "var",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Value.var",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value",
+    "parentClass": "Value"
+  },
+  {
+    "type": "function",
+    "name": "der",
+    "description": "Compute the derivative of an array of 'Value' objects with respect",
+    "path": "pathsim/v0.8.0/api#der",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "function",
+    "name": "jac",
+    "description": "Compute the derivative of an array of 'Value' objects with respect",
+    "path": "pathsim/v0.8.0/api#jac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "function",
+    "name": "var",
+    "description": "Compute the variance of an array of 'Value' objects with respect",
+    "path": "pathsim/v0.8.0/api#var",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "function",
+    "name": "autojac",
+    "description": "Decorator that wraps a function such that it computes its jacobian",
+    "path": "pathsim/v0.8.0/api#autojac",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "function",
+    "name": "add_funcs",
+    "description": "Decorator that adds numpy functions as methods to the Value class while overloading",
+    "path": "pathsim/v0.8.0/api#add_funcs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.optim.value"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.adaptivebuffer",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-adaptivebuffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer"
+  },
+  {
+    "type": "class",
+    "name": "AdaptiveBuffer",
+    "description": "A class that manages an adaptive buffer for delay modeling which is primarily",
+    "path": "pathsim/v0.8.0/api#AdaptiveBuffer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#AdaptiveBuffer.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer",
+    "parentClass": "AdaptiveBuffer"
+  },
+  {
+    "type": "method",
+    "name": "add",
+    "description": "adding a new datapoint to the buffer",
+    "path": "pathsim/v0.8.0/api#AdaptiveBuffer.add",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer",
+    "parentClass": "AdaptiveBuffer"
+  },
+  {
+    "type": "method",
+    "name": "interp",
+    "description": "interpolate buffer at defined lookup time",
+    "path": "pathsim/v0.8.0/api#AdaptiveBuffer.interp",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer",
+    "parentClass": "AdaptiveBuffer"
+  },
+  {
+    "type": "method",
+    "name": "get",
+    "description": "lookup datapoint from buffer with",
+    "path": "pathsim/v0.8.0/api#AdaptiveBuffer.get",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer",
+    "parentClass": "AdaptiveBuffer"
+  },
+  {
+    "type": "method",
+    "name": "clear",
+    "description": "clear the buffer, reset everything",
+    "path": "pathsim/v0.8.0/api#AdaptiveBuffer.clear",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.adaptivebuffer",
+    "parentClass": "AdaptiveBuffer"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.analysis",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-analysis",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.analysis"
+  },
+  {
+    "type": "class",
+    "name": "Timer",
+    "description": "Context manager that times the execution time",
+    "path": "pathsim/v0.8.0/api#Timer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.analysis"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Timer.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.analysis",
+    "parentClass": "Timer"
+  },
+  {
+    "type": "class",
+    "name": "Profiler",
+    "description": "Context manager for easy code profiling",
+    "path": "pathsim/v0.8.0/api#Profiler",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.analysis"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Profiler.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.analysis",
+    "parentClass": "Profiler"
+  },
+  {
+    "type": "function",
+    "name": "timer",
+    "description": "Shows the execution time in milliseconds of the",
+    "path": "pathsim/v0.8.0/api#timer",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.analysis"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.gilbert",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-gilbert",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.gilbert"
+  },
+  {
+    "type": "function",
+    "name": "gilbert_realization",
+    "description": "Build real valued statespace model from transfer function",
+    "path": "pathsim/v0.8.0/api#gilbert_realization",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.gilbert"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.graph",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-graph",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "class",
+    "name": "Graph",
+    "description": "Representation of a directed graph, defined by blocks (nodes)",
+    "path": "pathsim/v0.8.0/api#Graph",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Graph.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "depth",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Graph.depth",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "_assemble",
+    "description": "Constructs two separate DAG orderings of the graph components.",
+    "path": "pathsim/v0.8.0/api#Graph._assemble",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "_find_strongly_connected_components",
+    "description": "Finds strongly connected components (SCCs) in the subgraph",
+    "path": "pathsim/v0.8.0/api#Graph._find_strongly_connected_components",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "outgoing_connections",
+    "description": "Returns the outgoing connections of a block,",
+    "path": "pathsim/v0.8.0/api#Graph.outgoing_connections",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "is_algebraic_path",
+    "description": "Check if two blocks are connected through a",
+    "path": "pathsim/v0.8.0/api#Graph.is_algebraic_path",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "dag",
+    "description": "Generator that yields blocks and connections at each",
+    "path": "pathsim/v0.8.0/api#Graph.dag",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "method",
+    "name": "loop",
+    "description": "Generator that yields blocks and connections that are part of",
+    "path": "pathsim/v0.8.0/api#Graph.loop",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph",
+    "parentClass": "Graph"
+  },
+  {
+    "type": "function",
+    "name": "outgoing_block_connection_map",
+    "description": "Construct a mapping from blocks to their outgoing connections.",
+    "path": "pathsim/v0.8.0/api#outgoing_block_connection_map",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "function",
+    "name": "downstream_block_block_map",
+    "description": "Construct a connection map (directed graph) from the list of",
+    "path": "pathsim/v0.8.0/api#downstream_block_block_map",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "function",
+    "name": "upstream_block_block_map",
+    "description": "Construct a connection map (directed graph) from the list of",
+    "path": "pathsim/v0.8.0/api#upstream_block_block_map",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "function",
+    "name": "algebraic_depth_dfs",
+    "description": "Computes the longest algebraic path length using depth-first search.",
+    "path": "pathsim/v0.8.0/api#algebraic_depth_dfs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "function",
+    "name": "has_algebraic_path",
+    "description": "Determines if an algebraic path exists between two blocks.",
+    "path": "pathsim/v0.8.0/api#has_algebraic_path",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.graph"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.portreference",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-portreference",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference"
+  },
+  {
+    "type": "class",
+    "name": "PortReference",
+    "description": "This is a container class that holds a reference to a block",
+    "path": "pathsim/v0.8.0/api#PortReference",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#PortReference.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "_validate_input_ports",
+    "description": "Check the existance of the input ports, specifically string port",
+    "path": "pathsim/v0.8.0/api#PortReference._validate_input_ports",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "_validate_output_ports",
+    "description": "Check the existance of the output ports, specifically string port",
+    "path": "pathsim/v0.8.0/api#PortReference._validate_output_ports",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "to",
+    "description": "Transfer the data between two `PortReference` instances,",
+    "path": "pathsim/v0.8.0/api#PortReference.to",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "get_inputs",
+    "description": "Return the input values of the block at specified ports",
+    "path": "pathsim/v0.8.0/api#PortReference.get_inputs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "set_inputs",
+    "description": "Set the block inputs with values at specified ports",
+    "path": "pathsim/v0.8.0/api#PortReference.set_inputs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "get_outputs",
+    "description": "Return the output values of the block at specified ports",
+    "path": "pathsim/v0.8.0/api#PortReference.get_outputs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "set_outputs",
+    "description": "Set the block outputs with values at specified ports",
+    "path": "pathsim/v0.8.0/api#PortReference.set_outputs",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "method",
+    "name": "to_dict",
+    "description": "Serialization into dict",
+    "path": "pathsim/v0.8.0/api#PortReference.to_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.portreference",
+    "parentClass": "PortReference"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.progresstracker",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-progresstracker",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker"
+  },
+  {
+    "type": "class",
+    "name": "ProgressTracker",
+    "description": "A progress tracker suitable for simulations with variable timesteps,",
+    "path": "pathsim/v0.8.0/api#ProgressTracker",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#ProgressTracker.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "method",
+    "name": "_has_configured_handler",
+    "description": "Checks if the logger or any of its ancestors have configured",
+    "path": "pathsim/v0.8.0/api#ProgressTracker._has_configured_handler",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "method",
+    "name": "start",
+    "description": "Starts the progress timer and logs the initial message.",
+    "path": "pathsim/v0.8.0/api#ProgressTracker.start",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "Updates the tracker's progress and optional postfix info,",
+    "path": "pathsim/v0.8.0/api#ProgressTracker.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "method",
+    "name": "close",
+    "description": "Logs the final status, calculates final runtime, and marks tracker as closed.",
+    "path": "pathsim/v0.8.0/api#ProgressTracker.close",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "method",
+    "name": "_format_time",
+    "description": "Formats a duration in seconds into HH:MM:SS string format.",
+    "path": "pathsim/v0.8.0/api#ProgressTracker._format_time",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "method",
+    "name": "_log_progress",
+    "description": "Internal method to format and log the current progress status if",
+    "path": "pathsim/v0.8.0/api#ProgressTracker._log_progress",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.progresstracker",
+    "parentClass": "ProgressTracker"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.realtimeplotter",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-realtimeplotter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter"
+  },
+  {
+    "type": "class",
+    "name": "RealtimePlotter",
+    "description": "Class that manages a realtime plotting window that",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "method",
+    "name": "update_all",
+    "description": "update the plot completely with new data",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter.update_all",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "method",
+    "name": "update",
+    "description": "update the plot with new data",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter.update",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "method",
+    "name": "_update_plot",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter._update_plot",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "method",
+    "name": "show",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter.show",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "method",
+    "name": "on_close",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter.on_close",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "method",
+    "name": "_setup_legend_picking",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#RealtimePlotter._setup_legend_picking",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.realtimeplotter",
+    "parentClass": "RealtimePlotter"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.register",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-register",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register"
+  },
+  {
+    "type": "class",
+    "name": "Register",
+    "description": "This class is a intended to be used for the inputs and outputs of blocks.",
+    "path": "pathsim/v0.8.0/api#Register",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register"
+  },
+  {
+    "type": "method",
+    "name": "__init__",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#Register.__init__",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register",
+    "parentClass": "Register"
+  },
+  {
+    "type": "method",
+    "name": "_map",
+    "description": "Map string keys to integers defined in '_mapping'",
+    "path": "pathsim/v0.8.0/api#Register._map",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register",
+    "parentClass": "Register"
+  },
+  {
+    "type": "method",
+    "name": "reset",
+    "description": "Set all stored values of the register to zero.",
+    "path": "pathsim/v0.8.0/api#Register.reset",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register",
+    "parentClass": "Register"
+  },
+  {
+    "type": "method",
+    "name": "clear",
+    "description": "Fully clear the register of all values to length is zero.",
+    "path": "pathsim/v0.8.0/api#Register.clear",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register",
+    "parentClass": "Register"
+  },
+  {
+    "type": "method",
+    "name": "to_array",
+    "description": "Convert the register to a numpy array with entries",
+    "path": "pathsim/v0.8.0/api#Register.to_array",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register",
+    "parentClass": "Register"
+  },
+  {
+    "type": "method",
+    "name": "update_from_array",
+    "description": "Update the register values from an array in place.",
+    "path": "pathsim/v0.8.0/api#Register.update_from_array",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.register",
+    "parentClass": "Register"
+  },
+  {
+    "type": "module",
+    "name": "pathsim.utils.serialization",
+    "description": "",
+    "path": "pathsim/v0.8.0/api#pathsim-utils-serialization",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization"
+  },
+  {
+    "type": "class",
+    "name": "Serializable",
+    "description": "Mixin that provides automatic serialization based on __init__ parameters",
+    "path": "pathsim/v0.8.0/api#Serializable",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization"
+  },
+  {
+    "type": "method",
+    "name": "save",
+    "description": "Save the dictionary representation of object to an external file",
+    "path": "pathsim/v0.8.0/api#Serializable.save",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization",
+    "parentClass": "Serializable"
+  },
+  {
+    "type": "method",
+    "name": "load",
+    "description": "Load and instantiate an object from an external file in json format",
+    "path": "pathsim/v0.8.0/api#Serializable.load",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization",
+    "parentClass": "Serializable"
+  },
+  {
+    "type": "method",
+    "name": "from_dict",
+    "description": "Create block instance from dictionary representation.",
+    "path": "pathsim/v0.8.0/api#Serializable.from_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization",
+    "parentClass": "Serializable"
+  },
+  {
+    "type": "method",
+    "name": "to_dict",
+    "description": "Convert object to dictionary representation",
+    "path": "pathsim/v0.8.0/api#Serializable.to_dict",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization",
+    "parentClass": "Serializable"
+  },
+  {
+    "type": "method",
+    "name": "_find_class",
+    "description": "Find a class by name and optionally module name in the module hierarchy",
+    "path": "pathsim/v0.8.0/api#Serializable._find_class",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization",
+    "parentClass": "Serializable"
+  },
+  {
+    "type": "function",
+    "name": "serialize_callable",
+    "description": "Serialize a callable with priority for human-readable formats",
+    "path": "pathsim/v0.8.0/api#serialize_callable",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization"
+  },
+  {
+    "type": "function",
+    "name": "serialize_object",
+    "description": "Serialize any object by capturing its module and class",
+    "path": "pathsim/v0.8.0/api#serialize_object",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization"
+  },
+  {
+    "type": "function",
+    "name": "deserialize",
+    "description": "Deserialize an object from dictionary representation",
+    "path": "pathsim/v0.8.0/api#deserialize",
+    "packageId": "pathsim",
+    "moduleName": "pathsim.utils.serialization"
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "cells": {
+    "15": {
+      "stdout": "14:27:07 - INFO - LOGGING (log: True)\n14:27:07 - INFO - BLOCKS (total: 8, dynamic: 1, static: 7, eventful: 0)\n14:27:07 - INFO - GRAPH (nodes: 8, edges: 9, alg. depth: 2, loop depth: 0, runtime: 0.031ms)\n14:27:07 - INFO - STARTING -> TRANSIENT (Duration: 20.00s)\n14:27:07 - INFO - --------------------   1% | 0.0s<0.1s | 20126.6 it/s\n14:27:07 - INFO - ####----------------  20% | 0.0s<0.1s | 20221.7 it/s\n14:27:07 - INFO - ########------------  40% | 0.0s<0.1s | 20576.4 it/s\n14:27:07 - INFO - ############--------  60% | 0.1s<0.0s | 20346.3 it/s\n14:27:07 - INFO - ################----  80% | 0.1s<0.0s | 20802.9 it/s\n14:27:07 - INFO - #################### 100% | 0.1s<--:-- | 20251.4 it/s\n14:27:07 - INFO - FINISHED -> TRANSIENT (total steps: 2000, successful: 2000, runtime: 107.29 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "17": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "kalman_filter_0.png"
+      ]
+    },
+    "19": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "kalman_filter_1.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:27:08.593834+00:00",
+  "duration": 3322,
+  "success": true
+}

@@ -1,0 +1,24 @@
+{
+  "cells": {
+    "17": {
+      "stdout": "14:29:55 - INFO - LOGGING (log: True)\n14:29:55 - INFO - BLOCKS (total: 2, dynamic: 1, static: 1, eventful: 0)\n14:29:55 - INFO - GRAPH (nodes: 2, edges: 1, alg. depth: 1, loop depth: 0, runtime: 0.019ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "19": {
+      "stdout": "14:29:55 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n14:29:55 - INFO - --------------------   1% | 0.0s<0.2s | 14121.3 it/s\n14:29:55 - INFO - ####----------------  20% | 0.1s<0.2s | 13831.8 it/s\n14:29:55 - INFO - ########------------  40% | 0.2s<0.1s | 14419.1 it/s\n14:29:55 - INFO - ############--------  60% | 0.3s<0.5s | 14352.9 it/s\n14:29:55 - INFO - ################----  80% | 0.4s<0.0s | 14177.1 it/s\n14:29:56 - INFO - #################### 100% | 0.5s<--:-- | 13954.9 it/s\n14:29:56 - INFO - FINISHED -> TRANSIENT (total steps: 6711, successful: 4932, runtime: 495.02 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "21": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "poincare_maps_0.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:29:56.837135+00:00",
+  "duration": 3772,
+  "success": true
+}

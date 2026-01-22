@@ -1,0 +1,20 @@
+{
+  "cells": {
+    "12": {
+      "stdout": "14:27:01 - INFO - LOGGING (log: True)\n14:27:01 - INFO - BLOCKS (total: 9, dynamic: 1, static: 8, eventful: 4)\n14:27:01 - INFO - GRAPH (nodes: 9, edges: 13, alg. depth: 2, loop depth: 0, runtime: 0.032ms)\n14:27:01 - INFO - STARTING -> TRANSIENT (Duration: 2.00s)\n14:27:01 - INFO - --------------------   1% | 0.0s<0.2s | 10990.1 it/s\n14:27:01 - INFO - ####----------------  20% | 0.0s<0.2s | 10713.9 it/s\n14:27:01 - INFO - ########------------  40% | 0.1s<0.1s | 11630.9 it/s\n14:27:01 - INFO - ############--------  60% | 0.1s<0.1s | 11270.6 it/s\n14:27:01 - INFO - ################----  80% | 0.2s<0.0s | 11653.9 it/s\n14:27:01 - INFO - #################### 100% | 0.2s<--:-- | 8270.4 it/s\n14:27:01 - INFO - FINISHED -> TRANSIENT (total steps: 2402, successful: 2401, runtime: 217.15 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "14": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "delta_sigma_adc_0.png",
+        "delta_sigma_adc_1.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:27:02.498832+00:00",
+  "duration": 3472,
+  "success": true
+}

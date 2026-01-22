@@ -7,8 +7,11 @@
 // Request Messages (Main Thread → Worker)
 // ============================================================================
 
+/** Package versions to install (package name → version without 'v' prefix) */
+export type PackageVersions = Record<string, string>;
+
 export type WorkerRequest =
-	| { type: 'init' }
+	| { type: 'init'; packageVersions?: PackageVersions }
 	| { type: 'exec'; id: string; code: string }
 	| { type: 'reset' };
 

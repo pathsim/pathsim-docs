@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
@@ -19,8 +19,8 @@
 		return groupByCategory(data.versionManifest.notebooks, data.versionManifest.categories);
 	});
 
-	// Populate store for sidebar TOC
-	onMount(() => {
+	// Reactively update store for sidebar TOC when data changes (including version changes)
+	$effect(() => {
 		if (data.versionManifest) {
 			const grouped = groupByCategory(
 				data.versionManifest.notebooks,
@@ -31,6 +31,8 @@
 				notebooks
 			}));
 			exampleGroupsStore.set(groups);
+		} else {
+			exampleGroupsStore.set([]);
 		}
 	});
 

@@ -1,0 +1,26 @@
+{
+  "cells": {
+    "20": {
+      "stdout": "14:24:57 - INFO - LOGGING (log: True)\n14:24:57 - INFO - BLOCKS (total: 11, dynamic: 2, static: 9, eventful: 0)\n14:24:57 - INFO - GRAPH (nodes: 11, edges: 17, alg. depth: 5, loop depth: 0, runtime: 0.056ms)\n14:24:57 - INFO - STARTING -> TRANSIENT (Duration: 100.00s)\n14:24:57 - INFO - --------------------   1% | 0.0s<0.1s | 9245.4 it/s\n14:24:57 - INFO - ####----------------  20% | 0.0s<0.1s | 6945.1 it/s\n14:24:57 - INFO - ########------------  40% | 0.1s<0.1s | 7110.6 it/s\n14:24:57 - INFO - ############--------  60% | 0.2s<0.1s | 6821.3 it/s\n14:24:58 - INFO - ################----  80% | 0.7s<0.0s | 9219.5 it/s\n14:24:58 - INFO - #################### 100% | 0.7s<--:-- | 7000.9 it/s\n14:24:58 - INFO - FINISHED -> TRANSIENT (total steps: 5055, successful: 2409, runtime: 714.93 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "22": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "stick_slip_0.png"
+      ]
+    },
+    "24": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "stick_slip_1.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:24:59.414228+00:00",
+  "duration": 4031,
+  "success": true
+}

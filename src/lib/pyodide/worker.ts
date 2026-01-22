@@ -11,7 +11,7 @@ import {
 	ERROR_MESSAGES,
 	type PackageConfig
 } from '$lib/config/pyodide';
-import type { WorkerRequest, WorkerResponse } from './types';
+import type { WorkerRequest, WorkerResponse, PackageVersions } from './types';
 
 // Pyodide types (loaded dynamically from CDN)
 interface PyodideInterface {
@@ -36,8 +36,9 @@ function send(response: WorkerResponse): void {
 
 /**
  * Initialize Pyodide and install packages
+ * @param packageVersions Optional version overrides for packages (e.g., { pathsim: '0.16.4' })
  */
-async function initialize(): Promise<void> {
+async function initialize(packageVersions?: PackageVersions): Promise<void> {
 	if (isInitialized) {
 		send({ type: 'ready' });
 		return;
@@ -76,17 +77,22 @@ async function initialize(): Promise<void> {
 
 	// Install packages via micropip
 	for (const pkg of PYTHON_PACKAGES) {
+		// Check if a specific version was requested for this package
+		const version = packageVersions?.[pkg.pip];
+		const versionSuffix = version ? `==${version}` : '';
+
 		const progressKey = `INSTALLING_${pkg.import.toUpperCase()}` as keyof typeof PROGRESS_MESSAGES;
+		const versionDisplay = version ? ` ${version}` : '';
 		send({
 			type: 'progress',
-			message: PROGRESS_MESSAGES[progressKey] ?? `Installing ${pkg.import}...`
+			message: PROGRESS_MESSAGES[progressKey]?.replace('...', `${versionDisplay}...`) ?? `Installing ${pkg.import}${versionDisplay}...`
 		});
 
 		try {
 			const preFlag = pkg.pre ? ', pre=True' : '';
 			await pyodide.runPythonAsync(`
 import micropip
-await micropip.install('${pkg.pip}'${preFlag})
+await micropip.install('${pkg.pip}${versionSuffix}'${preFlag})
 			`);
 
 			// Verify installation
@@ -96,7 +102,7 @@ print(f"${pkg.import} {${pkg.import}.__version__} loaded successfully")
 			`);
 		} catch (error) {
 			if (pkg.required) {
-				throw new Error(`Failed to install required package ${pkg.pip}: ${error}`);
+				throw new Error(`Failed to install required package ${pkg.pip}${versionSuffix}: ${error}`);
 			}
 			console.warn(`Optional package ${pkg.pip} failed to install:`, error);
 		}
@@ -290,7 +296,7 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
 	try {
 		switch (type) {
 			case 'init':
-				await initialize();
+				await initialize(event.data.packageVersions);
 				break;
 
 			case 'exec': {

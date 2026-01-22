@@ -1,0 +1,373 @@
+{
+  "package": "pathsim",
+  "tag": "v0.12.0",
+  "notebooks": [
+    {
+      "slug": "harmonic-oscillator",
+      "file": "harmonic_oscillator.ipynb",
+      "title": "Harmonic Oscillator",
+      "description": "The equation of motion that defines the harmonic oscillator is given by",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "basics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "linear-feedback",
+      "file": "linear_feedback.ipynb",
+      "title": "Linear Feedback System",
+      "description": "Then lets define the system parameters such as the initial value  of the integrator, the linear feedback gain  and the time dependend source function .",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "feedback"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "pendulum",
+      "file": "pendulum.ipynb",
+      "title": "Pendulum",
+      "description": "Above we have both the mechanical mode, which is a weight dangling from a string with length  and diverted by some initial angle, as well as the block diagram representation of the equation of moti...",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "adaptive",
+        "physics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "vanderpol",
+      "file": "vanderpol.ipynb",
+      "title": "Van der Pol",
+      "description": "$$",
+      "category": "getting-started",
+      "tags": [
+        "ode",
+        "nonlinear"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "cascade-controller",
+      "file": "cascade_controller.ipynb",
+      "title": "Cascade Controller",
+      "description": "The cascade controller consists of:",
+      "category": "control",
+      "tags": [
+        "cascade",
+        "feedback"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "kalman-filter",
+      "file": "kalman_filter.ipynb",
+      "title": "Kalman Filter",
+      "description": "First let's import the required classes and blocks:",
+      "category": "control",
+      "tags": [
+        "estimation",
+        "filter"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "pid-controller",
+      "file": "pid_controller.ipynb",
+      "title": "PID Controller",
+      "description": "First let's import the required classes and blocks:",
+      "category": "control",
+      "tags": [
+        "pid",
+        "feedback"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "thermostat",
+      "file": "thermostat.ipynb",
+      "title": "Thermostat",
+      "description": "With some algebraic manipulations we can translate the system equation into a block diagram that can be implemented in PathSim. Note the event manager, that watches the state of the integrator and ...",
+      "category": "control",
+      "tags": [
+        "hybrid",
+        "events"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "bouncing-ball",
+      "file": "bouncing_ball.ipynb",
+      "title": "Bouncing Ball",
+      "description": "Systems like this require the location and resolution of discrete events within the timestep and are not easily solved with standard numerical ODE solvers. PathSim implements an event management sy...",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "hybrid"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "bouncing-pendulum",
+      "file": "bouncing_pendulum.ipynb",
+      "title": "Bouncing Pendulum",
+      "description": "The mathematical pendulum is governed by the nonlinear differential equation:",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "collision"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "coupled-oscillators",
+      "file": "coupled_oscillators.ipynb",
+      "title": "Coupled Oscillators",
+      "description": "As a block diagram it would look like this:",
+      "category": "mechanics",
+      "tags": [
+        "ode",
+        "physics"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "stick-slip",
+      "file": "stick_slip.ipynb",
+      "title": "Stick Slip",
+      "description": "This system has two possible states:",
+      "category": "mechanics",
+      "tags": [
+        "friction",
+        "hybrid"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "switched-bouncing-ball",
+      "file": "switched_bouncing_ball.ipynb",
+      "title": "Switched Bouncing Ball",
+      "description": "The ball experiences:",
+      "category": "mechanics",
+      "tags": [
+        "events",
+        "hybrid"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "delta-sigma-adc",
+      "file": "delta_sigma_adc.ipynb",
+      "title": "Delta-Sigma ADC",
+      "description": "A delta-sigma ADC works by:",
+      "category": "electronics",
+      "tags": [
+        "adc",
+        "mixed-signal"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "diode-circuit",
+      "file": "diode_circuit.ipynb",
+      "title": "Diode Circuit",
+      "description": "Applying Kirchhoff's Voltage Law (KVL):",
+      "category": "electronics",
+      "tags": [
+        "nonlinear",
+        "circuit"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "noisy-amplifier",
+      "file": "noisy_amplifier.ipynb",
+      "title": "Noisy Amplifier",
+      "description": "The most simplistic model for an amplifier is just the product of a signal with some factor (gain). But we all know, real amplifiers are noisy and nonlinear. Internal physical processes or fluctiat...",
+      "category": "electronics",
+      "tags": [
+        "noise",
+        "circuit"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "sar-adc",
+      "file": "sar_adc.ipynb",
+      "title": "SAR ADC",
+      "description": "A SAR ADC converts analog signals to digital using a binary search algorithm:",
+      "category": "electronics",
+      "tags": [
+        "adc",
+        "mixed-signal"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "fmcw-radar",
+      "file": "fmcw_radar.ipynb",
+      "title": "FMCW Radar",
+      "description": "The figure below shows the block diagram of a very basic FMCW radar system consisting of a chirp source (sinusoid with a linearly time dependent frequency), a delay (to model the signal propagation...",
+      "category": "signal-processing",
+      "tags": [
+        "radar",
+        "frequency"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "rf-network-oneport",
+      "file": "rf_network_oneport.ipynb",
+      "title": "RF Network - One Port",
+      "description": "This is an example of a simulation of a Radio Frequency (RF) network with PathSim.",
+      "category": "signal-processing",
+      "tags": [
+        "rf",
+        "network"
+      ],
+      "executable": false
+    },
+    {
+      "slug": "spectrum-analysis",
+      "file": "spectrum_analysis.ipynb",
+      "title": "Spectrum Analysis",
+      "description": "We'll create a simple signal chain:",
+      "category": "signal-processing",
+      "tags": [
+        "fft",
+        "frequency"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "transfer-function",
+      "file": "transfer_function.ipynb",
+      "title": "Transfer Function",
+      "description": "The pole-residue-constant form represents a transfer function as:",
+      "category": "signal-processing",
+      "tags": [
+        "frequency",
+        "bode"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "chemical-reactor",
+      "file": "chemical_reactor.ipynb",
+      "title": "Chemical Reactor",
+      "description": "We define the physical and chemical parameters for the reactor.",
+      "category": "chemical",
+      "tags": [
+        "cstr",
+        "reaction"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "algebraic-loop",
+      "file": "algebraic_loop.ipynb",
+      "title": "Algebraic Loop",
+      "description": "An algebraic loop occurs when the output of a block depends on its own input in the same timestep. This creates an implicit equation that must be solved:",
+      "category": "advanced",
+      "tags": [
+        "algebraic",
+        "solver"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "lorenz-attractor",
+      "file": "lorenz_attractor.ipynb",
+      "title": "Lorenz Attractor",
+      "description": "We create blocks for each equation:",
+      "category": "advanced",
+      "tags": [
+        "chaos",
+        "ode"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "nested-subsystems",
+      "file": "nested_subsystems.ipynb",
+      "title": "Nested Subsystems",
+      "description": "First, we create a subsystem that computes",
+      "category": "advanced",
+      "tags": [
+        "hierarchy",
+        "subsystem"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "poincare-maps",
+      "file": "poincare_maps.ipynb",
+      "title": "Poincaré Maps",
+      "description": "We'll use the compact ODE block formulation to define the Lorenz system, along with PathSim's event handling capabilities to detect surface crossings.",
+      "category": "advanced",
+      "tags": [
+        "analysis",
+        "chaos"
+      ],
+      "executable": true
+    },
+    {
+      "slug": "fmu-cosimulation",
+      "file": "fmu_cosimulation.ipynb",
+      "title": "FMU Co-Simulation",
+      "description": "Note that FMPy must be installed to use FMU blocks:",
+      "category": "fmu",
+      "tags": [
+        "fmu",
+        "cosim"
+      ],
+      "executable": false
+    }
+  ],
+  "categories": [
+    {
+      "id": "getting-started",
+      "title": "Getting Started",
+      "order": 1
+    },
+    {
+      "id": "control",
+      "title": "Control Systems",
+      "order": 2
+    },
+    {
+      "id": "mechanics",
+      "title": "Mechanics",
+      "order": 3
+    },
+    {
+      "id": "electronics",
+      "title": "Electronics",
+      "order": 4
+    },
+    {
+      "id": "signal-processing",
+      "title": "Signal Processing",
+      "order": 5
+    },
+    {
+      "id": "chemical",
+      "title": "Chemical Engineering",
+      "order": 6
+    },
+    {
+      "id": "advanced",
+      "title": "Advanced Topics",
+      "order": 7
+    },
+    {
+      "id": "fmu",
+      "title": "FMU Integration",
+      "order": 8
+    }
+  ]
+}

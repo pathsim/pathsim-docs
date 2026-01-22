@@ -4,11 +4,13 @@
 	 * Wraps CodeBlock with Pyodide execution, output display, and plot rendering
 	 */
 	import { onMount, onDestroy } from 'svelte';
+	import { get } from 'svelte/store';
 	import CodeBlock from './CodeBlock.svelte';
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
 	import { notebookStore, type CellStatus } from '$lib/stores/notebookStore';
 	import { pyodideState } from '$lib/stores/pyodideStore';
+	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import CellOutput from '$lib/components/notebook/CellOutput.svelte';
 	import type { CellOutput as CellOutputType } from '$lib/notebook/types';
 
@@ -25,6 +27,12 @@
 		prerequisites?: string[];
 		/** Static outputs from notebook file (shown before execution) */
 		staticOutputs?: CellOutputType[];
+		/** Pre-computed stdout from build */
+		precomputedStdout?: string | null;
+		/** Pre-computed stderr from build */
+		precomputedStderr?: string | null;
+		/** Figure URLs from pre-computed output */
+		figureUrls?: string[];
 	}
 
 	let {
@@ -33,7 +41,10 @@
 		title = 'Code',
 		editable = false,
 		prerequisites = [],
-		staticOutputs = []
+		staticOutputs = [],
+		precomputedStdout = null,
+		precomputedStderr = null,
+		figureUrls = []
 	}: Props = $props();
 
 	// Reference to CodeBlock for getting current code
@@ -56,7 +67,12 @@
 	let isRunning = $derived(cellState.status === 'running');
 	let isPending = $derived(cellState.status === 'pending');
 	let hasLiveOutput = $derived(stdout || stderr || plots.length > 0 || error);
-	let showStaticOutputs = $derived(!hasLiveOutput && staticOutputs.length > 0);
+	let hasPrecomputedOutput = $derived(
+		precomputedStdout || precomputedStderr || figureUrls.length > 0
+	);
+	let showStaticOutputs = $derived(
+		!hasLiveOutput && (staticOutputs.length > 0 || hasPrecomputedOutput)
+	);
 	let hasOutput = $derived(hasLiveOutput || showStaticOutputs);
 
 	/**
@@ -76,9 +92,12 @@
 			// Dynamically import pyodide
 			const { execute, initPyodide } = await import('$lib/pyodide');
 
-			// Ensure Pyodide is initialized
+			// Get package versions from store (set by example page)
+			const packageVersions = get(packageVersionsStore);
+
+			// Ensure Pyodide is initialized with the correct package versions
 			pyodideState.setLoading('Initializing Python...');
-			await initPyodide();
+			await initPyodide(Object.keys(packageVersions).length > 0 ? packageVersions : undefined);
 			pyodideState.setReady();
 
 			// Execute with streaming callbacks for real-time output
@@ -264,7 +283,12 @@
 			{/if}
 
 			{#if showStaticOutputs}
-				<CellOutput outputs={staticOutputs} />
+				<CellOutput
+					outputs={staticOutputs}
+					{figureUrls}
+					{precomputedStdout}
+					{precomputedStderr}
+				/>
 			{/if}
 		</div>
 	{/if}

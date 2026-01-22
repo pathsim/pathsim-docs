@@ -8,6 +8,7 @@
 	import CodeCell from './CodeCell.svelte';
 	import RawCell from './RawCell.svelte';
 	import type { NotebookData, CodeCellData } from '$lib/notebook/types';
+	import type { NotebookOutputs } from '$lib/notebook/loader';
 	import { isCellHidden } from '$lib/notebook/parser';
 	import { pyodideState } from '$lib/stores/pyodideStore';
 
@@ -15,11 +16,21 @@
 		notebook: NotebookData;
 		/** Base path for resolving relative paths (images, etc.) */
 		basePath?: string;
+		/** Pre-computed outputs from build (cell index -> outputs) */
+		precomputedOutputs?: NotebookOutputs | null;
+		/** Base path for figure URLs */
+		figuresBasePath?: string;
 		/** Show stored outputs from notebook file */
 		showStaticOutputs?: boolean;
 	}
 
-	let { notebook, basePath = '', showStaticOutputs = true }: Props = $props();
+	let {
+		notebook,
+		basePath = '',
+		precomputedOutputs = null,
+		figuresBasePath = '',
+		showStaticOutputs = true
+	}: Props = $props();
 
 	// Get list of code cells with their indices
 	let codeCells = $derived(
@@ -52,6 +63,21 @@
 		});
 		return unsubscribe;
 	});
+
+	// Helper to get pre-computed output for a cell by index
+	function getCellOutput(index: number) {
+		if (!precomputedOutputs?.cells) return null;
+		return precomputedOutputs.cells[String(index)] || null;
+	}
+
+	// Helper to get figure URLs for a cell
+	function getCellFigureUrls(index: number): string[] {
+		const cellOutput = getCellOutput(index);
+		if (!cellOutput?.figures) return [];
+		return cellOutput.figures.map((filename: string) =>
+			figuresBasePath ? `${figuresBasePath}/${filename}` : filename
+		);
+	}
 </script>
 
 <article class="notebook">
@@ -66,13 +92,15 @@
 		{#each notebook.cells as cell, index (cell.id)}
 			{#if !isCellHidden(cell)}
 				{#if cell.cell_type === 'markdown'}
-					<MarkdownCell {cell} />
+					<MarkdownCell {cell} {basePath} />
 				{:else if cell.cell_type === 'code'}
 					<CodeCell
 						{cell}
 						{index}
 						prerequisites={prerequisitesMap.get(cell.id) || []}
 						{showStaticOutputs}
+						precomputedOutput={getCellOutput(index)}
+						figureUrls={getCellFigureUrls(index)}
 					/>
 				{:else if cell.cell_type === 'raw'}
 					<RawCell {cell} {basePath} />

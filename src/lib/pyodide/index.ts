@@ -5,10 +5,11 @@
 
 import { TIMEOUTS, ERROR_MESSAGES } from '$lib/config/pyodide';
 import { pyodideState, updateState, setError, setReady } from '$lib/stores/pyodideStore';
-import type { WorkerRequest, WorkerResponse, ExecutionResult } from './types';
+import type { WorkerRequest, WorkerResponse, ExecutionResult, PackageVersions } from './types';
 
 let worker: Worker | null = null;
 let initPromise: Promise<void> | null = null;
+let initializedVersions: PackageVersions | null = null;
 
 // Streaming callbacks for real-time output
 export interface StreamCallbacks {
@@ -138,16 +139,38 @@ function send(request: WorkerRequest): void {
 }
 
 /**
+ * Check if versions have changed and reinitialization is needed
+ */
+function needsReinitialization(newVersions?: PackageVersions): boolean {
+	if (!newVersions) return false;
+	if (!initializedVersions) return true;
+
+	// Check if any version has changed
+	for (const [pkg, version] of Object.entries(newVersions)) {
+		if (initializedVersions[pkg] !== version) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * Initialize Pyodide
  * Returns a promise that resolves when Pyodide is ready
+ * @param packageVersions Optional package versions to install (e.g., { pathsim: '0.16.4' })
  */
-export async function initPyodide(): Promise<void> {
+export async function initPyodide(packageVersions?: PackageVersions): Promise<void> {
+	// Check if we need to reinitialize due to version change
+	if (needsReinitialization(packageVersions)) {
+		terminate();
+	}
+
 	// Return existing promise if already initializing
 	if (initPromise) {
 		return initPromise;
 	}
 
-	// Already initialized
+	// Already initialized with same versions
 	let state: { status: string } = { status: 'idle' };
 	pyodideState.subscribe((s) => (state = s))();
 	if (state.status === 'ready') {
@@ -169,6 +192,7 @@ export async function initPyodide(): Promise<void> {
 			originalHandler(event);
 			if (event.data.type === 'ready') {
 				worker!.onmessage = originalHandler;
+				initializedVersions = packageVersions ?? null;
 				resolve();
 			} else if (event.data.type === 'error' && !event.data.id) {
 				worker!.onmessage = originalHandler;
@@ -176,9 +200,9 @@ export async function initPyodide(): Promise<void> {
 			}
 		};
 
-		// Update state and send init message
+		// Update state and send init message with package versions
 		updateState({ status: 'loading', progress: 'Starting...', error: null });
-		send({ type: 'init' });
+		send({ type: 'init', packageVersions });
 
 		// Set timeout
 		setTimeout(() => {
@@ -274,10 +298,11 @@ export function terminate(): void {
 		worker = null;
 	}
 	initPromise = null;
+	initializedVersions = null;
 	pendingExecutions.clear();
 	updateState({ status: 'idle', progress: '', error: null });
 }
 
 // Re-export types and store
-export type { ExecutionResult, PyodideState, PyodideStatus } from './types';
+export type { ExecutionResult, PyodideState, PyodideStatus, PackageVersions } from './types';
 export { pyodideState } from '$lib/stores/pyodideStore';

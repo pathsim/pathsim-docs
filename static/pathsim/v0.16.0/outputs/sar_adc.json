@@ -1,0 +1,19 @@
+{
+  "cells": {
+    "14": {
+      "stdout": "14:28:04 - INFO - LOGGING (log: True)\n14:28:04 - INFO - BLOCKS (total: 9, dynamic: 1, static: 8, eventful: 5)\n14:28:04 - INFO - GRAPH (nodes: 9, edges: 27, alg. depth: 3, loop depth: 0, runtime: 0.089ms)\n14:28:04 - INFO - STARTING -> TRANSIENT (Duration: 1.00s)\n14:28:04 - INFO - --------------------   1% | 0.0s<0.2s | 7417.5 it/s\n14:28:04 - INFO - ####----------------  20% | 0.1s<0.3s | 6680.5 it/s\n14:28:04 - INFO - ########------------  40% | 0.1s<0.1s | 6368.2 it/s\n14:28:05 - INFO - ############--------  60% | 0.2s<0.1s | 7188.2 it/s\n14:28:05 - INFO - ################----  80% | 0.3s<0.0s | 7441.1 it/s\n14:28:05 - INFO - #################### 100% | 0.3s<--:-- | 7344.5 it/s\n14:28:05 - INFO - FINISHED -> TRANSIENT (total steps: 2124, successful: 2034, runtime: 310.68 ms)\n",
+      "stderr": null,
+      "figures": []
+    },
+    "16": {
+      "stdout": null,
+      "stderr": null,
+      "figures": [
+        "sar_adc_0.png"
+      ]
+    }
+  },
+  "executedAt": "2026-01-22T13:28:05.852864+00:00",
+  "duration": 3363,
+  "success": true
+}

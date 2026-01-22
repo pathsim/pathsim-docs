@@ -5,6 +5,7 @@
 	 */
 	import NotebookCell from '$lib/components/common/NotebookCell.svelte';
 	import type { CodeCellData } from '$lib/notebook/types';
+	import type { CellOutputData } from '$lib/notebook/loader';
 	import { transformCodeForPyodide } from '$lib/notebook/parser';
 
 	interface Props {
@@ -15,17 +16,28 @@
 		prerequisites?: string[];
 		/** Whether to show static outputs (before any execution) */
 		showStaticOutputs?: boolean;
+		/** Pre-computed output from build */
+		precomputedOutput?: CellOutputData | null;
+		/** Figure URLs from pre-computed output */
+		figureUrls?: string[];
 	}
 
 	let {
 		cell,
 		index,
 		prerequisites = [],
-		showStaticOutputs = true
+		showStaticOutputs = true,
+		precomputedOutput = null,
+		figureUrls = []
 	}: Props = $props();
 
 	// Transform code for Pyodide compatibility
 	let transformedCode = $derived(transformCodeForPyodide(cell.source));
+
+	// Use pre-computed outputs if available, otherwise fall back to inline notebook outputs
+	let hasPrecomputedOutput = $derived(
+		precomputedOutput?.stdout || precomputedOutput?.stderr || figureUrls.length > 0
+	);
 </script>
 
 <div class="code-cell-wrapper">
@@ -35,7 +47,10 @@
 		title="Python"
 		editable={true}
 		{prerequisites}
-		staticOutputs={showStaticOutputs ? cell.outputs : []}
+		staticOutputs={showStaticOutputs && !hasPrecomputedOutput ? cell.outputs : []}
+		precomputedStdout={showStaticOutputs ? precomputedOutput?.stdout : null}
+		precomputedStderr={showStaticOutputs ? precomputedOutput?.stderr : null}
+		{figureUrls}
 	/>
 </div>
 

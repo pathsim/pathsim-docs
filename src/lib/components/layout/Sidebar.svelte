@@ -12,7 +12,7 @@
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import type { PackageManifest } from '$lib/api/versions';
-	import { isLatestTag } from '$lib/api/versions';
+	import { isLatestTag, versionHasExamples } from '$lib/api/versions';
 
 	interface Props {
 		packageId: PackageId;
@@ -22,7 +22,17 @@
 
 	let { packageId, manifest, currentTag }: Props = $props();
 
-	let items = $derived(getSidebarItems(packageId, currentTag));
+	// Check if current version has examples
+	let hasExamples = $derived(
+		manifest && currentTag ? versionHasExamples(currentTag, manifest) : false
+	);
+
+	// Filter sidebar items based on examples availability
+	let items = $derived(
+		getSidebarItems(packageId, currentTag).filter(
+			(item) => item.title !== 'Examples' || hasExamples
+		)
+	);
 	let searchQuery = $state('');
 	let searchResults = $derived(search(searchQuery, 15));
 	let showResults = $derived(searchQuery.length > 0);
@@ -44,13 +54,10 @@
 		};
 	});
 
-	// Check if we're on an API page or examples listing page
+	// Check if we're on an API page or examples page
 	let isApiPage = $derived($page.url.pathname.includes('/api'));
-	let isExamplesListPage = $derived(
-		$page.url.pathname.endsWith('/examples') ||
-			$page.url.pathname.match(/\/examples\/?$/)
-	);
-	let isVersionedPage = $derived(isApiPage || $page.url.pathname.includes('/examples'));
+	let isExamplesPage = $derived($page.url.pathname.includes('/examples'));
+	let isVersionedPage = $derived(isApiPage || isExamplesPage);
 
 	// Check if we're on an overview page (no /api or /examples in path)
 	let isOverviewPage = $derived(!isApiPage && !$page.url.pathname.includes('/examples'));
@@ -110,21 +117,32 @@
 		const { versionStore } = await import('$lib/stores/versionStore');
 		versionStore.setVersion(packageId, tag);
 
+		// Check if the new version has examples
+		const newVersionHasExamples = manifest ? versionHasExamples(tag, manifest) : false;
+
 		// Preserve current hash if it exists
 		const hash = typeof window !== 'undefined' ? window.location.hash : '';
 
 		// Get current page type (api or examples or overview)
 		const pathname = $page.url.pathname;
 
-		if (pathname.includes('/examples/')) {
-			// We're on a specific example page
-			const match = pathname.match(/\/examples\/(.+)$/);
-			const subPath = match ? `/${match[1]}` : '';
-			goto(`${base}/${packageId}/${tag}/examples${subPath}${hash}`);
-		} else if (pathname.includes('/examples')) {
-			goto(`${base}/${packageId}/${tag}/examples${hash}`);
+		if (pathname.includes('/examples')) {
+			// On examples page - check if new version has examples
+			if (newVersionHasExamples) {
+				if (pathname.includes('/examples/')) {
+					// We're on a specific example page
+					const match = pathname.match(/\/examples\/(.+)$/);
+					const subPath = match ? `/${match[1]}` : '';
+					goto(`${base}/${packageId}/${tag}/examples${subPath}${hash}`, { invalidateAll: true });
+				} else {
+					goto(`${base}/${packageId}/${tag}/examples${hash}`, { invalidateAll: true });
+				}
+			} else {
+				// New version has no examples - go to overview
+				goto(`${base}/${packageId}`, { invalidateAll: true });
+			}
 		} else if (pathname.includes('/api')) {
-			goto(`${base}/${packageId}/${tag}/api${hash}`);
+			goto(`${base}/${packageId}/${tag}/api${hash}`, { invalidateAll: true });
 		} else {
 			// On overview page - reload to pick up new version
 			const { invalidateAll } = await import('$app/navigation');
@@ -202,7 +220,6 @@
 						onclick={toggleVersionDropdown}
 						aria-expanded={versionDropdownOpen}
 					>
-						<Icon name="git-branch" size={14} />
 						<span class="version-text">{currentTag}</span>
 						<Icon name="chevron-down" size={10} />
 					</button>
@@ -239,14 +256,15 @@
 				{/each}
 			</nav>
 		{/if}
+
 	</div>
 
 	{#if !showResults && isApiPage && $apiModulesStore.length > 0}
-		<div class="sidebar-scrollable">
+		<div class="sidebar-scrollable with-separator">
 			<ApiToc modules={$apiModulesStore} />
 		</div>
-	{:else if !showResults && isExamplesListPage && $exampleGroupsStore.length > 0}
-		<div class="sidebar-scrollable">
+	{:else if !showResults && isExamplesPage && $exampleGroupsStore.length > 0}
+		<div class="sidebar-scrollable with-separator">
 			<ExamplesToc groups={$exampleGroupsStore} {packageId} currentTag={currentTag} />
 		</div>
 	{/if}
@@ -270,6 +288,10 @@
 		flex: 1;
 		overflow-y: auto;
 		min-height: 0;
+	}
+
+	.sidebar-scrollable.with-separator {
+		border-top: 1px solid var(--border);
 	}
 
 	.search-container {
