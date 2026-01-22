@@ -92,7 +92,7 @@
   {
     "type": "method",
     "name": "_validate_ports",
-    "description": "Check the existance of the input and output ports of",
+    "description": "Check the existence of the input and output ports of",
     "path": "pathsim/api#Connection._validate_ports",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
@@ -697,7 +697,7 @@
   {
     "type": "class",
     "name": "Block",
-    "description": "Base 'Block' object that defines the inputs, outputs and the connect method.",
+    "description": "Base 'Block' object that defines the inputs, outputs and the block interface.",
     "path": "pathsim/api#Block",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block"
@@ -4631,7 +4631,7 @@
   {
     "type": "method",
     "name": "detect",
-    "description": "Evaluate the event function and decide if an event has occured.",
+    "description": "Evaluate the event function and decide if an event has occurred.",
     "path": "pathsim/api#Event.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
