@@ -30,6 +30,7 @@
 	.notebook-page {
 		max-width: var(--content-max-width);
 		min-width: 0;
+		padding-bottom: var(--space-4xl);
 	}
 
 	.notebook-notice {
