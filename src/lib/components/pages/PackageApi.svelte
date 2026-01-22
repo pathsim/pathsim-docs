@@ -21,8 +21,12 @@
 
 	let pkg = $derived(packages[packageId]);
 
-	// Extract modules from API data
-	let modules = $derived(apiData ? Object.values(apiData.modules) as APIModule[] : []);
+	// Extract modules from API data, sorted alphabetically to match TOC order
+	let modules = $derived(
+		apiData
+			? (Object.values(apiData.modules) as APIModule[]).sort((a, b) => a.name.localeCompare(b.name))
+			: []
+	);
 
 	// Update the store with modules for the sidebar TOC
 	$effect(() => {

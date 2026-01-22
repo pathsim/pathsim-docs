@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { APIModule } from '$lib/api/generated';
 	import Icon from '$lib/components/common/Icon.svelte';
+	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
 		modules: APIModule[];
@@ -57,6 +58,9 @@
 	// Track active element (from scroll position)
 	let activeId = $state<string | null>(null);
 
+	// Flag to temporarily disable intersection observer during programmatic navigation
+	let isNavigating = $state(false);
+
 	function toggleGroup(path: string) {
 		const newExpanded = new Set(expandedGroups);
 		if (newExpanded.has(path)) {
@@ -74,6 +78,32 @@
 			activeId = id;
 			onNavigate?.(id);
 		}
+	}
+
+	/**
+	 * Navigate to a class - sets searchTarget to trigger ClassDoc expansion
+	 */
+	function navigateToClass(className: string) {
+		isNavigating = true;
+		activeId = className; // Set immediately for visual feedback
+		searchTarget.set({ name: className, type: 'class' });
+		// Re-enable observer after scroll animation completes
+		setTimeout(() => {
+			isNavigating = false;
+		}, 500);
+	}
+
+	/**
+	 * Navigate to a function - sets searchTarget to trigger scroll
+	 */
+	function navigateToFunction(funcName: string) {
+		isNavigating = true;
+		activeId = funcName; // Set immediately for visual feedback
+		searchTarget.set({ name: funcName, type: 'function' });
+		// Re-enable observer after scroll animation completes
+		setTimeout(() => {
+			isNavigating = false;
+		}, 500);
 	}
 
 	function getModuleId(moduleName: string): string {
@@ -96,6 +126,81 @@
 		return false;
 	}
 
+	/**
+	 * Find the module path containing a class or function by name.
+	 * Returns the module's fullPath if found.
+	 */
+	function findModuleContaining(name: string, type: 'class' | 'function' | 'method'): string | null {
+		for (const mod of modules) {
+			if (type === 'class' || type === 'method') {
+				if (mod.classes.some((c) => c.name === name)) {
+					return mod.name;
+				}
+			}
+			if (type === 'function') {
+				if (mod.functions.some((f) => f.name === name)) {
+					return mod.name;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Expand all ancestors of a module path to reveal it in the tree.
+	 */
+	function expandPathTo(modulePath: string): void {
+		const parts = modulePath.split('.');
+		const newExpanded = new Set(expandedGroups);
+
+		// Expand each ancestor level
+		for (let i = 1; i <= parts.length; i++) {
+			const ancestorPath = parts.slice(0, i).join('.');
+			newExpanded.add(ancestorPath);
+		}
+
+		expandedGroups = newExpanded;
+	}
+
+	// Watch for search/crossref navigation and expand to reveal target
+	$effect(() => {
+		const target = $searchTarget;
+		if (!target) return;
+
+		// Find which module contains the target
+		let modulePath: string | null = null;
+
+		if (target.type === 'class' || target.type === 'function') {
+			modulePath = findModuleContaining(target.name, target.type);
+		} else if (target.type === 'method' && target.parentClass) {
+			modulePath = findModuleContaining(target.parentClass, 'class');
+		} else if (target.type === 'module') {
+			modulePath = target.name;
+		}
+
+		if (modulePath) {
+			// Disable observer during navigation
+			isNavigating = true;
+			expandPathTo(modulePath);
+
+			// Set active ID for highlight
+			if (target.type === 'class') {
+				activeId = target.name;
+			} else if (target.type === 'method') {
+				activeId = target.parentClass || target.name;
+			} else if (target.type === 'function') {
+				activeId = target.name;
+			} else {
+				activeId = getModuleId(modulePath);
+			}
+
+			// Re-enable observer after scroll completes
+			setTimeout(() => {
+				isNavigating = false;
+			}, 500);
+		}
+	});
+
 	// Set up intersection observer to track active section
 	$effect(() => {
 		if (typeof window === 'undefined') return;
@@ -104,6 +209,9 @@
 
 		const observer = new IntersectionObserver(
 			(entries) => {
+				// Skip updates during programmatic navigation to prevent fighting
+				if (isNavigating) return;
+
 				for (const entry of entries) {
 					if (entry.isIntersecting) {
 						activeId = entry.target.id;
@@ -177,7 +285,7 @@
 								class="api-toc-class"
 								class:active={activeId === cls.name}
 								style="--depth: {depth + 1}"
-								onclick={() => scrollToElement(cls.name)}
+								onclick={() => navigateToClass(cls.name)}
 							>
 								{cls.name}
 							</button>
@@ -191,7 +299,7 @@
 								class="api-toc-function"
 								class:active={activeId === func.name}
 								style="--depth: {depth + 1}"
-								onclick={() => scrollToElement(func.name)}
+								onclick={() => navigateToFunction(func.name)}
 							>
 								{func.name}()
 							</button>

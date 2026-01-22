@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { base } from '$app/paths';
-	import { lookupRef } from '$lib/utils/crossref';
+	import { crossrefIndexStore, type CrossRefTarget } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	interface Props {
@@ -15,11 +15,15 @@
 	interface TypePart {
 		text: string;
 		isLink: boolean;
-		target?: ReturnType<typeof lookupRef>;
+		target?: CrossRefTarget;
 	}
+
+	// Subscribe to crossref store for reactivity - re-computes when index loads
+	let crossrefIndex = $derived($crossrefIndexStore);
 
 	let parts = $derived.by(() => {
 		const result: TypePart[] = [];
+		const index = crossrefIndex; // Use the reactive index
 
 		// Tokenize type string by brackets, commas, and union operators
 		// Example: "list[ClassName]" → ["list", "[", "ClassName", "]"]
@@ -33,7 +37,7 @@
 			// Matches: "Integrator", "V1", "MyClass"
 			// Does NOT match: "list", "pathsim.Connection"
 			if (/^[A-Z][a-zA-Z0-9_]*$/.test(token)) {
-				const target = lookupRef(token);
+				const target = index.get(token);
 				if (target) {
 					result.push({ text: token, isLink: true, target });
 				} else {
@@ -46,12 +50,12 @@
 			// Does NOT match: "Connection", "pathsim.connection"
 			else if (/^[a-z][a-z0-9_]*(\.[a-z_][a-z0-9_]*)*\.[A-Z][a-zA-Z0-9_]*$/.test(token)) {
 				// Try lookup by full path first
-				let target = lookupRef(token);
+				let target = index.get(token);
 				if (!target) {
 					// Extract class name (last part) and try that
 					const className = token.split('.').pop();
 					if (className) {
-						target = lookupRef(className);
+						target = index.get(className);
 					}
 				}
 				// Display just the class name but link to the full reference
@@ -69,7 +73,7 @@
 		return result;
 	});
 
-	function handleClick(e: MouseEvent, target: ReturnType<typeof lookupRef>) {
+	function handleClick(e: MouseEvent, target: CrossRefTarget | undefined) {
 		if (!target) return;
 		e.preventDefault();
 
