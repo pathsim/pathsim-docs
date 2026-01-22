@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -71,6 +71,18 @@ jobs:
 
       - name: Build search and crossref indexes
         run: python scripts/build-indexes.py
+
+      - name: Commit generated files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/lib/api/generated/ static/api/versions/ static/notebooks/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update generated API data and indexes [skip ci]"
+            git push
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
