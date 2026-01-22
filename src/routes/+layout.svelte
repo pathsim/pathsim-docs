@@ -44,22 +44,23 @@
 	});
 
 	async function initializeAllPackageIndexes() {
-		const packages: Array<{ packageId: PackageId; tag: string }> = [];
-
-		for (const pkgId of packageOrder) {
-			// Check stored version first, then fetch latest
+		// Fetch all package versions in parallel
+		const packagePromises = packageOrder.map(async (pkgId) => {
+			// Check stored version first
 			let tag = versionStore.getVersion(pkgId);
 			if (!tag) {
 				try {
 					const manifest = await getPackageManifest(pkgId, fetch);
 					tag = manifest.latestTag;
 				} catch {
-					// Package might not have a manifest yet, skip it
-					continue;
+					return null; // Package not available
 				}
 			}
-			packages.push({ packageId: pkgId, tag });
-		}
+			return { packageId: pkgId, tag };
+		});
+
+		const results = await Promise.all(packagePromises);
+		const packages = results.filter((p): p is { packageId: PackageId; tag: string } => p !== null);
 
 		// Initialize search and crossref with all packages
 		await Promise.all([initializeSearch(packages), initializeCrossref(packages)]);

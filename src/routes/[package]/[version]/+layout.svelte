@@ -38,27 +38,27 @@
 		currentTag: string,
 		versions: Partial<Record<PackageId, string>>
 	) {
-		const packages: Array<{ packageId: PackageId; tag: string }> = [];
-
-		for (const pkgId of packageOrder) {
+		// Fetch all package versions in parallel
+		const packagePromises = packageOrder.map(async (pkgId) => {
 			if (pkgId === currentPackageId) {
 				// Current package uses the resolved tag from URL
-				packages.push({ packageId: pkgId, tag: currentTag });
-			} else {
-				// Other packages: use stored version or fetch latest
-				let tag = versions[pkgId];
-				if (!tag) {
-					try {
-						const manifest = await getPackageManifest(pkgId, fetch);
-						tag = manifest.latestTag;
-					} catch {
-						// Package might not have a manifest yet, skip it
-						continue;
-					}
-				}
-				packages.push({ packageId: pkgId, tag });
+				return { packageId: pkgId, tag: currentTag };
 			}
-		}
+			// Other packages: use stored version or fetch latest
+			let tag = versions[pkgId];
+			if (!tag) {
+				try {
+					const manifest = await getPackageManifest(pkgId, fetch);
+					tag = manifest.latestTag;
+				} catch {
+					return null; // Package not available
+				}
+			}
+			return { packageId: pkgId, tag };
+		});
+
+		const results = await Promise.all(packagePromises);
+		const packages = results.filter((p): p is { packageId: PackageId; tag: string } => p !== null);
 
 		// Initialize search and crossref with all packages
 		await Promise.all([
