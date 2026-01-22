@@ -3,15 +3,15 @@
 	import { base } from '$app/paths';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import type { PackageManifest } from '$lib/api/versions';
-	import { isLatestVersion } from '$lib/api/versions';
+	import { isLatestTag } from '$lib/api/versions';
 
 	interface Props {
 		packageId: string;
-		currentVersion: string;
+		currentTag: string;
 		manifest: PackageManifest;
 	}
 
-	let { packageId, currentVersion, manifest }: Props = $props();
+	let { packageId, currentTag, manifest }: Props = $props();
 
 	let isOpen = $state(false);
 	let dropdownRef: HTMLDivElement | null = $state(null);
@@ -20,14 +20,15 @@
 		isOpen = !isOpen;
 	}
 
-	function selectVersion(version: string) {
+	function selectTag(tag: string) {
 		isOpen = false;
 
 		// Preserve current hash if it exists
 		const hash = typeof window !== 'undefined' ? window.location.hash : '';
 
-		// Navigate to the new version
-		const versionPath = isLatestVersion(version, manifest) ? '' : `/v${version}`;
+		// Navigate to the new version (strip 'v' prefix for URL)
+		const versionStr = tag.startsWith('v') ? tag.slice(1) : tag;
+		const versionPath = isLatestTag(tag, manifest) ? '' : `/${tag}`;
 		goto(`${base}/${packageId}/api${versionPath}${hash}`);
 	}
 
@@ -56,21 +57,20 @@
 </script>
 
 <div class="version-selector" bind:this={dropdownRef}>
-	{@const currentInfo = manifest.versions.find(v => v.version === currentVersion)}
 	<button class="version-trigger" onclick={toggleDropdown} aria-expanded={isOpen}>
-		<span class="version-text">{currentInfo?.tag ?? `v${currentVersion}`}</span>
+		<span class="version-text">{currentTag}</span>
 		<Icon name="chevron-down" size={10} />
 	</button>
 
 	{#if isOpen}
 		<div class="dropdown">
 			{#each manifest.versions as v}
-				{@const isSelected = v.version === currentVersion}
-				{@const isLatest = isLatestVersion(v.version, manifest)}
+				{@const isSelected = v.tag === currentTag}
+				{@const isLatest = isLatestTag(v.tag, manifest)}
 				<button
 					class="dropdown-item"
 					class:selected={isSelected}
-					onclick={() => selectVersion(v.version)}
+					onclick={() => selectTag(v.tag)}
 				>
 					<span class="dropdown-version">{v.tag}</span>
 					{#if isLatest}

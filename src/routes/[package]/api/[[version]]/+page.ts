@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 import { packages, type PackageId } from '$lib/config/packages';
-import { getVersionManifest, getVersionedApiData, resolveVersion } from '$lib/api/versions';
+import { getVersionManifest, getVersionedApiData, resolveTag } from '$lib/api/versions';
 
 const validPackageIds = new Set<string>(Object.keys(packages));
 
@@ -17,16 +17,16 @@ export const load: PageLoad = async ({ params, fetch }) => {
 		// Fetch manifest
 		const manifest = await getVersionManifest(packageId, fetch);
 
-		// Resolve version (latest, undefined, or specific)
-		const resolvedVersion = resolveVersion(version, manifest);
+		// Resolve tag (latest, undefined, or specific like v0.16.4)
+		const resolvedTag = resolveTag(version, manifest);
 
 		// Fetch versioned API data
-		const apiData = await getVersionedApiData(packageId, resolvedVersion, fetch);
+		const apiData = await getVersionedApiData(packageId, resolvedTag, fetch);
 
 		return {
 			packageId: packageId as PackageId,
 			version: version || 'latest',
-			resolvedVersion,
+			resolvedTag,
 			manifest,
 			apiData
 		};

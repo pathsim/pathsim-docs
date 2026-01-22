@@ -101,14 +101,15 @@ def version_gte(version: str, min_version: str) -> bool:
 
 
 def get_cached_versions(package_id: str) -> set[str]:
-    """Get set of already cached version strings for a package."""
+    """Get set of already cached version tags for a package."""
     package_dir = VERSIONS_DIR / package_id
     if not package_dir.exists():
         return set()
 
     cached = set()
     for f in package_dir.glob("v*.json"):
-        match = re.match(r"^v(\d+\.\d+)\.json$", f.name)
+        # Match full version tags like v0.16.0.json or v0.16.4.json
+        match = re.match(r"^(v\d+\.\d+\.\d+)\.json$", f.name)
         if match:
             cached.add(match.group(1))
     return cached
@@ -243,54 +244,55 @@ def extract_package_versions(
     print(f"  Historical vX.Y.0 versions: {sorted(supported_historical.keys(), key=parse_minor_version, reverse=True)}")
 
     # Determine which versions to extract
+    # Now using full tags (e.g., v0.16.0, v0.16.4) not just minor versions
     cached = get_cached_versions(package_id)
 
-    # Build extraction list
-    versions_to_extract = []
+    # Build extraction list: all vX.Y.0 tags + latest patch if different
+    versions_to_extract = []  # List of (tag, is_latest) tuples
 
     if extract_all:
-        # Extract all historical vX.Y.0 versions
+        # Extract all vX.Y.0 versions
         for minor_version, tag in sorted(supported_historical.items(), key=lambda x: parse_minor_version(x[0]), reverse=True):
-            # Skip if this is the latest minor (we'll add the actual latest tag separately)
-            if minor_version != latest_minor:
-                versions_to_extract.append((minor_version, tag))
-        print(f"  Mode: Extract ALL historical ({len(versions_to_extract)} versions) + latest")
+            versions_to_extract.append((tag, False))
+        # Add latest if it's a patch release (not .0)
+        if latest_tag not in [t for t, _ in versions_to_extract]:
+            versions_to_extract.append((latest_tag, True))
+        print(f"  Mode: Extract ALL ({len(versions_to_extract)} versions)")
     else:
-        # Smart mode: only missing historical + latest
+        # Smart mode: only missing .0 versions + always re-extract latest
         for minor_version, tag in sorted(supported_historical.items(), key=lambda x: parse_minor_version(x[0]), reverse=True):
-            # Skip if this is the latest minor (we'll add the actual latest tag separately)
-            if minor_version == latest_minor:
-                continue
-            if minor_version not in cached:
-                versions_to_extract.append((minor_version, tag))
+            if tag not in cached:
+                versions_to_extract.append((tag, False))
 
-        missing_count = len(versions_to_extract)
+        # Always add latest (will be re-extracted)
+        # Mark as latest so we know to always extract it
+        versions_to_extract.append((latest_tag, True))
+
+        missing_count = len([t for t, is_latest in versions_to_extract if not is_latest])
         print(f"  Mode: Smart extraction")
-        print(f"    Cached: {len(cached)} versions")
-        print(f"    Missing historical: {missing_count} versions")
-
-    # Always add the latest tag (uses actual latest, not necessarily vX.Y.0)
-    versions_to_extract.append((latest_minor, latest_tag))
-    print(f"    Latest ({latest_tag}): will {'re-' if latest_minor in cached else ''}extract")
-    print(f"    Total to extract: {len(versions_to_extract)} versions")
+        print(f"    Cached: {len(cached)} tags")
+        print(f"    Missing .0 releases: {missing_count}")
+        print(f"    Latest ({latest_tag}): will {'re-' if latest_tag in cached else ''}extract")
+        print(f"    Total to extract: {len(versions_to_extract)} versions")
 
     extracted = []
     output_dir = VERSIONS_DIR / package_id
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    for minor_version, tag in versions_to_extract:
-        is_latest = minor_version == latest_minor
-        is_cached = minor_version in cached
+    for tag, is_latest in versions_to_extract:
+        is_cached = tag in cached
         status = "LATEST" if is_latest else ("NEW" if not is_cached else "cached")
+        # Extract version string from tag (e.g., "v0.16.4" -> "0.16.4")
+        version_str = tag[1:] if tag.startswith('v') else tag
 
-        print(f"\n  Version {minor_version} (tag: {tag}) [{status}]")
+        print(f"\n  {tag} [{status}]")
 
         if dry_run:
-            print(f"    Would extract to: {output_dir / f'v{minor_version}.json'}")
+            print(f"    Would extract to: {output_dir / f'{tag}.json'}")
             extracted.append({
-                "version": minor_version,
                 "tag": tag,
                 "released": "",
+                "latest": is_latest,
             })
             continue
 
@@ -298,12 +300,12 @@ def extract_package_versions(
         if not git_checkout(repo_path, tag):
             continue
 
-        # Run extraction
-        if run_extraction(package_id, minor_version, VERSIONS_DIR):
+        # Run extraction - pass full version string (e.g., "0.16.4")
+        if run_extraction(package_id, version_str, VERSIONS_DIR):
             extracted.append({
-                "version": minor_version,
                 "tag": tag,
                 "released": get_tag_date(repo_path, tag),
+                "latest": is_latest,
             })
             print(f"    ✓ Extracted successfully")
         else:

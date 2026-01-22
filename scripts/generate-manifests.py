@@ -30,12 +30,12 @@ PACKAGE_REPOS = {
 }
 
 
-def parse_version(version: str) -> tuple[int, int]:
-    """Parse version string into (major, minor) tuple."""
-    match = re.match(r"^(\d+)\.(\d+)$", version)
+def parse_version(version: str) -> tuple[int, int, int]:
+    """Parse version string into (major, minor, patch) tuple."""
+    match = re.match(r"^(\d+)\.(\d+)\.(\d+)$", version)
     if not match:
-        return (0, 0)
-    return (int(match.group(1)), int(match.group(2)))
+        return (0, 0, 0)
+    return (int(match.group(1)), int(match.group(2)), int(match.group(3)))
 
 
 def get_version_files(package_dir: Path) -> list[str]:
@@ -43,14 +43,14 @@ def get_version_files(package_dir: Path) -> list[str]:
     if not package_dir.exists():
         return []
 
-    versions = []
+    tags = []
     for f in package_dir.glob("v*.json"):
-        # Extract version from filename (e.g., "v0.16.json" -> "0.16")
-        match = re.match(r"^v(\d+\.\d+)\.json$", f.name)
+        # Extract full tag from filename (e.g., "v0.16.4.json" -> "v0.16.4")
+        match = re.match(r"^(v\d+\.\d+\.\d+)\.json$", f.name)
         if match:
-            versions.append(match.group(1))
+            tags.append(match.group(1))
 
-    return versions
+    return tags
 
 
 def get_tag_for_version(repo_path: Path, version: str) -> str:
@@ -105,36 +105,38 @@ def get_tag_date(repo_path: Path, tag: str) -> str:
 def generate_manifest(package_id: str, dry_run: bool = False) -> dict[str, Any] | None:
     """Generate manifest for a single package."""
     package_dir = VERSIONS_DIR / package_id
-    versions = get_version_files(package_dir)
+    tags = get_version_files(package_dir)
 
-    if not versions:
+    if not tags:
         print(f"  No version files found in {package_dir}")
         return None
 
-    # Sort versions (newest first)
-    sorted_versions = sorted(versions, key=parse_version, reverse=True)
-    latest_version = sorted_versions[0]
+    # Sort tags by version (newest first)
+    def tag_to_version(tag: str) -> tuple[int, int, int]:
+        version_str = tag[1:] if tag.startswith('v') else tag
+        return parse_version(version_str)
 
-    print(f"  Found {len(versions)} versions: {sorted_versions}")
-    print(f"  Latest: {latest_version}")
+    sorted_tags = sorted(tags, key=tag_to_version, reverse=True)
+    latest_tag = sorted_tags[0]
+
+    print(f"  Found {len(tags)} versions: {sorted_tags}")
+    print(f"  Latest: {latest_tag}")
 
     # Build version info list
     repo_path = PACKAGE_REPOS.get(package_id)
     version_infos = []
 
-    for version in sorted_versions:
-        tag = get_tag_for_version(repo_path, version) if repo_path else f"v{version}.0"
+    for tag in sorted_tags:
         released = get_tag_date(repo_path, tag) if repo_path else ""
 
         version_infos.append({
-            "version": version,
             "tag": tag,
             "released": released,
         })
 
     manifest = {
         "package": package_id,
-        "latestVersion": latest_version,
+        "latestTag": latest_tag,
         "versions": version_infos,
     }
 

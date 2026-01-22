@@ -7,7 +7,7 @@
 
 <PackageApi
 	packageId={data.packageId}
-	version={data.resolvedVersion}
+	tag={data.resolvedTag}
 	manifest={data.manifest}
 	apiData={data.apiData}
 />

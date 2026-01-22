@@ -13,12 +13,12 @@
 	interface Props {
 		packageId: PackageId;
 		// Optional versioned props - if not provided, uses static data (backward compat)
-		version?: string;
+		tag?: string;
 		manifest?: PackageManifest;
 		apiData?: APIPackage;
 	}
 
-	let { packageId, version, manifest, apiData }: Props = $props();
+	let { packageId, tag, manifest, apiData }: Props = $props();
 
 	let pkg = $derived(packages[packageId]);
 
@@ -35,7 +35,7 @@
 	let modules = $derived(apiPackage ? Object.values(apiPackage.modules) as APIModule[] : []);
 
 	// Whether we're in versioned mode
-	let hasVersioning = $derived(!!manifest && !!version);
+	let hasVersioning = $derived(!!manifest && !!tag);
 
 	// Update the store with modules for the sidebar TOC
 	$effect(() => {
@@ -110,7 +110,7 @@
 </script>
 
 <svelte:head>
-	<title>{pkg.name} - API{version ? ` v${version}` : ''}</title>
+	<title>{pkg.name} - API{tag ? ` ${tag}` : ''}</title>
 	<meta name="description" content="{pkg.name} API reference documentation" />
 </svelte:head>
 
@@ -118,7 +118,7 @@
 
 <div class="api-page">
 	{#if hasVersioning && manifest}
-		<VersionSelector {packageId} currentVersion={version!} {manifest} />
+		<VersionSelector {packageId} currentTag={tag!} {manifest} />
 	{/if}
 
 	<div class="hero">

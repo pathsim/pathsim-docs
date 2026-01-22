@@ -3,14 +3,13 @@ import { base } from '$app/paths';
 import type { APIPackage } from './generated';
 
 export interface VersionInfo {
-	version: string;
 	tag: string;
 	released: string;
 }
 
 export interface PackageManifest {
 	package: string;
-	latestVersion: string;
+	latestTag: string;
 	versions: VersionInfo[];
 }
 
@@ -32,39 +31,41 @@ export async function getVersionManifest(
 }
 
 /**
- * Fetch versioned API data for a specific package version
+ * Fetch versioned API data for a specific package version tag
  */
 export async function getVersionedApiData(
 	packageId: string,
-	version: string,
+	tag: string,
 	fetch: typeof globalThis.fetch
 ): Promise<APIPackage> {
-	const url = `${base}/api/versions/${packageId}/v${version}.json`;
+	// Ensure tag has 'v' prefix
+	const normalizedTag = tag.startsWith('v') ? tag : `v${tag}`;
+	const url = `${base}/api/versions/${packageId}/${normalizedTag}.json`;
 	const response = await fetch(url);
 
 	if (!response.ok) {
-		throw new Error(`Failed to load API data for ${packageId} v${version}: ${response.status}`);
+		throw new Error(`Failed to load API data for ${packageId} ${normalizedTag}: ${response.status}`);
 	}
 
 	return response.json();
 }
 
 /**
- * Resolve a version string to an actual version number
- * - 'latest' -> actual latest version from manifest
- * - undefined -> actual latest version from manifest
- * - 'v0.16' or '0.16' -> '0.16'
+ * Resolve a version/tag string to an actual tag
+ * - 'latest' -> actual latest tag from manifest
+ * - undefined -> actual latest tag from manifest
+ * - 'v0.16.4' or '0.16.4' -> 'v0.16.4'
  */
-export function resolveVersion(version: string | undefined, manifest: PackageManifest): string {
-	if (!version || version === 'latest') {
-		return manifest.latestVersion;
+export function resolveTag(tagOrVersion: string | undefined, manifest: PackageManifest): string {
+	if (!tagOrVersion || tagOrVersion === 'latest') {
+		return manifest.latestTag;
 	}
 
-	// Strip leading 'v' if present
-	const normalized = version.startsWith('v') ? version.slice(1) : version;
+	// Normalize to have 'v' prefix
+	const normalized = tagOrVersion.startsWith('v') ? tagOrVersion : `v${tagOrVersion}`;
 
-	// Validate the version exists in manifest
-	const exists = manifest.versions.some((v) => v.version === normalized);
+	// Validate the tag exists in manifest
+	const exists = manifest.versions.some((v) => v.tag === normalized);
 	if (!exists) {
 		throw new Error(`Version ${normalized} not found for ${manifest.package}`);
 	}
@@ -73,18 +74,19 @@ export function resolveVersion(version: string | undefined, manifest: PackageMan
 }
 
 /**
- * Check if a version is the latest version
+ * Check if a tag is the latest tag
  */
-export function isLatestVersion(version: string, manifest: PackageManifest): boolean {
-	return version === manifest.latestVersion;
+export function isLatestTag(tag: string, manifest: PackageManifest): boolean {
+	const normalized = tag.startsWith('v') ? tag : `v${tag}`;
+	return normalized === manifest.latestTag;
 }
 
 /**
- * Get the display label for a version
+ * Get the display label for a tag
  */
-export function getVersionLabel(version: string, manifest: PackageManifest): string {
-	if (isLatestVersion(version, manifest)) {
-		return `v${version} (latest)`;
+export function getTagLabel(tag: string, manifest: PackageManifest): string {
+	if (isLatestTag(tag, manifest)) {
+		return `${tag} (latest)`;
 	}
-	return `v${version}`;
+	return tag;
 }
