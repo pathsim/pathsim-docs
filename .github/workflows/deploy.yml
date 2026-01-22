@@ -69,6 +69,9 @@ jobs:
       - name: Prepare notebooks
         run: python scripts/prepare-notebooks.py
 
+      - name: Build search and crossref indexes
+        run: python scripts/build-indexes.py
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "extract": "python scripts/extract-api.py",
-    "search-index": "python scripts/generate-search-index.py"
+    "build:indexes": "python scripts/build-indexes.py",
+    "extract:all": "npm run extract && npm run build:indexes"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.0",

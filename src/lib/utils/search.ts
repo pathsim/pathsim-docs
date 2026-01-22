@@ -1,6 +1,9 @@
-import { apiData, type APIPackage, type APIModule, type APIClass, type APIFunction, type APIMethod } from '$lib/api/generated';
-import type { NotebookManifest } from '$lib/notebook/manifest';
-import { packages, packageOrder, type PackageId } from '$lib/config/packages';
+/**
+ * Search functionality using pre-built search index.
+ * Index is generated at build time by scripts/build-indexes.py
+ */
+
+import searchIndex from '$lib/api/generated/search-index.json';
 
 export type SearchResultType = 'page' | 'module' | 'class' | 'function' | 'method' | 'example';
 
@@ -15,207 +18,15 @@ export interface SearchResult {
 	tags?: string[];
 }
 
-interface SearchIndex {
-	results: SearchResult[];
-	built: boolean;
-}
-
-// Cached search index
-let searchIndex: SearchIndex = { results: [], built: false };
-
-// Cache for loaded manifests
-let manifestsLoaded = false;
-let exampleResults: SearchResult[] = [];
-let packagesWithExamples: Set<string> = new Set();
+// Type assertion for imported JSON
+const index = searchIndex as SearchResult[];
 
 /**
- * Build page-level search results for navigation pages
- */
-function buildPageResults(): SearchResult[] {
-	const results: SearchResult[] = [];
-
-	for (const packageId of packageOrder) {
-		const pkg = packages[packageId];
-
-		// Overview page
-		results.push({
-			type: 'page',
-			name: pkg.name,
-			description: pkg.description,
-			path: `${packageId}`,
-			packageId,
-			moduleName: '',
-			tags: ['overview', 'documentation', 'docs']
-		});
-
-		// API page
-		results.push({
-			type: 'page',
-			name: `${pkg.name} API`,
-			description: `API reference for ${pkg.name}`,
-			path: `${packageId}/api`,
-			packageId,
-			moduleName: '',
-			tags: ['api', 'reference', 'documentation']
-		});
-
-		// Examples page (only if package has examples)
-		if (packagesWithExamples.has(packageId)) {
-			results.push({
-				type: 'page',
-				name: `${pkg.name} Examples`,
-				description: `Example notebooks for ${pkg.name}`,
-				path: `${packageId}/examples`,
-				packageId,
-				moduleName: '',
-				tags: ['examples', 'tutorials', 'notebooks']
-			});
-		}
-	}
-
-	return results;
-}
-
-/**
- * Build the search index from all API data
- */
-function buildSearchIndex(): SearchResult[] {
-	const results: SearchResult[] = [];
-
-	// Add page-level results first
-	results.push(...buildPageResults());
-
-	for (const [packageId, pkg] of Object.entries(apiData)) {
-		const basePath = `${packageId}/api`;
-
-		for (const [moduleName, module] of Object.entries(pkg.modules)) {
-			// Add module
-			results.push({
-				type: 'module',
-				name: moduleName,
-				description: module.description || '',
-				path: `${basePath}#${moduleName}`,
-				packageId,
-				moduleName
-			});
-
-			// Add classes
-			for (const cls of module.classes) {
-				results.push({
-					type: 'class',
-					name: cls.name,
-					description: cls.description || '',
-					path: `${basePath}#${cls.name}`,
-					packageId,
-					moduleName
-				});
-
-				// Add methods
-				for (const method of cls.methods) {
-					results.push({
-						type: 'method',
-						name: method.name,
-						description: method.description || '',
-						path: `${basePath}#${method.name}`,
-						packageId,
-						moduleName,
-						parentClass: cls.name
-					});
-				}
-			}
-
-			// Add functions
-			for (const func of module.functions) {
-				results.push({
-					type: 'function',
-					name: func.name,
-					description: func.description || '',
-					path: `${basePath}#${func.name}`,
-					packageId,
-					moduleName
-				});
-			}
-		}
-	}
-
-	return results;
-}
-
-// Base path for fetching, set via initExamplesSearch
-let basePath = '';
-
-/**
- * Load example manifests and build example search results
- */
-async function loadExampleManifests(): Promise<SearchResult[]> {
-	if (manifestsLoaded) return exampleResults;
-
-	const results: SearchResult[] = [];
-	const packageIds = ['pathsim', 'chem', 'vehicle'];
-
-	for (const packageId of packageIds) {
-		try {
-			const response = await fetch(`${basePath}/notebooks/${packageId}/manifest.json`);
-			if (!response.ok) continue;
-
-			const manifest: NotebookManifest = await response.json();
-
-			if (manifest.notebooks.length > 0) {
-				packagesWithExamples.add(packageId);
-			}
-
-			for (const notebook of manifest.notebooks) {
-				results.push({
-					type: 'example',
-					name: notebook.title,
-					description: notebook.description || '',
-					path: `${packageId}/examples/${notebook.slug}`,
-					packageId,
-					moduleName: notebook.category,
-					tags: notebook.tags
-				});
-			}
-		} catch {
-			// Manifest doesn't exist for this package
-		}
-	}
-
-	exampleResults = results;
-	manifestsLoaded = true;
-
-	// Rebuild search index now that we know which packages have examples
-	searchIndex.built = false;
-
-	return results;
-}
-
-/**
- * Get or build the search index
- */
-function getSearchIndex(): SearchResult[] {
-	if (!searchIndex.built) {
-		searchIndex.results = buildSearchIndex();
-		searchIndex.built = true;
-	}
-	return searchIndex.results;
-}
-
-/**
- * Initialize examples in the search index (call once on app load)
- */
-export async function initExamplesSearch(base: string = ''): Promise<void> {
-	basePath = base;
-	await loadExampleManifests();
-}
-
-/**
- * Search the API and examples index
+ * Search the pre-built index
  */
 export function search(query: string, limit: number = 20): SearchResult[] {
 	if (!query.trim()) return [];
 
-	// Combine API results with cached example results
-	const index = [...getSearchIndex(), ...exampleResults];
 	const lowerQuery = query.toLowerCase();
 	const terms = lowerQuery.split(/\s+/).filter(Boolean);
 

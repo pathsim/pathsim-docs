@@ -1,8 +1,9 @@
 /**
- * Cross-reference system for linking class/function names in docstrings
+ * Cross-reference system for linking class/function names in docstrings.
+ * Index is generated at build time by scripts/build-indexes.py
  */
 
-import { apiData } from '$lib/api/generated';
+import crossrefIndex from '$lib/api/generated/crossref-index.json';
 
 export interface CrossRefTarget {
 	name: string;
@@ -13,99 +14,23 @@ export interface CrossRefTarget {
 	path: string;
 }
 
-// Cached cross-reference index
-let crossRefIndex: Map<string, CrossRefTarget> | null = null;
-
-/**
- * Build the cross-reference index from all API data
- * Paths are stored without leading slash, joined with base path at render time
- */
-function buildCrossRefIndex(): Map<string, CrossRefTarget> {
-	const index = new Map<string, CrossRefTarget>();
-
-	for (const [packageId, pkg] of Object.entries(apiData)) {
-		// Path without leading slash (base path handles the prefix)
-		const apiPath = `${packageId}/api`;
-
-		for (const [moduleName, module] of Object.entries(pkg.modules)) {
-			// Add module
-			index.set(moduleName, {
-				name: moduleName,
-				type: 'module',
-				packageId,
-				moduleName,
-				path: `${apiPath}#${moduleName.replace(/\./g, '-')}`
-			});
-
-			// Add classes
-			for (const cls of module.classes) {
-				// Full path: pathsim.blocks.integrator.Integrator
-				const fullModulePath = `${moduleName}.${cls.name}`;
-				const target: CrossRefTarget = {
-					name: cls.name,
-					type: 'class',
-					packageId,
-					moduleName,
-					path: `${apiPath}#${cls.name}`
-				};
-
-				// Index by multiple keys for flexible lookup
-				index.set(cls.name, target); // Just class name
-				index.set(fullModulePath, target); // Full path
-				index.set(`${packageId}.${cls.name}`, target); // package.ClassName
-
-				// Add methods
-				for (const method of cls.methods) {
-					const methodTarget: CrossRefTarget = {
-						name: method.name,
-						type: 'method',
-						packageId,
-						moduleName,
-						parentClass: cls.name,
-						path: `${apiPath}#${method.name}`
-					};
-
-					// Index by ClassName.method_name
-					index.set(`${cls.name}.${method.name}`, methodTarget);
-				}
-			}
-
-			// Add functions
-			for (const func of module.functions) {
-				const fullModulePath = `${moduleName}.${func.name}`;
-				const target: CrossRefTarget = {
-					name: func.name,
-					type: 'function',
-					packageId,
-					moduleName,
-					path: `${apiPath}#${func.name}`
-				};
-
-				index.set(func.name, target);
-				index.set(fullModulePath, target);
-			}
-		}
-	}
-
-	return index;
-}
-
-/**
- * Get the cross-reference index (builds on first access)
- */
-export function getCrossRefIndex(): Map<string, CrossRefTarget> {
-	if (!crossRefIndex) {
-		crossRefIndex = buildCrossRefIndex();
-	}
-	return crossRefIndex;
-}
+// Type assertion and convert to Map for fast lookup
+const index = new Map<string, CrossRefTarget>(
+	Object.entries(crossrefIndex as Record<string, CrossRefTarget>)
+);
 
 /**
  * Look up a reference and return the target if found
  */
 export function lookupRef(name: string): CrossRefTarget | undefined {
-	const index = getCrossRefIndex();
 	return index.get(name);
+}
+
+/**
+ * Get the full crossref index (for debugging or advanced use)
+ */
+export function getCrossRefIndex(): Map<string, CrossRefTarget> {
+	return index;
 }
 
 /**
@@ -118,8 +43,6 @@ export function lookupRef(name: string): CrossRefTarget | undefined {
  * - Single-quoted class names in text: 'ClassName'
  */
 export function processCrossRefs(html: string, basePath: string = '', currentPackageId?: string): string {
-	const index = getCrossRefIndex();
-
 	// Helper to build full URL: basePath (deployment prefix) + / + path
 	// Handles edge cases with trailing/leading slashes
 	const fullPath = (path: string) => {

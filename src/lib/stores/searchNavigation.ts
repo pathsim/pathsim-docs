@@ -2,7 +2,7 @@ import { writable } from 'svelte/store';
 
 export interface SearchTarget {
 	name: string;
-	type: 'module' | 'class' | 'function' | 'method' | 'example';
+	type: 'page' | 'module' | 'class' | 'function' | 'method' | 'example';
 	parentClass?: string;
 }
 

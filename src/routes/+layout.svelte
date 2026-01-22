@@ -7,7 +7,6 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
 	import { packageOrder, footer, type PackageId } from '$lib/config/packages';
-	import { initExamplesSearch } from '$lib/utils/search';
 
 	let { children } = $props();
 
@@ -33,9 +32,6 @@
 			theme = 'light';
 		}
 		document.documentElement.setAttribute('data-theme', theme);
-
-		// Initialize examples in search index
-		initExamplesSearch(base);
 
 		const handleKeydown = (e: KeyboardEvent) => {
 			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
