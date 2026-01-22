@@ -37,10 +37,14 @@ const createVersionStore = () => {
 		},
 
 		/**
-		 * Set the version for a specific package
+		 * Set the version for a specific package (only updates if changed)
 		 */
 		setVersion(packageId: PackageId, tag: string) {
 			update((versions) => {
+				// Skip update if version is already the same
+				if (versions[packageId] === tag) {
+					return versions;
+				}
 				const updated = { ...versions, [packageId]: tag };
 				this.persist(updated);
 				return updated;
