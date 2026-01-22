@@ -380,6 +380,7 @@
 	.hero-actions {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
 		gap: var(--space-xs);
 	}
 
@@ -411,6 +412,18 @@
 	@media (max-width: 600px) {
 		.package-grid {
 			grid-template-columns: 1fr;
+		}
+
+		main {
+			padding: 0 var(--space-md);
+		}
+
+		.hero {
+			padding: var(--space-xl) 0;
+		}
+
+		.hero-logo {
+			height: 100px;
 		}
 	}
 

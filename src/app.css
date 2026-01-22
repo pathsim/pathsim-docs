@@ -79,7 +79,7 @@
 	--sidebar-width: 220px;
 	--toc-width: 220px;
 	--content-max-width: 800px;
-	--app-min-width: 320px;
+	--app-min-width: 280px;
 
 	/* ===== BREAKPOINTS =====
 	 * Note: CSS custom properties cannot be used in @media queries.
@@ -955,6 +955,7 @@ input::placeholder {
 .hero-actions {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 	gap: var(--space-xs);
 }
 

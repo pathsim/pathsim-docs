@@ -60,4 +60,11 @@
 		padding: var(--space-xl);
 		padding-bottom: var(--space-2xl);
 	}
+
+	@media (max-width: 600px) {
+		.doc-content {
+			padding: var(--space-md);
+			padding-bottom: var(--space-xl);
+		}
+	}
 </style>
