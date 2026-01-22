@@ -5,14 +5,18 @@ PathSim Multi-Version API Extractor
 Extracts API documentation for multiple versions of PathSim packages by checking out
 historical git tags and running the extraction script.
 
+Version strategy:
+- Historical versions: Only vX.Y.0 tags (first patch of each minor version)
+- Latest version: Always the actual most recent tag (e.g., v0.16.4)
+
 Smart extraction mode (default):
-- Only extracts versions that are missing from cache
-- Always re-extracts the latest version
+- Only extracts missing vX.Y.0 versions from cache
+- Always re-extracts the latest version (actual latest tag)
 - Respects minimum supported version per package
 
 Usage:
     python scripts/extract-versions.py              # Smart extract (missing + latest)
-    python scripts/extract-versions.py --all        # Force extract all versions
+    python scripts/extract-versions.py --all        # Force extract all vX.Y.0 versions + latest
     python scripts/extract-versions.py --package pathsim  # Single package
     python scripts/extract-versions.py --dry-run   # Preview without extraction
 """
@@ -110,19 +114,27 @@ def get_cached_versions(package_id: str) -> set[str]:
     return cached
 
 
-def group_by_minor_version(tags: list[str]) -> dict[str, str]:
-    """Group tags by minor version, keeping the latest patch for each."""
-    versions: dict[str, tuple[str, tuple[int, int, int]]] = {}
+def get_minor_zero_tags(tags: list[str]) -> dict[str, str]:
+    """Get vX.Y.0 tags for each minor version (for historical caching)."""
+    versions: dict[str, str] = {}
 
     for tag in tags:
-        minor = get_minor_version(tag)
-        version_tuple = parse_version(tag)
+        major, minor, patch = parse_version(tag)
+        if patch == 0:  # Only vX.Y.0 tags
+            minor_str = f"{major}.{minor}"
+            versions[minor_str] = tag
 
-        if minor not in versions or version_tuple > versions[minor][1]:
-            versions[minor] = (tag, version_tuple)
+    return versions
 
-    # Return dict of minor_version -> tag
-    return {minor: tag for minor, (tag, _) in versions.items()}
+
+def get_latest_tag(tags: list[str]) -> tuple[str, str] | None:
+    """Get the actual latest tag (highest version number)."""
+    if not tags:
+        return None
+
+    latest_tag = max(tags, key=parse_version)
+    minor = get_minor_version(latest_tag)
+    return (minor, latest_tag)
 
 
 def git_checkout(repo_path: Path, ref: str) -> bool:
@@ -183,8 +195,12 @@ def extract_package_versions(
 ) -> list[dict[str, str]]:
     """Extract versions for a single package.
 
-    Smart mode (default): Only extracts missing versions + always re-extracts latest.
-    All mode: Extracts all versions from minimum supported version.
+    Version strategy:
+    - Historical versions: Only vX.Y.0 tags (first patch of each minor)
+    - Latest version: Always the actual most recent tag (e.g., v0.16.4)
+
+    Smart mode (default): Only extracts missing historical versions + always re-extracts latest.
+    All mode: Extracts all vX.Y.0 versions from minimum supported version + latest.
     """
     repo_path = PACKAGE_REPOS.get(package_id)
     if not repo_path or not repo_path.exists():
@@ -207,58 +223,63 @@ def extract_package_versions(
 
     print(f"  Found {len(all_tags)} tags")
 
-    # Group by minor version
-    minor_versions = group_by_minor_version(all_tags)
+    # Get vX.Y.0 tags for historical versions
+    minor_zero_versions = get_minor_zero_tags(all_tags)
 
     # Filter to supported versions only
-    supported_versions = {
-        v: tag for v, tag in minor_versions.items()
+    supported_historical = {
+        v: tag for v, tag in minor_zero_versions.items()
         if version_gte(v, min_version)
     }
 
-    if not supported_versions:
-        print(f"  No versions >= {min_version} found")
+    # Get the actual latest tag (could be vX.Y.Z where Z > 0)
+    latest_info = get_latest_tag(all_tags)
+    if not latest_info:
+        print(f"  No valid tags found")
         return []
 
-    print(f"  {len(supported_versions)} supported versions: {sorted(supported_versions.keys(), key=parse_minor_version, reverse=True)}")
-
-    # Sort by version (newest first)
-    sorted_versions = sorted(
-        supported_versions.items(),
-        key=lambda x: parse_minor_version(x[0]),
-        reverse=True,
-    )
+    latest_minor, latest_tag = latest_info
+    print(f"  Latest tag: {latest_tag} (minor: {latest_minor})")
+    print(f"  Historical vX.Y.0 versions: {sorted(supported_historical.keys(), key=parse_minor_version, reverse=True)}")
 
     # Determine which versions to extract
     cached = get_cached_versions(package_id)
-    latest_version = sorted_versions[0][0] if sorted_versions else None
+
+    # Build extraction list
+    versions_to_extract = []
 
     if extract_all:
-        versions_to_extract = sorted_versions
-        print(f"  Mode: Extract ALL ({len(versions_to_extract)} versions)")
+        # Extract all historical vX.Y.0 versions
+        for minor_version, tag in sorted(supported_historical.items(), key=lambda x: parse_minor_version(x[0]), reverse=True):
+            # Skip if this is the latest minor (we'll add the actual latest tag separately)
+            if minor_version != latest_minor:
+                versions_to_extract.append((minor_version, tag))
+        print(f"  Mode: Extract ALL historical ({len(versions_to_extract)} versions) + latest")
     else:
-        # Smart mode: only missing + latest
-        versions_to_extract = []
-        for minor_version, tag in sorted_versions:
-            is_latest = minor_version == latest_version
-            is_cached = minor_version in cached
-
-            if is_latest or not is_cached:
+        # Smart mode: only missing historical + latest
+        for minor_version, tag in sorted(supported_historical.items(), key=lambda x: parse_minor_version(x[0]), reverse=True):
+            # Skip if this is the latest minor (we'll add the actual latest tag separately)
+            if minor_version == latest_minor:
+                continue
+            if minor_version not in cached:
                 versions_to_extract.append((minor_version, tag))
 
-        missing_count = len([v for v, _ in versions_to_extract if v != latest_version and v not in cached])
+        missing_count = len(versions_to_extract)
         print(f"  Mode: Smart extraction")
         print(f"    Cached: {len(cached)} versions")
-        print(f"    Missing: {missing_count} versions")
-        print(f"    Latest ({latest_version}): will {'re-' if latest_version in cached else ''}extract")
-        print(f"    Total to extract: {len(versions_to_extract)} versions")
+        print(f"    Missing historical: {missing_count} versions")
+
+    # Always add the latest tag (uses actual latest, not necessarily vX.Y.0)
+    versions_to_extract.append((latest_minor, latest_tag))
+    print(f"    Latest ({latest_tag}): will {'re-' if latest_minor in cached else ''}extract")
+    print(f"    Total to extract: {len(versions_to_extract)} versions")
 
     extracted = []
     output_dir = VERSIONS_DIR / package_id
     output_dir.mkdir(parents=True, exist_ok=True)
 
     for minor_version, tag in versions_to_extract:
-        is_latest = minor_version == latest_version
+        is_latest = minor_version == latest_minor
         is_cached = minor_version in cached
         status = "LATEST" if is_latest else ("NEW" if not is_cached else "cached")
 
@@ -322,8 +343,12 @@ Minimum supported versions:
   chem:    %(chem)s
   vehicle: %(vehicle)s
 
+Version strategy:
+  - Historical: Only vX.Y.0 tags (first patch of each minor)
+  - Latest: Actual most recent tag (e.g., v0.16.4)
+
 By default, uses smart extraction:
-  - Only extracts versions that are missing from cache
+  - Only extracts missing vX.Y.0 versions from cache
   - Always re-extracts the latest version
   - Respects minimum supported versions
         """ % MIN_SUPPORTED_VERSIONS
@@ -337,7 +362,7 @@ By default, uses smart extraction:
         "--all", "-a",
         action="store_true",
         dest="extract_all",
-        help="Force extract all versions (ignore cache)"
+        help="Force extract all vX.Y.0 versions + latest (ignore cache)"
     )
     parser.add_argument(
         "--dry-run", "-n",
