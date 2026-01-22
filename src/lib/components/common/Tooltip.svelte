@@ -112,12 +112,12 @@
 <script lang="ts">
 	import { tick } from 'svelte';
 
-	let state = $state<TooltipState>({ text: '', x: 0, y: 0, visible: false, position: 'bottom' });
+	let tooltipState: TooltipState = $state({ text: '', x: 0, y: 0, visible: false, position: 'bottom' });
 	let tooltipEl: HTMLDivElement | undefined = $state();
-	let adjustment = $state({ x: 0, y: 0 });
+	let adjustment: { x: number; y: number } = $state({ x: 0, y: 0 });
 
 	tooltipStore.subscribe(async (s) => {
-		state = s;
+		tooltipState = s;
 		adjustment = { x: 0, y: 0 }; // Reset adjustment
 		if (s.visible) {
 			// Wait for DOM update, then check viewport collision
@@ -155,7 +155,7 @@
 	let transform = $derived.by(() => {
 		const { x, y } = adjustment;
 		const adj = (x !== 0 || y !== 0) ? ` translate(${x}px, ${y}px)` : '';
-		switch (state.position) {
+		switch (tooltipState.position) {
 			case 'top':
 				return `translateX(-50%) translateY(-100%)${adj}`;
 			case 'left':
@@ -169,15 +169,15 @@
 	});
 </script>
 
-{#if state.visible}
+{#if tooltipState.visible}
 	<div
 		bind:this={tooltipEl}
 		class="tooltip"
-		style="left: {state.x}px; top: {state.y}px; transform: {transform};{state.maxWidth ? ` max-width: ${state.maxWidth}px;` : ''}"
+		style="left: {tooltipState.x}px; top: {tooltipState.y}px; transform: {transform};{tooltipState.maxWidth ? ` max-width: ${tooltipState.maxWidth}px;` : ''}"
 	>
-		<span class="text">{state.text}</span>
-		{#if state.shortcut}
-			<span class="shortcut">{state.shortcut}</span>
+		<span class="text">{tooltipState.text}</span>
+		{#if tooltipState.shortcut}
+			<span class="shortcut">{tooltipState.shortcut}</span>
 		{/if}
 	</div>
 {/if}
