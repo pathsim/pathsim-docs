@@ -5,7 +5,7 @@
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
-	import { processCrossRefs, lookupRef } from '$lib/utils/crossref';
+	import { processCrossRefs, lookupRef, crossrefIndexStore } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { createCopyButton } from '$lib/utils/copyButton';
 
@@ -15,8 +15,12 @@
 
 	let { html }: Props = $props();
 
-	// Process HTML for cross-references
-	let processedHtml = $derived(processCrossRefs(html, base));
+	// Process HTML for cross-references (reactive to store changes)
+	let processedHtml = $derived.by(() => {
+		// Subscribe to crossref store to trigger re-processing when index loads
+		$crossrefIndexStore;
+		return processCrossRefs(html, base);
+	});
 
 	let container: HTMLDivElement | undefined = $state();
 	let katexLoaded = $state(false);

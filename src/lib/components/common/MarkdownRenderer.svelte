@@ -10,7 +10,7 @@
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
-	import { processCrossRefs } from '$lib/utils/crossref';
+	import { processCrossRefs, crossrefIndexStore } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { createCopyButton } from '$lib/utils/copyButton';
 
@@ -94,6 +94,8 @@
 
 	// Convert markdown to HTML and extract math blocks
 	let processedMarkdown = $derived.by(() => {
+		// Subscribe to crossref store to trigger re-processing when index loads
+		$crossrefIndexStore;
 		if (!markdown?.trim()) return { html: '', mathBlocks: new Map<string, { content: string; isDisplay: boolean }>() };
 		// Rewrite relative image URLs before processing
 		const rewritten = rewriteImageUrls(markdown, basePath);

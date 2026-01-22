@@ -10,7 +10,7 @@
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
-	import { processCrossRefs } from '$lib/utils/crossref';
+	import { processCrossRefs, crossrefIndexStore } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { createCopyButton } from '$lib/utils/copyButton';
 
@@ -297,8 +297,12 @@
 		}
 	}
 
-	// Parse RST if not already HTML
-	let parsedBlocks = $derived(isHtml ? [] : parseRst(content));
+	// Parse RST if not already HTML (reactive to crossref store)
+	let parsedBlocks = $derived.by(() => {
+		// Subscribe to crossref store to trigger re-processing when index loads
+		$crossrefIndexStore;
+		return isHtml ? [] : parseRst(content);
+	});
 
 	function resolveImagePath(src: string): string {
 		if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('data:')) {
