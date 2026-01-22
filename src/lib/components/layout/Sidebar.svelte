@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
@@ -33,10 +33,9 @@
 
 	onMount(() => {
 		window.addEventListener('keydown', handleGlobalKeydown);
-	});
-
-	onDestroy(() => {
-		window.removeEventListener('keydown', handleGlobalKeydown);
+		return () => {
+			window.removeEventListener('keydown', handleGlobalKeydown);
+		};
 	});
 
 	// Check if we're on an API page or examples listing page
