@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/pathsim/pathsim/main/docs/_static/pathsim_logo.png" width="300" alt="PathSim Logo" />
+  <img src="https://raw.githubusercontent.com/pathsim/pathsim-docs/master/static/pathsim_logo.png" width="300" alt="PathSim Logo" />
 </p>
 
 ------------
