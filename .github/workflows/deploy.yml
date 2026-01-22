@@ -35,30 +35,42 @@ jobs:
           git clone https://github.com/pathsim/pathsim-chem.git ../pathsim-chem || { echo "Failed to clone pathsim-chem"; exit 1; }
           git clone https://github.com/pathsim/pathsim-vehicle.git ../pathsim-vehicle || { echo "Failed to clone pathsim-vehicle"; exit 1; }
 
-      - name: Verify repository clones
+      - name: Fetch all tags and verify repos
         run: |
           for repo in pathsim pathsim-chem pathsim-vehicle; do
             if [ ! -d "../$repo/.git" ]; then
               echo "Error: Repository $repo not properly cloned"
               exit 1
             fi
-            echo "✓ $repo cloned successfully ($(git -C ../$repo describe --tags --always 2>/dev/null || echo 'no tags'))"
+            git -C ../$repo fetch --tags
+            latest_tag=$(git -C ../$repo describe --tags --abbrev=0 2>/dev/null || echo 'no tags')
+            echo "✓ $repo: branch=$(git -C ../$repo rev-parse --abbrev-ref HEAD), latest_tag=$latest_tag"
           done
 
       # Always extract latest API (for src/lib/api/generated/)
       - name: Extract latest API
         run: python scripts/extract-api.py
 
+      # Prepare notebooks BEFORE version extraction (repos still on main)
+      - name: Prepare notebooks
+        run: python scripts/prepare-notebooks.py
+
       # Smart extraction: only missing versions + always re-extract latest
+      # This checks out tags, so must run after notebook prep
       - name: Extract versioned API
         run: python scripts/extract-versions.py
+
+      # Ensure repos are back on main branch
+      - name: Restore repos to main branch
+        run: |
+          for repo in pathsim pathsim-chem pathsim-vehicle; do
+            git -C ../$repo checkout main 2>/dev/null || git -C ../$repo checkout master 2>/dev/null || true
+            echo "✓ $repo on $(git -C ../$repo rev-parse --abbrev-ref HEAD)"
+          done
 
       # Always regenerate manifests (to pick up new versions)
       - name: Generate version manifests
         run: python scripts/generate-manifests.py
-
-      - name: Prepare notebooks
-        run: python scripts/prepare-notebooks.py
 
       - name: Build search and crossref indexes
         run: python scripts/build-indexes.py
