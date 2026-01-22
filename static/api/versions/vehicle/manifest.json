@@ -2,6 +2,10 @@
   "package": "vehicle",
   "latestVersion": "0.1",
   "versions": [
-    { "version": "0.1", "tag": "v0.1.0", "released": "2025-01-05" }
+    {
+      "version": "0.1",
+      "tag": "v0.1.0",
+      "released": ""
+    }
   ]
 }

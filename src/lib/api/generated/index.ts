@@ -2,6 +2,7 @@
 // Re-run 'npm run extract' to update
 
 import pathsimData from './pathsim.json';
+import chemData from './chem.json';
 
 export interface APIParameter {
   name: string;
@@ -65,6 +66,7 @@ export interface APIPackage {
 
 export const apiData: Record<string, APIPackage> = {
   pathsim: pathsimData as APIPackage,
+  chem: chemData as APIPackage,
 };
 
 export default apiData;

@@ -7799,6 +7799,22 @@
     "parentClass": "Bubbler4",
     "path": "chem/api#__init__"
   },
+  "Bubbler4._create_reset_event_vial": {
+    "name": "_create_reset_event_vial",
+    "type": "method",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4",
+    "path": "chem/api#_create_reset_event_vial"
+  },
+  "Bubbler4._create_reset_events": {
+    "name": "_create_reset_events",
+    "type": "method",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4",
+    "path": "chem/api#_create_reset_events"
+  },
   "pathsim_chem.tritium.glc": {
     "name": "pathsim_chem.tritium.glc",
     "type": "module",
@@ -7842,6 +7858,62 @@
     "moduleName": "pathsim_chem.tritium.glc",
     "parentClass": "GLC",
     "path": "chem/api#func"
+  },
+  "_calculate_properties": {
+    "name": "_calculate_properties",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_calculate_properties"
+  },
+  "pathsim_chem.tritium.glc._calculate_properties": {
+    "name": "_calculate_properties",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_calculate_properties"
+  },
+  "_calculate_dimensionless_groups": {
+    "name": "_calculate_dimensionless_groups",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_calculate_dimensionless_groups"
+  },
+  "pathsim_chem.tritium.glc._calculate_dimensionless_groups": {
+    "name": "_calculate_dimensionless_groups",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_calculate_dimensionless_groups"
+  },
+  "_solve_bvp_system": {
+    "name": "_solve_bvp_system",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_solve_bvp_system"
+  },
+  "pathsim_chem.tritium.glc._solve_bvp_system": {
+    "name": "_solve_bvp_system",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_solve_bvp_system"
+  },
+  "_process_results": {
+    "name": "_process_results",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_process_results"
+  },
+  "pathsim_chem.tritium.glc._process_results": {
+    "name": "_process_results",
+    "type": "function",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc",
+    "path": "chem/api#_process_results"
   },
   "solve": {
     "name": "solve",

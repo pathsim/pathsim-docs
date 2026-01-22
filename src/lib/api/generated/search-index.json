@@ -92,7 +92,7 @@
   {
     "type": "method",
     "name": "_validate_ports",
-    "description": "Check the existance of the input and output ports of",
+    "description": "Check the existence of the input and output ports of",
     "path": "pathsim/api#_validate_ports",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
@@ -697,7 +697,7 @@
   {
     "type": "class",
     "name": "Block",
-    "description": "Base 'Block' object that defines the inputs, outputs and the connect method.",
+    "description": "Base 'Block' object that defines the inputs, outputs and the block interface.",
     "path": "pathsim/api#Block",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block"
@@ -4631,7 +4631,7 @@
   {
     "type": "method",
     "name": "detect",
-    "description": "Evaluate the event function and decide if an event has occured.",
+    "description": "Evaluate the event function and decide if an event has occurred.",
     "path": "pathsim/api#detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
@@ -6396,6 +6396,24 @@
     "parentClass": "Bubbler4"
   },
   {
+    "type": "method",
+    "name": "_create_reset_event_vial",
+    "description": "Define event action function and return a `ScheduleList` event",
+    "path": "chem/api#_create_reset_event_vial",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4"
+  },
+  {
+    "type": "method",
+    "name": "_create_reset_events",
+    "description": "Create reset events for all vials based on the replacement times.",
+    "path": "chem/api#_create_reset_events",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.bubbler",
+    "parentClass": "Bubbler4"
+  },
+  {
     "type": "module",
     "name": "pathsim_chem.tritium.glc",
     "description": "",
@@ -6428,6 +6446,38 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.glc",
     "parentClass": "GLC"
+  },
+  {
+    "type": "function",
+    "name": "_calculate_properties",
+    "description": "Calculate temperature-dependent and geometry-dependent physical properties.",
+    "path": "chem/api#_calculate_properties",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "_calculate_dimensionless_groups",
+    "description": "Calculate the dimensionless groups for the ODE system.",
+    "path": "chem/api#_calculate_dimensionless_groups",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "_solve_bvp_system",
+    "description": "Set up and solve the Boundary Value Problem for tritium extraction.",
+    "path": "chem/api#_solve_bvp_system",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
+  },
+  {
+    "type": "function",
+    "name": "_process_results",
+    "description": "Process the BVP solution to produce dimensional results.",
+    "path": "chem/api#_process_results",
+    "packageId": "chem",
+    "moduleName": "pathsim_chem.tritium.glc"
   },
   {
     "type": "function",
