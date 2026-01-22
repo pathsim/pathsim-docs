@@ -52,7 +52,6 @@ export interface NotebookManifest {
  */
 export async function loadManifest(
 	packageId: string,
-	_basePath: string = '',
 	customFetch: typeof globalThis.fetch = fetch
 ): Promise<NotebookManifest> {
 	// Get package manifest to find latest tag
@@ -72,7 +71,6 @@ export async function loadManifest(
 export async function loadNotebook(
 	packageId: string,
 	filename: string,
-	_basePath: string = '',
 	customFetch: typeof globalThis.fetch = fetch
 ): Promise<unknown> {
 	// Get package manifest to find latest tag

@@ -39,19 +39,35 @@ export interface SearchResult {
 // Store for the active search index
 const searchIndexStore = writable<SearchResult[]>([]);
 
-// Track initialization state
+// Track initialization state and current version
 let initialized = false;
 let initPromise: Promise<void> | null = null;
+let currentVersionKey: string | null = null;
 
 /**
  * Initialize search with indexes for specific package versions.
  * Call this when entering a versioned context.
+ * Re-initializes if the version changes.
  */
 export async function initializeSearch(
 	packages: Array<{ packageId: PackageId; tag: string }>,
 	customFetch: typeof globalThis.fetch = fetch
 ): Promise<void> {
-	// Avoid duplicate initialization
+	// Create a key for the current version combination
+	const versionKey = packages.map((p) => `${p.packageId}:${p.tag}`).join(',');
+
+	// Skip if already initialized for this exact version
+	if (initialized && currentVersionKey === versionKey) {
+		return;
+	}
+
+	// If initializing for a different version, reset first
+	if (currentVersionKey !== versionKey) {
+		initialized = false;
+		initPromise = null;
+	}
+
+	// Avoid duplicate initialization for same request
 	if (initPromise) {
 		return initPromise;
 	}
@@ -60,6 +76,7 @@ export async function initializeSearch(
 		const merged = await loadMergedSearchIndex(packages, customFetch);
 		searchIndexStore.set(merged);
 		initialized = true;
+		currentVersionKey = versionKey;
 	})();
 
 	await initPromise;
@@ -174,4 +191,5 @@ export function resetSearch(): void {
 	searchIndexStore.set([]);
 	initialized = false;
 	initPromise = null;
+	currentVersionKey = null;
 }

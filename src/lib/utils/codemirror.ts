@@ -10,6 +10,7 @@ let cachedModules: CodeMirrorModules | null = null;
 export interface CodeMirrorModules {
 	EditorView: typeof import('@codemirror/view').EditorView;
 	EditorState: typeof import('@codemirror/state').EditorState;
+	Compartment: typeof import('@codemirror/state').Compartment;
 	keymap: typeof import('@codemirror/view').keymap;
 	basicSetup: typeof import('codemirror').basicSetup;
 	python: typeof import('@codemirror/lang-python').python;
@@ -40,6 +41,7 @@ export async function loadCodeMirrorModules(): Promise<CodeMirrorModules> {
 	cachedModules = {
 		EditorView: viewModule.EditorView,
 		EditorState: stateModule.EditorState,
+		Compartment: stateModule.Compartment,
 		keymap: viewModule.keymap,
 		basicSetup: cmModule.basicSetup,
 		python: pythonModule.python,
@@ -103,6 +105,29 @@ export interface EditorOptions {
 	onDocChange?: (doc: string) => void;
 	/** Line numbers */
 	lineNumbers?: boolean;
+	/** Theme compartment for dynamic theme switching */
+	themeCompartment?: import('@codemirror/state').Compartment;
+}
+
+/**
+ * Create theme-specific extensions (syntax highlighting + dark chrome)
+ * Use this with a Compartment for efficient theme switching
+ */
+export function createThemeExtensions(
+	modules: CodeMirrorModules,
+	isDark: boolean
+): import('@codemirror/state').Extension[] {
+	const { oneDark, syntaxHighlighting } = modules;
+
+	const extensions: import('@codemirror/state').Extension[] = [
+		syntaxHighlighting(createHighlightStyle(modules, isDark))
+	];
+
+	if (isDark) {
+		extensions.push(oneDark);
+	}
+
+	return extensions;
 }
 
 /**
@@ -119,8 +144,6 @@ export function createEditorExtensions(
 		keymap,
 		basicSetup,
 		python,
-		oneDark,
-		syntaxHighlighting,
 		indentUnit
 	} = modules;
 
@@ -134,8 +157,7 @@ export function createEditorExtensions(
 	extensions.push(
 		basicSetup,
 		python(),
-		indentUnit.of('    '), // 4-space indentation for Python
-		syntaxHighlighting(createHighlightStyle(modules, isDark))
+		indentUnit.of('    ') // 4-space indentation for Python
 	);
 
 	// Read-only mode
@@ -155,9 +177,11 @@ export function createEditorExtensions(
 		);
 	}
 
-	// Dark theme chrome (gutters, background, etc.)
-	if (isDark) {
-		extensions.push(oneDark);
+	// Theme extensions - use compartment if provided for dynamic switching
+	if (options.themeCompartment) {
+		extensions.push(options.themeCompartment.of(createThemeExtensions(modules, isDark)));
+	} else {
+		extensions.push(...createThemeExtensions(modules, isDark));
 	}
 
 	return extensions;

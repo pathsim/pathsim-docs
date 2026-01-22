@@ -9,8 +9,18 @@
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	let searchQuery = $state('');
-	let searchResults = $derived(search(searchQuery, 8));
+	let debouncedQuery = $state('');
+	let searchResults = $derived(search(debouncedQuery, 8));
 	let showResults = $derived(searchQuery.length > 0);
+
+	// Debounce search query (150ms delay)
+	$effect(() => {
+		const query = searchQuery;
+		const timeout = setTimeout(() => {
+			debouncedQuery = query;
+		}, 150);
+		return () => clearTimeout(timeout);
+	});
 	let searchInput = $state<HTMLInputElement | null>(null);
 
 	function handleGlobalKeydown(event: KeyboardEvent) {

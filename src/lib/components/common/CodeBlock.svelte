@@ -9,6 +9,7 @@
 	import {
 		loadCodeMirrorModules,
 		createEditorExtensions,
+		createThemeExtensions,
 		type CodeMirrorModules
 	} from '$lib/utils/codemirror';
 	import { theme } from '$lib/stores/themeStore';
@@ -40,6 +41,7 @@
 	let editorContainer = $state<HTMLDivElement | undefined>(undefined);
 	let editorView: import('@codemirror/view').EditorView | null = null;
 	let cmModules: CodeMirrorModules | null = null;
+	let themeCompartment: import('@codemirror/state').Compartment | null = null;
 	let loading = $state(true);
 
 	// Track current code (IIFE to capture initial value without reactive warning)
@@ -75,6 +77,9 @@
 
 			const isDark = $theme === 'dark';
 
+			// Create theme compartment for efficient theme switching
+			themeCompartment = new cmModules.Compartment();
+
 			// Setup update listener for editable mode
 			const updateListener = editable
 				? cmModules.EditorView.updateListener.of((update) => {
@@ -88,7 +93,7 @@
 			editorView = new cmModules.EditorView({
 				doc: code,
 				extensions: [
-					createEditorExtensions(cmModules, isDark, { readOnly: !editable }),
+					createEditorExtensions(cmModules, isDark, { readOnly: !editable, themeCompartment }),
 					...(Array.isArray(updateListener) ? updateListener : [updateListener])
 				],
 				parent: editorContainer!
@@ -98,30 +103,14 @@
 		});
 	});
 
-	// Watch for theme changes
+	// Watch for theme changes - use compartment reconfigure for efficiency
 	$effect(() => {
 		const currentTheme = $theme;
-		if (editorView && cmModules && editorContainer) {
+		if (editorView && cmModules && themeCompartment) {
 			const isDark = currentTheme === 'dark';
-			const currentDoc = editorView.state.doc.toString();
-
-			const updateListener = editable
-				? cmModules.EditorView.updateListener.of((update) => {
-						if (update.docChanged) {
-							currentCode = update.state.doc.toString();
-							onchange?.(currentCode);
-						}
-					})
-				: [];
-
-			editorView.destroy();
-			editorView = new cmModules.EditorView({
-				doc: currentDoc,
-				extensions: [
-					createEditorExtensions(cmModules, isDark, { readOnly: !editable }),
-					...(Array.isArray(updateListener) ? updateListener : [updateListener])
-				],
-				parent: editorContainer
+			// Reconfigure theme compartment without recreating editor
+			editorView.dispatch({
+				effects: themeCompartment.reconfigure(createThemeExtensions(cmModules, isDark))
 			});
 		}
 	});

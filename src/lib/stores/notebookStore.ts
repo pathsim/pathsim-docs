@@ -17,6 +17,14 @@ export interface CellState {
 	prerequisites: string[];
 }
 
+/**
+ * Notebook state containing all registered cells.
+ *
+ * Note: Updates to `cells` always create a new Map instance (immutable pattern).
+ * This is intentional for Svelte's reactivity system - the store needs a new
+ * reference to trigger subscribers. While this creates some overhead, it
+ * ensures reliable reactivity and simplifies debugging.
+ */
 interface NotebookState {
 	/** Registry of all cells by ID */
 	cells: Map<string, CellState>;

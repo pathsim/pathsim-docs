@@ -35,7 +35,7 @@
 
 	onMount(async () => {
 		try {
-			manifest = await loadManifest(packageId, base);
+			manifest = await loadManifest(packageId);
 			// Populate store for sidebar TOC with grouped data
 			if (manifest) {
 				const grouped = groupByCategory(manifest.notebooks, manifest.categories);

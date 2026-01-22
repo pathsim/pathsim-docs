@@ -31,16 +31,6 @@
 			theme = 'light';
 		}
 		document.documentElement.setAttribute('data-theme', theme);
-
-		const handleKeydown = (e: KeyboardEvent) => {
-			if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-				e.preventDefault();
-				// TODO: Open search dialog
-			}
-		};
-
-		window.addEventListener('keydown', handleKeydown);
-		return () => window.removeEventListener('keydown', handleKeydown);
 	});
 
 	function toggleTheme() {

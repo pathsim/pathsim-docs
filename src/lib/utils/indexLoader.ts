@@ -11,16 +11,59 @@ import type { SearchResult } from './search';
 import type { CrossRefTarget } from './crossref';
 import type { PackageId } from '$lib/config/packages';
 
-// Cache for loaded indexes
-const searchIndexCache = new Map<string, SearchResult[]>();
-const crossrefIndexCache = new Map<string, Record<string, CrossRefTarget>>();
-
 /**
- * Get cache key for a package/version combo
+ * Create a cached index loader for a specific index type.
+ * Reduces duplication between search and crossref loaders.
  */
-function getCacheKey(packageId: string, tag: string): string {
-	return `${packageId}/${tag}`;
+function createCachedLoader<T>(
+	indexName: string,
+	emptyValue: T
+): {
+	load: (
+		packageId: string,
+		tag: string,
+		customFetch: typeof globalThis.fetch
+	) => Promise<T>;
+	cache: Map<string, T>;
+} {
+	const cache = new Map<string, T>();
+
+	async function load(
+		packageId: string,
+		tag: string,
+		customFetch: typeof globalThis.fetch = fetch
+	): Promise<T> {
+		const cacheKey = `${packageId}/${tag}`;
+
+		// Return cached if available
+		if (cache.has(cacheKey)) {
+			return cache.get(cacheKey)!;
+		}
+
+		try {
+			const url = `${base}/${packageId}/${tag}/${indexName}.json`;
+			const response = await customFetch(url);
+
+			if (!response.ok) {
+				console.warn(`Failed to load ${indexName} for ${packageId} ${tag}: ${response.status}`);
+				return emptyValue;
+			}
+
+			const data = (await response.json()) as T;
+			cache.set(cacheKey, data);
+			return data;
+		} catch (e) {
+			console.warn(`Error loading ${indexName} for ${packageId} ${tag}:`, e);
+			return emptyValue;
+		}
+	}
+
+	return { load, cache };
 }
+
+// Create cached loaders for each index type
+const searchLoader = createCachedLoader<SearchResult[]>('search-index', []);
+const crossrefLoader = createCachedLoader<Record<string, CrossRefTarget>>('crossref-index', {});
 
 /**
  * Load search index for a specific package version
@@ -30,29 +73,7 @@ export async function loadSearchIndex(
 	tag: string,
 	customFetch: typeof globalThis.fetch = fetch
 ): Promise<SearchResult[]> {
-	const cacheKey = getCacheKey(packageId, tag);
-
-	// Return cached if available
-	if (searchIndexCache.has(cacheKey)) {
-		return searchIndexCache.get(cacheKey)!;
-	}
-
-	try {
-		const url = `${base}/${packageId}/${tag}/search-index.json`;
-		const response = await customFetch(url);
-
-		if (!response.ok) {
-			console.warn(`Failed to load search index for ${packageId} ${tag}: ${response.status}`);
-			return [];
-		}
-
-		const data = (await response.json()) as SearchResult[];
-		searchIndexCache.set(cacheKey, data);
-		return data;
-	} catch (e) {
-		console.warn(`Error loading search index for ${packageId} ${tag}:`, e);
-		return [];
-	}
+	return searchLoader.load(packageId, tag, customFetch);
 }
 
 /**
@@ -63,29 +84,7 @@ export async function loadCrossrefIndex(
 	tag: string,
 	customFetch: typeof globalThis.fetch = fetch
 ): Promise<Record<string, CrossRefTarget>> {
-	const cacheKey = getCacheKey(packageId, tag);
-
-	// Return cached if available
-	if (crossrefIndexCache.has(cacheKey)) {
-		return crossrefIndexCache.get(cacheKey)!;
-	}
-
-	try {
-		const url = `${base}/${packageId}/${tag}/crossref-index.json`;
-		const response = await customFetch(url);
-
-		if (!response.ok) {
-			console.warn(`Failed to load crossref index for ${packageId} ${tag}: ${response.status}`);
-			return {};
-		}
-
-		const data = (await response.json()) as Record<string, CrossRefTarget>;
-		crossrefIndexCache.set(cacheKey, data);
-		return data;
-	} catch (e) {
-		console.warn(`Error loading crossref index for ${packageId} ${tag}:`, e);
-		return {};
-	}
+	return crossrefLoader.load(packageId, tag, customFetch);
 }
 
 /**
@@ -127,22 +126,22 @@ export async function loadMergedCrossrefIndex(
  * Clear all cached indexes
  */
 export function clearIndexCache(): void {
-	searchIndexCache.clear();
-	crossrefIndexCache.clear();
+	searchLoader.cache.clear();
+	crossrefLoader.cache.clear();
 }
 
 /**
  * Clear cached indexes for a specific package
  */
 export function clearPackageIndexCache(packageId: string): void {
-	for (const key of searchIndexCache.keys()) {
+	for (const key of searchLoader.cache.keys()) {
 		if (key.startsWith(`${packageId}/`)) {
-			searchIndexCache.delete(key);
+			searchLoader.cache.delete(key);
 		}
 	}
-	for (const key of crossrefIndexCache.keys()) {
+	for (const key of crossrefLoader.cache.keys()) {
 		if (key.startsWith(`${packageId}/`)) {
-			crossrefIndexCache.delete(key);
+			crossrefLoader.cache.delete(key);
 		}
 	}
 }
