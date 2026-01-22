@@ -1,3 +1,11 @@
 # Requirements for API extraction scripts
 griffe>=1.0.0
 docutils>=0.20
+
+# Requirements for notebook execution
+nbconvert>=7.0.0
+ipykernel>=6.0.0
+pathsim
+matplotlib
+numpy
+scipy

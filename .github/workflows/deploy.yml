@@ -55,6 +55,10 @@ jobs:
       - name: Prepare notebooks
         run: python scripts/prepare-notebooks.py
 
+      # Execute notebooks to generate outputs (parallel)
+      - name: Execute notebooks
+        run: python scripts/execute-notebooks.py
+
       # Smart extraction: only missing versions + always re-extract latest
       # This checks out tags, so must run after notebook prep
       - name: Extract versioned API

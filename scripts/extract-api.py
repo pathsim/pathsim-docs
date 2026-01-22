@@ -5,15 +5,20 @@ PathSim API Documentation Extractor
 Uses griffe to extract API documentation from PathSim packages and outputs
 structured JSON with rendered HTML docstrings for the documentation site.
 
+Caching: Stores extracted tags in .extracted-tags.json. Skips extraction
+if the current tag matches the cached tag.
+
 Usage:
     python scripts/extract-api.py              # Extract all packages
     python scripts/extract-api.py --package pathsim  # Single package
     python scripts/extract-api.py --dry-run    # Preview without writing
+    python scripts/extract-api.py --force      # Force re-extraction
 """
 
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
@@ -21,6 +26,7 @@ from typing import Any
 # Add parent packages to path for imports
 SCRIPT_DIR = Path(__file__).parent
 ROOT_DIR = SCRIPT_DIR.parent.parent
+PROJECT_ROOT = SCRIPT_DIR.parent
 
 # Package source paths
 PACKAGE_PATHS = {
@@ -28,6 +34,51 @@ PACKAGE_PATHS = {
     "pathsim_chem": ROOT_DIR / "pathsim-chem" / "src",
     "pathsim_vehicle": ROOT_DIR / "pathsim-vehicle" / "src",
 }
+
+# Package repo paths (for tag lookup)
+PACKAGE_REPOS = {
+    "pathsim": ROOT_DIR / "pathsim",
+    "chem": ROOT_DIR / "pathsim-chem",
+    "vehicle": ROOT_DIR / "pathsim-vehicle",
+}
+
+# Cache file for extracted tags
+CACHE_FILE = PROJECT_ROOT / "src" / "lib" / "api" / "generated" / ".extracted-tags.json"
+
+
+def get_latest_tag(repo_path: Path) -> str | None:
+    """Get the latest git tag from a repository."""
+    if not repo_path.exists():
+        return None
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(repo_path), "describe", "--tags", "--abbrev=0"],
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+    except Exception:
+        pass
+    return None
+
+
+def load_cached_tags() -> dict[str, str]:
+    """Load cached extracted tags."""
+    if CACHE_FILE.exists():
+        try:
+            with open(CACHE_FILE) as f:
+                return json.load(f)
+        except Exception:
+            pass
+    return {}
+
+
+def save_cached_tags(tags: dict[str, str]):
+    """Save extracted tags to cache."""
+    CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(CACHE_FILE, "w") as f:
+        json.dump(tags, f, indent=2)
 
 try:
     import griffe
@@ -711,6 +762,11 @@ def main():
         help="Preview extraction without writing files"
     )
     parser.add_argument(
+        "--force", "-f",
+        action="store_true",
+        help="Force re-extraction even if cached"
+    )
+    parser.add_argument(
         "--output", "-o",
         type=Path,
         default=SCRIPT_DIR.parent / "src" / "lib" / "api" / "generated",
@@ -741,11 +797,32 @@ def main():
     else:
         packages_to_extract = list(CONFIG.keys())
 
+    # Load cached tags (only for default mode, not versioned extraction)
+    cached_tags = load_cached_tags() if not args.versions_dir else {}
+    new_tags = dict(cached_tags)
+
     extracted_packages = []
+    skipped_packages = []
 
     for pkg_id in packages_to_extract:
         config = CONFIG[pkg_id]
-        print(f"\nExtracting: {config['display_name']}")
+
+        # Check cache (only for default mode)
+        if not args.versions_dir and not args.force:
+            repo_path = PACKAGE_REPOS.get(pkg_id)
+            current_tag = get_latest_tag(repo_path) if repo_path else None
+            cached_tag = cached_tags.get(pkg_id)
+
+            if current_tag and cached_tag and current_tag == cached_tag:
+                print(f"\n{config['display_name']}: ✓ Skipping - already extracted for {current_tag}")
+                skipped_packages.append(pkg_id)
+                extracted_packages.append(pkg_id)  # Still count as extracted for index
+                continue
+
+            print(f"\nExtracting: {config['display_name']} (tag: {current_tag or 'unknown'})")
+        else:
+            print(f"\nExtracting: {config['display_name']}")
+            current_tag = None
 
         extractor = APIExtractor(config)
         data = extractor.extract()
@@ -766,6 +843,10 @@ def main():
                     output_path = args.output / f"{pkg_id}.json"
 
                 write_json_output(data, output_path)
+
+                # Update cache (only for default mode)
+                if not args.versions_dir and current_tag:
+                    new_tags[pkg_id] = current_tag
             else:
                 print(f"  Would write: {args.output / f'{pkg_id}.json'}")
                 print(f"  Modules: {list(data['modules'].keys())}")
@@ -774,11 +855,17 @@ def main():
                 total_functions = sum(len(m.get("functions", [])) for m in data["modules"].values())
                 print(f"  Classes: {total_classes}, Functions: {total_functions}")
 
+    # Save updated cache
+    if not args.dry_run and not args.versions_dir and new_tags != cached_tags:
+        save_cached_tags(new_tags)
+        print(f"\nUpdated extraction cache")
+
     # Write TypeScript index (only for default mode, not versioned)
     if extracted_packages and not args.dry_run and not args.no_index and not args.versions_dir:
         write_typescript_index(extracted_packages, args.output)
 
-    print(f"\nDone! Extracted {len(extracted_packages)} package(s)")
+    actually_extracted = len(extracted_packages) - len(skipped_packages)
+    print(f"\nDone! Extracted {actually_extracted}, skipped {len(skipped_packages)} (cached)")
 
 
 if __name__ == "__main__":
