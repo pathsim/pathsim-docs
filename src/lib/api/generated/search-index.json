@@ -75,7 +75,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Connection.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -84,7 +84,7 @@
     "type": "method",
     "name": "_validate_dimensions",
     "description": "Check the dimensions of the source and target ports,",
-    "path": "pathsim/api#_validate_dimensions",
+    "path": "pathsim/api#Connection._validate_dimensions",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -92,8 +92,8 @@
   {
     "type": "method",
     "name": "_validate_ports",
-    "description": "Check the existence of the input and output ports of",
-    "path": "pathsim/api#_validate_ports",
+    "description": "Check the existance of the input and output ports of",
+    "path": "pathsim/api#Connection._validate_ports",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -102,7 +102,7 @@
     "type": "method",
     "name": "get_blocks",
     "description": "Returns all the unique internal source and target blocks",
-    "path": "pathsim/api#get_blocks",
+    "path": "pathsim/api#Connection.get_blocks",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -111,7 +111,7 @@
     "type": "method",
     "name": "on",
     "description": "",
-    "path": "pathsim/api#on",
+    "path": "pathsim/api#Connection.on",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -120,7 +120,7 @@
     "type": "method",
     "name": "off",
     "description": "",
-    "path": "pathsim/api#off",
+    "path": "pathsim/api#Connection.off",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -129,7 +129,7 @@
     "type": "method",
     "name": "update",
     "description": "Transfers data from the source block output port",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Connection.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection"
@@ -146,7 +146,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Duplex.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Duplex"
@@ -155,7 +155,7 @@
     "type": "method",
     "name": "update",
     "description": "Transfers data between the two target blocks",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Duplex.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Duplex"
@@ -180,7 +180,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Simulation.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -189,7 +189,7 @@
     "type": "method",
     "name": "plot",
     "description": "Plot the simulation results by calling all the blocks",
-    "path": "pathsim/api#plot",
+    "path": "pathsim/api#Simulation.plot",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -198,7 +198,7 @@
     "type": "method",
     "name": "add_block",
     "description": "Adds a new block to the simulation, initializes its local solver",
-    "path": "pathsim/api#add_block",
+    "path": "pathsim/api#Simulation.add_block",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -207,7 +207,7 @@
     "type": "method",
     "name": "add_connection",
     "description": "Adds a new connection to the simulaiton and checks if",
-    "path": "pathsim/api#add_connection",
+    "path": "pathsim/api#Simulation.add_connection",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -216,7 +216,7 @@
     "type": "method",
     "name": "add_event",
     "description": "Checks and adds a new event to the simulation.",
-    "path": "pathsim/api#add_event",
+    "path": "pathsim/api#Simulation.add_event",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -225,7 +225,7 @@
     "type": "method",
     "name": "_assemble_graph",
     "description": "Build the internal graph representation for fast system function",
-    "path": "pathsim/api#_assemble_graph",
+    "path": "pathsim/api#Simulation._assemble_graph",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -234,7 +234,7 @@
     "type": "method",
     "name": "_check_blocks_are_managed",
     "description": "Check whether the blocks that are part of the connections are",
-    "path": "pathsim/api#_check_blocks_are_managed",
+    "path": "pathsim/api#Simulation._check_blocks_are_managed",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -243,7 +243,7 @@
     "type": "method",
     "name": "_set_solver",
     "description": "Initialize all blocks with solver for numerical integration",
-    "path": "pathsim/api#_set_solver",
+    "path": "pathsim/api#Simulation._set_solver",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -252,7 +252,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the blocks to their initial state and the global time of",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Simulation.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -261,7 +261,7 @@
     "type": "method",
     "name": "linearize",
     "description": "Linearize the full system in the current simulation state",
-    "path": "pathsim/api#linearize",
+    "path": "pathsim/api#Simulation.linearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -270,7 +270,7 @@
     "type": "method",
     "name": "delinearize",
     "description": "Revert the linearization of the full system.",
-    "path": "pathsim/api#delinearize",
+    "path": "pathsim/api#Simulation.delinearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -279,7 +279,7 @@
     "type": "method",
     "name": "_get_active_events",
     "description": "Generator that yields all active events from simulation",
-    "path": "pathsim/api#_get_active_events",
+    "path": "pathsim/api#Simulation._get_active_events",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -288,7 +288,7 @@
     "type": "method",
     "name": "_estimate_events",
     "description": "Estimate the time until the next.",
-    "path": "pathsim/api#_estimate_events",
+    "path": "pathsim/api#Simulation._estimate_events",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -297,7 +297,7 @@
     "type": "method",
     "name": "_detected_events",
     "description": "Check for possible (active) events and return them chronologically,",
-    "path": "pathsim/api#_detected_events",
+    "path": "pathsim/api#Simulation._detected_events",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -306,7 +306,7 @@
     "type": "method",
     "name": "_update",
     "description": "Distribute information within the system by evaluating the directed acyclic graph",
-    "path": "pathsim/api#_update",
+    "path": "pathsim/api#Simulation._update",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -315,7 +315,7 @@
     "type": "method",
     "name": "_dag",
     "description": "Update the directed acyclic graph components of the system.",
-    "path": "pathsim/api#_dag",
+    "path": "pathsim/api#Simulation._dag",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -324,7 +324,7 @@
     "type": "method",
     "name": "_loops",
     "description": "Perform the algebraic loop solve of the system using accelerated",
-    "path": "pathsim/api#_loops",
+    "path": "pathsim/api#Simulation._loops",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -333,7 +333,7 @@
     "type": "method",
     "name": "_solve",
     "description": "For implicit solvers, this method implements the solving step",
-    "path": "pathsim/api#_solve",
+    "path": "pathsim/api#Simulation._solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -342,7 +342,7 @@
     "type": "method",
     "name": "steadystate",
     "description": "Find steady state solution (DC operating point) of the system",
-    "path": "pathsim/api#steadystate",
+    "path": "pathsim/api#Simulation.steadystate",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -351,7 +351,7 @@
     "type": "method",
     "name": "_revert",
     "description": "Revert simulation state to previous timestep for adaptive solvers",
-    "path": "pathsim/api#_revert",
+    "path": "pathsim/api#Simulation._revert",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -360,7 +360,7 @@
     "type": "method",
     "name": "_sample",
     "description": "Sample data from blocks that implement the 'sample' method such",
-    "path": "pathsim/api#_sample",
+    "path": "pathsim/api#Simulation._sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -369,7 +369,7 @@
     "type": "method",
     "name": "_buffer",
     "description": "Buffer states for event monitoring and internal states of blocks",
-    "path": "pathsim/api#_buffer",
+    "path": "pathsim/api#Simulation._buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -378,7 +378,7 @@
     "type": "method",
     "name": "_step",
     "description": "Performs the 'step' method for dynamical blocks with internal",
-    "path": "pathsim/api#_step",
+    "path": "pathsim/api#Simulation._step",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -387,7 +387,7 @@
     "type": "method",
     "name": "timestep_fixed_explicit",
     "description": "Advances the simulation by one timestep 'dt' for explicit fixed step solvers.",
-    "path": "pathsim/api#timestep_fixed_explicit",
+    "path": "pathsim/api#Simulation.timestep_fixed_explicit",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -396,7 +396,7 @@
     "type": "method",
     "name": "timestep_fixed_implicit",
     "description": "Advances the simulation by one timestep 'dt' for implicit fixed step solvers.",
-    "path": "pathsim/api#timestep_fixed_implicit",
+    "path": "pathsim/api#Simulation.timestep_fixed_implicit",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -405,7 +405,7 @@
     "type": "method",
     "name": "timestep_adaptive_explicit",
     "description": "Advances the simulation by one timestep 'dt' for explicit adaptive solvers.",
-    "path": "pathsim/api#timestep_adaptive_explicit",
+    "path": "pathsim/api#Simulation.timestep_adaptive_explicit",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -414,7 +414,7 @@
     "type": "method",
     "name": "timestep_adaptive_implicit",
     "description": "Advances the simulation by one timestep 'dt' for implicit adaptive solvers.",
-    "path": "pathsim/api#timestep_adaptive_implicit",
+    "path": "pathsim/api#Simulation.timestep_adaptive_implicit",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -423,7 +423,7 @@
     "type": "method",
     "name": "timestep",
     "description": "Advances the transient simulation by one timestep 'dt'.",
-    "path": "pathsim/api#timestep",
+    "path": "pathsim/api#Simulation.timestep",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -432,7 +432,7 @@
     "type": "method",
     "name": "step",
     "description": "Wraps 'Simulation.timestep' for backward compatibility",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Simulation.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -441,7 +441,7 @@
     "type": "method",
     "name": "collect",
     "description": "Collect all current simulation results from the internal",
-    "path": "pathsim/api#collect",
+    "path": "pathsim/api#Simulation.collect",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -450,7 +450,7 @@
     "type": "method",
     "name": "stop",
     "description": "Set the flag for active simulation to 'False', intended to be",
-    "path": "pathsim/api#stop",
+    "path": "pathsim/api#Simulation.stop",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -459,7 +459,7 @@
     "type": "method",
     "name": "_run_loop",
     "description": "Core simulation loop generator that yields after each timestep.",
-    "path": "pathsim/api#_run_loop",
+    "path": "pathsim/api#Simulation._run_loop",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -468,7 +468,7 @@
     "type": "method",
     "name": "run",
     "description": "Perform multiple simulation timesteps for a given 'duration'.",
-    "path": "pathsim/api#run",
+    "path": "pathsim/api#Simulation.run",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -477,7 +477,7 @@
     "type": "method",
     "name": "run_streaming",
     "description": "Perform simulation with streaming output at a fixed wall-clock rate.",
-    "path": "pathsim/api#run_streaming",
+    "path": "pathsim/api#Simulation.run_streaming",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -486,7 +486,7 @@
     "type": "method",
     "name": "run_realtime",
     "description": "Perform simulation paced to wall-clock time.",
-    "path": "pathsim/api#run_realtime",
+    "path": "pathsim/api#Simulation.run_realtime",
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation"
@@ -511,7 +511,7 @@
     "type": "method",
     "name": "register_port_map",
     "description": "Update the input and output registers of the interface block with port mappings",
-    "path": "pathsim/api#register_port_map",
+    "path": "pathsim/api#Interface.register_port_map",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Interface"
@@ -528,7 +528,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Subsystem.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -537,7 +537,7 @@
     "type": "method",
     "name": "_assemble_graph",
     "description": "Assemble internal graph of subsystem for fast",
-    "path": "pathsim/api#_assemble_graph",
+    "path": "pathsim/api#Subsystem._assemble_graph",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -546,7 +546,7 @@
     "type": "method",
     "name": "plot",
     "description": "Plot the simulation results by calling all the blocks",
-    "path": "pathsim/api#plot",
+    "path": "pathsim/api#Subsystem.plot",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -555,7 +555,7 @@
     "type": "method",
     "name": "collect",
     "description": "Aggregate results from internal blocks.",
-    "path": "pathsim/api#collect",
+    "path": "pathsim/api#Subsystem.collect",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -564,7 +564,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the subsystem interface and all internal blocks",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Subsystem.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -573,7 +573,7 @@
     "type": "method",
     "name": "on",
     "description": "Activate the subsystem and all internal blocks, sets the boolean",
-    "path": "pathsim/api#on",
+    "path": "pathsim/api#Subsystem.on",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -582,7 +582,7 @@
     "type": "method",
     "name": "off",
     "description": "Deactivate the subsystem and all internal blocks, sets the boolean",
-    "path": "pathsim/api#off",
+    "path": "pathsim/api#Subsystem.off",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -591,7 +591,7 @@
     "type": "method",
     "name": "linearize",
     "description": "Linearize the algebraic and dynamic components of the internal blocks.",
-    "path": "pathsim/api#linearize",
+    "path": "pathsim/api#Subsystem.linearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -600,7 +600,7 @@
     "type": "method",
     "name": "delinearize",
     "description": "Revert the linearization of the internal blocks.",
-    "path": "pathsim/api#delinearize",
+    "path": "pathsim/api#Subsystem.delinearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -609,7 +609,7 @@
     "type": "method",
     "name": "sample",
     "description": "Update the internal connections again and sample data from",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#Subsystem.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -618,7 +618,7 @@
     "type": "method",
     "name": "update",
     "description": "Update the instant time components of the internal blocks",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Subsystem.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -627,7 +627,7 @@
     "type": "method",
     "name": "_dag",
     "description": "Update the directed acyclic graph components of the system.",
-    "path": "pathsim/api#_dag",
+    "path": "pathsim/api#Subsystem._dag",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -636,7 +636,7 @@
     "type": "method",
     "name": "_loops",
     "description": "Perform the algebraic loop solve of the subsystem using accelerated",
-    "path": "pathsim/api#_loops",
+    "path": "pathsim/api#Subsystem._loops",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -645,7 +645,7 @@
     "type": "method",
     "name": "solve",
     "description": "Advance solution of implicit update equation",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#Subsystem.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -654,7 +654,7 @@
     "type": "method",
     "name": "step",
     "description": "Explicit component of timestep for internal blocks",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Subsystem.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -663,7 +663,7 @@
     "type": "method",
     "name": "set_solver",
     "description": "Initialize all blocks with solver for numerical integration",
-    "path": "pathsim/api#set_solver",
+    "path": "pathsim/api#Subsystem.set_solver",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -672,7 +672,7 @@
     "type": "method",
     "name": "revert",
     "description": "revert the internal blocks to the state",
-    "path": "pathsim/api#revert",
+    "path": "pathsim/api#Subsystem.revert",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -681,7 +681,7 @@
     "type": "method",
     "name": "buffer",
     "description": "buffer internal states of blocks with",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#Subsystem.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem"
@@ -697,7 +697,7 @@
   {
     "type": "class",
     "name": "Block",
-    "description": "Base 'Block' object that defines the inputs, outputs and the block interface.",
+    "description": "Base 'Block' object that defines the inputs, outputs and the connect method.",
     "path": "pathsim/api#Block",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block"
@@ -706,7 +706,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Block.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -715,7 +715,7 @@
     "type": "method",
     "name": "info",
     "description": "Get block metadata for introspection and UI integration.",
-    "path": "pathsim/api#info",
+    "path": "pathsim/api#Block.info",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -724,7 +724,7 @@
     "type": "method",
     "name": "plot",
     "description": "Block specific visualization, enables plotting",
-    "path": "pathsim/api#plot",
+    "path": "pathsim/api#Block.plot",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -733,7 +733,7 @@
     "type": "method",
     "name": "on",
     "description": "Activate the block and all internal events, sets the boolean",
-    "path": "pathsim/api#on",
+    "path": "pathsim/api#Block.on",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -742,7 +742,7 @@
     "type": "method",
     "name": "off",
     "description": "Deactivate the block and all internal events, sets the boolean",
-    "path": "pathsim/api#off",
+    "path": "pathsim/api#Block.off",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -751,7 +751,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the blocks inputs and outputs and also its internal solver,",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Block.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -760,7 +760,7 @@
     "type": "method",
     "name": "linearize",
     "description": "Linearize the algebraic and dynamic components of the block.",
-    "path": "pathsim/api#linearize",
+    "path": "pathsim/api#Block.linearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -769,7 +769,7 @@
     "type": "method",
     "name": "delinearize",
     "description": "Revert the linearization of the blocks algebraic and dynamic components.",
-    "path": "pathsim/api#delinearize",
+    "path": "pathsim/api#Block.delinearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -778,7 +778,7 @@
     "type": "method",
     "name": "set_solver",
     "description": "Initialize the numerical integration engine with local truncation error",
-    "path": "pathsim/api#set_solver",
+    "path": "pathsim/api#Block.set_solver",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -787,7 +787,7 @@
     "type": "method",
     "name": "revert",
     "description": "Revert the block to the state of the previous timestep, if the",
-    "path": "pathsim/api#revert",
+    "path": "pathsim/api#Block.revert",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -796,7 +796,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Buffer current internal state of the block and the current timestep",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#Block.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -805,7 +805,7 @@
     "type": "method",
     "name": "sample",
     "description": "Samples the data of the blocks inputs or internal state when called.",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#Block.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -814,7 +814,7 @@
     "type": "method",
     "name": "read",
     "description": "Read data from recording blocks.",
-    "path": "pathsim/api#read",
+    "path": "pathsim/api#Block.read",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -823,7 +823,7 @@
     "type": "method",
     "name": "collect",
     "description": "Yield (category, id, data) tuples for recording blocks to simplify",
-    "path": "pathsim/api#collect",
+    "path": "pathsim/api#Block.collect",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -832,7 +832,7 @@
     "type": "method",
     "name": "get_all",
     "description": "Retrieves and returns internal states of engine (if available)",
-    "path": "pathsim/api#get_all",
+    "path": "pathsim/api#Block.get_all",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -841,7 +841,7 @@
     "type": "method",
     "name": "update",
     "description": "The 'update' method is called iteratively for all blocks to evaluate the",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Block.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -850,7 +850,7 @@
     "type": "method",
     "name": "solve",
     "description": "The 'solve' method performs one iterative solution step that is required",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#Block.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -859,7 +859,7 @@
     "type": "method",
     "name": "step",
     "description": "The 'step' method is used in transient simulations and performs an action",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Block.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block"
@@ -884,7 +884,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Adder.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.adder",
     "parentClass": "Adder"
@@ -893,7 +893,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation in fixed point loop for",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Adder.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.adder",
     "parentClass": "Adder"
@@ -918,7 +918,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Amplifier.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.amplifier",
     "parentClass": "Amplifier"
@@ -927,7 +927,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation in fixed point loop",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Amplifier.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.amplifier",
     "parentClass": "Amplifier"
@@ -952,7 +952,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Comparator.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.comparator",
     "parentClass": "Comparator"
@@ -961,7 +961,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Comparator.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.comparator",
     "parentClass": "Comparator"
@@ -986,7 +986,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ADC.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.converters",
     "parentClass": "ADC"
@@ -1003,7 +1003,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DAC.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.converters",
     "parentClass": "DAC"
@@ -1028,7 +1028,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Counter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "Counter"
@@ -1037,7 +1037,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Counter.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "Counter"
@@ -1054,7 +1054,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#CounterUp.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "CounterUp"
@@ -1071,7 +1071,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#CounterDown.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "CounterDown"
@@ -1096,7 +1096,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#PID.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID"
@@ -1105,7 +1105,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation fixed point loop, with convergence control",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#PID.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID"
@@ -1114,7 +1114,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#PID.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID"
@@ -1123,7 +1123,7 @@
     "type": "method",
     "name": "step",
     "description": "compute update step with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#PID.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID"
@@ -1140,7 +1140,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#AntiWindupPID.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "AntiWindupPID"
@@ -1165,7 +1165,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Delay.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay"
@@ -1174,7 +1174,7 @@
     "type": "method",
     "name": "reset",
     "description": "",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Delay.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay"
@@ -1183,7 +1183,7 @@
     "type": "method",
     "name": "update",
     "description": "Evaluation of the buffer at different times",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Delay.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay"
@@ -1192,7 +1192,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample input values and time of sampling",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#Delay.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay"
@@ -1217,7 +1217,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Differentiator.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator"
@@ -1226,7 +1226,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Differentiator.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator"
@@ -1235,7 +1235,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#Differentiator.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator"
@@ -1244,7 +1244,7 @@
     "type": "method",
     "name": "step",
     "description": "compute update step with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Differentiator.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator"
@@ -1269,7 +1269,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DynamicalSystem.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem"
@@ -1278,7 +1278,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop, by evaluating the",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#DynamicalSystem.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem"
@@ -1287,7 +1287,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation of the solver",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#DynamicalSystem.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem"
@@ -1296,7 +1296,7 @@
     "type": "method",
     "name": "step",
     "description": "compute timestep update with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#DynamicalSystem.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem"
@@ -1321,7 +1321,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ButterworthLowpassFilter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthLowpassFilter"
@@ -1338,7 +1338,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ButterworthHighpassFilter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthHighpassFilter"
@@ -1355,7 +1355,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ButterworthBandpassFilter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthBandpassFilter"
@@ -1372,7 +1372,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ButterworthBandstopFilter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthBandstopFilter"
@@ -1389,7 +1389,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#AllpassFilter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "AllpassFilter"
@@ -1414,7 +1414,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#FIR.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fir",
     "parentClass": "FIR"
@@ -1423,7 +1423,7 @@
     "type": "method",
     "name": "reset",
     "description": "Resets the filter state (buffer) and output.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#FIR.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fir",
     "parentClass": "FIR"
@@ -1448,7 +1448,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#CoSimulationFMU.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "CoSimulationFMU"
@@ -1457,7 +1457,7 @@
     "type": "method",
     "name": "_step_fmu",
     "description": "Perform one FMU co-simulation step.",
-    "path": "pathsim/api#_step_fmu",
+    "path": "pathsim/api#CoSimulationFMU._step_fmu",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "CoSimulationFMU"
@@ -1466,7 +1466,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the FMU instance.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#CoSimulationFMU.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "CoSimulationFMU"
@@ -1483,7 +1483,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ModelExchangeFMU.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1492,7 +1492,7 @@
     "type": "method",
     "name": "_get_derivatives",
     "description": "Evaluate FMU derivatives (RHS of ODE).",
-    "path": "pathsim/api#_get_derivatives",
+    "path": "pathsim/api#ModelExchangeFMU._get_derivatives",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1501,7 +1501,7 @@
     "type": "method",
     "name": "_get_jacobian",
     "description": "Evaluate Jacobian of FMU derivatives w.r.t. states (∂ẋ/∂x).",
-    "path": "pathsim/api#_get_jacobian",
+    "path": "pathsim/api#ModelExchangeFMU._get_jacobian",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1510,7 +1510,7 @@
     "type": "method",
     "name": "_get_outputs",
     "description": "Evaluate FMU outputs (algebraic part).",
-    "path": "pathsim/api#_get_outputs",
+    "path": "pathsim/api#ModelExchangeFMU._get_outputs",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1519,7 +1519,7 @@
     "type": "method",
     "name": "_get_event_indicator",
     "description": "Get value of a specific event indicator.",
-    "path": "pathsim/api#_get_event_indicator",
+    "path": "pathsim/api#ModelExchangeFMU._get_event_indicator",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1528,7 +1528,7 @@
     "type": "method",
     "name": "_handle_event",
     "description": "Handle FMU event with fixed-point iteration for discrete states.",
-    "path": "pathsim/api#_handle_event",
+    "path": "pathsim/api#ModelExchangeFMU._handle_event",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1537,7 +1537,7 @@
     "type": "method",
     "name": "_update_time_events",
     "description": "Update or create time event schedule.",
-    "path": "pathsim/api#_update_time_events",
+    "path": "pathsim/api#ModelExchangeFMU._update_time_events",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1546,7 +1546,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample block after successful timestep and handle FMU step completion events.",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#ModelExchangeFMU.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1555,7 +1555,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the FMU instance.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#ModelExchangeFMU.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU"
@@ -1580,7 +1580,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Function.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "Function"
@@ -1589,7 +1589,7 @@
     "type": "method",
     "name": "update",
     "description": "Evaluate function block as part of algebraic component",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Function.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "Function"
@@ -1606,7 +1606,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DynamicalFunction.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "DynamicalFunction"
@@ -1615,7 +1615,7 @@
     "type": "method",
     "name": "update",
     "description": "Evaluate function with time dependency as part of algebraic",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#DynamicalFunction.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "DynamicalFunction"
@@ -1640,7 +1640,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Integrator.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator"
@@ -1649,7 +1649,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation fixed point loop",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Integrator.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator"
@@ -1658,7 +1658,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation of the solver",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#Integrator.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator"
@@ -1667,7 +1667,7 @@
     "type": "method",
     "name": "step",
     "description": "compute timestep update with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Integrator.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator"
@@ -1692,7 +1692,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#KalmanFilter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.kalman",
     "parentClass": "KalmanFilter"
@@ -1701,7 +1701,7 @@
     "type": "method",
     "name": "_kf_update",
     "description": "Perform one Kalman filter update step.",
-    "path": "pathsim/api#_kf_update",
+    "path": "pathsim/api#KalmanFilter._kf_update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.kalman",
     "parentClass": "KalmanFilter"
@@ -1710,7 +1710,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample after successful timestep.",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#KalmanFilter.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.kalman",
     "parentClass": "KalmanFilter"
@@ -1735,7 +1735,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#StateSpace.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "StateSpace"
@@ -1744,7 +1744,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation of the solver",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#StateSpace.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "StateSpace"
@@ -1753,7 +1753,7 @@
     "type": "method",
     "name": "step",
     "description": "compute timestep update with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#StateSpace.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "StateSpace"
@@ -1770,7 +1770,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#TransferFunctionPRC.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "TransferFunctionPRC"
@@ -1795,7 +1795,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#TransferFunctionZPG.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "TransferFunctionZPG"
@@ -1812,7 +1812,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#TransferFunctionNumDen.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "TransferFunctionNumDen"
@@ -1837,7 +1837,7 @@
     "type": "method",
     "name": "update",
     "description": "update algebraic component of system equation",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Math.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Math"
@@ -1854,7 +1854,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Sin.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Sin"
@@ -1871,7 +1871,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Cos.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Cos"
@@ -1888,7 +1888,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Sqrt.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Sqrt"
@@ -1905,7 +1905,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Abs.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Abs"
@@ -1922,7 +1922,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Pow.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Pow"
@@ -1939,7 +1939,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#PowProd.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "PowProd"
@@ -1956,7 +1956,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Exp.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Exp"
@@ -1973,7 +1973,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Log.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Log"
@@ -1990,7 +1990,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Log10.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Log10"
@@ -2007,7 +2007,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Tan.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Tan"
@@ -2024,7 +2024,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Sinh.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Sinh"
@@ -2041,7 +2041,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Cosh.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Cosh"
@@ -2058,7 +2058,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Tanh.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Tanh"
@@ -2075,7 +2075,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Atan.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Atan"
@@ -2092,7 +2092,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Norm.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Norm"
@@ -2109,7 +2109,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Mod.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Mod"
@@ -2126,7 +2126,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Clip.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Clip"
@@ -2143,7 +2143,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Matrix.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Matrix"
@@ -2168,7 +2168,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Multiplier.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.multiplier",
     "parentClass": "Multiplier"
@@ -2177,7 +2177,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Multiplier.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.multiplier",
     "parentClass": "Multiplier"
@@ -2202,7 +2202,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#WhiteNoise.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise"
@@ -2211,7 +2211,7 @@
     "type": "method",
     "name": "_generate_sample",
     "description": "Generate a random sample from the noise distribution.",
-    "path": "pathsim/api#_generate_sample",
+    "path": "pathsim/api#WhiteNoise._generate_sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise"
@@ -2220,7 +2220,7 @@
     "type": "method",
     "name": "sample",
     "description": "Generate new noise sample after successful timestep.",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#WhiteNoise.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise"
@@ -2229,7 +2229,7 @@
     "type": "method",
     "name": "update",
     "description": "",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#WhiteNoise.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise"
@@ -2246,7 +2246,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#PinkNoise.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise"
@@ -2255,7 +2255,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the noise generator state.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#PinkNoise.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise"
@@ -2264,7 +2264,7 @@
     "type": "method",
     "name": "_generate_sample",
     "description": "Generate a pink noise sample using the Voss-McCartney algorithm.",
-    "path": "pathsim/api#_generate_sample",
+    "path": "pathsim/api#PinkNoise._generate_sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise"
@@ -2273,7 +2273,7 @@
     "type": "method",
     "name": "sample",
     "description": "Generate new noise sample after successful timestep.",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#PinkNoise.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise"
@@ -2282,7 +2282,7 @@
     "type": "method",
     "name": "update",
     "description": "",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#PinkNoise.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise"
@@ -2307,7 +2307,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ODE.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE"
@@ -2316,7 +2316,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#ODE.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE"
@@ -2325,7 +2325,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation of the solver",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#ODE.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE"
@@ -2334,7 +2334,7 @@
     "type": "method",
     "name": "step",
     "description": "compute timestep update with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#ODE.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE"
@@ -2359,7 +2359,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Relay.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.relay",
     "parentClass": "Relay"
@@ -2368,7 +2368,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Relay.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.relay",
     "parentClass": "Relay"
@@ -2393,7 +2393,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RFNetwork.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rf",
     "parentClass": "RFNetwork"
@@ -2402,7 +2402,7 @@
     "type": "method",
     "name": "s",
     "description": "S-matrix of the vector fitted N-port model calculated from its state-space representation.",
-    "path": "pathsim/api#s",
+    "path": "pathsim/api#RFNetwork.s",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rf",
     "parentClass": "RFNetwork"
@@ -2427,7 +2427,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RandomNumberGenerator.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rng",
     "parentClass": "RandomNumberGenerator"
@@ -2436,7 +2436,7 @@
     "type": "method",
     "name": "update",
     "description": "Setting output with random sample in case",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#RandomNumberGenerator.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rng",
     "parentClass": "RandomNumberGenerator"
@@ -2445,7 +2445,7 @@
     "type": "method",
     "name": "sample",
     "description": "Generating a new random sample at each timestep",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#RandomNumberGenerator.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rng",
     "parentClass": "RandomNumberGenerator"
@@ -2478,7 +2478,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SampleHold.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.samplehold",
     "parentClass": "SampleHold"
@@ -2503,7 +2503,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Scope.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2512,7 +2512,7 @@
     "type": "method",
     "name": "reset",
     "description": "",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Scope.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2521,7 +2521,7 @@
     "type": "method",
     "name": "read",
     "description": "Return the recorded time domain data and the corresponding",
-    "path": "pathsim/api#read",
+    "path": "pathsim/api#Scope.read",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2530,7 +2530,7 @@
     "type": "method",
     "name": "collect",
     "description": "Yield (category, id, data) tuples for recording blocks to simplify",
-    "path": "pathsim/api#collect",
+    "path": "pathsim/api#Scope.collect",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2539,7 +2539,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample the data from all inputs. Skips duplicate timestamps to maintain",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#Scope.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2548,7 +2548,7 @@
     "type": "method",
     "name": "plot",
     "description": "Directly create a plot of the recorded data for quick visualization and debugging.",
-    "path": "pathsim/api#plot",
+    "path": "pathsim/api#Scope.plot",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2557,7 +2557,7 @@
     "type": "method",
     "name": "plot2D",
     "description": "Directly create a 2D plot of the recorded data for quick visualization and debugging.",
-    "path": "pathsim/api#plot2D",
+    "path": "pathsim/api#Scope.plot2D",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2566,7 +2566,7 @@
     "type": "method",
     "name": "plot3D",
     "description": "Directly create a 3D plot of the recorded data for quick visualization.",
-    "path": "pathsim/api#plot3D",
+    "path": "pathsim/api#Scope.plot3D",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2575,7 +2575,7 @@
     "type": "method",
     "name": "save",
     "description": "Save the recording of the scope to a csv file.",
-    "path": "pathsim/api#save",
+    "path": "pathsim/api#Scope.save",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2584,7 +2584,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Scope.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope"
@@ -2601,7 +2601,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RealtimeScope.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "RealtimeScope"
@@ -2610,7 +2610,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample the data from all inputs, and overwrites existing timepoints,",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#RealtimeScope.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "RealtimeScope"
@@ -2635,7 +2635,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Constant.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Constant"
@@ -2644,7 +2644,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation fixed point loop",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Constant.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Constant"
@@ -2661,7 +2661,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Source.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Source"
@@ -2670,7 +2670,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation fixed point loop",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Source.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Source"
@@ -2687,7 +2687,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#TriangleWaveSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "TriangleWaveSource"
@@ -2696,7 +2696,7 @@
     "type": "method",
     "name": "_triangle_wave",
     "description": "triangle wave with amplitude '1' and frequency 'f'",
-    "path": "pathsim/api#_triangle_wave",
+    "path": "pathsim/api#TriangleWaveSource._triangle_wave",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "TriangleWaveSource"
@@ -2713,7 +2713,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SinusoidalSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalSource"
@@ -2730,7 +2730,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GaussianPulseSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "GaussianPulseSource"
@@ -2739,7 +2739,7 @@
     "type": "method",
     "name": "_gaussian",
     "description": "gaussian pulse with its maximum at t=0",
-    "path": "pathsim/api#_gaussian",
+    "path": "pathsim/api#GaussianPulseSource._gaussian",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "GaussianPulseSource"
@@ -2756,7 +2756,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource"
@@ -2765,7 +2765,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset block state including noise samples.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource"
@@ -2774,7 +2774,7 @@
     "type": "method",
     "name": "update",
     "description": "Update system equation for fixed point loop, evaluating the",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource"
@@ -2783,7 +2783,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample from a normal distribution after successful timestep.",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource"
@@ -2792,7 +2792,7 @@
     "type": "method",
     "name": "solve",
     "description": "Advance solution of implicit update equation for cumulative noise integration.",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource"
@@ -2801,7 +2801,7 @@
     "type": "method",
     "name": "step",
     "description": "Compute update step with integration engine for cumulative noise.",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource"
@@ -2818,7 +2818,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ChirpPhaseNoiseSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2827,7 +2827,7 @@
     "type": "method",
     "name": "_triangle_wave",
     "description": "Triangle wave from -1 to +1 with frequency f.",
-    "path": "pathsim/api#_triangle_wave",
+    "path": "pathsim/api#ChirpPhaseNoiseSource._triangle_wave",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2836,7 +2836,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset block state including noise samples.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#ChirpPhaseNoiseSource.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2845,7 +2845,7 @@
     "type": "method",
     "name": "sample",
     "description": "Sample from a normal distribution after successful timestep",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#ChirpPhaseNoiseSource.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2854,7 +2854,7 @@
     "type": "method",
     "name": "update",
     "description": "Update the block output, assemble phase and evaluate the sinusoid.",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#ChirpPhaseNoiseSource.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2863,7 +2863,7 @@
     "type": "method",
     "name": "solve",
     "description": "Advance implicit solver of implicit integration engine, evaluate",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#ChirpPhaseNoiseSource.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2872,7 +2872,7 @@
     "type": "method",
     "name": "step",
     "description": "Compute update step with integration engine, evaluate the triangle wave",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#ChirpPhaseNoiseSource.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource"
@@ -2897,7 +2897,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#PulseSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "PulseSource"
@@ -2906,7 +2906,7 @@
     "type": "method",
     "name": "reset",
     "description": "Resets the block state.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#PulseSource.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "PulseSource"
@@ -2915,7 +2915,7 @@
     "type": "method",
     "name": "update",
     "description": "Calculate the pulse output value based on the current phase.",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#PulseSource.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "PulseSource"
@@ -2940,7 +2940,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ClockSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ClockSource"
@@ -2965,7 +2965,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SquareWaveSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SquareWaveSource"
@@ -2982,7 +2982,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#StepSource.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "StepSource"
@@ -3015,7 +3015,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Spectrum.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3024,7 +3024,7 @@
     "type": "method",
     "name": "_kernel",
     "description": "Helper method that defines the kernel for the internal",
-    "path": "pathsim/api#_kernel",
+    "path": "pathsim/api#Spectrum._kernel",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3033,7 +3033,7 @@
     "type": "method",
     "name": "reset",
     "description": "",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Spectrum.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3042,7 +3042,7 @@
     "type": "method",
     "name": "read",
     "description": "Read the recorded spectrum",
-    "path": "pathsim/api#read",
+    "path": "pathsim/api#Spectrum.read",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3051,7 +3051,7 @@
     "type": "method",
     "name": "collect",
     "description": "Yield (category, id, data) tuples for recording blocks to simplify",
-    "path": "pathsim/api#collect",
+    "path": "pathsim/api#Spectrum.collect",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3060,7 +3060,7 @@
     "type": "method",
     "name": "solve",
     "description": "advance solution of implicit update equation of the solver",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#Spectrum.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3069,7 +3069,7 @@
     "type": "method",
     "name": "step",
     "description": "compute timestep update with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Spectrum.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3078,7 +3078,7 @@
     "type": "method",
     "name": "sample",
     "description": "sample time of successfull timestep for waiting period",
-    "path": "pathsim/api#sample",
+    "path": "pathsim/api#Spectrum.sample",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3087,7 +3087,7 @@
     "type": "method",
     "name": "plot",
     "description": "Directly create a plot of the recorded data for visualization.",
-    "path": "pathsim/api#plot",
+    "path": "pathsim/api#Spectrum.plot",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3096,7 +3096,7 @@
     "type": "method",
     "name": "save",
     "description": "Save the recording of the spectrum to a csv file",
-    "path": "pathsim/api#save",
+    "path": "pathsim/api#Spectrum.save",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3105,7 +3105,7 @@
     "type": "method",
     "name": "update",
     "description": "update system equation for fixed point loop,",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Spectrum.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum"
@@ -3122,7 +3122,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RealtimeSpectrum.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "RealtimeSpectrum"
@@ -3131,7 +3131,7 @@
     "type": "method",
     "name": "step",
     "description": "compute timestep update with integration engine",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#RealtimeSpectrum.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "RealtimeSpectrum"
@@ -3156,7 +3156,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Switch.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.switch",
     "parentClass": "Switch"
@@ -3165,7 +3165,7 @@
     "type": "method",
     "name": "select",
     "description": "This method is unique to the `Switch` block and intended",
-    "path": "pathsim/api#select",
+    "path": "pathsim/api#Switch.select",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.switch",
     "parentClass": "Switch"
@@ -3174,7 +3174,7 @@
     "type": "method",
     "name": "update",
     "description": "Update switch output depending on inputs and switch state.",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Switch.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.switch",
     "parentClass": "Switch"
@@ -3199,7 +3199,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#LUT.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.table",
     "parentClass": "LUT"
@@ -3216,7 +3216,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#LUT1D.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.table",
     "parentClass": "LUT1D"
@@ -3241,7 +3241,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Wrapper.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.wrapper",
     "parentClass": "Wrapper"
@@ -3250,7 +3250,7 @@
     "type": "method",
     "name": "update",
     "description": "Update system equation for fixed point loop.",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#Wrapper.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.wrapper",
     "parentClass": "Wrapper"
@@ -3259,7 +3259,7 @@
     "type": "method",
     "name": "dec",
     "description": "decorator for direct instance construction from func",
-    "path": "pathsim/api#dec",
+    "path": "pathsim/api#Wrapper.dec",
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.wrapper",
     "parentClass": "Wrapper"
@@ -3284,7 +3284,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ExplicitRungeKutta.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "ExplicitRungeKutta"
@@ -3293,7 +3293,7 @@
     "type": "method",
     "name": "error_controller",
     "description": "Compute scaling factor for adaptive timestep based on",
-    "path": "pathsim/api#error_controller",
+    "path": "pathsim/api#ExplicitRungeKutta.error_controller",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "ExplicitRungeKutta"
@@ -3302,7 +3302,7 @@
     "type": "method",
     "name": "step",
     "description": "Performs the (explicit) timestep at the intermediate RK stages",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#ExplicitRungeKutta.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "ExplicitRungeKutta"
@@ -3319,7 +3319,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta"
@@ -3328,7 +3328,7 @@
     "type": "method",
     "name": "error_controller",
     "description": "Compute scaling factor for adaptive timestep based on",
-    "path": "pathsim/api#error_controller",
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.error_controller",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta"
@@ -3337,7 +3337,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solves the implicit update equation using the optimizer of the engine.",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta"
@@ -3346,7 +3346,7 @@
     "type": "method",
     "name": "step",
     "description": "performs the (explicit) timestep at the intermediate RK stages",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta"
@@ -3371,7 +3371,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Solver.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3380,7 +3380,7 @@
     "type": "method",
     "name": "is_first_stage",
     "description": "",
-    "path": "pathsim/api#is_first_stage",
+    "path": "pathsim/api#Solver.is_first_stage",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3389,7 +3389,7 @@
     "type": "method",
     "name": "is_last_stage",
     "description": "",
-    "path": "pathsim/api#is_last_stage",
+    "path": "pathsim/api#Solver.is_last_stage",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3398,7 +3398,7 @@
     "type": "method",
     "name": "stages",
     "description": "Generator that yields the intermediate evaluation",
-    "path": "pathsim/api#stages",
+    "path": "pathsim/api#Solver.stages",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3407,7 +3407,7 @@
     "type": "method",
     "name": "get",
     "description": "Returns current internal state of the solver.",
-    "path": "pathsim/api#get",
+    "path": "pathsim/api#Solver.get",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3416,7 +3416,7 @@
     "type": "method",
     "name": "set",
     "description": "Sets the internal state of the integration engine.",
-    "path": "pathsim/api#set",
+    "path": "pathsim/api#Solver.set",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3425,7 +3425,7 @@
     "type": "method",
     "name": "reset",
     "description": "\"Resets integration engine to initial value",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Solver.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3434,7 +3434,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Saves the current state to an internal state buffer which",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#Solver.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3443,7 +3443,7 @@
     "type": "method",
     "name": "cast",
     "description": "Cast the integration engine to the new type and initialize",
-    "path": "pathsim/api#cast",
+    "path": "pathsim/api#Solver.cast",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3452,7 +3452,7 @@
     "type": "method",
     "name": "create",
     "description": "Create a new solver instance, optionally inheriting state from existing engine.",
-    "path": "pathsim/api#create",
+    "path": "pathsim/api#Solver.create",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3461,7 +3461,7 @@
     "type": "method",
     "name": "error_controller",
     "description": "Returns the estimated local truncation error (abs and rel) and scaling factor",
-    "path": "pathsim/api#error_controller",
+    "path": "pathsim/api#Solver.error_controller",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3470,7 +3470,7 @@
     "type": "method",
     "name": "revert",
     "description": "Revert integration engine to previous timestep.",
-    "path": "pathsim/api#revert",
+    "path": "pathsim/api#Solver.revert",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3479,7 +3479,7 @@
     "type": "method",
     "name": "step",
     "description": "Performs the explicit timestep for (t+dt) based",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Solver.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3488,7 +3488,7 @@
     "type": "method",
     "name": "interpolate",
     "description": "Interpolate solution after successful timestep as a ratio",
-    "path": "pathsim/api#interpolate",
+    "path": "pathsim/api#Solver.interpolate",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver"
@@ -3505,7 +3505,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ExplicitSolver.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ExplicitSolver"
@@ -3514,7 +3514,7 @@
     "type": "method",
     "name": "integrate_singlestep",
     "description": "Directly integrate the function for a single timestep 'dt' with",
-    "path": "pathsim/api#integrate_singlestep",
+    "path": "pathsim/api#ExplicitSolver.integrate_singlestep",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ExplicitSolver"
@@ -3523,7 +3523,7 @@
     "type": "method",
     "name": "integrate",
     "description": "Directly integrate the function 'func' from 'time_start'",
-    "path": "pathsim/api#integrate",
+    "path": "pathsim/api#ExplicitSolver.integrate",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ExplicitSolver"
@@ -3540,7 +3540,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ImplicitSolver.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver"
@@ -3549,7 +3549,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Saves the current state to an internal state buffer which",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#ImplicitSolver.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver"
@@ -3558,7 +3558,7 @@
     "type": "method",
     "name": "solve",
     "description": "Advances the solution of the implicit update equation of the solver",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#ImplicitSolver.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver"
@@ -3567,7 +3567,7 @@
     "type": "method",
     "name": "integrate_singlestep",
     "description": "Directly integrate the function 'func' for a single timestep 'dt' with",
-    "path": "pathsim/api#integrate_singlestep",
+    "path": "pathsim/api#ImplicitSolver.integrate_singlestep",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver"
@@ -3576,7 +3576,7 @@
     "type": "method",
     "name": "integrate",
     "description": "Directly integrate the function 'func' from 'time_start'",
-    "path": "pathsim/api#integrate",
+    "path": "pathsim/api#ImplicitSolver.integrate",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver"
@@ -3601,7 +3601,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#BDF.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3610,7 +3610,7 @@
     "type": "method",
     "name": "cast",
     "description": "cast to this solver needs special handling of startup method",
-    "path": "pathsim/api#cast",
+    "path": "pathsim/api#BDF.cast",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3619,7 +3619,7 @@
     "type": "method",
     "name": "create",
     "description": "Create a new BDF solver, properly initializing the startup solver.",
-    "path": "pathsim/api#create",
+    "path": "pathsim/api#BDF.create",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3628,7 +3628,7 @@
     "type": "method",
     "name": "stages",
     "description": "Generator that yields the intermediate evaluation",
-    "path": "pathsim/api#stages",
+    "path": "pathsim/api#BDF.stages",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3637,7 +3637,7 @@
     "type": "method",
     "name": "reset",
     "description": "\"Resets integration engine to initial state.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#BDF.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3646,7 +3646,7 @@
     "type": "method",
     "name": "buffer",
     "description": "buffer the state for the multistep method",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#BDF.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3655,7 +3655,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solves the implicit update equation using the optimizer of the engine.",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#BDF.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3664,7 +3664,7 @@
     "type": "method",
     "name": "step",
     "description": "Performs the explicit timestep for (t+dt) based",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#BDF.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF"
@@ -3681,7 +3681,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#BDF2.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF2"
@@ -3698,7 +3698,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#BDF3.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF3"
@@ -3715,7 +3715,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#BDF4.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF4"
@@ -3732,7 +3732,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#BDF5.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF5"
@@ -3749,7 +3749,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#BDF6.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF6"
@@ -3774,7 +3774,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DIRK2.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.dirk2",
     "parentClass": "DIRK2"
@@ -3799,7 +3799,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DIRK3.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.dirk3",
     "parentClass": "DIRK3"
@@ -3824,7 +3824,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ESDIRK32.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk32",
     "parentClass": "ESDIRK32"
@@ -3849,7 +3849,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ESDIRK4.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk4",
     "parentClass": "ESDIRK4"
@@ -3874,7 +3874,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ESDIRK43.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk43",
     "parentClass": "ESDIRK43"
@@ -3899,7 +3899,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ESDIRK54.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk54",
     "parentClass": "ESDIRK54"
@@ -3924,7 +3924,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ESDIRK85.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk85",
     "parentClass": "ESDIRK85"
@@ -3949,7 +3949,7 @@
     "type": "method",
     "name": "step",
     "description": "performs the explicit forward timestep for (t+dt)",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#EUF.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.euler",
     "parentClass": "EUF"
@@ -3966,7 +3966,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solves the implicit update equation",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#EUB.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.euler",
     "parentClass": "EUB"
@@ -3991,7 +3991,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GEAR.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4000,7 +4000,7 @@
     "type": "method",
     "name": "cast",
     "description": "cast to this solver needs special handling of startup method",
-    "path": "pathsim/api#cast",
+    "path": "pathsim/api#GEAR.cast",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4009,7 +4009,7 @@
     "type": "method",
     "name": "create",
     "description": "Create a new GEAR solver, properly initializing the startup solver.",
-    "path": "pathsim/api#create",
+    "path": "pathsim/api#GEAR.create",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4018,7 +4018,7 @@
     "type": "method",
     "name": "stages",
     "description": "Generator that yields the intermediate evaluation",
-    "path": "pathsim/api#stages",
+    "path": "pathsim/api#GEAR.stages",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4027,7 +4027,7 @@
     "type": "method",
     "name": "reset",
     "description": "\"Resets integration engine to initial state.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#GEAR.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4036,7 +4036,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Buffer the state and timestep. Dynamically precompute",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#GEAR.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4045,7 +4045,7 @@
     "type": "method",
     "name": "revert",
     "description": "Revert integration engine to previous timestep, this is only",
-    "path": "pathsim/api#revert",
+    "path": "pathsim/api#GEAR.revert",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4054,7 +4054,7 @@
     "type": "method",
     "name": "error_controller",
     "description": "Compute scaling factor for adaptive timestep based on absolute and",
-    "path": "pathsim/api#error_controller",
+    "path": "pathsim/api#GEAR.error_controller",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4063,7 +4063,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solves the implicit update equation using the optimizer of the engine.",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#GEAR.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4072,7 +4072,7 @@
     "type": "method",
     "name": "step",
     "description": "Finalizes the timestep by resetting the solver for the implicit",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#GEAR.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR"
@@ -4089,7 +4089,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GEAR21.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR21"
@@ -4106,7 +4106,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GEAR32.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR32"
@@ -4123,7 +4123,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GEAR43.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR43"
@@ -4140,7 +4140,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GEAR54.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR54"
@@ -4157,7 +4157,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#GEAR52A.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A"
@@ -4166,7 +4166,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Buffer the state and timestep. Dynamically precompute",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#GEAR52A.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A"
@@ -4175,7 +4175,7 @@
     "type": "method",
     "name": "error_controller",
     "description": "Compute scaling factor for adaptive timestep based on absolute and",
-    "path": "pathsim/api#error_controller",
+    "path": "pathsim/api#GEAR52A.error_controller",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A"
@@ -4184,7 +4184,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solves the implicit update equation using the optimizer of the engine.",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#GEAR52A.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A"
@@ -4193,7 +4193,7 @@
     "type": "method",
     "name": "step",
     "description": "Finalizes the timestep by resetting the solver for the implicit",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#GEAR52A.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A"
@@ -4226,7 +4226,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RK4.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rk4",
     "parentClass": "RK4"
@@ -4235,7 +4235,7 @@
     "type": "method",
     "name": "interpolate",
     "description": "",
-    "path": "pathsim/api#interpolate",
+    "path": "pathsim/api#RK4.interpolate",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rk4",
     "parentClass": "RK4"
@@ -4260,7 +4260,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKBS32.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkbs32",
     "parentClass": "RKBS32"
@@ -4285,7 +4285,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKCK54.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkck54",
     "parentClass": "RKCK54"
@@ -4310,7 +4310,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKDP54.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkdp54",
     "parentClass": "RKDP54"
@@ -4335,7 +4335,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKDP87.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkdp87",
     "parentClass": "RKDP87"
@@ -4360,7 +4360,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKF21.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkf21",
     "parentClass": "RKF21"
@@ -4385,7 +4385,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKF45.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkf45",
     "parentClass": "RKF45"
@@ -4410,7 +4410,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKF78.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkf78",
     "parentClass": "RKF78"
@@ -4435,7 +4435,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RKV65.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkv65",
     "parentClass": "RKV65"
@@ -4460,7 +4460,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SSPRK22.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk22",
     "parentClass": "SSPRK22"
@@ -4469,7 +4469,7 @@
     "type": "method",
     "name": "interpolate",
     "description": "",
-    "path": "pathsim/api#interpolate",
+    "path": "pathsim/api#SSPRK22.interpolate",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk22",
     "parentClass": "SSPRK22"
@@ -4494,7 +4494,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SSPRK33.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk33",
     "parentClass": "SSPRK33"
@@ -4503,7 +4503,7 @@
     "type": "method",
     "name": "interpolate",
     "description": "",
-    "path": "pathsim/api#interpolate",
+    "path": "pathsim/api#SSPRK33.interpolate",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk33",
     "parentClass": "SSPRK33"
@@ -4528,7 +4528,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#SSPRK34.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk34",
     "parentClass": "SSPRK34"
@@ -4553,7 +4553,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solve for steady state by finding x where f(x,u,t) = 0",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#SteadyState.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.steadystate",
     "parentClass": "SteadyState"
@@ -4578,7 +4578,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Event.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4587,7 +4587,7 @@
     "type": "method",
     "name": "on",
     "description": "",
-    "path": "pathsim/api#on",
+    "path": "pathsim/api#Event.on",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4596,7 +4596,7 @@
     "type": "method",
     "name": "off",
     "description": "",
-    "path": "pathsim/api#off",
+    "path": "pathsim/api#Event.off",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4605,7 +4605,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the recorded event times. Resetting the history is not",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Event.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4614,7 +4614,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Buffer the event function evaluation before the timestep is",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#Event.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4623,7 +4623,7 @@
     "type": "method",
     "name": "estimate",
     "description": "Estimate the time of the next event, based on history or internal schedule.",
-    "path": "pathsim/api#estimate",
+    "path": "pathsim/api#Event.estimate",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4631,8 +4631,8 @@
   {
     "type": "method",
     "name": "detect",
-    "description": "Evaluate the event function and decide if an event has occurred.",
-    "path": "pathsim/api#detect",
+    "description": "Evaluate the event function and decide if an event has occured.",
+    "path": "pathsim/api#Event.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4641,7 +4641,7 @@
     "type": "method",
     "name": "resolve",
     "description": "Resolve the event and record the time (t) at which it occurs.",
-    "path": "pathsim/api#resolve",
+    "path": "pathsim/api#Event.resolve",
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event"
@@ -4666,7 +4666,7 @@
     "type": "method",
     "name": "detect",
     "description": "Evaluate the event function and check if condition is satisfied.",
-    "path": "pathsim/api#detect",
+    "path": "pathsim/api#Condition.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.condition",
     "parentClass": "Condition"
@@ -4675,7 +4675,7 @@
     "type": "method",
     "name": "resolve",
     "description": "Resolve the event and record the time (t) at which it occurs.",
-    "path": "pathsim/api#resolve",
+    "path": "pathsim/api#Condition.resolve",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.condition",
     "parentClass": "Condition"
@@ -4700,7 +4700,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Schedule.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule"
@@ -4709,7 +4709,7 @@
     "type": "method",
     "name": "_next",
     "description": "return the next period break",
-    "path": "pathsim/api#_next",
+    "path": "pathsim/api#Schedule._next",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule"
@@ -4718,7 +4718,7 @@
     "type": "method",
     "name": "estimate",
     "description": "Estimate the time until the next scheduled event.",
-    "path": "pathsim/api#estimate",
+    "path": "pathsim/api#Schedule.estimate",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule"
@@ -4727,7 +4727,7 @@
     "type": "method",
     "name": "buffer",
     "description": "Buffer the current time to history",
-    "path": "pathsim/api#buffer",
+    "path": "pathsim/api#Schedule.buffer",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule"
@@ -4736,7 +4736,7 @@
     "type": "method",
     "name": "detect",
     "description": "Check if the event condition is satisfied, i.e. if the",
-    "path": "pathsim/api#detect",
+    "path": "pathsim/api#Schedule.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule"
@@ -4753,7 +4753,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ScheduleList.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "ScheduleList"
@@ -4762,7 +4762,7 @@
     "type": "method",
     "name": "_next",
     "description": "return the next event from the event time list by index",
-    "path": "pathsim/api#_next",
+    "path": "pathsim/api#ScheduleList._next",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "ScheduleList"
@@ -4771,7 +4771,7 @@
     "type": "method",
     "name": "detect",
     "description": "Check if the event condition is satisfied, i.e. if the",
-    "path": "pathsim/api#detect",
+    "path": "pathsim/api#ScheduleList.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "ScheduleList"
@@ -4796,7 +4796,7 @@
     "type": "method",
     "name": "detect",
     "description": "Evaluate the event function and check for zero-crossings",
-    "path": "pathsim/api#detect",
+    "path": "pathsim/api#ZeroCrossing.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.zerocrossing",
     "parentClass": "ZeroCrossing"
@@ -4813,7 +4813,7 @@
     "type": "method",
     "name": "detect",
     "description": "Evaluate the event function and check for zero-crossings",
-    "path": "pathsim/api#detect",
+    "path": "pathsim/api#ZeroCrossingUp.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.zerocrossing",
     "parentClass": "ZeroCrossingUp"
@@ -4830,7 +4830,7 @@
     "type": "method",
     "name": "detect",
     "description": "Evaluate the event function and check for zero-crossings",
-    "path": "pathsim/api#detect",
+    "path": "pathsim/api#ZeroCrossingDown.detect",
     "packageId": "pathsim",
     "moduleName": "pathsim.events.zerocrossing",
     "parentClass": "ZeroCrossingDown"
@@ -4855,7 +4855,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Anderson.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson"
@@ -4864,7 +4864,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solve the function 'func' with initial",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#Anderson.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson"
@@ -4873,7 +4873,7 @@
     "type": "method",
     "name": "reset",
     "description": "reset the anderson accelerator",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Anderson.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson"
@@ -4882,7 +4882,7 @@
     "type": "method",
     "name": "step",
     "description": "Perform one iteration on the fixed-point solution.",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#Anderson.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson"
@@ -4899,7 +4899,7 @@
     "type": "method",
     "name": "solve",
     "description": "Solve the function 'func' with initial value",
-    "path": "pathsim/api#solve",
+    "path": "pathsim/api#NewtonAnderson.solve",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "NewtonAnderson"
@@ -4908,7 +4908,7 @@
     "type": "method",
     "name": "_newton",
     "description": "Newton step on solution, where 'f=g-x' is the",
-    "path": "pathsim/api#_newton",
+    "path": "pathsim/api#NewtonAnderson._newton",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "NewtonAnderson"
@@ -4917,7 +4917,7 @@
     "type": "method",
     "name": "step",
     "description": "Perform one iteration on the fixed-point solution.",
-    "path": "pathsim/api#step",
+    "path": "pathsim/api#NewtonAnderson.step",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "NewtonAnderson"
@@ -4942,7 +4942,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ConnectionBooster.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster"
@@ -4951,7 +4951,7 @@
     "type": "method",
     "name": "get",
     "description": "Return the output values of the source block that is referenced in",
-    "path": "pathsim/api#get",
+    "path": "pathsim/api#ConnectionBooster.get",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster"
@@ -4960,7 +4960,7 @@
     "type": "method",
     "name": "set",
     "description": "Set targets input values.",
-    "path": "pathsim/api#set",
+    "path": "pathsim/api#ConnectionBooster.set",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster"
@@ -4969,7 +4969,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the internal fixed point accelerator and update the history",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#ConnectionBooster.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster"
@@ -4978,7 +4978,7 @@
     "type": "method",
     "name": "update",
     "description": "Wraps the `Connection.update` method for data transfer from source",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#ConnectionBooster.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster"
@@ -5027,7 +5027,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Operator.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator"
@@ -5036,7 +5036,7 @@
     "type": "method",
     "name": "jac",
     "description": "Compute the Jacobian matrix at point x.",
-    "path": "pathsim/api#jac",
+    "path": "pathsim/api#Operator.jac",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator"
@@ -5045,7 +5045,7 @@
     "type": "method",
     "name": "linearize",
     "description": "Linearize the function at point x.",
-    "path": "pathsim/api#linearize",
+    "path": "pathsim/api#Operator.linearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator"
@@ -5054,7 +5054,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the linearization.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Operator.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator"
@@ -5071,7 +5071,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#DynamicOperator.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator"
@@ -5080,7 +5080,7 @@
     "type": "method",
     "name": "jac_x",
     "description": "Compute the Jacobian matrix with respect to x.",
-    "path": "pathsim/api#jac_x",
+    "path": "pathsim/api#DynamicOperator.jac_x",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator"
@@ -5089,7 +5089,7 @@
     "type": "method",
     "name": "jac_u",
     "description": "Compute the Jacobian matrix with respect to u.",
-    "path": "pathsim/api#jac_u",
+    "path": "pathsim/api#DynamicOperator.jac_u",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator"
@@ -5098,7 +5098,7 @@
     "type": "method",
     "name": "linearize",
     "description": "Linearize the function at point (x, u, t).",
-    "path": "pathsim/api#linearize",
+    "path": "pathsim/api#DynamicOperator.linearize",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator"
@@ -5107,7 +5107,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset the linearization.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#DynamicOperator.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator"
@@ -5132,7 +5132,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#AdaptiveBuffer.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer"
@@ -5141,7 +5141,7 @@
     "type": "method",
     "name": "add",
     "description": "adding a new datapoint to the buffer",
-    "path": "pathsim/api#add",
+    "path": "pathsim/api#AdaptiveBuffer.add",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer"
@@ -5150,7 +5150,7 @@
     "type": "method",
     "name": "interp",
     "description": "interpolate buffer at defined lookup time",
-    "path": "pathsim/api#interp",
+    "path": "pathsim/api#AdaptiveBuffer.interp",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer"
@@ -5159,7 +5159,7 @@
     "type": "method",
     "name": "get",
     "description": "lookup datapoint from buffer with",
-    "path": "pathsim/api#get",
+    "path": "pathsim/api#AdaptiveBuffer.get",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer"
@@ -5168,7 +5168,7 @@
     "type": "method",
     "name": "clear",
     "description": "clear the buffer, reset everything",
-    "path": "pathsim/api#clear",
+    "path": "pathsim/api#AdaptiveBuffer.clear",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer"
@@ -5193,7 +5193,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Timer.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.analysis",
     "parentClass": "Timer"
@@ -5210,7 +5210,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Profiler.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.analysis",
     "parentClass": "Profiler"
@@ -5267,7 +5267,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#EventInfo.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "EventInfo"
@@ -5284,7 +5284,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#StepResult.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "StepResult"
@@ -5301,7 +5301,7 @@
     "type": "method",
     "name": "set_real",
     "description": "",
-    "path": "pathsim/api#set_real",
+    "path": "pathsim/api#_FMI2Ops.set_real",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5310,7 +5310,7 @@
     "type": "method",
     "name": "get_real",
     "description": "",
-    "path": "pathsim/api#get_real",
+    "path": "pathsim/api#_FMI2Ops.get_real",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5319,7 +5319,7 @@
     "type": "method",
     "name": "set_integer",
     "description": "",
-    "path": "pathsim/api#set_integer",
+    "path": "pathsim/api#_FMI2Ops.set_integer",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5328,7 +5328,7 @@
     "type": "method",
     "name": "get_integer",
     "description": "",
-    "path": "pathsim/api#get_integer",
+    "path": "pathsim/api#_FMI2Ops.get_integer",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5337,7 +5337,7 @@
     "type": "method",
     "name": "do_step",
     "description": "",
-    "path": "pathsim/api#do_step",
+    "path": "pathsim/api#_FMI2Ops.do_step",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5346,7 +5346,7 @@
     "type": "method",
     "name": "get_derivatives",
     "description": "",
-    "path": "pathsim/api#get_derivatives",
+    "path": "pathsim/api#_FMI2Ops.get_derivatives",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5355,7 +5355,7 @@
     "type": "method",
     "name": "update_discrete_states",
     "description": "",
-    "path": "pathsim/api#update_discrete_states",
+    "path": "pathsim/api#_FMI2Ops.update_discrete_states",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5364,7 +5364,7 @@
     "type": "method",
     "name": "setup_experiment",
     "description": "",
-    "path": "pathsim/api#setup_experiment",
+    "path": "pathsim/api#_FMI2Ops.setup_experiment",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5373,7 +5373,7 @@
     "type": "method",
     "name": "enter_initialization_mode",
     "description": "",
-    "path": "pathsim/api#enter_initialization_mode",
+    "path": "pathsim/api#_FMI2Ops.enter_initialization_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5382,7 +5382,7 @@
     "type": "method",
     "name": "exit_initialization_mode",
     "description": "",
-    "path": "pathsim/api#exit_initialization_mode",
+    "path": "pathsim/api#_FMI2Ops.exit_initialization_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops"
@@ -5399,7 +5399,7 @@
     "type": "method",
     "name": "set_real",
     "description": "",
-    "path": "pathsim/api#set_real",
+    "path": "pathsim/api#_FMI3Ops.set_real",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5408,7 +5408,7 @@
     "type": "method",
     "name": "get_real",
     "description": "",
-    "path": "pathsim/api#get_real",
+    "path": "pathsim/api#_FMI3Ops.get_real",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5417,7 +5417,7 @@
     "type": "method",
     "name": "set_integer",
     "description": "",
-    "path": "pathsim/api#set_integer",
+    "path": "pathsim/api#_FMI3Ops.set_integer",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5426,7 +5426,7 @@
     "type": "method",
     "name": "get_integer",
     "description": "",
-    "path": "pathsim/api#get_integer",
+    "path": "pathsim/api#_FMI3Ops.get_integer",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5435,7 +5435,7 @@
     "type": "method",
     "name": "do_step",
     "description": "",
-    "path": "pathsim/api#do_step",
+    "path": "pathsim/api#_FMI3Ops.do_step",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5444,7 +5444,7 @@
     "type": "method",
     "name": "get_derivatives",
     "description": "",
-    "path": "pathsim/api#get_derivatives",
+    "path": "pathsim/api#_FMI3Ops.get_derivatives",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5453,7 +5453,7 @@
     "type": "method",
     "name": "update_discrete_states",
     "description": "",
-    "path": "pathsim/api#update_discrete_states",
+    "path": "pathsim/api#_FMI3Ops.update_discrete_states",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5462,7 +5462,7 @@
     "type": "method",
     "name": "setup_experiment",
     "description": "",
-    "path": "pathsim/api#setup_experiment",
+    "path": "pathsim/api#_FMI3Ops.setup_experiment",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5471,7 +5471,7 @@
     "type": "method",
     "name": "enter_initialization_mode",
     "description": "",
-    "path": "pathsim/api#enter_initialization_mode",
+    "path": "pathsim/api#_FMI3Ops.enter_initialization_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5480,7 +5480,7 @@
     "type": "method",
     "name": "exit_initialization_mode",
     "description": "",
-    "path": "pathsim/api#exit_initialization_mode",
+    "path": "pathsim/api#_FMI3Ops.exit_initialization_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops"
@@ -5497,7 +5497,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#FMUWrapper.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5506,7 +5506,7 @@
     "type": "method",
     "name": "_create_fmu_instance",
     "description": "Create the appropriate FMU instance based on version and mode.",
-    "path": "pathsim/api#_create_fmu_instance",
+    "path": "pathsim/api#FMUWrapper._create_fmu_instance",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5515,7 +5515,7 @@
     "type": "method",
     "name": "_build_variable_maps",
     "description": "Build internal variable name to reference mappings.",
-    "path": "pathsim/api#_build_variable_maps",
+    "path": "pathsim/api#FMUWrapper._build_variable_maps",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5524,7 +5524,7 @@
     "type": "method",
     "name": "_build_state_derivative_maps",
     "description": "Build state and derivative value reference lists (Model Exchange only).",
-    "path": "pathsim/api#_build_state_derivative_maps",
+    "path": "pathsim/api#FMUWrapper._build_state_derivative_maps",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5533,7 +5533,7 @@
     "type": "method",
     "name": "create_port_registers",
     "description": "Create input and output registers for block I/O.",
-    "path": "pathsim/api#create_port_registers",
+    "path": "pathsim/api#FMUWrapper.create_port_registers",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5542,7 +5542,7 @@
     "type": "method",
     "name": "initialize",
     "description": "Complete FMU initialization sequence.",
-    "path": "pathsim/api#initialize",
+    "path": "pathsim/api#FMUWrapper.initialize",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5551,7 +5551,7 @@
     "type": "method",
     "name": "get_state_jacobian",
     "description": "Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).",
-    "path": "pathsim/api#get_state_jacobian",
+    "path": "pathsim/api#FMUWrapper.get_state_jacobian",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5560,7 +5560,7 @@
     "type": "method",
     "name": "instantiate",
     "description": "Instantiate the FMU.",
-    "path": "pathsim/api#instantiate",
+    "path": "pathsim/api#FMUWrapper.instantiate",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5569,7 +5569,7 @@
     "type": "method",
     "name": "setup_experiment",
     "description": "Setup experiment parameters.",
-    "path": "pathsim/api#setup_experiment",
+    "path": "pathsim/api#FMUWrapper.setup_experiment",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5578,7 +5578,7 @@
     "type": "method",
     "name": "enter_initialization_mode",
     "description": "Enter initialization mode.",
-    "path": "pathsim/api#enter_initialization_mode",
+    "path": "pathsim/api#FMUWrapper.enter_initialization_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5587,7 +5587,7 @@
     "type": "method",
     "name": "exit_initialization_mode",
     "description": "Exit initialization mode and return event information.",
-    "path": "pathsim/api#exit_initialization_mode",
+    "path": "pathsim/api#FMUWrapper.exit_initialization_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5596,7 +5596,7 @@
     "type": "method",
     "name": "reset",
     "description": "Reset FMU to initial state.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#FMUWrapper.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5605,7 +5605,7 @@
     "type": "method",
     "name": "terminate",
     "description": "Terminate FMU.",
-    "path": "pathsim/api#terminate",
+    "path": "pathsim/api#FMUWrapper.terminate",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5614,7 +5614,7 @@
     "type": "method",
     "name": "free_instance",
     "description": "Free FMU instance and resources.",
-    "path": "pathsim/api#free_instance",
+    "path": "pathsim/api#FMUWrapper.free_instance",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5623,7 +5623,7 @@
     "type": "method",
     "name": "set_real",
     "description": "Set real-valued variables by reference.",
-    "path": "pathsim/api#set_real",
+    "path": "pathsim/api#FMUWrapper.set_real",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5632,7 +5632,7 @@
     "type": "method",
     "name": "get_real",
     "description": "Get real-valued variables by reference.",
-    "path": "pathsim/api#get_real",
+    "path": "pathsim/api#FMUWrapper.get_real",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5641,7 +5641,7 @@
     "type": "method",
     "name": "set_variable",
     "description": "Set a single variable by name (automatically detects type).",
-    "path": "pathsim/api#set_variable",
+    "path": "pathsim/api#FMUWrapper.set_variable",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5650,7 +5650,7 @@
     "type": "method",
     "name": "set_inputs_from_array",
     "description": "Set all FMU inputs from an array.",
-    "path": "pathsim/api#set_inputs_from_array",
+    "path": "pathsim/api#FMUWrapper.set_inputs_from_array",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5659,7 +5659,7 @@
     "type": "method",
     "name": "get_outputs_as_array",
     "description": "Get all FMU outputs as an array.",
-    "path": "pathsim/api#get_outputs_as_array",
+    "path": "pathsim/api#FMUWrapper.get_outputs_as_array",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5668,7 +5668,7 @@
     "type": "method",
     "name": "do_step",
     "description": "Perform a co-simulation step.",
-    "path": "pathsim/api#do_step",
+    "path": "pathsim/api#FMUWrapper.do_step",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5677,7 +5677,7 @@
     "type": "method",
     "name": "set_time",
     "description": "Set current time (Model Exchange only).",
-    "path": "pathsim/api#set_time",
+    "path": "pathsim/api#FMUWrapper.set_time",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5686,7 +5686,7 @@
     "type": "method",
     "name": "set_continuous_states",
     "description": "Set continuous states (Model Exchange only).",
-    "path": "pathsim/api#set_continuous_states",
+    "path": "pathsim/api#FMUWrapper.set_continuous_states",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5695,7 +5695,7 @@
     "type": "method",
     "name": "get_continuous_states",
     "description": "Get continuous states (Model Exchange only).",
-    "path": "pathsim/api#get_continuous_states",
+    "path": "pathsim/api#FMUWrapper.get_continuous_states",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5704,7 +5704,7 @@
     "type": "method",
     "name": "get_derivatives",
     "description": "Get state derivatives (Model Exchange only).",
-    "path": "pathsim/api#get_derivatives",
+    "path": "pathsim/api#FMUWrapper.get_derivatives",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5713,7 +5713,7 @@
     "type": "method",
     "name": "get_event_indicators",
     "description": "Get event indicators (Model Exchange only).",
-    "path": "pathsim/api#get_event_indicators",
+    "path": "pathsim/api#FMUWrapper.get_event_indicators",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5722,7 +5722,7 @@
     "type": "method",
     "name": "enter_event_mode",
     "description": "Enter event mode (Model Exchange only).",
-    "path": "pathsim/api#enter_event_mode",
+    "path": "pathsim/api#FMUWrapper.enter_event_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5731,7 +5731,7 @@
     "type": "method",
     "name": "enter_continuous_time_mode",
     "description": "Enter continuous time mode (Model Exchange only).",
-    "path": "pathsim/api#enter_continuous_time_mode",
+    "path": "pathsim/api#FMUWrapper.enter_continuous_time_mode",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5740,7 +5740,7 @@
     "type": "method",
     "name": "update_discrete_states",
     "description": "Update discrete states during event iteration (Model Exchange only).",
-    "path": "pathsim/api#update_discrete_states",
+    "path": "pathsim/api#FMUWrapper.update_discrete_states",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5749,7 +5749,7 @@
     "type": "method",
     "name": "completed_integrator_step",
     "description": "Notify FMU that integrator step completed (Model Exchange only).",
-    "path": "pathsim/api#completed_integrator_step",
+    "path": "pathsim/api#FMUWrapper.completed_integrator_step",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5758,7 +5758,7 @@
     "type": "method",
     "name": "__del__",
     "description": "Cleanup FMU resources on deletion.",
-    "path": "pathsim/api#__del__",
+    "path": "pathsim/api#FMUWrapper.__del__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper"
@@ -5799,7 +5799,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Graph.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5808,7 +5808,7 @@
     "type": "method",
     "name": "_validate_connections",
     "description": "Fast O(N) validation that no connections overwrite each other.",
-    "path": "pathsim/api#_validate_connections",
+    "path": "pathsim/api#Graph._validate_connections",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5817,7 +5817,7 @@
     "type": "method",
     "name": "_build_all_maps",
     "description": "Build all connection maps in a single pass for efficiency.",
-    "path": "pathsim/api#_build_all_maps",
+    "path": "pathsim/api#Graph._build_all_maps",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5826,7 +5826,7 @@
     "type": "method",
     "name": "_assemble",
     "description": "Optimized assembly using DFS with proper cycle detection.",
-    "path": "pathsim/api#_assemble",
+    "path": "pathsim/api#Graph._assemble",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5835,7 +5835,7 @@
     "type": "method",
     "name": "_compute_depths_iterative",
     "description": "Compute algebraic depths using iterative DFS (no recursion limit).",
-    "path": "pathsim/api#_compute_depths_iterative",
+    "path": "pathsim/api#Graph._compute_depths_iterative",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5844,7 +5844,7 @@
     "type": "method",
     "name": "_process_loops",
     "description": "Optimized loop processing with minimal overhead.",
-    "path": "pathsim/api#_process_loops",
+    "path": "pathsim/api#Graph._process_loops",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5853,7 +5853,7 @@
     "type": "method",
     "name": "_find_strongly_connected_components",
     "description": "Iterative Tarjan's algorithm using cleaner state machine.",
-    "path": "pathsim/api#_find_strongly_connected_components",
+    "path": "pathsim/api#Graph._find_strongly_connected_components",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5862,7 +5862,7 @@
     "type": "method",
     "name": "is_algebraic_path",
     "description": "Check if blocks are connected through an algebraic path.",
-    "path": "pathsim/api#is_algebraic_path",
+    "path": "pathsim/api#Graph.is_algebraic_path",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5871,7 +5871,7 @@
     "type": "method",
     "name": "_has_algebraic_self_loop",
     "description": "Check if a block has an algebraic path back to itself.",
-    "path": "pathsim/api#_has_algebraic_self_loop",
+    "path": "pathsim/api#Graph._has_algebraic_self_loop",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5880,7 +5880,7 @@
     "type": "method",
     "name": "outgoing_connections",
     "description": "Returns outgoing connections of a block.",
-    "path": "pathsim/api#outgoing_connections",
+    "path": "pathsim/api#Graph.outgoing_connections",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5889,7 +5889,7 @@
     "type": "method",
     "name": "dag",
     "description": "Generator for DAG levels.",
-    "path": "pathsim/api#dag",
+    "path": "pathsim/api#Graph.dag",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5898,7 +5898,7 @@
     "type": "method",
     "name": "loop",
     "description": "Generator for loop DAG levels.",
-    "path": "pathsim/api#loop",
+    "path": "pathsim/api#Graph.loop",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5907,7 +5907,7 @@
     "type": "method",
     "name": "loop_closing_connections",
     "description": "Returns loop-closing connections.",
-    "path": "pathsim/api#loop_closing_connections",
+    "path": "pathsim/api#Graph.loop_closing_connections",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph"
@@ -5932,7 +5932,7 @@
     "type": "method",
     "name": "__new__",
     "description": "Ensure only one instance exists (singleton pattern).",
-    "path": "pathsim/api#__new__",
+    "path": "pathsim/api#LoggerManager.__new__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5941,7 +5941,7 @@
     "type": "method",
     "name": "__init__",
     "description": "Initialize the logger manager and setup root logger.",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#LoggerManager.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5950,7 +5950,7 @@
     "type": "method",
     "name": "_setup_root_logger",
     "description": "Setup the root PathSim logger with default configuration.",
-    "path": "pathsim/api#_setup_root_logger",
+    "path": "pathsim/api#LoggerManager._setup_root_logger",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5959,7 +5959,7 @@
     "type": "method",
     "name": "configure",
     "description": "Configure the root PathSim logger and all child loggers.",
-    "path": "pathsim/api#configure",
+    "path": "pathsim/api#LoggerManager.configure",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5968,7 +5968,7 @@
     "type": "method",
     "name": "get_logger",
     "description": "Get or create a logger with PathSim hierarchy.",
-    "path": "pathsim/api#get_logger",
+    "path": "pathsim/api#LoggerManager.get_logger",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5977,7 +5977,7 @@
     "type": "method",
     "name": "set_level",
     "description": "Set logging level globally or for a specific module.",
-    "path": "pathsim/api#set_level",
+    "path": "pathsim/api#LoggerManager.set_level",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5986,7 +5986,7 @@
     "type": "method",
     "name": "is_enabled",
     "description": "Check if logging is currently enabled.",
-    "path": "pathsim/api#is_enabled",
+    "path": "pathsim/api#LoggerManager.is_enabled",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -5995,7 +5995,7 @@
     "type": "method",
     "name": "get_effective_level",
     "description": "Get the effective logging level.",
-    "path": "pathsim/api#get_effective_level",
+    "path": "pathsim/api#LoggerManager.get_effective_level",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager"
@@ -6020,7 +6020,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#PortReference.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6029,7 +6029,7 @@
     "type": "method",
     "name": "_get_input_indices",
     "description": "Get cached input indices, resolving string aliases to integers.",
-    "path": "pathsim/api#_get_input_indices",
+    "path": "pathsim/api#PortReference._get_input_indices",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6038,7 +6038,7 @@
     "type": "method",
     "name": "_get_output_indices",
     "description": "Get cached output indices, resolving string aliases to integers.",
-    "path": "pathsim/api#_get_output_indices",
+    "path": "pathsim/api#PortReference._get_output_indices",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6047,7 +6047,7 @@
     "type": "method",
     "name": "_validate_input_ports",
     "description": "Check the existence of the input ports, specifically string port",
-    "path": "pathsim/api#_validate_input_ports",
+    "path": "pathsim/api#PortReference._validate_input_ports",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6056,7 +6056,7 @@
     "type": "method",
     "name": "_validate_output_ports",
     "description": "Check the existence of the output ports, specifically string port",
-    "path": "pathsim/api#_validate_output_ports",
+    "path": "pathsim/api#PortReference._validate_output_ports",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6065,7 +6065,7 @@
     "type": "method",
     "name": "to",
     "description": "Transfer the data between two `PortReference` instances,",
-    "path": "pathsim/api#to",
+    "path": "pathsim/api#PortReference.to",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6074,7 +6074,7 @@
     "type": "method",
     "name": "get_inputs",
     "description": "Return the input values of the block at specified ports",
-    "path": "pathsim/api#get_inputs",
+    "path": "pathsim/api#PortReference.get_inputs",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6083,7 +6083,7 @@
     "type": "method",
     "name": "set_inputs",
     "description": "Set the block inputs with values at specified ports",
-    "path": "pathsim/api#set_inputs",
+    "path": "pathsim/api#PortReference.set_inputs",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6092,7 +6092,7 @@
     "type": "method",
     "name": "get_outputs",
     "description": "Return the output values of the block at specified ports",
-    "path": "pathsim/api#get_outputs",
+    "path": "pathsim/api#PortReference.get_outputs",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6101,7 +6101,7 @@
     "type": "method",
     "name": "set_outputs",
     "description": "Set the block outputs with values at specified ports",
-    "path": "pathsim/api#set_outputs",
+    "path": "pathsim/api#PortReference.set_outputs",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6110,7 +6110,7 @@
     "type": "method",
     "name": "to_dict",
     "description": "Serialization into dict",
-    "path": "pathsim/api#to_dict",
+    "path": "pathsim/api#PortReference.to_dict",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference"
@@ -6135,7 +6135,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#ProgressTracker.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6144,7 +6144,7 @@
     "type": "method",
     "name": "start",
     "description": "Start the progress tracker",
-    "path": "pathsim/api#start",
+    "path": "pathsim/api#ProgressTracker.start",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6153,7 +6153,7 @@
     "type": "method",
     "name": "update",
     "description": "Update progress and optionally log",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#ProgressTracker.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6162,7 +6162,7 @@
     "type": "method",
     "name": "interrupt",
     "description": "Mark tracker as interrupted",
-    "path": "pathsim/api#interrupt",
+    "path": "pathsim/api#ProgressTracker.interrupt",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6171,7 +6171,7 @@
     "type": "method",
     "name": "close",
     "description": "Close tracker and log final stats",
-    "path": "pathsim/api#close",
+    "path": "pathsim/api#ProgressTracker.close",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6180,7 +6180,7 @@
     "type": "method",
     "name": "_log_progress",
     "description": "Log progress if conditions met",
-    "path": "pathsim/api#_log_progress",
+    "path": "pathsim/api#ProgressTracker._log_progress",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6189,7 +6189,7 @@
     "type": "method",
     "name": "_render_bar",
     "description": "Render ASCII progress bar",
-    "path": "pathsim/api#_render_bar",
+    "path": "pathsim/api#ProgressTracker._render_bar",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6198,7 +6198,7 @@
     "type": "method",
     "name": "_format_time",
     "description": "Format time adaptively: 5.2s, 05:23, or 01:23:45",
-    "path": "pathsim/api#_format_time",
+    "path": "pathsim/api#ProgressTracker._format_time",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6207,7 +6207,7 @@
     "type": "method",
     "name": "_format_rate",
     "description": "Format rate adaptively",
-    "path": "pathsim/api#_format_rate",
+    "path": "pathsim/api#ProgressTracker._format_rate",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker"
@@ -6232,7 +6232,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#RealtimePlotter.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6241,7 +6241,7 @@
     "type": "method",
     "name": "update_all",
     "description": "update the plot completely with new data",
-    "path": "pathsim/api#update_all",
+    "path": "pathsim/api#RealtimePlotter.update_all",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6250,7 +6250,7 @@
     "type": "method",
     "name": "update",
     "description": "update the plot with new data",
-    "path": "pathsim/api#update",
+    "path": "pathsim/api#RealtimePlotter.update",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6259,7 +6259,7 @@
     "type": "method",
     "name": "_update_plot",
     "description": "",
-    "path": "pathsim/api#_update_plot",
+    "path": "pathsim/api#RealtimePlotter._update_plot",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6268,7 +6268,7 @@
     "type": "method",
     "name": "show",
     "description": "",
-    "path": "pathsim/api#show",
+    "path": "pathsim/api#RealtimePlotter.show",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6277,7 +6277,7 @@
     "type": "method",
     "name": "on_close",
     "description": "",
-    "path": "pathsim/api#on_close",
+    "path": "pathsim/api#RealtimePlotter.on_close",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6286,7 +6286,7 @@
     "type": "method",
     "name": "_setup_legend_picking",
     "description": "",
-    "path": "pathsim/api#_setup_legend_picking",
+    "path": "pathsim/api#RealtimePlotter._setup_legend_picking",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter"
@@ -6311,7 +6311,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "pathsim/api#__init__",
+    "path": "pathsim/api#Register.__init__",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6320,7 +6320,7 @@
     "type": "method",
     "name": "_map",
     "description": "Map string keys to integers defined in '_mapping'",
-    "path": "pathsim/api#_map",
+    "path": "pathsim/api#Register._map",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6329,7 +6329,7 @@
     "type": "method",
     "name": "_get_max_index",
     "description": "Identify max index from different key types.",
-    "path": "pathsim/api#_get_max_index",
+    "path": "pathsim/api#Register._get_max_index",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6338,7 +6338,7 @@
     "type": "method",
     "name": "resize",
     "description": "Resize the internal data array to accommodate more entries.",
-    "path": "pathsim/api#resize",
+    "path": "pathsim/api#Register.resize",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6347,7 +6347,7 @@
     "type": "method",
     "name": "reset",
     "description": "Set all stored values to zero.",
-    "path": "pathsim/api#reset",
+    "path": "pathsim/api#Register.reset",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6356,7 +6356,7 @@
     "type": "method",
     "name": "to_array",
     "description": "Returns a copy of the internal array.",
-    "path": "pathsim/api#to_array",
+    "path": "pathsim/api#Register.to_array",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6365,7 +6365,7 @@
     "type": "method",
     "name": "update_from_array",
     "description": "Update the register values from an array in place.",
-    "path": "pathsim/api#update_from_array",
+    "path": "pathsim/api#Register.update_from_array",
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register"
@@ -6390,7 +6390,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "chem/api#__init__",
+    "path": "chem/api#Bubbler4.__init__",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.bubbler",
     "parentClass": "Bubbler4"
@@ -6399,7 +6399,7 @@
     "type": "method",
     "name": "_create_reset_event_vial",
     "description": "Define event action function and return a `ScheduleList` event",
-    "path": "chem/api#_create_reset_event_vial",
+    "path": "chem/api#Bubbler4._create_reset_event_vial",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.bubbler",
     "parentClass": "Bubbler4"
@@ -6408,7 +6408,7 @@
     "type": "method",
     "name": "_create_reset_events",
     "description": "Create reset events for all vials based on the replacement times.",
-    "path": "chem/api#_create_reset_events",
+    "path": "chem/api#Bubbler4._create_reset_events",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.bubbler",
     "parentClass": "Bubbler4"
@@ -6433,7 +6433,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "chem/api#__init__",
+    "path": "chem/api#GLC.__init__",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.glc",
     "parentClass": "GLC"
@@ -6442,7 +6442,7 @@
     "type": "method",
     "name": "func",
     "description": "",
-    "path": "chem/api#func",
+    "path": "chem/api#GLC.func",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.glc",
     "parentClass": "GLC"
@@ -6507,7 +6507,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "chem/api#__init__",
+    "path": "chem/api#ResidenceTime.__init__",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.residencetime",
     "parentClass": "ResidenceTime"
@@ -6524,7 +6524,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "chem/api#__init__",
+    "path": "chem/api#Process.__init__",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.residencetime",
     "parentClass": "Process"
@@ -6549,7 +6549,7 @@
     "type": "method",
     "name": "__init__",
     "description": "",
-    "path": "chem/api#__init__",
+    "path": "chem/api#Splitter.__init__",
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.splitter",
     "parentClass": "Splitter"
@@ -6581,7 +6581,7 @@
   {
     "type": "example",
     "name": "Harmonic Oscillator",
-    "description": "Build your first PathSim model: a simple mass-spring system demonstrating basic ODE simulation.",
+    "description": "The equation of motion that defines the harmonic oscillator is given by",
     "path": "pathsim/examples/harmonic-oscillator",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6593,7 +6593,7 @@
   {
     "type": "example",
     "name": "Linear Feedback System",
-    "description": "Learn to create feedback loops with integrators and time-dependent sources.",
+    "description": "Then lets define the system parameters such as the initial value  of the integrator, the linear feedback gain  and the time dependend source function .",
     "path": "pathsim/examples/linear-feedback",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6605,7 +6605,7 @@
   {
     "type": "example",
     "name": "Pendulum",
-    "description": "Model a nonlinear pendulum and use adaptive time-stepping for accurate simulation.",
+    "description": "Above we have both the mechanical mode, which is a weight dangling from a string with length  and diverted by some initial angle, as well as the block diagram representation of the equation of moti...",
     "path": "pathsim/examples/pendulum",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6617,8 +6617,8 @@
   },
   {
     "type": "example",
-    "name": "Van der Pol Oscillator",
-    "description": "Simulate the classic Van der Pol oscillator with nonlinear damping and limit cycles.",
+    "name": "Van der Pol",
+    "description": "$$",
     "path": "pathsim/examples/vanderpol",
     "packageId": "pathsim",
     "moduleName": "getting-started",
@@ -6629,68 +6629,8 @@
   },
   {
     "type": "example",
-    "name": "PID Controller",
-    "description": "Implement a PID controller with tunable gains for setpoint tracking.",
-    "path": "pathsim/examples/pid-controller",
-    "packageId": "pathsim",
-    "moduleName": "control",
-    "tags": [
-      "pid",
-      "feedback"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Cascade Controller",
-    "description": "Design a multi-loop cascade control system with inner and outer controllers.",
-    "path": "pathsim/examples/cascade-controller",
-    "packageId": "pathsim",
-    "moduleName": "control",
-    "tags": [
-      "cascade",
-      "feedback"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "DC Motor Speed Control",
-    "description": "Model a DC motor with coupled electrical and mechanical dynamics under PID control.",
-    "path": "pathsim/examples/dcmotor-control",
-    "packageId": "pathsim",
-    "moduleName": "control",
-    "tags": [
-      "motor",
-      "pid"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Kalman Filter",
-    "description": "Implement a Kalman filter for state estimation with noisy measurements.",
-    "path": "pathsim/examples/kalman-filter",
-    "packageId": "pathsim",
-    "moduleName": "control",
-    "tags": [
-      "estimation",
-      "filter"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Thermostat",
-    "description": "Model a bang-bang thermostat controller using event-driven hybrid simulation.",
-    "path": "pathsim/examples/thermostat",
-    "packageId": "pathsim",
-    "moduleName": "control",
-    "tags": [
-      "hybrid",
-      "events"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Anti-lock Braking System",
-    "description": "Simulate an ABS system with coupled vehicle and wheel dynamics using events.",
+    "name": "Anti-lock Braking System (ABS)",
+    "description": "The ABS system consists of coupled vehicle and wheel dynamics. The vehicle longitudinal motion is governed by:",
     "path": "pathsim/examples/abs-braking",
     "packageId": "pathsim",
     "moduleName": "control",
@@ -6702,23 +6642,83 @@
   },
   {
     "type": "example",
-    "name": "Bouncing Ball",
-    "description": "Simulate a ball bouncing with gravity using zero-crossing event detection.",
-    "path": "pathsim/examples/bouncing-ball",
+    "name": "Cascade Controller",
+    "description": "The cascade controller consists of:",
+    "path": "pathsim/examples/cascade-controller",
     "packageId": "pathsim",
-    "moduleName": "hybrid",
+    "moduleName": "control",
     "tags": [
-      "events",
-      "hybrid"
+      "cascade",
+      "feedback"
     ]
   },
   {
     "type": "example",
-    "name": "Switched Bouncing Ball",
-    "description": "Extend the bouncing ball with state-dependent switching behavior.",
-    "path": "pathsim/examples/switched-bouncing-ball",
+    "name": "DC Motor Speed Control",
+    "description": "A DC motor is a multi-domain electromechanical system where electrical energy is converted to mechanical rotation. The system consists of two coupled subsystems:",
+    "path": "pathsim/examples/dcmotor-control",
     "packageId": "pathsim",
-    "moduleName": "hybrid",
+    "moduleName": "control",
+    "tags": [
+      "motor",
+      "pid"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Kalman Filter",
+    "description": "First let's import the required classes and blocks:",
+    "path": "pathsim/examples/kalman-filter",
+    "packageId": "pathsim",
+    "moduleName": "control",
+    "tags": [
+      "estimation",
+      "filter"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "PID Controller",
+    "description": "First let's import the required classes and blocks:",
+    "path": "pathsim/examples/pid-controller",
+    "packageId": "pathsim",
+    "moduleName": "control",
+    "tags": [
+      "pid",
+      "feedback"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Thermostat",
+    "description": "With some algebraic manipulations we can translate the system equation into a block diagram that can be implemented in PathSim. Note the event manager, that watches the state of the integrator and ...",
+    "path": "pathsim/examples/thermostat",
+    "packageId": "pathsim",
+    "moduleName": "control",
+    "tags": [
+      "hybrid",
+      "events"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Billards & Collisions",
+    "description": "The collision is detected using a zero-crossing event. The detection function computes the distance from the origin minus the boundary radius:",
+    "path": "pathsim/examples/billards",
+    "packageId": "pathsim",
+    "moduleName": "mechanics",
+    "tags": [
+      "events",
+      "collision"
+    ]
+  },
+  {
+    "type": "example",
+    "name": "Bouncing Ball",
+    "description": "Systems like this require the location and resolution of discrete events within the timestep and are not easily solved with standard numerical ODE solvers. PathSim implements an event management sy...",
+    "path": "pathsim/examples/bouncing-ball",
+    "packageId": "pathsim",
+    "moduleName": "mechanics",
     "tags": [
       "events",
       "hybrid"
@@ -6727,43 +6727,19 @@
   {
     "type": "example",
     "name": "Bouncing Pendulum",
-    "description": "Combine pendulum dynamics with collision detection at a wall boundary.",
+    "description": "The mathematical pendulum is governed by the nonlinear differential equation:",
     "path": "pathsim/examples/bouncing-pendulum",
     "packageId": "pathsim",
-    "moduleName": "hybrid",
+    "moduleName": "mechanics",
     "tags": [
       "events",
       "collision"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Billiard Collisions",
-    "description": "Model billiard ball motion with elastic wall collisions in a circular boundary.",
-    "path": "pathsim/examples/billards",
-    "packageId": "pathsim",
-    "moduleName": "hybrid",
-    "tags": [
-      "events",
-      "collision"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Stick-Slip Friction",
-    "description": "Model discontinuous stick-slip friction with mode switching.",
-    "path": "pathsim/examples/stick-slip",
-    "packageId": "pathsim",
-    "moduleName": "hybrid",
-    "tags": [
-      "friction",
-      "hybrid"
     ]
   },
   {
     "type": "example",
     "name": "Coupled Oscillators",
-    "description": "Simulate multiple coupled harmonic oscillators sharing energy.",
+    "description": "As a block diagram it would look like this:",
     "path": "pathsim/examples/coupled-oscillators",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6775,7 +6751,7 @@
   {
     "type": "example",
     "name": "Elastic Pendulum",
-    "description": "Model a pendulum with an elastic spring connection showing complex motion.",
+    "description": "$$",
     "path": "pathsim/examples/elastic-pendulum",
     "packageId": "pathsim",
     "moduleName": "mechanics",
@@ -6786,32 +6762,32 @@
   },
   {
     "type": "example",
-    "name": "Lorenz Attractor",
-    "description": "Simulate the famous Lorenz system and visualize chaotic dynamics.",
-    "path": "pathsim/examples/lorenz-attractor",
+    "name": "Stick Slip",
+    "description": "This system has two possible states:",
+    "path": "pathsim/examples/stick-slip",
     "packageId": "pathsim",
     "moduleName": "mechanics",
     "tags": [
-      "chaos",
-      "ode"
+      "friction",
+      "hybrid"
     ]
   },
   {
     "type": "example",
-    "name": "Poincare Maps",
-    "description": "Use event detection to construct Poincare sections of chaotic systems.",
-    "path": "pathsim/examples/poincare-maps",
+    "name": "Switched Bouncing Ball",
+    "description": "The ball experiences:",
+    "path": "pathsim/examples/switched-bouncing-ball",
     "packageId": "pathsim",
     "moduleName": "mechanics",
     "tags": [
-      "chaos",
-      "analysis"
+      "events",
+      "hybrid"
     ]
   },
   {
     "type": "example",
     "name": "Delta-Sigma ADC",
-    "description": "Model a delta-sigma analog-to-digital converter with noise shaping.",
+    "description": "A delta-sigma ADC works by:",
     "path": "pathsim/examples/delta-sigma-adc",
     "packageId": "pathsim",
     "moduleName": "electronics",
@@ -6822,20 +6798,8 @@
   },
   {
     "type": "example",
-    "name": "SAR ADC",
-    "description": "Implement a successive approximation ADC with binary search conversion.",
-    "path": "pathsim/examples/sar-adc",
-    "packageId": "pathsim",
-    "moduleName": "electronics",
-    "tags": [
-      "adc",
-      "mixed-signal"
-    ]
-  },
-  {
-    "type": "example",
     "name": "Diode Circuit",
-    "description": "Simulate a nonlinear diode circuit using implicit equation solving.",
+    "description": "Applying Kirchhoff's Voltage Law (KVL):",
     "path": "pathsim/examples/diode-circuit",
     "packageId": "pathsim",
     "moduleName": "electronics",
@@ -6847,7 +6811,7 @@
   {
     "type": "example",
     "name": "Noisy Amplifier",
-    "description": "Model an amplifier with noise sources and nonlinear saturation.",
+    "description": "The most simplistic model for an amplifier is just the product of a signal with some factor (gain). But we all know, real amplifiers are noisy and nonlinear. Internal physical processes or fluctiat...",
     "path": "pathsim/examples/noisy-amplifier",
     "packageId": "pathsim",
     "moduleName": "electronics",
@@ -6858,8 +6822,20 @@
   },
   {
     "type": "example",
+    "name": "SAR ADC",
+    "description": "A SAR ADC converts analog signals to digital using a binary search algorithm:",
+    "path": "pathsim/examples/sar-adc",
+    "packageId": "pathsim",
+    "moduleName": "electronics",
+    "tags": [
+      "adc",
+      "mixed-signal"
+    ]
+  },
+  {
+    "type": "example",
     "name": "FMCW Radar",
-    "description": "Build an FMCW radar system with chirp generation and beat frequency detection.",
+    "description": "The figure below shows the block diagram of a very basic FMCW radar system consisting of a chirp source (sinusoid with a linearly time dependent frequency), a delay (to model the signal propagation...",
     "path": "pathsim/examples/fmcw-radar",
     "packageId": "pathsim",
     "moduleName": "signal-processing",
@@ -6870,8 +6846,20 @@
   },
   {
     "type": "example",
+    "name": "RF Network - One Port",
+    "description": "This is an example of a simulation of a Radio Frequency (RF) network with PathSim.",
+    "path": "pathsim/examples/rf-network-oneport",
+    "packageId": "pathsim",
+    "moduleName": "signal-processing",
+    "tags": [
+      "rf",
+      "network"
+    ]
+  },
+  {
+    "type": "example",
     "name": "Spectrum Analysis",
-    "description": "Perform FFT-based spectrum analysis on simulated signals.",
+    "description": "We'll create a simple signal chain:",
     "path": "pathsim/examples/spectrum-analysis",
     "packageId": "pathsim",
     "moduleName": "signal-processing",
@@ -6883,7 +6871,7 @@
   {
     "type": "example",
     "name": "Transfer Function",
-    "description": "Define systems using pole-residue form and analyze frequency response.",
+    "description": "The pole-residue-constant form represents a transfer function as:",
     "path": "pathsim/examples/transfer-function",
     "packageId": "pathsim",
     "moduleName": "signal-processing",
@@ -6894,23 +6882,11 @@
   },
   {
     "type": "example",
-    "name": "RF One-Port Network",
-    "description": "Simulate RF networks using S-parameter data from touchstone files.",
-    "path": "pathsim/examples/rf-network-oneport",
-    "packageId": "pathsim",
-    "moduleName": "signal-processing",
-    "tags": [
-      "rf",
-      "network"
-    ]
-  },
-  {
-    "type": "example",
-    "name": "Chemical Reactor (CSTR)",
-    "description": "Model a continuous stirred-tank reactor with reaction kinetics and heat transfer.",
+    "name": "Chemical Reactor",
+    "description": "We define the physical and chemical parameters for the reactor.",
     "path": "pathsim/examples/chemical-reactor",
     "packageId": "pathsim",
-    "moduleName": "advanced",
+    "moduleName": "chemical",
     "tags": [
       "cstr",
       "reaction"
@@ -6918,8 +6894,8 @@
   },
   {
     "type": "example",
-    "name": "Algebraic Loops",
-    "description": "Solve implicit algebraic equations within the simulation loop.",
+    "name": "Algebraic Loop",
+    "description": "An algebraic loop occurs when the output of a block depends on its own input in the same timestep. This creates an implicit equation that must be solved:",
     "path": "pathsim/examples/algebraic-loop",
     "packageId": "pathsim",
     "moduleName": "advanced",
@@ -6930,8 +6906,20 @@
   },
   {
     "type": "example",
+    "name": "Lorenz Attractor",
+    "description": "We create blocks for each equation:",
+    "path": "pathsim/examples/lorenz-attractor",
+    "packageId": "pathsim",
+    "moduleName": "advanced",
+    "tags": [
+      "chaos",
+      "ode"
+    ]
+  },
+  {
+    "type": "example",
     "name": "Nested Subsystems",
-    "description": "Build hierarchical models using nested subsystems for modularity.",
+    "description": "First, we create a subsystem that computes",
     "path": "pathsim/examples/nested-subsystems",
     "packageId": "pathsim",
     "moduleName": "advanced",
@@ -6942,8 +6930,20 @@
   },
   {
     "type": "example",
+    "name": "Poincaré Maps",
+    "description": "We'll use the compact ODE block formulation to define the Lorenz system, along with PathSim's event handling capabilities to detect surface crossings.",
+    "path": "pathsim/examples/poincare-maps",
+    "packageId": "pathsim",
+    "moduleName": "advanced",
+    "tags": [
+      "chaos",
+      "analysis"
+    ]
+  },
+  {
+    "type": "example",
     "name": "FMU Co-Simulation",
-    "description": "Integrate external FMU models using the FMI co-simulation interface.",
+    "description": "Note that FMPy must be installed to use FMU blocks:",
     "path": "pathsim/examples/fmu-cosimulation",
     "packageId": "pathsim",
     "moduleName": "fmu",
@@ -6954,8 +6954,8 @@
   },
   {
     "type": "example",
-    "name": "FMU Model Exchange: Bouncing Ball",
-    "description": "Use FMI model exchange to integrate an external bouncing ball model.",
+    "name": "FMU ME: Bouncing Ball",
+    "description": "Note that FMPy must be installed to use FMU blocks:",
     "path": "pathsim/examples/fmu-model-exchange-bouncing-ball",
     "packageId": "pathsim",
     "moduleName": "fmu",
@@ -6966,8 +6966,8 @@
   },
   {
     "type": "example",
-    "name": "FMU Model Exchange: Van der Pol",
-    "description": "Integrate a Van der Pol FMU using model exchange mode.",
+    "name": "FMU ME: Van der Pol",
+    "description": "We simulate with  for clear nonlinear oscillations:",
     "path": "pathsim/examples/fmu-model-exchange-vanderpol",
     "packageId": "pathsim",
     "moduleName": "fmu",

@@ -33,7 +33,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Connection.__init__"
   },
   "Connection._validate_dimensions": {
     "name": "_validate_dimensions",
@@ -41,7 +41,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#_validate_dimensions"
+    "path": "pathsim/api#Connection._validate_dimensions"
   },
   "Connection._validate_ports": {
     "name": "_validate_ports",
@@ -49,7 +49,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#_validate_ports"
+    "path": "pathsim/api#Connection._validate_ports"
   },
   "Connection.get_blocks": {
     "name": "get_blocks",
@@ -57,7 +57,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#get_blocks"
+    "path": "pathsim/api#Connection.get_blocks"
   },
   "Connection.on": {
     "name": "on",
@@ -65,7 +65,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#on"
+    "path": "pathsim/api#Connection.on"
   },
   "Connection.off": {
     "name": "off",
@@ -73,7 +73,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#off"
+    "path": "pathsim/api#Connection.off"
   },
   "Connection.update": {
     "name": "update",
@@ -81,7 +81,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Connection",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Connection.update"
   },
   "Duplex": {
     "name": "Duplex",
@@ -110,7 +110,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Duplex",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Duplex.__init__"
   },
   "Duplex.update": {
     "name": "update",
@@ -118,7 +118,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.connection",
     "parentClass": "Duplex",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Duplex.update"
   },
   "pathsim.simulation": {
     "name": "pathsim.simulation",
@@ -154,7 +154,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Simulation.__init__"
   },
   "Simulation.plot": {
     "name": "plot",
@@ -162,7 +162,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#plot"
+    "path": "pathsim/api#Simulation.plot"
   },
   "Simulation.add_block": {
     "name": "add_block",
@@ -170,7 +170,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#add_block"
+    "path": "pathsim/api#Simulation.add_block"
   },
   "Simulation.add_connection": {
     "name": "add_connection",
@@ -178,7 +178,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#add_connection"
+    "path": "pathsim/api#Simulation.add_connection"
   },
   "Simulation.add_event": {
     "name": "add_event",
@@ -186,7 +186,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#add_event"
+    "path": "pathsim/api#Simulation.add_event"
   },
   "Simulation._assemble_graph": {
     "name": "_assemble_graph",
@@ -194,7 +194,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_assemble_graph"
+    "path": "pathsim/api#Simulation._assemble_graph"
   },
   "Simulation._check_blocks_are_managed": {
     "name": "_check_blocks_are_managed",
@@ -202,7 +202,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_check_blocks_are_managed"
+    "path": "pathsim/api#Simulation._check_blocks_are_managed"
   },
   "Simulation._set_solver": {
     "name": "_set_solver",
@@ -210,7 +210,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_set_solver"
+    "path": "pathsim/api#Simulation._set_solver"
   },
   "Simulation.reset": {
     "name": "reset",
@@ -218,7 +218,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Simulation.reset"
   },
   "Simulation.linearize": {
     "name": "linearize",
@@ -226,7 +226,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#linearize"
+    "path": "pathsim/api#Simulation.linearize"
   },
   "Simulation.delinearize": {
     "name": "delinearize",
@@ -234,7 +234,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#delinearize"
+    "path": "pathsim/api#Simulation.delinearize"
   },
   "Simulation._get_active_events": {
     "name": "_get_active_events",
@@ -242,7 +242,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_get_active_events"
+    "path": "pathsim/api#Simulation._get_active_events"
   },
   "Simulation._estimate_events": {
     "name": "_estimate_events",
@@ -250,7 +250,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_estimate_events"
+    "path": "pathsim/api#Simulation._estimate_events"
   },
   "Simulation._detected_events": {
     "name": "_detected_events",
@@ -258,7 +258,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_detected_events"
+    "path": "pathsim/api#Simulation._detected_events"
   },
   "Simulation._update": {
     "name": "_update",
@@ -266,7 +266,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_update"
+    "path": "pathsim/api#Simulation._update"
   },
   "Simulation._dag": {
     "name": "_dag",
@@ -274,7 +274,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_dag"
+    "path": "pathsim/api#Simulation._dag"
   },
   "Simulation._loops": {
     "name": "_loops",
@@ -282,7 +282,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_loops"
+    "path": "pathsim/api#Simulation._loops"
   },
   "Simulation._solve": {
     "name": "_solve",
@@ -290,7 +290,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_solve"
+    "path": "pathsim/api#Simulation._solve"
   },
   "Simulation.steadystate": {
     "name": "steadystate",
@@ -298,7 +298,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#steadystate"
+    "path": "pathsim/api#Simulation.steadystate"
   },
   "Simulation._revert": {
     "name": "_revert",
@@ -306,7 +306,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_revert"
+    "path": "pathsim/api#Simulation._revert"
   },
   "Simulation._sample": {
     "name": "_sample",
@@ -314,7 +314,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_sample"
+    "path": "pathsim/api#Simulation._sample"
   },
   "Simulation._buffer": {
     "name": "_buffer",
@@ -322,7 +322,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_buffer"
+    "path": "pathsim/api#Simulation._buffer"
   },
   "Simulation._step": {
     "name": "_step",
@@ -330,7 +330,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_step"
+    "path": "pathsim/api#Simulation._step"
   },
   "Simulation.timestep_fixed_explicit": {
     "name": "timestep_fixed_explicit",
@@ -338,7 +338,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#timestep_fixed_explicit"
+    "path": "pathsim/api#Simulation.timestep_fixed_explicit"
   },
   "Simulation.timestep_fixed_implicit": {
     "name": "timestep_fixed_implicit",
@@ -346,7 +346,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#timestep_fixed_implicit"
+    "path": "pathsim/api#Simulation.timestep_fixed_implicit"
   },
   "Simulation.timestep_adaptive_explicit": {
     "name": "timestep_adaptive_explicit",
@@ -354,7 +354,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#timestep_adaptive_explicit"
+    "path": "pathsim/api#Simulation.timestep_adaptive_explicit"
   },
   "Simulation.timestep_adaptive_implicit": {
     "name": "timestep_adaptive_implicit",
@@ -362,7 +362,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#timestep_adaptive_implicit"
+    "path": "pathsim/api#Simulation.timestep_adaptive_implicit"
   },
   "Simulation.timestep": {
     "name": "timestep",
@@ -370,7 +370,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#timestep"
+    "path": "pathsim/api#Simulation.timestep"
   },
   "Simulation.step": {
     "name": "step",
@@ -378,7 +378,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Simulation.step"
   },
   "Simulation.collect": {
     "name": "collect",
@@ -386,7 +386,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#collect"
+    "path": "pathsim/api#Simulation.collect"
   },
   "Simulation.stop": {
     "name": "stop",
@@ -394,7 +394,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#stop"
+    "path": "pathsim/api#Simulation.stop"
   },
   "Simulation._run_loop": {
     "name": "_run_loop",
@@ -402,7 +402,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#_run_loop"
+    "path": "pathsim/api#Simulation._run_loop"
   },
   "Simulation.run": {
     "name": "run",
@@ -410,7 +410,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#run"
+    "path": "pathsim/api#Simulation.run"
   },
   "Simulation.run_streaming": {
     "name": "run_streaming",
@@ -418,7 +418,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#run_streaming"
+    "path": "pathsim/api#Simulation.run_streaming"
   },
   "Simulation.run_realtime": {
     "name": "run_realtime",
@@ -426,7 +426,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.simulation",
     "parentClass": "Simulation",
-    "path": "pathsim/api#run_realtime"
+    "path": "pathsim/api#Simulation.run_realtime"
   },
   "pathsim.subsystem": {
     "name": "pathsim.subsystem",
@@ -462,7 +462,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Interface",
-    "path": "pathsim/api#register_port_map"
+    "path": "pathsim/api#Interface.register_port_map"
   },
   "Subsystem": {
     "name": "Subsystem",
@@ -491,7 +491,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Subsystem.__init__"
   },
   "Subsystem._assemble_graph": {
     "name": "_assemble_graph",
@@ -499,7 +499,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#_assemble_graph"
+    "path": "pathsim/api#Subsystem._assemble_graph"
   },
   "Subsystem.plot": {
     "name": "plot",
@@ -507,7 +507,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#plot"
+    "path": "pathsim/api#Subsystem.plot"
   },
   "Subsystem.collect": {
     "name": "collect",
@@ -515,7 +515,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#collect"
+    "path": "pathsim/api#Subsystem.collect"
   },
   "Subsystem.reset": {
     "name": "reset",
@@ -523,7 +523,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Subsystem.reset"
   },
   "Subsystem.on": {
     "name": "on",
@@ -531,7 +531,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#on"
+    "path": "pathsim/api#Subsystem.on"
   },
   "Subsystem.off": {
     "name": "off",
@@ -539,7 +539,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#off"
+    "path": "pathsim/api#Subsystem.off"
   },
   "Subsystem.linearize": {
     "name": "linearize",
@@ -547,7 +547,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#linearize"
+    "path": "pathsim/api#Subsystem.linearize"
   },
   "Subsystem.delinearize": {
     "name": "delinearize",
@@ -555,7 +555,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#delinearize"
+    "path": "pathsim/api#Subsystem.delinearize"
   },
   "Subsystem.sample": {
     "name": "sample",
@@ -563,7 +563,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#Subsystem.sample"
   },
   "Subsystem.update": {
     "name": "update",
@@ -571,7 +571,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Subsystem.update"
   },
   "Subsystem._dag": {
     "name": "_dag",
@@ -579,7 +579,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#_dag"
+    "path": "pathsim/api#Subsystem._dag"
   },
   "Subsystem._loops": {
     "name": "_loops",
@@ -587,7 +587,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#_loops"
+    "path": "pathsim/api#Subsystem._loops"
   },
   "Subsystem.solve": {
     "name": "solve",
@@ -595,7 +595,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#Subsystem.solve"
   },
   "Subsystem.step": {
     "name": "step",
@@ -603,7 +603,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Subsystem.step"
   },
   "Subsystem.set_solver": {
     "name": "set_solver",
@@ -611,7 +611,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#set_solver"
+    "path": "pathsim/api#Subsystem.set_solver"
   },
   "Subsystem.revert": {
     "name": "revert",
@@ -619,7 +619,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#revert"
+    "path": "pathsim/api#Subsystem.revert"
   },
   "Subsystem.buffer": {
     "name": "buffer",
@@ -627,7 +627,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.subsystem",
     "parentClass": "Subsystem",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#Subsystem.buffer"
   },
   "pathsim.blocks._block": {
     "name": "pathsim.blocks._block",
@@ -663,7 +663,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Block.__init__"
   },
   "Block.info": {
     "name": "info",
@@ -671,7 +671,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#info"
+    "path": "pathsim/api#Block.info"
   },
   "Block.plot": {
     "name": "plot",
@@ -679,7 +679,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#plot"
+    "path": "pathsim/api#Block.plot"
   },
   "Block.on": {
     "name": "on",
@@ -687,7 +687,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#on"
+    "path": "pathsim/api#Block.on"
   },
   "Block.off": {
     "name": "off",
@@ -695,7 +695,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#off"
+    "path": "pathsim/api#Block.off"
   },
   "Block.reset": {
     "name": "reset",
@@ -703,7 +703,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Block.reset"
   },
   "Block.linearize": {
     "name": "linearize",
@@ -711,7 +711,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#linearize"
+    "path": "pathsim/api#Block.linearize"
   },
   "Block.delinearize": {
     "name": "delinearize",
@@ -719,7 +719,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#delinearize"
+    "path": "pathsim/api#Block.delinearize"
   },
   "Block.set_solver": {
     "name": "set_solver",
@@ -727,7 +727,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#set_solver"
+    "path": "pathsim/api#Block.set_solver"
   },
   "Block.revert": {
     "name": "revert",
@@ -735,7 +735,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#revert"
+    "path": "pathsim/api#Block.revert"
   },
   "Block.buffer": {
     "name": "buffer",
@@ -743,7 +743,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#Block.buffer"
   },
   "Block.sample": {
     "name": "sample",
@@ -751,7 +751,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#Block.sample"
   },
   "Block.read": {
     "name": "read",
@@ -759,7 +759,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#read"
+    "path": "pathsim/api#Block.read"
   },
   "Block.collect": {
     "name": "collect",
@@ -767,7 +767,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#collect"
+    "path": "pathsim/api#Block.collect"
   },
   "Block.get_all": {
     "name": "get_all",
@@ -775,7 +775,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#get_all"
+    "path": "pathsim/api#Block.get_all"
   },
   "Block.update": {
     "name": "update",
@@ -783,7 +783,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Block.update"
   },
   "Block.solve": {
     "name": "solve",
@@ -791,7 +791,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#Block.solve"
   },
   "Block.step": {
     "name": "step",
@@ -799,7 +799,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks._block",
     "parentClass": "Block",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Block.step"
   },
   "pathsim.blocks.adder": {
     "name": "pathsim.blocks.adder",
@@ -835,7 +835,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.adder",
     "parentClass": "Adder",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Adder.__init__"
   },
   "Adder.update": {
     "name": "update",
@@ -843,7 +843,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.adder",
     "parentClass": "Adder",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Adder.update"
   },
   "pathsim.blocks.amplifier": {
     "name": "pathsim.blocks.amplifier",
@@ -879,7 +879,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.amplifier",
     "parentClass": "Amplifier",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Amplifier.__init__"
   },
   "Amplifier.update": {
     "name": "update",
@@ -887,7 +887,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.amplifier",
     "parentClass": "Amplifier",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Amplifier.update"
   },
   "pathsim.blocks.comparator": {
     "name": "pathsim.blocks.comparator",
@@ -923,7 +923,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.comparator",
     "parentClass": "Comparator",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Comparator.__init__"
   },
   "Comparator.update": {
     "name": "update",
@@ -931,7 +931,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.comparator",
     "parentClass": "Comparator",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Comparator.update"
   },
   "pathsim.blocks.converters": {
     "name": "pathsim.blocks.converters",
@@ -967,7 +967,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.converters",
     "parentClass": "ADC",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ADC.__init__"
   },
   "DAC": {
     "name": "DAC",
@@ -996,7 +996,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.converters",
     "parentClass": "DAC",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DAC.__init__"
   },
   "pathsim.blocks.counter": {
     "name": "pathsim.blocks.counter",
@@ -1032,7 +1032,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "Counter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Counter.__init__"
   },
   "Counter.update": {
     "name": "update",
@@ -1040,7 +1040,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "Counter",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Counter.update"
   },
   "CounterUp": {
     "name": "CounterUp",
@@ -1069,7 +1069,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "CounterUp",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#CounterUp.__init__"
   },
   "CounterDown": {
     "name": "CounterDown",
@@ -1098,7 +1098,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.counter",
     "parentClass": "CounterDown",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#CounterDown.__init__"
   },
   "pathsim.blocks.ctrl": {
     "name": "pathsim.blocks.ctrl",
@@ -1134,7 +1134,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#PID.__init__"
   },
   "PID.update": {
     "name": "update",
@@ -1142,7 +1142,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#PID.update"
   },
   "PID.solve": {
     "name": "solve",
@@ -1150,7 +1150,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#PID.solve"
   },
   "PID.step": {
     "name": "step",
@@ -1158,7 +1158,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "PID",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#PID.step"
   },
   "AntiWindupPID": {
     "name": "AntiWindupPID",
@@ -1187,7 +1187,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ctrl",
     "parentClass": "AntiWindupPID",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#AntiWindupPID.__init__"
   },
   "pathsim.blocks.delay": {
     "name": "pathsim.blocks.delay",
@@ -1223,7 +1223,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Delay.__init__"
   },
   "Delay.reset": {
     "name": "reset",
@@ -1231,7 +1231,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Delay.reset"
   },
   "Delay.update": {
     "name": "update",
@@ -1239,7 +1239,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Delay.update"
   },
   "Delay.sample": {
     "name": "sample",
@@ -1247,7 +1247,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.delay",
     "parentClass": "Delay",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#Delay.sample"
   },
   "pathsim.blocks.differentiator": {
     "name": "pathsim.blocks.differentiator",
@@ -1283,7 +1283,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Differentiator.__init__"
   },
   "Differentiator.update": {
     "name": "update",
@@ -1291,7 +1291,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Differentiator.update"
   },
   "Differentiator.solve": {
     "name": "solve",
@@ -1299,7 +1299,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#Differentiator.solve"
   },
   "Differentiator.step": {
     "name": "step",
@@ -1307,7 +1307,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.differentiator",
     "parentClass": "Differentiator",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Differentiator.step"
   },
   "pathsim.blocks.dynsys": {
     "name": "pathsim.blocks.dynsys",
@@ -1343,7 +1343,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DynamicalSystem.__init__"
   },
   "DynamicalSystem.update": {
     "name": "update",
@@ -1351,7 +1351,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#DynamicalSystem.update"
   },
   "DynamicalSystem.solve": {
     "name": "solve",
@@ -1359,7 +1359,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#DynamicalSystem.solve"
   },
   "DynamicalSystem.step": {
     "name": "step",
@@ -1367,7 +1367,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.dynsys",
     "parentClass": "DynamicalSystem",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#DynamicalSystem.step"
   },
   "pathsim.blocks.filters": {
     "name": "pathsim.blocks.filters",
@@ -1403,7 +1403,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthLowpassFilter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ButterworthLowpassFilter.__init__"
   },
   "ButterworthHighpassFilter": {
     "name": "ButterworthHighpassFilter",
@@ -1432,7 +1432,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthHighpassFilter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ButterworthHighpassFilter.__init__"
   },
   "ButterworthBandpassFilter": {
     "name": "ButterworthBandpassFilter",
@@ -1461,7 +1461,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthBandpassFilter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ButterworthBandpassFilter.__init__"
   },
   "ButterworthBandstopFilter": {
     "name": "ButterworthBandstopFilter",
@@ -1490,7 +1490,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "ButterworthBandstopFilter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ButterworthBandstopFilter.__init__"
   },
   "AllpassFilter": {
     "name": "AllpassFilter",
@@ -1519,7 +1519,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.filters",
     "parentClass": "AllpassFilter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#AllpassFilter.__init__"
   },
   "pathsim.blocks.fir": {
     "name": "pathsim.blocks.fir",
@@ -1555,7 +1555,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fir",
     "parentClass": "FIR",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#FIR.__init__"
   },
   "FIR.reset": {
     "name": "reset",
@@ -1563,7 +1563,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fir",
     "parentClass": "FIR",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#FIR.reset"
   },
   "pathsim.blocks.fmu": {
     "name": "pathsim.blocks.fmu",
@@ -1599,7 +1599,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "CoSimulationFMU",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#CoSimulationFMU.__init__"
   },
   "CoSimulationFMU._step_fmu": {
     "name": "_step_fmu",
@@ -1607,7 +1607,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "CoSimulationFMU",
-    "path": "pathsim/api#_step_fmu"
+    "path": "pathsim/api#CoSimulationFMU._step_fmu"
   },
   "CoSimulationFMU.reset": {
     "name": "reset",
@@ -1615,7 +1615,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "CoSimulationFMU",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#CoSimulationFMU.reset"
   },
   "ModelExchangeFMU": {
     "name": "ModelExchangeFMU",
@@ -1644,7 +1644,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ModelExchangeFMU.__init__"
   },
   "ModelExchangeFMU._get_derivatives": {
     "name": "_get_derivatives",
@@ -1652,7 +1652,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#_get_derivatives"
+    "path": "pathsim/api#ModelExchangeFMU._get_derivatives"
   },
   "ModelExchangeFMU._get_jacobian": {
     "name": "_get_jacobian",
@@ -1660,7 +1660,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#_get_jacobian"
+    "path": "pathsim/api#ModelExchangeFMU._get_jacobian"
   },
   "ModelExchangeFMU._get_outputs": {
     "name": "_get_outputs",
@@ -1668,7 +1668,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#_get_outputs"
+    "path": "pathsim/api#ModelExchangeFMU._get_outputs"
   },
   "ModelExchangeFMU._get_event_indicator": {
     "name": "_get_event_indicator",
@@ -1676,7 +1676,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#_get_event_indicator"
+    "path": "pathsim/api#ModelExchangeFMU._get_event_indicator"
   },
   "ModelExchangeFMU._handle_event": {
     "name": "_handle_event",
@@ -1684,7 +1684,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#_handle_event"
+    "path": "pathsim/api#ModelExchangeFMU._handle_event"
   },
   "ModelExchangeFMU._update_time_events": {
     "name": "_update_time_events",
@@ -1692,7 +1692,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#_update_time_events"
+    "path": "pathsim/api#ModelExchangeFMU._update_time_events"
   },
   "ModelExchangeFMU.sample": {
     "name": "sample",
@@ -1700,7 +1700,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#ModelExchangeFMU.sample"
   },
   "ModelExchangeFMU.reset": {
     "name": "reset",
@@ -1708,7 +1708,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.fmu",
     "parentClass": "ModelExchangeFMU",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#ModelExchangeFMU.reset"
   },
   "pathsim.blocks.function": {
     "name": "pathsim.blocks.function",
@@ -1744,7 +1744,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "Function",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Function.__init__"
   },
   "Function.update": {
     "name": "update",
@@ -1752,7 +1752,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "Function",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Function.update"
   },
   "DynamicalFunction": {
     "name": "DynamicalFunction",
@@ -1781,7 +1781,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "DynamicalFunction",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DynamicalFunction.__init__"
   },
   "DynamicalFunction.update": {
     "name": "update",
@@ -1789,7 +1789,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.function",
     "parentClass": "DynamicalFunction",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#DynamicalFunction.update"
   },
   "pathsim.blocks.integrator": {
     "name": "pathsim.blocks.integrator",
@@ -1825,7 +1825,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Integrator.__init__"
   },
   "Integrator.update": {
     "name": "update",
@@ -1833,7 +1833,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Integrator.update"
   },
   "Integrator.solve": {
     "name": "solve",
@@ -1841,7 +1841,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#Integrator.solve"
   },
   "Integrator.step": {
     "name": "step",
@@ -1849,7 +1849,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.integrator",
     "parentClass": "Integrator",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Integrator.step"
   },
   "pathsim.blocks.kalman": {
     "name": "pathsim.blocks.kalman",
@@ -1885,7 +1885,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.kalman",
     "parentClass": "KalmanFilter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#KalmanFilter.__init__"
   },
   "KalmanFilter._kf_update": {
     "name": "_kf_update",
@@ -1893,7 +1893,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.kalman",
     "parentClass": "KalmanFilter",
-    "path": "pathsim/api#_kf_update"
+    "path": "pathsim/api#KalmanFilter._kf_update"
   },
   "KalmanFilter.sample": {
     "name": "sample",
@@ -1901,7 +1901,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.kalman",
     "parentClass": "KalmanFilter",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#KalmanFilter.sample"
   },
   "pathsim.blocks.lti": {
     "name": "pathsim.blocks.lti",
@@ -1937,7 +1937,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "StateSpace",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#StateSpace.__init__"
   },
   "StateSpace.solve": {
     "name": "solve",
@@ -1945,7 +1945,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "StateSpace",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#StateSpace.solve"
   },
   "StateSpace.step": {
     "name": "step",
@@ -1953,7 +1953,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "StateSpace",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#StateSpace.step"
   },
   "TransferFunctionPRC": {
     "name": "TransferFunctionPRC",
@@ -1982,7 +1982,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "TransferFunctionPRC",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#TransferFunctionPRC.__init__"
   },
   "TransferFunction": {
     "name": "TransferFunction",
@@ -2032,7 +2032,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "TransferFunctionZPG",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#TransferFunctionZPG.__init__"
   },
   "TransferFunctionNumDen": {
     "name": "TransferFunctionNumDen",
@@ -2061,7 +2061,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.lti",
     "parentClass": "TransferFunctionNumDen",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#TransferFunctionNumDen.__init__"
   },
   "pathsim.blocks.math": {
     "name": "pathsim.blocks.math",
@@ -2097,7 +2097,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Math",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Math.update"
   },
   "Sin": {
     "name": "Sin",
@@ -2126,7 +2126,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Sin",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Sin.__init__"
   },
   "Cos": {
     "name": "Cos",
@@ -2155,7 +2155,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Cos",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Cos.__init__"
   },
   "Sqrt": {
     "name": "Sqrt",
@@ -2184,7 +2184,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Sqrt",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Sqrt.__init__"
   },
   "Abs": {
     "name": "Abs",
@@ -2213,7 +2213,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Abs",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Abs.__init__"
   },
   "Pow": {
     "name": "Pow",
@@ -2242,7 +2242,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Pow",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Pow.__init__"
   },
   "PowProd": {
     "name": "PowProd",
@@ -2271,7 +2271,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "PowProd",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#PowProd.__init__"
   },
   "Exp": {
     "name": "Exp",
@@ -2300,7 +2300,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Exp",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Exp.__init__"
   },
   "Log": {
     "name": "Log",
@@ -2329,7 +2329,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Log",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Log.__init__"
   },
   "Log10": {
     "name": "Log10",
@@ -2358,7 +2358,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Log10",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Log10.__init__"
   },
   "Tan": {
     "name": "Tan",
@@ -2387,7 +2387,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Tan",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Tan.__init__"
   },
   "Sinh": {
     "name": "Sinh",
@@ -2416,7 +2416,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Sinh",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Sinh.__init__"
   },
   "Cosh": {
     "name": "Cosh",
@@ -2445,7 +2445,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Cosh",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Cosh.__init__"
   },
   "Tanh": {
     "name": "Tanh",
@@ -2474,7 +2474,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Tanh",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Tanh.__init__"
   },
   "Atan": {
     "name": "Atan",
@@ -2503,7 +2503,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Atan",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Atan.__init__"
   },
   "Norm": {
     "name": "Norm",
@@ -2532,7 +2532,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Norm",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Norm.__init__"
   },
   "Mod": {
     "name": "Mod",
@@ -2561,7 +2561,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Mod",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Mod.__init__"
   },
   "Clip": {
     "name": "Clip",
@@ -2590,7 +2590,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Clip",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Clip.__init__"
   },
   "Matrix": {
     "name": "Matrix",
@@ -2619,7 +2619,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.math",
     "parentClass": "Matrix",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Matrix.__init__"
   },
   "pathsim.blocks.multiplier": {
     "name": "pathsim.blocks.multiplier",
@@ -2655,7 +2655,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.multiplier",
     "parentClass": "Multiplier",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Multiplier.__init__"
   },
   "Multiplier.update": {
     "name": "update",
@@ -2663,7 +2663,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.multiplier",
     "parentClass": "Multiplier",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Multiplier.update"
   },
   "pathsim.blocks.noise": {
     "name": "pathsim.blocks.noise",
@@ -2699,7 +2699,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#WhiteNoise.__init__"
   },
   "WhiteNoise._generate_sample": {
     "name": "_generate_sample",
@@ -2707,7 +2707,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise",
-    "path": "pathsim/api#_generate_sample"
+    "path": "pathsim/api#WhiteNoise._generate_sample"
   },
   "WhiteNoise.sample": {
     "name": "sample",
@@ -2715,7 +2715,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#WhiteNoise.sample"
   },
   "WhiteNoise.update": {
     "name": "update",
@@ -2723,7 +2723,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "WhiteNoise",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#WhiteNoise.update"
   },
   "PinkNoise": {
     "name": "PinkNoise",
@@ -2752,7 +2752,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#PinkNoise.__init__"
   },
   "PinkNoise.reset": {
     "name": "reset",
@@ -2760,7 +2760,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#PinkNoise.reset"
   },
   "PinkNoise._generate_sample": {
     "name": "_generate_sample",
@@ -2768,7 +2768,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise",
-    "path": "pathsim/api#_generate_sample"
+    "path": "pathsim/api#PinkNoise._generate_sample"
   },
   "PinkNoise.sample": {
     "name": "sample",
@@ -2776,7 +2776,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#PinkNoise.sample"
   },
   "PinkNoise.update": {
     "name": "update",
@@ -2784,7 +2784,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.noise",
     "parentClass": "PinkNoise",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#PinkNoise.update"
   },
   "pathsim.blocks.ode": {
     "name": "pathsim.blocks.ode",
@@ -2820,7 +2820,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ODE.__init__"
   },
   "ODE.update": {
     "name": "update",
@@ -2828,7 +2828,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#ODE.update"
   },
   "ODE.solve": {
     "name": "solve",
@@ -2836,7 +2836,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#ODE.solve"
   },
   "ODE.step": {
     "name": "step",
@@ -2844,7 +2844,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.ode",
     "parentClass": "ODE",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#ODE.step"
   },
   "pathsim.blocks.relay": {
     "name": "pathsim.blocks.relay",
@@ -2880,7 +2880,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.relay",
     "parentClass": "Relay",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Relay.__init__"
   },
   "Relay.update": {
     "name": "update",
@@ -2888,7 +2888,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.relay",
     "parentClass": "Relay",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Relay.update"
   },
   "pathsim.blocks.rf": {
     "name": "pathsim.blocks.rf",
@@ -2924,7 +2924,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rf",
     "parentClass": "RFNetwork",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RFNetwork.__init__"
   },
   "RFNetwork.s": {
     "name": "s",
@@ -2932,7 +2932,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rf",
     "parentClass": "RFNetwork",
-    "path": "pathsim/api#s"
+    "path": "pathsim/api#RFNetwork.s"
   },
   "pathsim.blocks.rng": {
     "name": "pathsim.blocks.rng",
@@ -2968,7 +2968,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rng",
     "parentClass": "RandomNumberGenerator",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RandomNumberGenerator.__init__"
   },
   "RandomNumberGenerator.update": {
     "name": "update",
@@ -2976,7 +2976,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rng",
     "parentClass": "RandomNumberGenerator",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#RandomNumberGenerator.update"
   },
   "RandomNumberGenerator.sample": {
     "name": "sample",
@@ -2984,7 +2984,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.rng",
     "parentClass": "RandomNumberGenerator",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#RandomNumberGenerator.sample"
   },
   "RNG": {
     "name": "RNG",
@@ -3041,7 +3041,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.samplehold",
     "parentClass": "SampleHold",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SampleHold.__init__"
   },
   "pathsim.blocks.scope": {
     "name": "pathsim.blocks.scope",
@@ -3077,7 +3077,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Scope.__init__"
   },
   "Scope.reset": {
     "name": "reset",
@@ -3085,7 +3085,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Scope.reset"
   },
   "Scope.read": {
     "name": "read",
@@ -3093,7 +3093,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#read"
+    "path": "pathsim/api#Scope.read"
   },
   "Scope.collect": {
     "name": "collect",
@@ -3101,7 +3101,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#collect"
+    "path": "pathsim/api#Scope.collect"
   },
   "Scope.sample": {
     "name": "sample",
@@ -3109,7 +3109,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#Scope.sample"
   },
   "Scope.plot": {
     "name": "plot",
@@ -3117,7 +3117,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#plot"
+    "path": "pathsim/api#Scope.plot"
   },
   "Scope.plot2D": {
     "name": "plot2D",
@@ -3125,7 +3125,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#plot2D"
+    "path": "pathsim/api#Scope.plot2D"
   },
   "Scope.plot3D": {
     "name": "plot3D",
@@ -3133,7 +3133,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#plot3D"
+    "path": "pathsim/api#Scope.plot3D"
   },
   "Scope.save": {
     "name": "save",
@@ -3141,7 +3141,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#save"
+    "path": "pathsim/api#Scope.save"
   },
   "Scope.update": {
     "name": "update",
@@ -3149,7 +3149,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "Scope",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Scope.update"
   },
   "RealtimeScope": {
     "name": "RealtimeScope",
@@ -3178,7 +3178,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "RealtimeScope",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RealtimeScope.__init__"
   },
   "RealtimeScope.sample": {
     "name": "sample",
@@ -3186,7 +3186,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.scope",
     "parentClass": "RealtimeScope",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#RealtimeScope.sample"
   },
   "pathsim.blocks.sources": {
     "name": "pathsim.blocks.sources",
@@ -3222,7 +3222,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Constant",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Constant.__init__"
   },
   "Constant.update": {
     "name": "update",
@@ -3230,7 +3230,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Constant",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Constant.update"
   },
   "Source": {
     "name": "Source",
@@ -3259,7 +3259,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Source",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Source.__init__"
   },
   "Source.update": {
     "name": "update",
@@ -3267,7 +3267,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "Source",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Source.update"
   },
   "TriangleWaveSource": {
     "name": "TriangleWaveSource",
@@ -3296,7 +3296,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "TriangleWaveSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#TriangleWaveSource.__init__"
   },
   "TriangleWaveSource._triangle_wave": {
     "name": "_triangle_wave",
@@ -3304,7 +3304,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "TriangleWaveSource",
-    "path": "pathsim/api#_triangle_wave"
+    "path": "pathsim/api#TriangleWaveSource._triangle_wave"
   },
   "SinusoidalSource": {
     "name": "SinusoidalSource",
@@ -3333,7 +3333,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SinusoidalSource.__init__"
   },
   "GaussianPulseSource": {
     "name": "GaussianPulseSource",
@@ -3362,7 +3362,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "GaussianPulseSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GaussianPulseSource.__init__"
   },
   "GaussianPulseSource._gaussian": {
     "name": "_gaussian",
@@ -3370,7 +3370,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "GaussianPulseSource",
-    "path": "pathsim/api#_gaussian"
+    "path": "pathsim/api#GaussianPulseSource._gaussian"
   },
   "SinusoidalPhaseNoiseSource": {
     "name": "SinusoidalPhaseNoiseSource",
@@ -3399,7 +3399,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.__init__"
   },
   "SinusoidalPhaseNoiseSource.reset": {
     "name": "reset",
@@ -3407,7 +3407,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.reset"
   },
   "SinusoidalPhaseNoiseSource.update": {
     "name": "update",
@@ -3415,7 +3415,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.update"
   },
   "SinusoidalPhaseNoiseSource.sample": {
     "name": "sample",
@@ -3423,7 +3423,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.sample"
   },
   "SinusoidalPhaseNoiseSource.solve": {
     "name": "solve",
@@ -3431,7 +3431,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.solve"
   },
   "SinusoidalPhaseNoiseSource.step": {
     "name": "step",
@@ -3439,7 +3439,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SinusoidalPhaseNoiseSource",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#SinusoidalPhaseNoiseSource.step"
   },
   "ChirpPhaseNoiseSource": {
     "name": "ChirpPhaseNoiseSource",
@@ -3468,7 +3468,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ChirpPhaseNoiseSource.__init__"
   },
   "ChirpPhaseNoiseSource._triangle_wave": {
     "name": "_triangle_wave",
@@ -3476,7 +3476,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#_triangle_wave"
+    "path": "pathsim/api#ChirpPhaseNoiseSource._triangle_wave"
   },
   "ChirpPhaseNoiseSource.reset": {
     "name": "reset",
@@ -3484,7 +3484,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#ChirpPhaseNoiseSource.reset"
   },
   "ChirpPhaseNoiseSource.sample": {
     "name": "sample",
@@ -3492,7 +3492,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#ChirpPhaseNoiseSource.sample"
   },
   "ChirpPhaseNoiseSource.update": {
     "name": "update",
@@ -3500,7 +3500,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#ChirpPhaseNoiseSource.update"
   },
   "ChirpPhaseNoiseSource.solve": {
     "name": "solve",
@@ -3508,7 +3508,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#ChirpPhaseNoiseSource.solve"
   },
   "ChirpPhaseNoiseSource.step": {
     "name": "step",
@@ -3516,7 +3516,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ChirpPhaseNoiseSource",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#ChirpPhaseNoiseSource.step"
   },
   "ChirpSource": {
     "name": "ChirpSource",
@@ -3566,7 +3566,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "PulseSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#PulseSource.__init__"
   },
   "PulseSource.reset": {
     "name": "reset",
@@ -3574,7 +3574,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "PulseSource",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#PulseSource.reset"
   },
   "PulseSource.update": {
     "name": "update",
@@ -3582,7 +3582,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "PulseSource",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#PulseSource.update"
   },
   "Pulse": {
     "name": "Pulse",
@@ -3632,7 +3632,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "ClockSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ClockSource.__init__"
   },
   "Clock": {
     "name": "Clock",
@@ -3682,7 +3682,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "SquareWaveSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SquareWaveSource.__init__"
   },
   "StepSource": {
     "name": "StepSource",
@@ -3711,7 +3711,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.sources",
     "parentClass": "StepSource",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#StepSource.__init__"
   },
   "Step": {
     "name": "Step",
@@ -3768,7 +3768,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Spectrum.__init__"
   },
   "Spectrum._kernel": {
     "name": "_kernel",
@@ -3776,7 +3776,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#_kernel"
+    "path": "pathsim/api#Spectrum._kernel"
   },
   "Spectrum.reset": {
     "name": "reset",
@@ -3784,7 +3784,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Spectrum.reset"
   },
   "Spectrum.read": {
     "name": "read",
@@ -3792,7 +3792,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#read"
+    "path": "pathsim/api#Spectrum.read"
   },
   "Spectrum.collect": {
     "name": "collect",
@@ -3800,7 +3800,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#collect"
+    "path": "pathsim/api#Spectrum.collect"
   },
   "Spectrum.solve": {
     "name": "solve",
@@ -3808,7 +3808,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#Spectrum.solve"
   },
   "Spectrum.step": {
     "name": "step",
@@ -3816,7 +3816,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Spectrum.step"
   },
   "Spectrum.sample": {
     "name": "sample",
@@ -3824,7 +3824,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#sample"
+    "path": "pathsim/api#Spectrum.sample"
   },
   "Spectrum.plot": {
     "name": "plot",
@@ -3832,7 +3832,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#plot"
+    "path": "pathsim/api#Spectrum.plot"
   },
   "Spectrum.save": {
     "name": "save",
@@ -3840,7 +3840,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#save"
+    "path": "pathsim/api#Spectrum.save"
   },
   "Spectrum.update": {
     "name": "update",
@@ -3848,7 +3848,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "Spectrum",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Spectrum.update"
   },
   "RealtimeSpectrum": {
     "name": "RealtimeSpectrum",
@@ -3877,7 +3877,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "RealtimeSpectrum",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RealtimeSpectrum.__init__"
   },
   "RealtimeSpectrum.step": {
     "name": "step",
@@ -3885,7 +3885,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.spectrum",
     "parentClass": "RealtimeSpectrum",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#RealtimeSpectrum.step"
   },
   "pathsim.blocks.switch": {
     "name": "pathsim.blocks.switch",
@@ -3921,7 +3921,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.switch",
     "parentClass": "Switch",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Switch.__init__"
   },
   "Switch.select": {
     "name": "select",
@@ -3929,7 +3929,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.switch",
     "parentClass": "Switch",
-    "path": "pathsim/api#select"
+    "path": "pathsim/api#Switch.select"
   },
   "Switch.update": {
     "name": "update",
@@ -3937,7 +3937,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.switch",
     "parentClass": "Switch",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Switch.update"
   },
   "pathsim.blocks.table": {
     "name": "pathsim.blocks.table",
@@ -3973,7 +3973,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.table",
     "parentClass": "LUT",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#LUT.__init__"
   },
   "LUT1D": {
     "name": "LUT1D",
@@ -4002,7 +4002,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.table",
     "parentClass": "LUT1D",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#LUT1D.__init__"
   },
   "pathsim.blocks.wrapper": {
     "name": "pathsim.blocks.wrapper",
@@ -4038,7 +4038,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.wrapper",
     "parentClass": "Wrapper",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Wrapper.__init__"
   },
   "Wrapper.update": {
     "name": "update",
@@ -4046,7 +4046,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.wrapper",
     "parentClass": "Wrapper",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#Wrapper.update"
   },
   "Wrapper.dec": {
     "name": "dec",
@@ -4054,7 +4054,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.blocks.wrapper",
     "parentClass": "Wrapper",
-    "path": "pathsim/api#dec"
+    "path": "pathsim/api#Wrapper.dec"
   },
   "pathsim.solvers._rungekutta": {
     "name": "pathsim.solvers._rungekutta",
@@ -4090,7 +4090,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "ExplicitRungeKutta",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ExplicitRungeKutta.__init__"
   },
   "ExplicitRungeKutta.error_controller": {
     "name": "error_controller",
@@ -4098,7 +4098,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "ExplicitRungeKutta",
-    "path": "pathsim/api#error_controller"
+    "path": "pathsim/api#ExplicitRungeKutta.error_controller"
   },
   "ExplicitRungeKutta.step": {
     "name": "step",
@@ -4106,7 +4106,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "ExplicitRungeKutta",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#ExplicitRungeKutta.step"
   },
   "DiagonallyImplicitRungeKutta": {
     "name": "DiagonallyImplicitRungeKutta",
@@ -4135,7 +4135,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.__init__"
   },
   "DiagonallyImplicitRungeKutta.error_controller": {
     "name": "error_controller",
@@ -4143,7 +4143,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta",
-    "path": "pathsim/api#error_controller"
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.error_controller"
   },
   "DiagonallyImplicitRungeKutta.solve": {
     "name": "solve",
@@ -4151,7 +4151,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.solve"
   },
   "DiagonallyImplicitRungeKutta.step": {
     "name": "step",
@@ -4159,7 +4159,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._rungekutta",
     "parentClass": "DiagonallyImplicitRungeKutta",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#DiagonallyImplicitRungeKutta.step"
   },
   "pathsim.solvers._solver": {
     "name": "pathsim.solvers._solver",
@@ -4195,7 +4195,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Solver.__init__"
   },
   "Solver.is_first_stage": {
     "name": "is_first_stage",
@@ -4203,7 +4203,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#is_first_stage"
+    "path": "pathsim/api#Solver.is_first_stage"
   },
   "Solver.is_last_stage": {
     "name": "is_last_stage",
@@ -4211,7 +4211,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#is_last_stage"
+    "path": "pathsim/api#Solver.is_last_stage"
   },
   "Solver.stages": {
     "name": "stages",
@@ -4219,7 +4219,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#stages"
+    "path": "pathsim/api#Solver.stages"
   },
   "Solver.get": {
     "name": "get",
@@ -4227,7 +4227,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#get"
+    "path": "pathsim/api#Solver.get"
   },
   "Solver.set": {
     "name": "set",
@@ -4235,7 +4235,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#set"
+    "path": "pathsim/api#Solver.set"
   },
   "Solver.reset": {
     "name": "reset",
@@ -4243,7 +4243,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Solver.reset"
   },
   "Solver.buffer": {
     "name": "buffer",
@@ -4251,7 +4251,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#Solver.buffer"
   },
   "Solver.cast": {
     "name": "cast",
@@ -4259,7 +4259,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#cast"
+    "path": "pathsim/api#Solver.cast"
   },
   "Solver.create": {
     "name": "create",
@@ -4267,7 +4267,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#create"
+    "path": "pathsim/api#Solver.create"
   },
   "Solver.error_controller": {
     "name": "error_controller",
@@ -4275,7 +4275,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#error_controller"
+    "path": "pathsim/api#Solver.error_controller"
   },
   "Solver.revert": {
     "name": "revert",
@@ -4283,7 +4283,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#revert"
+    "path": "pathsim/api#Solver.revert"
   },
   "Solver.step": {
     "name": "step",
@@ -4291,7 +4291,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Solver.step"
   },
   "Solver.interpolate": {
     "name": "interpolate",
@@ -4299,7 +4299,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "Solver",
-    "path": "pathsim/api#interpolate"
+    "path": "pathsim/api#Solver.interpolate"
   },
   "ExplicitSolver": {
     "name": "ExplicitSolver",
@@ -4328,7 +4328,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ExplicitSolver",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ExplicitSolver.__init__"
   },
   "ExplicitSolver.integrate_singlestep": {
     "name": "integrate_singlestep",
@@ -4336,7 +4336,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ExplicitSolver",
-    "path": "pathsim/api#integrate_singlestep"
+    "path": "pathsim/api#ExplicitSolver.integrate_singlestep"
   },
   "ExplicitSolver.integrate": {
     "name": "integrate",
@@ -4344,7 +4344,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ExplicitSolver",
-    "path": "pathsim/api#integrate"
+    "path": "pathsim/api#ExplicitSolver.integrate"
   },
   "ImplicitSolver": {
     "name": "ImplicitSolver",
@@ -4373,7 +4373,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ImplicitSolver.__init__"
   },
   "ImplicitSolver.buffer": {
     "name": "buffer",
@@ -4381,7 +4381,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#ImplicitSolver.buffer"
   },
   "ImplicitSolver.solve": {
     "name": "solve",
@@ -4389,7 +4389,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#ImplicitSolver.solve"
   },
   "ImplicitSolver.integrate_singlestep": {
     "name": "integrate_singlestep",
@@ -4397,7 +4397,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver",
-    "path": "pathsim/api#integrate_singlestep"
+    "path": "pathsim/api#ImplicitSolver.integrate_singlestep"
   },
   "ImplicitSolver.integrate": {
     "name": "integrate",
@@ -4405,7 +4405,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers._solver",
     "parentClass": "ImplicitSolver",
-    "path": "pathsim/api#integrate"
+    "path": "pathsim/api#ImplicitSolver.integrate"
   },
   "pathsim.solvers.bdf": {
     "name": "pathsim.solvers.bdf",
@@ -4441,7 +4441,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#BDF.__init__"
   },
   "BDF.cast": {
     "name": "cast",
@@ -4449,7 +4449,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#cast"
+    "path": "pathsim/api#BDF.cast"
   },
   "BDF.create": {
     "name": "create",
@@ -4457,7 +4457,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#create"
+    "path": "pathsim/api#BDF.create"
   },
   "BDF.stages": {
     "name": "stages",
@@ -4465,7 +4465,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#stages"
+    "path": "pathsim/api#BDF.stages"
   },
   "BDF.reset": {
     "name": "reset",
@@ -4473,7 +4473,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#BDF.reset"
   },
   "BDF.buffer": {
     "name": "buffer",
@@ -4481,7 +4481,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#BDF.buffer"
   },
   "BDF.solve": {
     "name": "solve",
@@ -4489,7 +4489,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#BDF.solve"
   },
   "BDF.step": {
     "name": "step",
@@ -4497,7 +4497,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#BDF.step"
   },
   "BDF2": {
     "name": "BDF2",
@@ -4526,7 +4526,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF2",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#BDF2.__init__"
   },
   "BDF3": {
     "name": "BDF3",
@@ -4555,7 +4555,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF3",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#BDF3.__init__"
   },
   "BDF4": {
     "name": "BDF4",
@@ -4584,7 +4584,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF4",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#BDF4.__init__"
   },
   "BDF5": {
     "name": "BDF5",
@@ -4613,7 +4613,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF5",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#BDF5.__init__"
   },
   "BDF6": {
     "name": "BDF6",
@@ -4642,7 +4642,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.bdf",
     "parentClass": "BDF6",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#BDF6.__init__"
   },
   "pathsim.solvers.dirk2": {
     "name": "pathsim.solvers.dirk2",
@@ -4678,7 +4678,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.dirk2",
     "parentClass": "DIRK2",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DIRK2.__init__"
   },
   "pathsim.solvers.dirk3": {
     "name": "pathsim.solvers.dirk3",
@@ -4714,7 +4714,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.dirk3",
     "parentClass": "DIRK3",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DIRK3.__init__"
   },
   "pathsim.solvers.esdirk32": {
     "name": "pathsim.solvers.esdirk32",
@@ -4750,7 +4750,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk32",
     "parentClass": "ESDIRK32",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ESDIRK32.__init__"
   },
   "pathsim.solvers.esdirk4": {
     "name": "pathsim.solvers.esdirk4",
@@ -4786,7 +4786,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk4",
     "parentClass": "ESDIRK4",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ESDIRK4.__init__"
   },
   "pathsim.solvers.esdirk43": {
     "name": "pathsim.solvers.esdirk43",
@@ -4822,7 +4822,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk43",
     "parentClass": "ESDIRK43",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ESDIRK43.__init__"
   },
   "pathsim.solvers.esdirk54": {
     "name": "pathsim.solvers.esdirk54",
@@ -4858,7 +4858,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk54",
     "parentClass": "ESDIRK54",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ESDIRK54.__init__"
   },
   "pathsim.solvers.esdirk85": {
     "name": "pathsim.solvers.esdirk85",
@@ -4894,7 +4894,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.esdirk85",
     "parentClass": "ESDIRK85",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ESDIRK85.__init__"
   },
   "pathsim.solvers.euler": {
     "name": "pathsim.solvers.euler",
@@ -4930,7 +4930,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.euler",
     "parentClass": "EUF",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#EUF.step"
   },
   "EUB": {
     "name": "EUB",
@@ -4959,7 +4959,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.euler",
     "parentClass": "EUB",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#EUB.solve"
   },
   "pathsim.solvers.gear": {
     "name": "pathsim.solvers.gear",
@@ -4995,7 +4995,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GEAR.__init__"
   },
   "GEAR.cast": {
     "name": "cast",
@@ -5003,7 +5003,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#cast"
+    "path": "pathsim/api#GEAR.cast"
   },
   "GEAR.create": {
     "name": "create",
@@ -5011,7 +5011,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#create"
+    "path": "pathsim/api#GEAR.create"
   },
   "GEAR.stages": {
     "name": "stages",
@@ -5019,7 +5019,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#stages"
+    "path": "pathsim/api#GEAR.stages"
   },
   "GEAR.reset": {
     "name": "reset",
@@ -5027,7 +5027,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#GEAR.reset"
   },
   "GEAR.buffer": {
     "name": "buffer",
@@ -5035,7 +5035,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#GEAR.buffer"
   },
   "GEAR.revert": {
     "name": "revert",
@@ -5043,7 +5043,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#revert"
+    "path": "pathsim/api#GEAR.revert"
   },
   "GEAR.error_controller": {
     "name": "error_controller",
@@ -5051,7 +5051,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#error_controller"
+    "path": "pathsim/api#GEAR.error_controller"
   },
   "GEAR.solve": {
     "name": "solve",
@@ -5059,7 +5059,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#GEAR.solve"
   },
   "GEAR.step": {
     "name": "step",
@@ -5067,7 +5067,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#GEAR.step"
   },
   "GEAR21": {
     "name": "GEAR21",
@@ -5096,7 +5096,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR21",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GEAR21.__init__"
   },
   "GEAR32": {
     "name": "GEAR32",
@@ -5125,7 +5125,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR32",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GEAR32.__init__"
   },
   "GEAR43": {
     "name": "GEAR43",
@@ -5154,7 +5154,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR43",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GEAR43.__init__"
   },
   "GEAR54": {
     "name": "GEAR54",
@@ -5183,7 +5183,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR54",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GEAR54.__init__"
   },
   "GEAR52A": {
     "name": "GEAR52A",
@@ -5212,7 +5212,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#GEAR52A.__init__"
   },
   "GEAR52A.buffer": {
     "name": "buffer",
@@ -5220,7 +5220,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#GEAR52A.buffer"
   },
   "GEAR52A.error_controller": {
     "name": "error_controller",
@@ -5228,7 +5228,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A",
-    "path": "pathsim/api#error_controller"
+    "path": "pathsim/api#GEAR52A.error_controller"
   },
   "GEAR52A.solve": {
     "name": "solve",
@@ -5236,7 +5236,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#GEAR52A.solve"
   },
   "GEAR52A.step": {
     "name": "step",
@@ -5244,7 +5244,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.gear",
     "parentClass": "GEAR52A",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#GEAR52A.step"
   },
   "compute_bdf_coefficients": {
     "name": "compute_bdf_coefficients",
@@ -5294,7 +5294,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rk4",
     "parentClass": "RK4",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RK4.__init__"
   },
   "RK4.interpolate": {
     "name": "interpolate",
@@ -5302,7 +5302,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rk4",
     "parentClass": "RK4",
-    "path": "pathsim/api#interpolate"
+    "path": "pathsim/api#RK4.interpolate"
   },
   "pathsim.solvers.rkbs32": {
     "name": "pathsim.solvers.rkbs32",
@@ -5338,7 +5338,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkbs32",
     "parentClass": "RKBS32",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKBS32.__init__"
   },
   "pathsim.solvers.rkck54": {
     "name": "pathsim.solvers.rkck54",
@@ -5374,7 +5374,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkck54",
     "parentClass": "RKCK54",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKCK54.__init__"
   },
   "pathsim.solvers.rkdp54": {
     "name": "pathsim.solvers.rkdp54",
@@ -5410,7 +5410,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkdp54",
     "parentClass": "RKDP54",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKDP54.__init__"
   },
   "pathsim.solvers.rkdp87": {
     "name": "pathsim.solvers.rkdp87",
@@ -5446,7 +5446,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkdp87",
     "parentClass": "RKDP87",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKDP87.__init__"
   },
   "pathsim.solvers.rkf21": {
     "name": "pathsim.solvers.rkf21",
@@ -5482,7 +5482,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkf21",
     "parentClass": "RKF21",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKF21.__init__"
   },
   "pathsim.solvers.rkf45": {
     "name": "pathsim.solvers.rkf45",
@@ -5518,7 +5518,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkf45",
     "parentClass": "RKF45",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKF45.__init__"
   },
   "pathsim.solvers.rkf78": {
     "name": "pathsim.solvers.rkf78",
@@ -5554,7 +5554,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkf78",
     "parentClass": "RKF78",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKF78.__init__"
   },
   "pathsim.solvers.rkv65": {
     "name": "pathsim.solvers.rkv65",
@@ -5590,7 +5590,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.rkv65",
     "parentClass": "RKV65",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RKV65.__init__"
   },
   "pathsim.solvers.ssprk22": {
     "name": "pathsim.solvers.ssprk22",
@@ -5626,7 +5626,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk22",
     "parentClass": "SSPRK22",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SSPRK22.__init__"
   },
   "SSPRK22.interpolate": {
     "name": "interpolate",
@@ -5634,7 +5634,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk22",
     "parentClass": "SSPRK22",
-    "path": "pathsim/api#interpolate"
+    "path": "pathsim/api#SSPRK22.interpolate"
   },
   "pathsim.solvers.ssprk33": {
     "name": "pathsim.solvers.ssprk33",
@@ -5670,7 +5670,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk33",
     "parentClass": "SSPRK33",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SSPRK33.__init__"
   },
   "SSPRK33.interpolate": {
     "name": "interpolate",
@@ -5678,7 +5678,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk33",
     "parentClass": "SSPRK33",
-    "path": "pathsim/api#interpolate"
+    "path": "pathsim/api#SSPRK33.interpolate"
   },
   "pathsim.solvers.ssprk34": {
     "name": "pathsim.solvers.ssprk34",
@@ -5714,7 +5714,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.ssprk34",
     "parentClass": "SSPRK34",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#SSPRK34.__init__"
   },
   "pathsim.solvers.steadystate": {
     "name": "pathsim.solvers.steadystate",
@@ -5750,7 +5750,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.solvers.steadystate",
     "parentClass": "SteadyState",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#SteadyState.solve"
   },
   "pathsim.events._event": {
     "name": "pathsim.events._event",
@@ -5786,7 +5786,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Event.__init__"
   },
   "Event.on": {
     "name": "on",
@@ -5794,7 +5794,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#on"
+    "path": "pathsim/api#Event.on"
   },
   "Event.off": {
     "name": "off",
@@ -5802,7 +5802,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#off"
+    "path": "pathsim/api#Event.off"
   },
   "Event.reset": {
     "name": "reset",
@@ -5810,7 +5810,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Event.reset"
   },
   "Event.buffer": {
     "name": "buffer",
@@ -5818,7 +5818,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#Event.buffer"
   },
   "Event.estimate": {
     "name": "estimate",
@@ -5826,7 +5826,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#estimate"
+    "path": "pathsim/api#Event.estimate"
   },
   "Event.detect": {
     "name": "detect",
@@ -5834,7 +5834,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#Event.detect"
   },
   "Event.resolve": {
     "name": "resolve",
@@ -5842,7 +5842,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events._event",
     "parentClass": "Event",
-    "path": "pathsim/api#resolve"
+    "path": "pathsim/api#Event.resolve"
   },
   "pathsim.events.condition": {
     "name": "pathsim.events.condition",
@@ -5878,7 +5878,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.condition",
     "parentClass": "Condition",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#Condition.detect"
   },
   "Condition.resolve": {
     "name": "resolve",
@@ -5886,7 +5886,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.condition",
     "parentClass": "Condition",
-    "path": "pathsim/api#resolve"
+    "path": "pathsim/api#Condition.resolve"
   },
   "pathsim.events.schedule": {
     "name": "pathsim.events.schedule",
@@ -5922,7 +5922,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Schedule.__init__"
   },
   "Schedule._next": {
     "name": "_next",
@@ -5930,7 +5930,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule",
-    "path": "pathsim/api#_next"
+    "path": "pathsim/api#Schedule._next"
   },
   "Schedule.estimate": {
     "name": "estimate",
@@ -5938,7 +5938,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule",
-    "path": "pathsim/api#estimate"
+    "path": "pathsim/api#Schedule.estimate"
   },
   "Schedule.buffer": {
     "name": "buffer",
@@ -5946,7 +5946,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule",
-    "path": "pathsim/api#buffer"
+    "path": "pathsim/api#Schedule.buffer"
   },
   "Schedule.detect": {
     "name": "detect",
@@ -5954,7 +5954,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "Schedule",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#Schedule.detect"
   },
   "ScheduleList": {
     "name": "ScheduleList",
@@ -5983,7 +5983,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "ScheduleList",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ScheduleList.__init__"
   },
   "ScheduleList._next": {
     "name": "_next",
@@ -5991,7 +5991,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "ScheduleList",
-    "path": "pathsim/api#_next"
+    "path": "pathsim/api#ScheduleList._next"
   },
   "ScheduleList.detect": {
     "name": "detect",
@@ -5999,7 +5999,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.schedule",
     "parentClass": "ScheduleList",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#ScheduleList.detect"
   },
   "pathsim.events.zerocrossing": {
     "name": "pathsim.events.zerocrossing",
@@ -6035,7 +6035,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.zerocrossing",
     "parentClass": "ZeroCrossing",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#ZeroCrossing.detect"
   },
   "ZeroCrossingUp": {
     "name": "ZeroCrossingUp",
@@ -6064,7 +6064,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.zerocrossing",
     "parentClass": "ZeroCrossingUp",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#ZeroCrossingUp.detect"
   },
   "ZeroCrossingDown": {
     "name": "ZeroCrossingDown",
@@ -6093,7 +6093,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.events.zerocrossing",
     "parentClass": "ZeroCrossingDown",
-    "path": "pathsim/api#detect"
+    "path": "pathsim/api#ZeroCrossingDown.detect"
   },
   "pathsim.optim.anderson": {
     "name": "pathsim.optim.anderson",
@@ -6129,7 +6129,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Anderson.__init__"
   },
   "Anderson.solve": {
     "name": "solve",
@@ -6137,7 +6137,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#Anderson.solve"
   },
   "Anderson.reset": {
     "name": "reset",
@@ -6145,7 +6145,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Anderson.reset"
   },
   "Anderson.step": {
     "name": "step",
@@ -6153,7 +6153,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "Anderson",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#Anderson.step"
   },
   "NewtonAnderson": {
     "name": "NewtonAnderson",
@@ -6182,7 +6182,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "NewtonAnderson",
-    "path": "pathsim/api#solve"
+    "path": "pathsim/api#NewtonAnderson.solve"
   },
   "NewtonAnderson._newton": {
     "name": "_newton",
@@ -6190,7 +6190,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "NewtonAnderson",
-    "path": "pathsim/api#_newton"
+    "path": "pathsim/api#NewtonAnderson._newton"
   },
   "NewtonAnderson.step": {
     "name": "step",
@@ -6198,7 +6198,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.anderson",
     "parentClass": "NewtonAnderson",
-    "path": "pathsim/api#step"
+    "path": "pathsim/api#NewtonAnderson.step"
   },
   "pathsim.optim.booster": {
     "name": "pathsim.optim.booster",
@@ -6234,7 +6234,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ConnectionBooster.__init__"
   },
   "ConnectionBooster.get": {
     "name": "get",
@@ -6242,7 +6242,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster",
-    "path": "pathsim/api#get"
+    "path": "pathsim/api#ConnectionBooster.get"
   },
   "ConnectionBooster.set": {
     "name": "set",
@@ -6250,7 +6250,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster",
-    "path": "pathsim/api#set"
+    "path": "pathsim/api#ConnectionBooster.set"
   },
   "ConnectionBooster.reset": {
     "name": "reset",
@@ -6258,7 +6258,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#ConnectionBooster.reset"
   },
   "ConnectionBooster.update": {
     "name": "update",
@@ -6266,7 +6266,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.booster",
     "parentClass": "ConnectionBooster",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#ConnectionBooster.update"
   },
   "pathsim.optim.numerical": {
     "name": "pathsim.optim.numerical",
@@ -6337,7 +6337,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Operator.__init__"
   },
   "Operator.jac": {
     "name": "jac",
@@ -6345,7 +6345,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator",
-    "path": "pathsim/api#jac"
+    "path": "pathsim/api#Operator.jac"
   },
   "Operator.linearize": {
     "name": "linearize",
@@ -6353,7 +6353,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator",
-    "path": "pathsim/api#linearize"
+    "path": "pathsim/api#Operator.linearize"
   },
   "Operator.reset": {
     "name": "reset",
@@ -6361,7 +6361,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "Operator",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Operator.reset"
   },
   "DynamicOperator": {
     "name": "DynamicOperator",
@@ -6390,7 +6390,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#DynamicOperator.__init__"
   },
   "DynamicOperator.jac_x": {
     "name": "jac_x",
@@ -6398,7 +6398,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator",
-    "path": "pathsim/api#jac_x"
+    "path": "pathsim/api#DynamicOperator.jac_x"
   },
   "DynamicOperator.jac_u": {
     "name": "jac_u",
@@ -6406,7 +6406,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator",
-    "path": "pathsim/api#jac_u"
+    "path": "pathsim/api#DynamicOperator.jac_u"
   },
   "DynamicOperator.linearize": {
     "name": "linearize",
@@ -6414,7 +6414,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator",
-    "path": "pathsim/api#linearize"
+    "path": "pathsim/api#DynamicOperator.linearize"
   },
   "DynamicOperator.reset": {
     "name": "reset",
@@ -6422,7 +6422,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.optim.operator",
     "parentClass": "DynamicOperator",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#DynamicOperator.reset"
   },
   "pathsim.utils.adaptivebuffer": {
     "name": "pathsim.utils.adaptivebuffer",
@@ -6458,7 +6458,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#AdaptiveBuffer.__init__"
   },
   "AdaptiveBuffer.add": {
     "name": "add",
@@ -6466,7 +6466,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer",
-    "path": "pathsim/api#add"
+    "path": "pathsim/api#AdaptiveBuffer.add"
   },
   "AdaptiveBuffer.interp": {
     "name": "interp",
@@ -6474,7 +6474,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer",
-    "path": "pathsim/api#interp"
+    "path": "pathsim/api#AdaptiveBuffer.interp"
   },
   "AdaptiveBuffer.get": {
     "name": "get",
@@ -6482,7 +6482,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer",
-    "path": "pathsim/api#get"
+    "path": "pathsim/api#AdaptiveBuffer.get"
   },
   "AdaptiveBuffer.clear": {
     "name": "clear",
@@ -6490,7 +6490,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.adaptivebuffer",
     "parentClass": "AdaptiveBuffer",
-    "path": "pathsim/api#clear"
+    "path": "pathsim/api#AdaptiveBuffer.clear"
   },
   "pathsim.utils.analysis": {
     "name": "pathsim.utils.analysis",
@@ -6526,7 +6526,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.analysis",
     "parentClass": "Timer",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Timer.__init__"
   },
   "Profiler": {
     "name": "Profiler",
@@ -6555,7 +6555,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.analysis",
     "parentClass": "Profiler",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Profiler.__init__"
   },
   "timer": {
     "name": "timer",
@@ -6640,7 +6640,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "EventInfo",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#EventInfo.__init__"
   },
   "StepResult": {
     "name": "StepResult",
@@ -6669,7 +6669,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "StepResult",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#StepResult.__init__"
   },
   "_FMI2Ops": {
     "name": "_FMI2Ops",
@@ -6698,7 +6698,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#set_real"
+    "path": "pathsim/api#_FMI2Ops.set_real"
   },
   "_FMI2Ops.get_real": {
     "name": "get_real",
@@ -6706,7 +6706,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#get_real"
+    "path": "pathsim/api#_FMI2Ops.get_real"
   },
   "_FMI2Ops.set_integer": {
     "name": "set_integer",
@@ -6714,7 +6714,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#set_integer"
+    "path": "pathsim/api#_FMI2Ops.set_integer"
   },
   "_FMI2Ops.get_integer": {
     "name": "get_integer",
@@ -6722,7 +6722,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#get_integer"
+    "path": "pathsim/api#_FMI2Ops.get_integer"
   },
   "_FMI2Ops.do_step": {
     "name": "do_step",
@@ -6730,7 +6730,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#do_step"
+    "path": "pathsim/api#_FMI2Ops.do_step"
   },
   "_FMI2Ops.get_derivatives": {
     "name": "get_derivatives",
@@ -6738,7 +6738,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#get_derivatives"
+    "path": "pathsim/api#_FMI2Ops.get_derivatives"
   },
   "_FMI2Ops.update_discrete_states": {
     "name": "update_discrete_states",
@@ -6746,7 +6746,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#update_discrete_states"
+    "path": "pathsim/api#_FMI2Ops.update_discrete_states"
   },
   "_FMI2Ops.setup_experiment": {
     "name": "setup_experiment",
@@ -6754,7 +6754,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#setup_experiment"
+    "path": "pathsim/api#_FMI2Ops.setup_experiment"
   },
   "_FMI2Ops.enter_initialization_mode": {
     "name": "enter_initialization_mode",
@@ -6762,7 +6762,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#enter_initialization_mode"
+    "path": "pathsim/api#_FMI2Ops.enter_initialization_mode"
   },
   "_FMI2Ops.exit_initialization_mode": {
     "name": "exit_initialization_mode",
@@ -6770,7 +6770,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI2Ops",
-    "path": "pathsim/api#exit_initialization_mode"
+    "path": "pathsim/api#_FMI2Ops.exit_initialization_mode"
   },
   "_FMI3Ops": {
     "name": "_FMI3Ops",
@@ -6799,7 +6799,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#set_real"
+    "path": "pathsim/api#_FMI3Ops.set_real"
   },
   "_FMI3Ops.get_real": {
     "name": "get_real",
@@ -6807,7 +6807,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#get_real"
+    "path": "pathsim/api#_FMI3Ops.get_real"
   },
   "_FMI3Ops.set_integer": {
     "name": "set_integer",
@@ -6815,7 +6815,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#set_integer"
+    "path": "pathsim/api#_FMI3Ops.set_integer"
   },
   "_FMI3Ops.get_integer": {
     "name": "get_integer",
@@ -6823,7 +6823,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#get_integer"
+    "path": "pathsim/api#_FMI3Ops.get_integer"
   },
   "_FMI3Ops.do_step": {
     "name": "do_step",
@@ -6831,7 +6831,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#do_step"
+    "path": "pathsim/api#_FMI3Ops.do_step"
   },
   "_FMI3Ops.get_derivatives": {
     "name": "get_derivatives",
@@ -6839,7 +6839,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#get_derivatives"
+    "path": "pathsim/api#_FMI3Ops.get_derivatives"
   },
   "_FMI3Ops.update_discrete_states": {
     "name": "update_discrete_states",
@@ -6847,7 +6847,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#update_discrete_states"
+    "path": "pathsim/api#_FMI3Ops.update_discrete_states"
   },
   "_FMI3Ops.setup_experiment": {
     "name": "setup_experiment",
@@ -6855,7 +6855,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#setup_experiment"
+    "path": "pathsim/api#_FMI3Ops.setup_experiment"
   },
   "_FMI3Ops.enter_initialization_mode": {
     "name": "enter_initialization_mode",
@@ -6863,7 +6863,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#enter_initialization_mode"
+    "path": "pathsim/api#_FMI3Ops.enter_initialization_mode"
   },
   "_FMI3Ops.exit_initialization_mode": {
     "name": "exit_initialization_mode",
@@ -6871,7 +6871,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "_FMI3Ops",
-    "path": "pathsim/api#exit_initialization_mode"
+    "path": "pathsim/api#_FMI3Ops.exit_initialization_mode"
   },
   "FMUWrapper": {
     "name": "FMUWrapper",
@@ -6900,7 +6900,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#FMUWrapper.__init__"
   },
   "FMUWrapper._create_fmu_instance": {
     "name": "_create_fmu_instance",
@@ -6908,7 +6908,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#_create_fmu_instance"
+    "path": "pathsim/api#FMUWrapper._create_fmu_instance"
   },
   "FMUWrapper._build_variable_maps": {
     "name": "_build_variable_maps",
@@ -6916,7 +6916,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#_build_variable_maps"
+    "path": "pathsim/api#FMUWrapper._build_variable_maps"
   },
   "FMUWrapper._build_state_derivative_maps": {
     "name": "_build_state_derivative_maps",
@@ -6924,7 +6924,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#_build_state_derivative_maps"
+    "path": "pathsim/api#FMUWrapper._build_state_derivative_maps"
   },
   "FMUWrapper.create_port_registers": {
     "name": "create_port_registers",
@@ -6932,7 +6932,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#create_port_registers"
+    "path": "pathsim/api#FMUWrapper.create_port_registers"
   },
   "FMUWrapper.initialize": {
     "name": "initialize",
@@ -6940,7 +6940,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#initialize"
+    "path": "pathsim/api#FMUWrapper.initialize"
   },
   "FMUWrapper.get_state_jacobian": {
     "name": "get_state_jacobian",
@@ -6948,7 +6948,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#get_state_jacobian"
+    "path": "pathsim/api#FMUWrapper.get_state_jacobian"
   },
   "FMUWrapper.instantiate": {
     "name": "instantiate",
@@ -6956,7 +6956,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#instantiate"
+    "path": "pathsim/api#FMUWrapper.instantiate"
   },
   "FMUWrapper.setup_experiment": {
     "name": "setup_experiment",
@@ -6964,7 +6964,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#setup_experiment"
+    "path": "pathsim/api#FMUWrapper.setup_experiment"
   },
   "FMUWrapper.enter_initialization_mode": {
     "name": "enter_initialization_mode",
@@ -6972,7 +6972,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#enter_initialization_mode"
+    "path": "pathsim/api#FMUWrapper.enter_initialization_mode"
   },
   "FMUWrapper.exit_initialization_mode": {
     "name": "exit_initialization_mode",
@@ -6980,7 +6980,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#exit_initialization_mode"
+    "path": "pathsim/api#FMUWrapper.exit_initialization_mode"
   },
   "FMUWrapper.reset": {
     "name": "reset",
@@ -6988,7 +6988,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#FMUWrapper.reset"
   },
   "FMUWrapper.terminate": {
     "name": "terminate",
@@ -6996,7 +6996,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#terminate"
+    "path": "pathsim/api#FMUWrapper.terminate"
   },
   "FMUWrapper.free_instance": {
     "name": "free_instance",
@@ -7004,7 +7004,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#free_instance"
+    "path": "pathsim/api#FMUWrapper.free_instance"
   },
   "FMUWrapper.set_real": {
     "name": "set_real",
@@ -7012,7 +7012,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#set_real"
+    "path": "pathsim/api#FMUWrapper.set_real"
   },
   "FMUWrapper.get_real": {
     "name": "get_real",
@@ -7020,7 +7020,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#get_real"
+    "path": "pathsim/api#FMUWrapper.get_real"
   },
   "FMUWrapper.set_variable": {
     "name": "set_variable",
@@ -7028,7 +7028,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#set_variable"
+    "path": "pathsim/api#FMUWrapper.set_variable"
   },
   "FMUWrapper.set_inputs_from_array": {
     "name": "set_inputs_from_array",
@@ -7036,7 +7036,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#set_inputs_from_array"
+    "path": "pathsim/api#FMUWrapper.set_inputs_from_array"
   },
   "FMUWrapper.get_outputs_as_array": {
     "name": "get_outputs_as_array",
@@ -7044,7 +7044,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#get_outputs_as_array"
+    "path": "pathsim/api#FMUWrapper.get_outputs_as_array"
   },
   "FMUWrapper.do_step": {
     "name": "do_step",
@@ -7052,7 +7052,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#do_step"
+    "path": "pathsim/api#FMUWrapper.do_step"
   },
   "FMUWrapper.set_time": {
     "name": "set_time",
@@ -7060,7 +7060,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#set_time"
+    "path": "pathsim/api#FMUWrapper.set_time"
   },
   "FMUWrapper.set_continuous_states": {
     "name": "set_continuous_states",
@@ -7068,7 +7068,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#set_continuous_states"
+    "path": "pathsim/api#FMUWrapper.set_continuous_states"
   },
   "FMUWrapper.get_continuous_states": {
     "name": "get_continuous_states",
@@ -7076,7 +7076,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#get_continuous_states"
+    "path": "pathsim/api#FMUWrapper.get_continuous_states"
   },
   "FMUWrapper.get_derivatives": {
     "name": "get_derivatives",
@@ -7084,7 +7084,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#get_derivatives"
+    "path": "pathsim/api#FMUWrapper.get_derivatives"
   },
   "FMUWrapper.get_event_indicators": {
     "name": "get_event_indicators",
@@ -7092,7 +7092,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#get_event_indicators"
+    "path": "pathsim/api#FMUWrapper.get_event_indicators"
   },
   "FMUWrapper.enter_event_mode": {
     "name": "enter_event_mode",
@@ -7100,7 +7100,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#enter_event_mode"
+    "path": "pathsim/api#FMUWrapper.enter_event_mode"
   },
   "FMUWrapper.enter_continuous_time_mode": {
     "name": "enter_continuous_time_mode",
@@ -7108,7 +7108,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#enter_continuous_time_mode"
+    "path": "pathsim/api#FMUWrapper.enter_continuous_time_mode"
   },
   "FMUWrapper.update_discrete_states": {
     "name": "update_discrete_states",
@@ -7116,7 +7116,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#update_discrete_states"
+    "path": "pathsim/api#FMUWrapper.update_discrete_states"
   },
   "FMUWrapper.completed_integrator_step": {
     "name": "completed_integrator_step",
@@ -7124,7 +7124,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#completed_integrator_step"
+    "path": "pathsim/api#FMUWrapper.completed_integrator_step"
   },
   "FMUWrapper.__del__": {
     "name": "__del__",
@@ -7132,7 +7132,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.fmuwrapper",
     "parentClass": "FMUWrapper",
-    "path": "pathsim/api#__del__"
+    "path": "pathsim/api#FMUWrapper.__del__"
   },
   "pathsim.utils.gilbert": {
     "name": "pathsim.utils.gilbert",
@@ -7189,7 +7189,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Graph.__init__"
   },
   "Graph._validate_connections": {
     "name": "_validate_connections",
@@ -7197,7 +7197,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_validate_connections"
+    "path": "pathsim/api#Graph._validate_connections"
   },
   "Graph._build_all_maps": {
     "name": "_build_all_maps",
@@ -7205,7 +7205,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_build_all_maps"
+    "path": "pathsim/api#Graph._build_all_maps"
   },
   "Graph._assemble": {
     "name": "_assemble",
@@ -7213,7 +7213,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_assemble"
+    "path": "pathsim/api#Graph._assemble"
   },
   "Graph._compute_depths_iterative": {
     "name": "_compute_depths_iterative",
@@ -7221,7 +7221,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_compute_depths_iterative"
+    "path": "pathsim/api#Graph._compute_depths_iterative"
   },
   "Graph._process_loops": {
     "name": "_process_loops",
@@ -7229,7 +7229,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_process_loops"
+    "path": "pathsim/api#Graph._process_loops"
   },
   "Graph._find_strongly_connected_components": {
     "name": "_find_strongly_connected_components",
@@ -7237,7 +7237,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_find_strongly_connected_components"
+    "path": "pathsim/api#Graph._find_strongly_connected_components"
   },
   "Graph.is_algebraic_path": {
     "name": "is_algebraic_path",
@@ -7245,7 +7245,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#is_algebraic_path"
+    "path": "pathsim/api#Graph.is_algebraic_path"
   },
   "Graph._has_algebraic_self_loop": {
     "name": "_has_algebraic_self_loop",
@@ -7253,7 +7253,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#_has_algebraic_self_loop"
+    "path": "pathsim/api#Graph._has_algebraic_self_loop"
   },
   "Graph.outgoing_connections": {
     "name": "outgoing_connections",
@@ -7261,7 +7261,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#outgoing_connections"
+    "path": "pathsim/api#Graph.outgoing_connections"
   },
   "Graph.dag": {
     "name": "dag",
@@ -7269,7 +7269,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#dag"
+    "path": "pathsim/api#Graph.dag"
   },
   "Graph.loop": {
     "name": "loop",
@@ -7277,7 +7277,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#loop"
+    "path": "pathsim/api#Graph.loop"
   },
   "Graph.loop_closing_connections": {
     "name": "loop_closing_connections",
@@ -7285,7 +7285,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.graph",
     "parentClass": "Graph",
-    "path": "pathsim/api#loop_closing_connections"
+    "path": "pathsim/api#Graph.loop_closing_connections"
   },
   "pathsim.utils.logger": {
     "name": "pathsim.utils.logger",
@@ -7321,7 +7321,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#__new__"
+    "path": "pathsim/api#LoggerManager.__new__"
   },
   "LoggerManager.__init__": {
     "name": "__init__",
@@ -7329,7 +7329,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#LoggerManager.__init__"
   },
   "LoggerManager._setup_root_logger": {
     "name": "_setup_root_logger",
@@ -7337,7 +7337,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#_setup_root_logger"
+    "path": "pathsim/api#LoggerManager._setup_root_logger"
   },
   "LoggerManager.configure": {
     "name": "configure",
@@ -7345,7 +7345,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#configure"
+    "path": "pathsim/api#LoggerManager.configure"
   },
   "LoggerManager.get_logger": {
     "name": "get_logger",
@@ -7353,7 +7353,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#get_logger"
+    "path": "pathsim/api#LoggerManager.get_logger"
   },
   "LoggerManager.set_level": {
     "name": "set_level",
@@ -7361,7 +7361,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#set_level"
+    "path": "pathsim/api#LoggerManager.set_level"
   },
   "LoggerManager.is_enabled": {
     "name": "is_enabled",
@@ -7369,7 +7369,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#is_enabled"
+    "path": "pathsim/api#LoggerManager.is_enabled"
   },
   "LoggerManager.get_effective_level": {
     "name": "get_effective_level",
@@ -7377,7 +7377,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.logger",
     "parentClass": "LoggerManager",
-    "path": "pathsim/api#get_effective_level"
+    "path": "pathsim/api#LoggerManager.get_effective_level"
   },
   "pathsim.utils.portreference": {
     "name": "pathsim.utils.portreference",
@@ -7413,7 +7413,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#PortReference.__init__"
   },
   "PortReference._get_input_indices": {
     "name": "_get_input_indices",
@@ -7421,7 +7421,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#_get_input_indices"
+    "path": "pathsim/api#PortReference._get_input_indices"
   },
   "PortReference._get_output_indices": {
     "name": "_get_output_indices",
@@ -7429,7 +7429,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#_get_output_indices"
+    "path": "pathsim/api#PortReference._get_output_indices"
   },
   "PortReference._validate_input_ports": {
     "name": "_validate_input_ports",
@@ -7437,7 +7437,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#_validate_input_ports"
+    "path": "pathsim/api#PortReference._validate_input_ports"
   },
   "PortReference._validate_output_ports": {
     "name": "_validate_output_ports",
@@ -7445,7 +7445,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#_validate_output_ports"
+    "path": "pathsim/api#PortReference._validate_output_ports"
   },
   "PortReference.to": {
     "name": "to",
@@ -7453,7 +7453,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#to"
+    "path": "pathsim/api#PortReference.to"
   },
   "PortReference.get_inputs": {
     "name": "get_inputs",
@@ -7461,7 +7461,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#get_inputs"
+    "path": "pathsim/api#PortReference.get_inputs"
   },
   "PortReference.set_inputs": {
     "name": "set_inputs",
@@ -7469,7 +7469,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#set_inputs"
+    "path": "pathsim/api#PortReference.set_inputs"
   },
   "PortReference.get_outputs": {
     "name": "get_outputs",
@@ -7477,7 +7477,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#get_outputs"
+    "path": "pathsim/api#PortReference.get_outputs"
   },
   "PortReference.set_outputs": {
     "name": "set_outputs",
@@ -7485,7 +7485,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#set_outputs"
+    "path": "pathsim/api#PortReference.set_outputs"
   },
   "PortReference.to_dict": {
     "name": "to_dict",
@@ -7493,7 +7493,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.portreference",
     "parentClass": "PortReference",
-    "path": "pathsim/api#to_dict"
+    "path": "pathsim/api#PortReference.to_dict"
   },
   "pathsim.utils.progresstracker": {
     "name": "pathsim.utils.progresstracker",
@@ -7529,7 +7529,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#ProgressTracker.__init__"
   },
   "ProgressTracker.start": {
     "name": "start",
@@ -7537,7 +7537,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#start"
+    "path": "pathsim/api#ProgressTracker.start"
   },
   "ProgressTracker.update": {
     "name": "update",
@@ -7545,7 +7545,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#ProgressTracker.update"
   },
   "ProgressTracker.interrupt": {
     "name": "interrupt",
@@ -7553,7 +7553,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#interrupt"
+    "path": "pathsim/api#ProgressTracker.interrupt"
   },
   "ProgressTracker.close": {
     "name": "close",
@@ -7561,7 +7561,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#close"
+    "path": "pathsim/api#ProgressTracker.close"
   },
   "ProgressTracker._log_progress": {
     "name": "_log_progress",
@@ -7569,7 +7569,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#_log_progress"
+    "path": "pathsim/api#ProgressTracker._log_progress"
   },
   "ProgressTracker._render_bar": {
     "name": "_render_bar",
@@ -7577,7 +7577,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#_render_bar"
+    "path": "pathsim/api#ProgressTracker._render_bar"
   },
   "ProgressTracker._format_time": {
     "name": "_format_time",
@@ -7585,7 +7585,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#_format_time"
+    "path": "pathsim/api#ProgressTracker._format_time"
   },
   "ProgressTracker._format_rate": {
     "name": "_format_rate",
@@ -7593,7 +7593,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.progresstracker",
     "parentClass": "ProgressTracker",
-    "path": "pathsim/api#_format_rate"
+    "path": "pathsim/api#ProgressTracker._format_rate"
   },
   "pathsim.utils.realtimeplotter": {
     "name": "pathsim.utils.realtimeplotter",
@@ -7629,7 +7629,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#RealtimePlotter.__init__"
   },
   "RealtimePlotter.update_all": {
     "name": "update_all",
@@ -7637,7 +7637,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#update_all"
+    "path": "pathsim/api#RealtimePlotter.update_all"
   },
   "RealtimePlotter.update": {
     "name": "update",
@@ -7645,7 +7645,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#update"
+    "path": "pathsim/api#RealtimePlotter.update"
   },
   "RealtimePlotter._update_plot": {
     "name": "_update_plot",
@@ -7653,7 +7653,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#_update_plot"
+    "path": "pathsim/api#RealtimePlotter._update_plot"
   },
   "RealtimePlotter.show": {
     "name": "show",
@@ -7661,7 +7661,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#show"
+    "path": "pathsim/api#RealtimePlotter.show"
   },
   "RealtimePlotter.on_close": {
     "name": "on_close",
@@ -7669,7 +7669,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#on_close"
+    "path": "pathsim/api#RealtimePlotter.on_close"
   },
   "RealtimePlotter._setup_legend_picking": {
     "name": "_setup_legend_picking",
@@ -7677,7 +7677,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.realtimeplotter",
     "parentClass": "RealtimePlotter",
-    "path": "pathsim/api#_setup_legend_picking"
+    "path": "pathsim/api#RealtimePlotter._setup_legend_picking"
   },
   "pathsim.utils.register": {
     "name": "pathsim.utils.register",
@@ -7713,7 +7713,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#__init__"
+    "path": "pathsim/api#Register.__init__"
   },
   "Register._map": {
     "name": "_map",
@@ -7721,7 +7721,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#_map"
+    "path": "pathsim/api#Register._map"
   },
   "Register._get_max_index": {
     "name": "_get_max_index",
@@ -7729,7 +7729,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#_get_max_index"
+    "path": "pathsim/api#Register._get_max_index"
   },
   "Register.resize": {
     "name": "resize",
@@ -7737,7 +7737,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#resize"
+    "path": "pathsim/api#Register.resize"
   },
   "Register.reset": {
     "name": "reset",
@@ -7745,7 +7745,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#reset"
+    "path": "pathsim/api#Register.reset"
   },
   "Register.to_array": {
     "name": "to_array",
@@ -7753,7 +7753,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#to_array"
+    "path": "pathsim/api#Register.to_array"
   },
   "Register.update_from_array": {
     "name": "update_from_array",
@@ -7761,7 +7761,7 @@
     "packageId": "pathsim",
     "moduleName": "pathsim.utils.register",
     "parentClass": "Register",
-    "path": "pathsim/api#update_from_array"
+    "path": "pathsim/api#Register.update_from_array"
   },
   "pathsim_chem.tritium.bubbler": {
     "name": "pathsim_chem.tritium.bubbler",
@@ -7797,7 +7797,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.bubbler",
     "parentClass": "Bubbler4",
-    "path": "chem/api#__init__"
+    "path": "chem/api#Bubbler4.__init__"
   },
   "Bubbler4._create_reset_event_vial": {
     "name": "_create_reset_event_vial",
@@ -7805,7 +7805,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.bubbler",
     "parentClass": "Bubbler4",
-    "path": "chem/api#_create_reset_event_vial"
+    "path": "chem/api#Bubbler4._create_reset_event_vial"
   },
   "Bubbler4._create_reset_events": {
     "name": "_create_reset_events",
@@ -7813,7 +7813,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.bubbler",
     "parentClass": "Bubbler4",
-    "path": "chem/api#_create_reset_events"
+    "path": "chem/api#Bubbler4._create_reset_events"
   },
   "pathsim_chem.tritium.glc": {
     "name": "pathsim_chem.tritium.glc",
@@ -7849,7 +7849,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.glc",
     "parentClass": "GLC",
-    "path": "chem/api#__init__"
+    "path": "chem/api#GLC.__init__"
   },
   "GLC.func": {
     "name": "func",
@@ -7857,7 +7857,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.glc",
     "parentClass": "GLC",
-    "path": "chem/api#func"
+    "path": "chem/api#GLC.func"
   },
   "_calculate_properties": {
     "name": "_calculate_properties",
@@ -7963,7 +7963,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.residencetime",
     "parentClass": "ResidenceTime",
-    "path": "chem/api#__init__"
+    "path": "chem/api#ResidenceTime.__init__"
   },
   "Process": {
     "name": "Process",
@@ -7992,7 +7992,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.residencetime",
     "parentClass": "Process",
-    "path": "chem/api#__init__"
+    "path": "chem/api#Process.__init__"
   },
   "pathsim_chem.tritium.splitter": {
     "name": "pathsim_chem.tritium.splitter",
@@ -8028,7 +8028,7 @@
     "packageId": "chem",
     "moduleName": "pathsim_chem.tritium.splitter",
     "parentClass": "Splitter",
-    "path": "chem/api#__init__"
+    "path": "chem/api#Splitter.__init__"
   },
   "pathsim_chem.tritium.tcap": {
     "name": "pathsim_chem.tritium.tcap",

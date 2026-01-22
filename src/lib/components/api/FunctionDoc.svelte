@@ -13,9 +13,13 @@
 		func: APIFunction | APIMethod;
 		isMethod?: boolean;
 		expanded?: boolean;
+		parentClass?: string;
 	}
 
-	let { func, isMethod = false, expanded = false }: Props = $props();
+	let { func, isMethod = false, expanded = false, parentClass }: Props = $props();
+
+	// Element ID - include parent class for methods to avoid collisions
+	let elementId = $derived(parentClass ? `${parentClass}.${func.name}` : func.name);
 	// Use IIFE to capture initial value without triggering reactive warning
 	let isExpanded = $state((() => expanded)());
 	let viewMode = $state<'docs' | 'source'>('docs');
@@ -82,8 +86,12 @@
 		const target = $searchTarget;
 		if (!target) return;
 
-		// Match function or method by name
-		if ((target.type === 'function' || target.type === 'method') && target.name === func.name) {
+		// Match function by name, or method by name AND parentClass
+		const nameMatches = target.name === func.name;
+		const isMethodMatch = target.type === 'method' && nameMatches && target.parentClass === parentClass;
+		const isFunctionMatch = target.type === 'function' && nameMatches;
+
+		if (isMethodMatch || isFunctionMatch) {
 			isExpanded = true;
 			clearSearchTarget();
 			tick().then(() => {
@@ -97,7 +105,7 @@
 	});
 </script>
 
-<div class="tile method-tile elevated" id={func.name} bind:this={tileElement}>
+<div class="tile method-tile elevated" id={elementId} bind:this={tileElement}>
 	<button class="panel-header method-header" class:expanded={isExpanded} onclick={() => (isExpanded = !isExpanded)}>
 		<div class="method-header-content">
 			<code class="method-name">{func.name}</code>

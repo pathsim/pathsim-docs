@@ -142,7 +142,7 @@
 						<div class="label-uppercase methods-header">Methods</div>
 						<div class="methods-list">
 							{#each methods as method}
-								<FunctionDoc func={method} isMethod={true} />
+								<FunctionDoc func={method} isMethod={true} parentClass={cls.name} />
 							{/each}
 						</div>
 					</div>

@@ -139,7 +139,7 @@ def build_search_index(api_data: dict, manifests: dict) -> list[dict]:
                         "type": "method",
                         "name": method["name"],
                         "description": method.get("description", ""),
-                        "path": f"{base_path}#{method['name']}",
+                        "path": f"{base_path}#{cls['name']}.{method['name']}",
                         "packageId": pkg_id,
                         "moduleName": module_name,
                         "parentClass": cls["name"]
@@ -215,7 +215,7 @@ def build_crossref_index(api_data: dict) -> dict[str, dict]:
                         "packageId": pkg_id,
                         "moduleName": module_name,
                         "parentClass": cls["name"],
-                        "path": f"{api_path}#{method['name']}"
+                        "path": f"{api_path}#{cls['name']}.{method['name']}"
                     }
                     # Index by ClassName.method_name
                     index[f"{cls['name']}.{method['name']}"] = method_target
