@@ -45,15 +45,6 @@ jobs:
             echo "✓ $repo cloned successfully ($(git -C ../$repo describe --tags --always 2>/dev/null || echo 'no tags'))"
           done
 
-      # Cache historical API versions (reduces extraction time)
-      - name: Cache versioned API files
-        uses: actions/cache@v4
-        with:
-          path: static/api/versions
-          key: api-versions-v2-${{ hashFiles('scripts/extract-versions.py') }}
-          restore-keys: |
-            api-versions-v2-
-
       # Always extract latest API (for src/lib/api/generated/)
       - name: Extract latest API
         run: python scripts/extract-api.py
