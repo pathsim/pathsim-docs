@@ -26,7 +26,18 @@
 		const pipName = pkg.installation.find((i) => i.name.toLowerCase() === 'pip')?.command.split(' ').pop() || data.packageId;
 		packageVersionsStore.set({ [pipName]: versionNumber });
 
-		return () => {
+		// Also track slug to re-run effect when example changes
+		const _slug = data.meta.slug;
+
+		return async () => {
+			// Terminate Pyodide when leaving/changing example
+			// This ensures clean state and correct package versions
+			try {
+				const { terminate } = await import('$lib/pyodide');
+				terminate();
+			} catch {
+				// Ignore if not loaded
+			}
 			packageVersionsStore.clear();
 		};
 	});
