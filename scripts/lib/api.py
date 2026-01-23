@@ -413,7 +413,7 @@ def _rst_to_html(rst_text: str) -> str:
                 "report_level": 5,
                 "halt_level": 5,
                 "initial_header_level": 4,
-                "math_output": "MathJax",
+                "math_output": "LaTeX",
                 "syntax_highlight": "short",
             }
         )

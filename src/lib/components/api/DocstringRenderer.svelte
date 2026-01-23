@@ -64,7 +64,7 @@
 					cleaned = `\\begin{aligned}${cleaned}\\end{aligned}`;
 				}
 
-				const isDisplay = el.tagName === 'DIV' || latex.includes('\\[');
+				const isDisplay = el.tagName === 'DIV' || el.tagName === 'PRE' || latex.includes('\\[');
 
 				const rendered = k.default.renderToString(cleaned, {
 					displayMode: isDisplay,
@@ -238,8 +238,9 @@
 		const preElements = container.querySelectorAll('pre');
 
 		for (const preEl of preElements) {
-			// Skip if already processed
+			// Skip if already processed or is math content
 			if (preEl.classList.contains('cm-processed')) continue;
+			if (preEl.classList.contains('math')) continue;
 
 			// Get code content - either from nested code element or directly from pre
 			const codeEl = preEl.querySelector('code');
