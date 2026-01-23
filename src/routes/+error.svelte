@@ -107,7 +107,7 @@
 					</a>
 					<a href="{base}/{packages.pathsim.docs}" class="action-card">
 						<Icon name="zap" size={20} />
-						<span class="action-label">Get Started</span>
+						<span class="action-label">Intro</span>
 					</a>
 					<a href={nav.tryOnline} class="action-card">
 						<Icon name="play" size={20} />
