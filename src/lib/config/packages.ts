@@ -207,7 +207,7 @@ export function getSidebarItems(packageId: PackageId, version?: string): Sidebar
 // Navigation links
 export const nav = {
 	home: external.home,
-	tryOnline: external.view,
+	editor: external.view,
 	github: `${external.github}/pathsim`,
 	sponsor: external.sponsor
 };
