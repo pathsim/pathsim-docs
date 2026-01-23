@@ -46,6 +46,13 @@ from lib.notebooks import (
 )
 from lib.executor import execute_notebooks
 
+# Optional: embeddings for semantic search
+try:
+    from lib.embeddings import generate_version_embeddings
+    HAS_EMBEDDINGS = True
+except ImportError:
+    HAS_EMBEDDINGS = False
+
 
 # ============================================================================
 # Index Generation (per-version search and crossref indexes)
@@ -336,6 +343,16 @@ def build_version(
         print(f"    Generating indexes...")
         generate_version_indexes(package_id, tag, output_dir)
 
+        # 6. Generate embeddings for semantic search (optional)
+        if HAS_EMBEDDINGS:
+            print(f"    Generating embeddings...")
+            try:
+                generated = generate_version_embeddings(output_dir, force=True)
+                if not generated:
+                    print(f"      Skipped (no search items)")
+            except Exception as e:
+                print(f"      Warning: {e}")
+
         print(f"    Done")
         return True
 
@@ -513,6 +530,7 @@ Examples:
     print("=" * 50)
     print(f"Mode: {'REBUILD ALL' if args.rebuild_all else 'SMART (missing + latest)'}")
     print(f"Execute notebooks: {'NO' if args.no_execute else 'YES'}")
+    print(f"Embeddings: {'YES' if HAS_EMBEDDINGS else 'NO (install sentence-transformers)'}")
     if args.dry_run:
         print("DRY RUN - no files will be written")
 

@@ -5,18 +5,14 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, packageOrder, nav } from '$lib/config/packages';
-	import { search, searchIndexStore, type SearchResult } from '$lib/utils/search';
+	import { search, hybridSearch, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
+	import { SearchResult as SearchResultComponent } from '$lib/components/search';
 
 	let searchQuery = $state('');
 	let debouncedQuery = $state('');
-	// Subscribe to store for reactivity, then compute search results
-	let searchIndex = $derived($searchIndexStore);
-	let searchResults = $derived.by(() => {
-		// Depend on searchIndex to trigger re-computation when index loads
-		searchIndex;
-		return search(debouncedQuery, 8);
-	});
+	let searchResults = $state<SearchResult[]>([]);
+	let isSearching = $state(false);
 	let showResults = $derived(searchQuery.length > 0);
 
 	// Debounce search query (150ms delay)
@@ -26,6 +22,34 @@
 			debouncedQuery = query;
 		}, 150);
 		return () => clearTimeout(timeout);
+	});
+
+	// Run hybrid search when debounced query changes
+	$effect(() => {
+		const query = debouncedQuery;
+		if (!query) {
+			searchResults = [];
+			isSearching = false;
+			return;
+		}
+
+		let cancelled = false;
+
+		hybridSearch(query, 8, () => {
+			if (!cancelled) isSearching = true;
+		}).then((result) => {
+			if (!cancelled) {
+				searchResults = result.results;
+				isSearching = false;
+			}
+		}).catch(() => {
+			if (!cancelled) {
+				searchResults = search(query, 8);
+				isSearching = false;
+			}
+		});
+
+		return () => { cancelled = true; };
 	});
 	let searchInput = $state<HTMLInputElement | null>(null);
 
@@ -64,17 +88,6 @@
 		});
 		goto(`${base}/${result.path}`);
 	}
-
-	function getTypeIcon(type: SearchResult['type']): string {
-		switch (type) {
-			case 'page': return 'file';
-			case 'module': return 'package';
-			case 'class': return 'box';
-			case 'function': return 'zap';
-			case 'method': return 'code';
-			case 'example': return 'play';
-		}
-	}
 </script>
 
 <svelte:head>
@@ -102,7 +115,9 @@
 						bind:this={searchInput}
 						onkeydown={handleSearchKeydown}
 					/>
-					{#if searchQuery}
+					{#if isSearching}
+						<span class="search-spinner"></span>
+					{:else if searchQuery}
 						<button class="clear-btn" onclick={() => (searchQuery = '')}>
 							<Icon name="x" size={14} />
 						</button>
@@ -143,15 +158,7 @@
 				{#if searchResults.length > 0}
 					<div class="results-grid">
 						{#each searchResults as result}
-							<button class="result-card elevated" onclick={() => handleResultClick(result)}>
-								<div class="result-icon">
-									<Icon name={getTypeIcon(result.type)} size={16} />
-								</div>
-								<div class="result-content">
-									<span class="result-name">{result.name}</span>
-									<span class="result-context">{result.parentClass || result.moduleName}</span>
-								</div>
-							</button>
+							<SearchResultComponent {result} variant="card" onclick={() => handleResultClick(result)} />
 						{/each}
 					</div>
 				{:else}
@@ -320,51 +327,6 @@
 		.results-grid {
 			grid-template-columns: 1fr;
 		}
-	}
-
-	.result-card {
-		display: flex;
-		align-items: center;
-		gap: var(--space-md);
-		padding: var(--space-md) var(--space-lg);
-		background: var(--surface-raised);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		cursor: pointer;
-		text-align: left;
-		transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-	}
-
-	.result-card:hover {
-		border-color: var(--accent);
-		box-shadow: var(--shadow-md), 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
-	}
-
-	.result-icon {
-		color: var(--text-muted);
-		flex-shrink: 0;
-	}
-
-	.result-content {
-		flex: 1;
-		min-width: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 2px;
-	}
-
-	.result-name {
-		font-size: var(--font-base);
-		font-weight: 600;
-		color: var(--text);
-	}
-
-	.result-context {
-		font-size: var(--font-base);
-		color: var(--text-muted);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
 	}
 
 	.no-results {
