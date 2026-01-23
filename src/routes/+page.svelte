@@ -5,18 +5,13 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, packageOrder, nav } from '$lib/config/packages';
-	import { search, searchIndexStore, type SearchResult } from '$lib/utils/search';
+	import { search, hybridSearch, searchIndexStore, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 
 	let searchQuery = $state('');
 	let debouncedQuery = $state('');
-	// Subscribe to store for reactivity, then compute search results
-	let searchIndex = $derived($searchIndexStore);
-	let searchResults = $derived.by(() => {
-		// Depend on searchIndex to trigger re-computation when index loads
-		searchIndex;
-		return search(debouncedQuery, 8);
-	});
+	let searchResults = $state<SearchResult[]>([]);
+	let isSearching = $state(false);
 	let showResults = $derived(searchQuery.length > 0);
 
 	// Debounce search query (150ms delay)
@@ -26,6 +21,34 @@
 			debouncedQuery = query;
 		}, 150);
 		return () => clearTimeout(timeout);
+	});
+
+	// Run hybrid search when debounced query changes
+	$effect(() => {
+		const query = debouncedQuery;
+		if (!query) {
+			searchResults = [];
+			isSearching = false;
+			return;
+		}
+
+		let cancelled = false;
+
+		hybridSearch(query, 8, () => {
+			if (!cancelled) isSearching = true;
+		}).then((result) => {
+			if (!cancelled) {
+				searchResults = result.results;
+				isSearching = false;
+			}
+		}).catch(() => {
+			if (!cancelled) {
+				searchResults = search(query, 8);
+				isSearching = false;
+			}
+		});
+
+		return () => { cancelled = true; };
 	});
 	let searchInput = $state<HTMLInputElement | null>(null);
 
@@ -102,7 +125,9 @@
 						bind:this={searchInput}
 						onkeydown={handleSearchKeydown}
 					/>
-					{#if searchQuery}
+					{#if isSearching}
+						<span class="search-spinner"></span>
+					{:else if searchQuery}
 						<button class="clear-btn" onclick={() => (searchQuery = '')}>
 							<Icon name="x" size={14} />
 						</button>
@@ -291,6 +316,22 @@
 
 	.search-box .clear-btn:hover {
 		color: var(--text);
+	}
+
+	.search-spinner {
+		width: 14px;
+		height: 14px;
+		border: 2px solid var(--border);
+		border-top-color: var(--accent);
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+		flex-shrink: 0;
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
 	/* Search Results Section */
