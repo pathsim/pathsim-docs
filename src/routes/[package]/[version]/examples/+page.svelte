@@ -43,6 +43,10 @@
 	function navigateToExample(slug: string) {
 		goto(`${base}/${data.packageId}/${data.resolvedTag}/examples/${slug}`);
 	}
+
+	function getThumbnailUrl(thumbnail: string): string {
+		return `${base}/${data.packageId}/${data.resolvedTag}/figures/${thumbnail}`;
+	}
 </script>
 
 <svelte:head>
@@ -61,7 +65,7 @@
 	{#each [...groupedNotebooks] as [category, notebooks]}
 		<h2 id={category.id}>{category.title}</h2>
 
-		<div class="tile-grid cols-3">
+		<div class="tile-grid cols-2">
 			{#each notebooks as notebook}
 				<div
 					class="tile example-tile elevated"
@@ -71,7 +75,14 @@
 					tabindex="0"
 				>
 					<div class="panel-header">{notebook.title}</div>
-					<div class="panel-body tile-body">{notebook.description}</div>
+					<div class="panel-body tile-body">
+						<p class="tile-description">{notebook.description}</p>
+						{#if notebook.thumbnail}
+							<div class="thumbnail-wrapper">
+								<img src={getThumbnailUrl(notebook.thumbnail)} alt={notebook.title} />
+							</div>
+						{/if}
+					</div>
 				</div>
 			{/each}
 		</div>
@@ -92,5 +103,30 @@
 	/* Example tile - clickable */
 	.example-tile {
 		cursor: pointer;
+	}
+
+	/* Tile description text */
+	.tile-description {
+		margin: 0 0 var(--space-md) 0;
+		color: var(--text-muted);
+		font-size: var(--font-sm);
+		line-height: 1.5;
+	}
+
+	/* Thumbnail wrapper and image */
+	.thumbnail-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.thumbnail-wrapper img {
+		max-width: 100%;
+		max-height: 180px;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		border-radius: var(--radius-sm);
 	}
 </style>

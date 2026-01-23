@@ -12,7 +12,8 @@
         "ode",
         "basics"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/harmonic_oscillator_g.png"
     },
     {
       "slug": "linear-feedback",
@@ -24,7 +25,8 @@
         "ode",
         "feedback"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/linear_feedback_blockdiagram_g.png"
     },
     {
       "slug": "pendulum",
@@ -37,7 +39,8 @@
         "adaptive",
         "physics"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/pendulum_blockdiagram_g.png"
     },
     {
       "slug": "vanderpol",
@@ -49,7 +52,8 @@
         "ode",
         "nonlinear"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/ode_blockdiagram_g.png"
     },
     {
       "slug": "cascade-controller",
@@ -61,7 +65,8 @@
         "cascade",
         "feedback"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/cascade_blockdiagram_g.png"
     },
     {
       "slug": "pid-controller",
@@ -73,7 +78,8 @@
         "pid",
         "feedback"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/pid_blockdiagram_g.png"
     },
     {
       "slug": "thermostat",
@@ -85,7 +91,8 @@
         "hybrid",
         "events"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/thermostat_blockdiagram_g.png"
     },
     {
       "slug": "bouncing-ball",
@@ -97,7 +104,8 @@
         "events",
         "hybrid"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/bouncing_ball_g.png"
     },
     {
       "slug": "bouncing-pendulum",
@@ -109,7 +117,8 @@
         "events",
         "collision"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/bouncing_pendulum_blockdiagram_g.png"
     },
     {
       "slug": "stick-slip",
@@ -121,7 +130,8 @@
         "friction",
         "hybrid"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/stick_slip_g.png"
     },
     {
       "slug": "switched-bouncing-ball",
@@ -139,13 +149,14 @@
       "slug": "delta-sigma-adc",
       "file": "delta_sigma_adc.ipynb",
       "title": "Delta-Sigma ADC",
-      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a first-order delta-sigma (\u0394\u03a3) ADC, a popular architecture for high-resolution analog-to-digital c...",
+      "description": "You can also find this example as a single file in the GitHub repository.This example demonstrates a first-order delta-sigma (ΔΣ) ADC, a popular architecture for high-resolution analog-to-digital c...",
       "category": "electronics",
       "tags": [
         "adc",
         "mixed-signal"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/delta_sigma_blockdiagram_g.png"
     },
     {
       "slug": "diode-circuit",
@@ -157,7 +168,8 @@
         "nonlinear",
         "circuit"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/diode_blockdiagram_g.png"
     },
     {
       "slug": "sar-adc",
@@ -169,7 +181,8 @@
         "adc",
         "mixed-signal"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/sar_adc_blockdiagram_g.png"
     },
     {
       "slug": "fmcw-radar",
@@ -181,7 +194,8 @@
         "radar",
         "frequency"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/fmcw_g.png"
     },
     {
       "slug": "rf-network-oneport",
@@ -241,7 +255,8 @@
         "algebraic",
         "solver"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/algebraicloop_blockdiagram_g.png"
     },
     {
       "slug": "lorenz-attractor",
@@ -265,7 +280,8 @@
         "hierarchy",
         "subsystem"
       ],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/vanderpol_subsystem_lvl1_g.png"
     },
     {
       "slug": "automatic-differentiation",
@@ -274,7 +290,8 @@
       "description": "Lets start by evaluating our function with some regular floats:",
       "category": "advanced",
       "tags": [],
-      "executable": true
+      "executable": true,
+      "thumbnail": "figures_g/linear_feedback_blockdiagram_g.png"
     },
     {
       "slug": "fmu-cosimulation",

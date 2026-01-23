@@ -79,6 +79,7 @@ def _process_notebook(nb_path: Path, output_dir: Path) -> dict | None:
     # Extract metadata
     title = _extract_title(notebook)
     description = _extract_description(notebook)
+    thumbnail_path = _extract_thumbnail(notebook)
 
     # Get category and tags from mapping
     category, tags = CATEGORY_MAPPINGS.get(stem, ("advanced", []))
@@ -92,7 +93,24 @@ def _process_notebook(nb_path: Path, output_dir: Path) -> dict | None:
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(clean_notebook, f, indent=1, ensure_ascii=False)
 
-    return {
+    # Process thumbnail path - convert to figures-relative path
+    thumbnail = None
+    if thumbnail_path:
+        # Handle relative paths like "../figures/image.png" or "figures/image.png"
+        # Extract just the filename or subdirectory/filename
+        path_parts = Path(thumbnail_path.replace("\\", "/"))
+        # Get the path relative to figures directory
+        # Common patterns: ../figures/foo.png, figures/foo.png, ./figures/foo.png
+        parts = path_parts.parts
+        if "figures" in parts:
+            # Find index of 'figures' and take everything after
+            fig_idx = parts.index("figures")
+            thumbnail = "/".join(parts[fig_idx + 1:])
+        else:
+            # Just use the filename
+            thumbnail = path_parts.name
+
+    result = {
         "slug": slug,
         "file": nb_path.name,
         "title": title,
@@ -101,6 +119,11 @@ def _process_notebook(nb_path: Path, output_dir: Path) -> dict | None:
         "tags": tags,
         "executable": executable,
     }
+
+    if thumbnail:
+        result["thumbnail"] = thumbnail
+
+    return result
 
 
 def _strip_outputs(notebook: dict) -> dict:
@@ -136,6 +159,49 @@ def _extract_title(notebook: dict) -> str:
                 return match.group(1).strip()
 
     return "Untitled"
+
+
+def _extract_thumbnail(notebook: dict) -> str | None:
+    """Extract first image path from markdown cells.
+
+    Looks for images in markdown cells using:
+    - Markdown syntax: ![alt](path)
+    - HTML syntax: <img src="path">
+    - RST syntax: .. image:: path
+
+    Returns the image path (relative to notebook) or None if not found.
+    """
+    # Pattern for markdown images: ![alt](path)
+    md_pattern = re.compile(r'!\[[^\]]*\]\(([^)]+)\)')
+    # Pattern for HTML images: <img src="path"> or <img src='path'>
+    html_pattern = re.compile(r'<img[^>]+src=["\']([^"\']+)["\']', re.IGNORECASE)
+    # Pattern for RST images: .. image:: path
+    rst_pattern = re.compile(r'\.\.\s+image::\s*(\S+)')
+
+    for cell in notebook.get("cells", []):
+        cell_type = cell.get("cell_type")
+        # Check markdown and raw cells (RST is often in raw cells)
+        if cell_type in ("markdown", "raw"):
+            source = cell.get("source", [])
+            if isinstance(source, list):
+                source = "".join(source)
+
+            # Try markdown syntax first
+            match = md_pattern.search(source)
+            if match:
+                return match.group(1)
+
+            # Try HTML syntax
+            match = html_pattern.search(source)
+            if match:
+                return match.group(1)
+
+            # Try RST syntax
+            match = rst_pattern.search(source)
+            if match:
+                return match.group(1)
+
+    return None
 
 
 def _extract_description(notebook: dict) -> str:

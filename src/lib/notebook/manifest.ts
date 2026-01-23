@@ -24,6 +24,8 @@ export interface NotebookMeta {
 	tags: string[];
 	/** Whether notebook can run in Pyodide */
 	executable: boolean;
+	/** Thumbnail image filename (relative to figures directory) */
+	thumbnail?: string;
 }
 
 export interface Category {
