@@ -4,6 +4,9 @@
 griffe>=1.0.0
 docutils>=0.20
 
+# Semantic search embeddings
+sentence-transformers>=2.2.0
+
 # Notebook execution
 nbconvert>=7.0.0
 nbformat>=5.0.0
