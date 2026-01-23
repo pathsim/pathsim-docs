@@ -4,7 +4,7 @@
 	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
-	import { packages, packageOrder, external } from '$lib/config/packages';
+	import { packages, nav } from '$lib/config/packages';
 
 	let redirecting = $state(false);
 	let redirectTarget = $state('');
@@ -95,43 +95,31 @@
 					<h1>Something went wrong</h1>
 					<p class="error-message">{$page.error?.message || 'An unexpected error occurred'}</p>
 				{/if}
-			</section>
 
-			<div class="separator"></div>
-
-			<section class="packages-section">
-				<h2>Browse Documentation</h2>
-				<div class="package-grid">
-					{#each packageOrder as pkgId}
-						{@const pkg = packages[pkgId]}
-						<a href="{base}/{pkg.docs}" class="package-card elevated">
-							<img src="{base}/{pkg.logo}" alt={pkg.name} />
-							<span class="package-name">{pkg.shortName}</span>
-						</a>
-					{/each}
-				</div>
-			</section>
-
-			<div class="separator"></div>
-
-			<section class="actions-section">
-				<h2>Quick Links</h2>
-				<div class="actions-row">
-					<a href="{base}/" class="action-card">
+				<div class="hero-actions">
+					<a href={nav.home} class="action-card">
 						<Icon name="home" size={20} />
 						<span class="action-label">Home</span>
 					</a>
-					<a href="{base}/pathsim/latest/api" class="action-card">
-						<Icon name="braces" size={20} />
-						<span class="action-label">API Reference</span>
+					<a href="{base}/" class="action-card">
+						<Icon name="book" size={20} />
+						<span class="action-label">Docs</span>
 					</a>
-					<a href="{base}/pathsim/latest/examples" class="action-card">
+					<a href="{base}/{packages.pathsim.docs}" class="action-card">
+						<Icon name="zap" size={20} />
+						<span class="action-label">Get Started</span>
+					</a>
+					<a href={nav.tryOnline} class="action-card">
 						<Icon name="play" size={20} />
-						<span class="action-label">Examples</span>
+						<span class="action-label">Try Online</span>
 					</a>
-					<a href={external.github} class="action-card">
+					<a href={nav.github} class="action-card">
 						<Icon name="github" size={20} />
 						<span class="action-label">GitHub</span>
+					</a>
+					<a href={nav.sponsor} class="action-card">
+						<Icon name="heart" size={20} />
+						<span class="action-label">Sponsor</span>
 					</a>
 				</div>
 			</section>
@@ -150,10 +138,6 @@
 		max-width: 800px;
 		margin: 0 auto;
 		padding: 0 var(--space-lg);
-	}
-
-	section {
-		padding: var(--space-xl) 0;
 	}
 
 	h1 {
@@ -188,16 +172,24 @@
 	.error-message {
 		font-size: var(--font-md);
 		color: var(--text-muted);
+		margin-bottom: var(--space-xl);
 	}
 
 	.migration-hint {
 		font-size: var(--font-base);
 		color: var(--text-muted);
-		margin-top: var(--space-lg);
+		margin-bottom: var(--space-xl);
 		padding: var(--space-sm) var(--space-md);
 		background: var(--surface-raised);
 		border-radius: var(--radius-md);
 		display: inline-block;
+	}
+
+	.hero-actions {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
 	}
 
 	.redirect-notice {
@@ -226,77 +218,9 @@
 		font-family: var(--font-mono);
 	}
 
-	.packages-section {
-		text-align: center;
-	}
-
-	.package-grid {
-		display: flex;
-		justify-content: center;
-		gap: var(--space-lg);
-		flex-wrap: wrap;
-	}
-
-	.package-card {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-sm);
-		padding: var(--space-lg);
-		background: var(--surface-raised);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-lg);
-		text-decoration: none;
-		color: var(--text);
-		transition: all var(--transition-fast);
-		min-width: 140px;
-	}
-
-	.package-card:hover {
-		border-color: var(--accent);
-		box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
-		text-decoration: none;
-	}
-
-	.package-card img {
-		height: 60px;
-		width: auto;
-		object-fit: contain;
-	}
-
-	.package-name {
-		font-size: var(--font-base);
-		font-weight: 500;
-		color: var(--text-muted);
-	}
-
-	.actions-section {
-		text-align: center;
-	}
-
-	.actions-row {
-		display: flex;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: var(--space-xs);
-	}
-
 	@media (max-width: 600px) {
 		.error-code {
 			font-size: 72px;
-		}
-
-		.package-grid {
-			gap: var(--space-md);
-		}
-
-		.package-card {
-			min-width: 100px;
-			padding: var(--space-md);
-		}
-
-		.package-card img {
-			height: 48px;
 		}
 	}
 </style>
