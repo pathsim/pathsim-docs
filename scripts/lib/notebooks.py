@@ -167,6 +167,7 @@ def _extract_thumbnail(notebook: dict) -> str | None:
     Looks for images in markdown cells using:
     - Markdown syntax: ![alt](path)
     - HTML syntax: <img src="path">
+    - RST syntax: .. image:: path
 
     Returns the image path (relative to notebook) or None if not found.
     """
@@ -174,9 +175,13 @@ def _extract_thumbnail(notebook: dict) -> str | None:
     md_pattern = re.compile(r'!\[[^\]]*\]\(([^)]+)\)')
     # Pattern for HTML images: <img src="path"> or <img src='path'>
     html_pattern = re.compile(r'<img[^>]+src=["\']([^"\']+)["\']', re.IGNORECASE)
+    # Pattern for RST images: .. image:: path
+    rst_pattern = re.compile(r'\.\.\s+image::\s*(\S+)')
 
     for cell in notebook.get("cells", []):
-        if cell.get("cell_type") == "markdown":
+        cell_type = cell.get("cell_type")
+        # Check markdown and raw cells (RST is often in raw cells)
+        if cell_type in ("markdown", "raw"):
             source = cell.get("source", [])
             if isinstance(source, list):
                 source = "".join(source)
@@ -188,6 +193,11 @@ def _extract_thumbnail(notebook: dict) -> str | None:
 
             # Try HTML syntax
             match = html_pattern.search(source)
+            if match:
+                return match.group(1)
+
+            # Try RST syntax
+            match = rst_pattern.search(source)
             if match:
                 return match.group(1)
 

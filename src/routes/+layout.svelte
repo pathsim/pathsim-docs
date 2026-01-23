@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
 	import { packageOrder, type PackageId } from '$lib/config/packages';
@@ -84,6 +85,19 @@
 	$effect(() => {
 		$page.url.pathname;
 		mobileMenuOpen = false;
+	});
+
+	// Scroll to top on navigation
+	afterNavigate(() => {
+		// Find scrollable content areas and reset their scroll position
+		const scrollables = document.querySelectorAll('.doc-main, .page-wrapper');
+		scrollables.forEach((el) => {
+			if (el instanceof HTMLElement) {
+				el.scrollTop = 0;
+			}
+		});
+		// Also reset window scroll as fallback
+		window.scrollTo(0, 0);
 	});
 </script>
 
