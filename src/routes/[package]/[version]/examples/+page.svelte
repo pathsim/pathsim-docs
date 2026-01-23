@@ -43,6 +43,10 @@
 	function navigateToExample(slug: string) {
 		goto(`${base}/${data.packageId}/${data.resolvedTag}/examples/${slug}`);
 	}
+
+	function getThumbnailUrl(thumbnail: string): string {
+		return `${base}/${data.packageId}/${data.resolvedTag}/figures/${thumbnail}`;
+	}
 </script>
 
 <svelte:head>
@@ -71,7 +75,13 @@
 					tabindex="0"
 				>
 					<div class="panel-header">{notebook.title}</div>
-					<div class="panel-body tile-body">{notebook.description}</div>
+					{#if notebook.thumbnail}
+						<div class="panel-body tile-body thumbnail-body">
+							<img src={getThumbnailUrl(notebook.thumbnail)} alt={notebook.title} />
+						</div>
+					{:else}
+						<div class="panel-body tile-body">{notebook.description}</div>
+					{/if}
 				</div>
 			{/each}
 		</div>
@@ -92,5 +102,21 @@
 	/* Example tile - clickable */
 	.example-tile {
 		cursor: pointer;
+	}
+
+	/* Thumbnail image in tile body */
+	.thumbnail-body {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-sm);
+	}
+
+	.thumbnail-body img {
+		max-width: 100%;
+		max-height: 150px;
+		width: auto;
+		height: auto;
+		object-fit: contain;
 	}
 </style>
