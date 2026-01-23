@@ -376,6 +376,26 @@ export function getTypeLabel(type: SearchResultType): string {
 }
 
 /**
+ * Get icon name for result type
+ */
+export function getTypeIcon(type: SearchResultType): string {
+	switch (type) {
+		case 'page':
+			return 'file';
+		case 'module':
+			return 'package';
+		case 'class':
+			return 'box';
+		case 'function':
+			return 'zap';
+		case 'method':
+			return 'code';
+		case 'example':
+			return 'play';
+	}
+}
+
+/**
  * Reset search state (for testing or cleanup)
  */
 export function resetSearch(): void {
