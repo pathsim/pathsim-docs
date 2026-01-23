@@ -111,7 +111,7 @@
 					</a>
 					<a href={nav.tryOnline} class="action-card">
 						<Icon name="play" size={20} />
-						<span class="action-label">Try Online</span>
+						<span class="action-label">Editor</span>
 					</a>
 					<a href={nav.github} class="action-card">
 						<Icon name="github" size={20} />
