@@ -10,7 +10,7 @@
 	import { ApiToc } from '$lib/components/api';
 	import ExamplesToc from '$lib/components/examples/ExamplesToc.svelte';
 	import type { SearchResult } from '$lib/utils/search';
-	import { createDebouncedSearch } from '$lib/stores/searchHook';
+	import { createDebouncedSearch } from '$lib/stores/searchHook.svelte';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import type { PackageManifest } from '$lib/api/versions';

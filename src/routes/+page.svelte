@@ -6,7 +6,7 @@
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, packageOrder, nav } from '$lib/config/packages';
 	import type { SearchResult } from '$lib/utils/search';
-	import { createDebouncedSearch } from '$lib/stores/searchHook';
+	import { createDebouncedSearch } from '$lib/stores/searchHook.svelte';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { SearchResult as SearchResultComponent } from '$lib/components/search';
 
