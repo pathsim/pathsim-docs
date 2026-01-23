@@ -9,6 +9,9 @@ export const TOOLTIP_SHOW_DELAY = 300;
 /** Delay before hiding tooltip (ms) */
 export const TOOLTIP_HIDE_DELAY = 100;
 
+/** Debounce delay for search input (ms) */
+export const SEARCH_DEBOUNCE_MS = 150;
+
 /** Animation durations matching CSS variables */
 export const TRANSITION = {
 	fast: 100,

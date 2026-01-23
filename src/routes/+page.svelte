@@ -5,52 +5,13 @@
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
 	import { packages, packageOrder, nav } from '$lib/config/packages';
-	import { search, hybridSearch, type SearchResult } from '$lib/utils/search';
+	import type { SearchResult } from '$lib/utils/search';
+	import { createDebouncedSearch } from '$lib/stores/searchHook';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { SearchResult as SearchResultComponent } from '$lib/components/search';
 
-	let searchQuery = $state('');
-	let debouncedQuery = $state('');
-	let searchResults = $state<SearchResult[]>([]);
-	let isSearching = $state(false);
-	let showResults = $derived(searchQuery.length > 0);
-
-	// Debounce search query (150ms delay)
-	$effect(() => {
-		const query = searchQuery;
-		const timeout = setTimeout(() => {
-			debouncedQuery = query;
-		}, 150);
-		return () => clearTimeout(timeout);
-	});
-
-	// Run hybrid search when debounced query changes
-	$effect(() => {
-		const query = debouncedQuery;
-		if (!query) {
-			searchResults = [];
-			isSearching = false;
-			return;
-		}
-
-		let cancelled = false;
-
-		hybridSearch(query, 8, () => {
-			if (!cancelled) isSearching = true;
-		}).then((result) => {
-			if (!cancelled) {
-				searchResults = result.results;
-				isSearching = false;
-			}
-		}).catch(() => {
-			if (!cancelled) {
-				searchResults = search(query, 8);
-				isSearching = false;
-			}
-		});
-
-		return () => { cancelled = true; };
-	});
+	// Use shared search hook
+	const searchState = createDebouncedSearch({ limit: 8 });
 	let searchInput = $state<HTMLInputElement | null>(null);
 
 	function handleGlobalKeydown(event: KeyboardEvent) {
@@ -69,8 +30,8 @@
 
 	function handleSearchKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
-			if (searchQuery) {
-				searchQuery = '';
+			if (searchState.query) {
+				searchState.clear();
 			} else {
 				searchInput?.blur();
 			}
@@ -79,7 +40,7 @@
 	}
 
 	function handleResultClick(result: SearchResult) {
-		searchQuery = '';
+		searchState.clear();
 		searchTarget.set({
 			name: result.name,
 			type: result.type,
@@ -111,14 +72,14 @@
 					<input
 						type="text"
 						placeholder="Search the API..."
-						bind:value={searchQuery}
+						bind:value={searchState.query}
 						bind:this={searchInput}
 						onkeydown={handleSearchKeydown}
 					/>
-					{#if isSearching}
+					{#if searchState.isSearching}
 						<span class="search-spinner"></span>
-					{:else if searchQuery}
-						<button class="clear-btn" onclick={() => (searchQuery = '')}>
+					{:else if searchState.query}
+						<button class="clear-btn" onclick={() => searchState.clear()}>
 							<Icon name="x" size={14} />
 						</button>
 					{/if}
@@ -151,18 +112,18 @@
 
 	<div class="separator"></div>
 
-	{#if showResults}
+	{#if searchState.showResults}
 		<main>
 			<section class="search-results-section">
 				<h2>Search Results</h2>
-				{#if searchResults.length > 0}
+				{#if searchState.results.length > 0}
 					<div class="results-grid">
-						{#each searchResults as result}
+						{#each searchState.results as result}
 							<SearchResultComponent {result} variant="card" onclick={() => handleResultClick(result)} />
 						{/each}
 					</div>
 				{:else}
-					<div class="no-results">No results found for "{searchQuery}"</div>
+					<div class="no-results">No results found for "{searchState.query}"</div>
 				{/if}
 			</section>
 		</main>

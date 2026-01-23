@@ -9,6 +9,7 @@
 	import { goto } from '$app/navigation';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
+	import { detectLanguage } from '$lib/utils/codeUtils';
 	import { theme } from '$lib/stores/themeStore';
 	import { processCrossRefs, crossrefIndexStore } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
@@ -68,8 +69,7 @@
 		| CodeBlockDirective
 		| MathDirective
 		| SectionHeader
-		| { type: 'paragraph'; content: string }
-		| { type: 'hidden' };
+		| { type: 'paragraph'; content: string };
 
 	/**
 	 * Parse RST content into blocks
@@ -346,16 +346,6 @@
 	}
 
 	/**
-	 * Detect language from code content
-	 */
-	function detectLanguage(code: string): 'python' | 'console' {
-		if (code.includes('>>>') || code.includes('...')) {
-			return 'console';
-		}
-		return 'python';
-	}
-
-	/**
 	 * Render code blocks with CodeMirror
 	 */
 	async function renderCodeBlocks() {
@@ -497,11 +487,12 @@
 			{:else if block.type === 'paragraph'}
 				<p>{@html block.content}</p>
 			{:else if block.type === 'image'}
-				<div class="image-block" style:text-align={block.align || 'center'}>
+				<div class="image-block align-{block.align || 'center'}">
 					<img
 						src={resolveImagePath(block.src)}
 						alt={block.alt || 'Image'}
-						style:max-width={block.width ? `min(${block.width}px, 100%)` : '100%'}
+						class={block.width ? 'has-width' : ''}
+						style:--img-width="{block.width}px"
 					/>
 				</div>
 			{:else if block.type === 'admonition'}
@@ -555,10 +546,18 @@
 		margin: var(--space-md) 0;
 	}
 
+	.image-block.align-left { text-align: left; }
+	.image-block.align-center { text-align: center; }
+	.image-block.align-right { text-align: right; }
+
 	.image-block img {
 		max-width: 100%;
 		height: auto;
 		border-radius: var(--radius-md);
+	}
+
+	.image-block img.has-width {
+		max-width: min(var(--img-width, 100%), 100%);
 	}
 
 	/* Admonitions - styled like DocstringRenderer */

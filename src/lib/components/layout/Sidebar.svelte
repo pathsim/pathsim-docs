@@ -9,7 +9,8 @@
 	import { apiModulesStore } from '$lib/stores/apiContext';
 	import { ApiToc } from '$lib/components/api';
 	import ExamplesToc from '$lib/components/examples/ExamplesToc.svelte';
-	import { search, hybridSearch, type SearchResult } from '$lib/utils/search';
+	import type { SearchResult } from '$lib/utils/search';
+	import { createDebouncedSearch } from '$lib/stores/searchHook';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import type { PackageManifest } from '$lib/api/versions';
@@ -35,56 +36,9 @@
 			(item) => item.title !== 'Examples' || hasExamples
 		)
 	);
-	let searchQuery = $state('');
-	let debouncedQuery = $state('');
-	let searchResults = $state<SearchResult[]>([]);
-	let isSearching = $state(false);
-	let showResults = $derived(searchQuery.length > 0);
 
-	// Debounce search query (150ms delay)
-	$effect(() => {
-		const query = searchQuery;
-		const timeout = setTimeout(() => {
-			debouncedQuery = query;
-		}, 150);
-		return () => clearTimeout(timeout);
-	});
-
-	// Run hybrid search when debounced query changes
-	$effect(() => {
-		const query = debouncedQuery;
-		if (!query) {
-			searchResults = [];
-			isSearching = false;
-			return;
-		}
-
-		// Track if this search is still relevant
-		let cancelled = false;
-
-		// Run hybrid search with semantic fallback
-		hybridSearch(query, 15, () => {
-			// Callback when semantic search starts
-			if (!cancelled) {
-				isSearching = true;
-			}
-		}).then((result) => {
-			if (!cancelled) {
-				searchResults = result.results;
-				isSearching = false;
-			}
-		}).catch(() => {
-			if (!cancelled) {
-				// Fallback to keyword search on error
-				searchResults = search(query, 15);
-				isSearching = false;
-			}
-		});
-
-		return () => {
-			cancelled = true;
-		};
-	});
+	// Use shared search hook
+	const searchState = createDebouncedSearch({ limit: 15 });
 	let searchInput = $state<HTMLInputElement | null>(null);
 
 	function handleGlobalKeydown(event: KeyboardEvent) {
@@ -115,8 +69,8 @@
 
 	function handleSearchKeydown(event: KeyboardEvent) {
 		if (event.key === 'Escape') {
-			if (searchQuery) {
-				searchQuery = '';
+			if (searchState.query) {
+				searchState.clear();
 			} else {
 				searchInput?.blur();
 			}
@@ -125,7 +79,7 @@
 	}
 
 	function handleResultClick(result: SearchResult) {
-		searchQuery = '';
+		searchState.clear();
 		// Set the target element to expand/scroll to
 		searchTarget.set({
 			name: result.name,
@@ -141,17 +95,17 @@
 	<div class="sidebar-fixed">
 		<div class="search-container">
 			<SearchInput
-				bind:value={searchQuery}
+				bind:value={searchState.query}
 				bind:inputRef={searchInput}
-				{isSearching}
+				isSearching={searchState.isSearching}
 				onkeydown={handleSearchKeydown}
 			/>
 		</div>
 
-		{#if showResults}
+		{#if searchState.showResults}
 			<nav class="sidebar-nav search-results">
-				{#if searchResults.length > 0}
-					{#each searchResults as result}
+				{#if searchState.results.length > 0}
+					{#each searchState.results as result}
 						<SearchResultComponent {result} variant="list" onclick={() => handleResultClick(result)} />
 					{/each}
 				{:else}
@@ -178,11 +132,11 @@
 
 	</div>
 
-	{#if !showResults && isApiPage && $apiModulesStore.length > 0}
+	{#if !searchState.showResults && isApiPage && $apiModulesStore.length > 0}
 		<div class="sidebar-scrollable with-separator">
 			<ApiToc modules={$apiModulesStore} />
 		</div>
-	{:else if !showResults && isExamplesPage && $exampleGroupsStore.length > 0}
+	{:else if !searchState.showResults && isExamplesPage && $exampleGroupsStore.length > 0}
 		<div class="sidebar-scrollable with-separator">
 			<ExamplesToc groups={$exampleGroupsStore} {packageId} currentTag={currentTag} />
 		</div>

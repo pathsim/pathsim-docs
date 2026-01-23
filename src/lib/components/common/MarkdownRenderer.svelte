@@ -9,6 +9,7 @@
 	import { marked } from 'marked';
 	import { loadKatex, getKatexCssUrl } from '$lib/utils/katexLoader';
 	import { loadCodeMirrorModules, createEditorExtensions, type CodeMirrorModules } from '$lib/utils/codemirror';
+	import { detectLanguage } from '$lib/utils/codeUtils';
 	import { theme } from '$lib/stores/themeStore';
 	import { processCrossRefs, crossrefIndexStore } from '$lib/utils/crossref';
 	import { searchTarget } from '$lib/stores/searchNavigation';
@@ -157,16 +158,6 @@
 		}
 
 		container.innerHTML = innerHTML;
-	}
-
-	/**
-	 * Detect language from code content
-	 */
-	function detectLanguage(code: string): 'python' | 'console' {
-		if (code.includes('>>>') || code.includes('...')) {
-			return 'console';
-		}
-		return 'python';
 	}
 
 	/**
