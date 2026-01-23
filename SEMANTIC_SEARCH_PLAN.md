@@ -13,7 +13,7 @@ Progressive enhancement: keyword search first, automatic semantic fallback when 
 │             │                              (lazy, incremental)   │
 │  manifest.json                                                   │
 │                                                                  │
-│  Embedding model: all-MiniLM-L6-v2 (sentence-transformers)      │
+│  Embedding model: e5-small-v2 (sentence-transformers)      │
 │                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 
@@ -134,7 +134,7 @@ def should_regenerate_embeddings(version_dir: Path) -> bool:
 **Embeddings index format:**
 ```json
 {
-  "model": "all-MiniLM-L6-v2",
+  "model": "e5-small-v2",
   "dim": 384,
   "count": 500,
   "embeddings": "<base64 encoded Float32Array>"
@@ -150,7 +150,7 @@ def should_regenerate_embeddings(version_dir: Path) -> bool:
 **Tasks:**
 1. Create `model.ts`:
    - Lazy load transformers.js
-   - Load all-MiniLM-L6-v2 model
+   - Load e5-small-v2 model
    - Cache model instance
    - Expose `embedQuery(text: string): Promise<Float32Array>`
 
@@ -167,7 +167,7 @@ export async function getModel(): Promise<Pipeline> {
   if (!modelPromise) {
     modelPromise = (async () => {
       const { pipeline } = await import('@xenova/transformers');
-      return await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2');
+      return await pipeline('feature-extraction', 'Xenova/e5-small-v2');
     })();
   }
   return modelPromise;
@@ -337,16 +337,24 @@ numpy
    - Enable progressive enhancement
    - Monitor performance
 
-## Open Questions
+## Design Decisions
 
-1. **Model choice**: all-MiniLM-L6-v2 vs newer alternatives?
-   - Could use gte-small for better quality
-   - Or quantized models for smaller size
+1. **Model**: `e5-small-v2` via `Xenova/e5-small-v2`
+   - 100% Top-5 accuracy vs MiniLM's 56%
+   - Similar speed (~16ms latency)
+   - ~33MB model size
+   - Available in transformers.js
 
-2. **Threshold tuning**: When to trigger semantic search?
-   - Results < 3? Score < X?
-   - Query length > N words?
+2. **Semantic trigger**: Results < 3 from keyword search
 
-3. **Result merging**: How to combine keyword + semantic scores?
-   - Weighted average?
-   - RRF (Reciprocal Rank Fusion)?
+3. **Score merging**: RRF (Reciprocal Rank Fusion)
+   ```
+   RRF(d) = Σ 1 / (k + rank(d))
+   ```
+   where k=60 (standard constant)
+
+4. **Loading UX**: Spinner animation with timeout, no text
+
+Sources:
+- [Best Open-Source Embedding Models 2026](https://www.bentoml.com/blog/a-guide-to-open-source-embedding-models)
+- [Transformers.js](https://github.com/xenova/transformers.js/)
