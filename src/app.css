@@ -415,6 +415,7 @@ button.ghost:hover {
 	align-items: center;
 	gap: 6px;
 	padding: 6px 12px;
+	min-width: 56px;
 	background: transparent;
 	border: none;
 	border-radius: var(--radius-md);
