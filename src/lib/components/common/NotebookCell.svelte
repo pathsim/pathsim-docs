@@ -34,6 +34,8 @@
 		precomputedStderr?: string | null;
 		/** Figure URLs from pre-computed output */
 		figureUrls?: string[];
+		/** Callback to advance to next cell after execution */
+		onadvance?: () => void;
 	}
 
 	let {
@@ -45,11 +47,20 @@
 		staticOutputs = [],
 		precomputedStdout = null,
 		precomputedStderr = null,
-		figureUrls = []
+		figureUrls = [],
+		onadvance = undefined
 	}: Props = $props();
 
-	// Reference to CodeBlock for getting current code
-	let codeBlockRef = $state<{ getCurrentCode: () => string } | undefined>(undefined);
+	// Reference to CodeBlock for getting current code and focusing
+	let codeBlockRef = $state<{ getCurrentCode: () => string; focus: () => void } | undefined>(undefined);
+	// Reference to container for scrolling
+	let containerRef = $state<HTMLDivElement | undefined>(undefined);
+
+	/** Focus this cell's editor and scroll into view */
+	export function focus() {
+		containerRef?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		codeBlockRef?.focus();
+	}
 
 	// Execution output state
 	let stdout = $state('');
@@ -152,6 +163,16 @@
 		}
 	}
 
+	/**
+	 * Handle run and advance - move to next cell immediately, then execute (Jupyter style)
+	 */
+	function handleRunAdvance() {
+		// Advance to next cell immediately (don't wait for execution)
+		onadvance?.();
+		// Then trigger execution
+		handleRun();
+	}
+
 	function clearOutput() {
 		stdout = '';
 		stderr = '';
@@ -185,12 +206,14 @@
 	});
 </script>
 
-<div class="notebook-cell elevated" class:running={isRunning} class:pending={isPending} class:has-output={hasOutput}>
+<div class="notebook-cell elevated" class:running={isRunning} class:pending={isPending} class:has-output={hasOutput} bind:this={containerRef}>
 	<CodeBlock
 		bind:this={codeBlockRef}
 		{code}
 		{title}
 		{editable}
+		onrun={handleRun}
+		onrunadvance={handleRunAdvance}
 	>
 		{#snippet headerActions()}
 			{#if isRunning}
@@ -252,6 +275,12 @@
 	.notebook-cell.pending {
 		border-color: var(--text-muted);
 		opacity: 0.8;
+	}
+
+	/* Focus highlight when editor is focused */
+	.notebook-cell:focus-within {
+		border-color: var(--accent);
+		box-shadow: var(--shadow-md), 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
 	}
 
 	.notebook-cell :global(.code-panel) {

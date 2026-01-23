@@ -24,6 +24,10 @@
 		editable?: boolean;
 		/** Callback when code changes (for editable blocks) */
 		onchange?: (code: string) => void;
+		/** Callback for run action (Ctrl+Shift+Enter - execute only) */
+		onrun?: () => void;
+		/** Callback for run and advance action (Ctrl+Enter - execute and move to next) */
+		onrunadvance?: () => void;
 		/** Additional header actions (slot content) */
 		headerActions?: import('svelte').Snippet;
 	}
@@ -33,6 +37,8 @@
 		title = 'Example',
 		editable = false,
 		onchange = undefined,
+		onrun = undefined,
+		onrunadvance = undefined,
 		headerActions
 	}: Props = $props();
 
@@ -69,6 +75,11 @@
 		currentCode = newCode;
 	}
 
+	/** Focus the editor */
+	export function focus() {
+		editorView?.focus();
+	}
+
 	onMount(() => {
 		if (!editorContainer) return;
 
@@ -90,10 +101,28 @@
 					})
 				: [];
 
+			// Create keymaps for run actions and navigation
+			// Ctrl+Enter: Run and advance to next cell
+			// Ctrl+Shift+Enter: Run only (stay in current cell)
+			// Escape: Unfocus the editor
+			const runKeymaps: { key: string; run: (view: import('@codemirror/view').EditorView) => boolean }[] = [];
+			if (onrunadvance) {
+				runKeymaps.push({ key: 'Ctrl-Enter', run: () => { onrunadvance(); return true; } });
+			}
+			if (onrun) {
+				runKeymaps.push({ key: 'Ctrl-Shift-Enter', run: () => { onrun(); return true; } });
+			}
+			// Always add Escape to blur
+			runKeymaps.push({ key: 'Escape', run: (view) => { view.contentDOM.blur(); return true; } });
+
 			editorView = new cmModules.EditorView({
 				doc: code,
 				extensions: [
-					createEditorExtensions(cmModules, isDark, { readOnly: !editable, themeCompartment }),
+					createEditorExtensions(cmModules, isDark, {
+						readOnly: !editable,
+						themeCompartment,
+						keymaps: runKeymaps
+					}),
 					...(Array.isArray(updateListener) ? updateListener : [updateListener])
 				],
 				parent: editorContainer!
