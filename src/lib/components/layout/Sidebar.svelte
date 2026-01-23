@@ -9,7 +9,7 @@
 	import { apiModulesStore } from '$lib/stores/apiContext';
 	import { ApiToc } from '$lib/components/api';
 	import ExamplesToc from '$lib/components/examples/ExamplesToc.svelte';
-	import { search, type SearchResult } from '$lib/utils/search';
+	import { search, hybridSearch, type SearchResult } from '$lib/utils/search';
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
 	import type { PackageManifest } from '$lib/api/versions';
@@ -36,7 +36,8 @@
 	);
 	let searchQuery = $state('');
 	let debouncedQuery = $state('');
-	let searchResults = $derived(search(debouncedQuery, 15));
+	let searchResults = $state<SearchResult[]>([]);
+	let isSearching = $state(false);
 	let showResults = $derived(searchQuery.length > 0);
 
 	// Debounce search query (150ms delay)
@@ -46,6 +47,42 @@
 			debouncedQuery = query;
 		}, 150);
 		return () => clearTimeout(timeout);
+	});
+
+	// Run hybrid search when debounced query changes
+	$effect(() => {
+		const query = debouncedQuery;
+		if (!query) {
+			searchResults = [];
+			isSearching = false;
+			return;
+		}
+
+		// Track if this search is still relevant
+		let cancelled = false;
+
+		// Run hybrid search with semantic fallback
+		hybridSearch(query, 15, () => {
+			// Callback when semantic search starts
+			if (!cancelled) {
+				isSearching = true;
+			}
+		}).then((result) => {
+			if (!cancelled) {
+				searchResults = result.results;
+				isSearching = false;
+			}
+		}).catch(() => {
+			if (!cancelled) {
+				// Fallback to keyword search on error
+				searchResults = search(query, 15);
+				isSearching = false;
+			}
+		});
+
+		return () => {
+			cancelled = true;
+		};
 	});
 	let searchInput = $state<HTMLInputElement | null>(null);
 
@@ -129,7 +166,9 @@
 				class="search-input"
 				onkeydown={handleSearchKeydown}
 			/>
-			{#if searchQuery}
+			{#if isSearching}
+				<span class="search-spinner"></span>
+			{:else if searchQuery}
 				<button class="clear-btn" onclick={() => (searchQuery = '')}>
 					<Icon name="x" size={12} />
 				</button>
@@ -260,6 +299,22 @@
 
 	.clear-btn:hover {
 		color: var(--text);
+	}
+
+	.search-spinner {
+		width: 14px;
+		height: 14px;
+		border: 2px solid var(--border);
+		border-top-color: var(--accent);
+		border-radius: 50%;
+		animation: spin 0.8s linear infinite;
+		flex-shrink: 0;
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
 	}
 
 	.search-results {
