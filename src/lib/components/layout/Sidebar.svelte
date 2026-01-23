@@ -30,10 +30,14 @@
 		manifest && currentTag ? versionHasExamples(currentTag, manifest) : false
 	);
 
-	// Filter sidebar items based on examples availability
+	// Filter sidebar items based on availability
+	// - Hide API Reference if no manifest (no versioned docs exist)
+	// - Hide Examples if current version has no examples
 	let items = $derived(
 		getSidebarItems(packageId, currentTag).filter(
-			(item) => item.title !== 'Examples' || hasExamples
+			(item) =>
+				(item.title !== 'API Reference' || manifest) &&
+				(item.title !== 'Examples' || hasExamples)
 		)
 	);
 
