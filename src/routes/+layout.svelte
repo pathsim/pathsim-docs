@@ -7,6 +7,7 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { Header, MobileDrawer } from '$lib/components/layout';
 	import { packageOrder, type PackageId } from '$lib/config/packages';
+	import { CDN } from '$lib/config/cdn';
 	import { getPackageManifest } from '$lib/api/versions';
 	import { initializeSearch } from '$lib/utils/search';
 	import { initializeCrossref } from '$lib/utils/crossref';
@@ -102,7 +103,7 @@
 </script>
 
 <svelte:head>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" />
+	<link rel="stylesheet" href={CDN.katex.css} />
 </svelte:head>
 
 <Tooltip />
