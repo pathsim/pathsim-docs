@@ -3,6 +3,7 @@
 	 * Notebook - Main container for rendering Jupyter notebooks
 	 * Parses .ipynb and renders all cell types with execution support
 	 */
+	import { onMount } from 'svelte';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import MarkdownCell from './MarkdownCell.svelte';
 	import CodeCell from './CodeCell.svelte';
@@ -40,6 +41,58 @@
 				item.cell.cell_type === 'code' && !isCellHidden(item.cell)
 			)
 	);
+
+	// Track references to code cells for advancing focus
+	let codeCellRefs: Record<string, { focus: () => void } | undefined> = {};
+
+	function createAdvanceCallback(cellId: string) {
+		return () => {
+			// Find index of current cell in codeCells
+			const currentIndex = codeCells.findIndex(item => item.cell.id === cellId);
+			if (currentIndex >= 0 && currentIndex < codeCells.length - 1) {
+				// Focus the next code cell
+				const nextCellId = codeCells[currentIndex + 1].cell.id;
+				const nextCellRef = codeCellRefs[nextCellId];
+				nextCellRef?.focus();
+			}
+		};
+	}
+
+	// Reference to notebook container for checking focus
+	let notebookRef = $state<HTMLElement | undefined>(undefined);
+
+	// Check if any code cell editor is currently focused
+	function isCodeCellFocused(): boolean {
+		const activeElement = document.activeElement;
+		if (!activeElement || !notebookRef) return false;
+		// Check if active element is inside a CodeMirror editor within the notebook
+		return notebookRef.contains(activeElement) &&
+			activeElement.closest('.cm-editor') !== null;
+	}
+
+	// Global keyboard handler to focus first cell when none is selected
+	function handleGlobalKeydown(event: KeyboardEvent) {
+		// Only handle Ctrl+Enter or Ctrl+Shift+Enter
+		if (!event.ctrlKey || event.key !== 'Enter') return;
+
+		// If a code cell is already focused, let it handle the event
+		if (isCodeCellFocused()) return;
+
+		// Focus the first code cell
+		if (codeCells.length > 0) {
+			const firstCellId = codeCells[0].cell.id;
+			const firstCellRef = codeCellRefs[firstCellId];
+			firstCellRef?.focus();
+			event.preventDefault();
+		}
+	}
+
+	onMount(() => {
+		window.addEventListener('keydown', handleGlobalKeydown);
+		return () => {
+			window.removeEventListener('keydown', handleGlobalKeydown);
+		};
+	});
 
 	// Build prerequisites map: each code cell depends on all previous code cells
 	let prerequisitesMap = $derived(
@@ -80,7 +133,7 @@
 	}
 </script>
 
-<article class="notebook">
+<article class="notebook" bind:this={notebookRef}>
 	{#if pyodideLoading}
 		<div class="pyodide-status">
 			<Icon name="loader" size={14} />
@@ -95,12 +148,14 @@
 					<MarkdownCell {cell} {basePath} />
 				{:else if cell.cell_type === 'code'}
 					<CodeCell
+						bind:this={codeCellRefs[cell.id]}
 						{cell}
 						{index}
 						prerequisites={prerequisitesMap.get(cell.id) || []}
 						{showStaticOutputs}
 						precomputedOutput={getCellOutput(index)}
 						figureUrls={getCellFigureUrls(index)}
+						onadvance={createAdvanceCallback(cell.id)}
 					/>
 				{:else if cell.cell_type === 'raw'}
 					<RawCell {cell} {basePath} />

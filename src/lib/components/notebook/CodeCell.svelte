@@ -20,6 +20,8 @@
 		precomputedOutput?: CellOutputData | null;
 		/** Figure URLs from pre-computed output */
 		figureUrls?: string[];
+		/** Callback to advance to next cell after execution */
+		onadvance?: () => void;
 	}
 
 	let {
@@ -28,8 +30,17 @@
 		prerequisites = [],
 		showStaticOutputs = true,
 		precomputedOutput = null,
-		figureUrls = []
+		figureUrls = [],
+		onadvance = undefined
 	}: Props = $props();
+
+	// Reference to NotebookCell for focusing
+	let notebookCellRef = $state<{ focus: () => void } | undefined>(undefined);
+
+	/** Focus this cell's editor */
+	export function focus() {
+		notebookCellRef?.focus();
+	}
 
 	// Transform code for Pyodide compatibility
 	let transformedCode = $derived(transformCodeForPyodide(cell.source));
@@ -42,6 +53,7 @@
 
 <div class="code-cell-wrapper">
 	<NotebookCell
+		bind:this={notebookCellRef}
 		id={cell.id}
 		code={transformedCode}
 		title="Python"
@@ -51,6 +63,7 @@
 		precomputedStdout={showStaticOutputs ? precomputedOutput?.stdout : null}
 		precomputedStderr={showStaticOutputs ? precomputedOutput?.stderr : null}
 		{figureUrls}
+		{onadvance}
 	/>
 </div>
 
