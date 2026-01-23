@@ -16,6 +16,7 @@ A unified documentation site for the PathSim ecosystem, featuring API references
 - [CodeMirror 6](https://codemirror.net/) for code highlighting
 - [KaTeX](https://katex.org/) for math rendering
 - [Marked](https://marked.js.org/) for Markdown processing
+- [Transformers.js](https://huggingface.co/docs/transformers.js/) for semantic search (e5-small-v2)
 
 ## Getting Started
 
@@ -67,6 +68,9 @@ src/
 │   │   │   └── CellOutput.svelte
 │   │   ├── examples/      # Examples page components
 │   │   │   └── ExamplesToc.svelte
+│   │   ├── search/        # Search UI components
+│   │   │   ├── SearchInput.svelte
+│   │   │   └── SearchResult.svelte
 │   │   └── pages/         # Full page components
 │   │       ├── PackageOverview.svelte
 │   │       └── PackageApi.svelte
@@ -82,6 +86,10 @@ src/
 │   │   ├── index.ts       # Main thread bridge
 │   │   ├── worker.ts      # Web Worker implementation
 │   │   └── types.ts       # Message protocol types
+│   ├── semantic/          # Semantic search (client-side)
+│   │   ├── model.ts       # Embedding model loader (e5-small-v2)
+│   │   ├── similarity.ts  # Cosine similarity search
+│   │   └── index.ts       # Public API
 │   ├── stores/            # Svelte stores
 │   │   ├── apiContext.ts
 │   │   ├── examplesContext.ts
@@ -124,11 +132,13 @@ src/
 scripts/
 ├── build.py               # Main build script (API, notebooks, indexes)
 ├── build-indexes.py       # Standalone index generation
+├── build-embeddings.py    # Generate semantic search embeddings
+├── rebuild-manifests.py   # Rebuild notebook manifests (metadata only)
 ├── requirements.txt
 └── lib/
     ├── config.py          # Build configuration (min versions, paths)
     ├── api.py             # API extraction using Griffe
-    ├── notebooks.py       # Notebook processing
+    ├── notebooks.py       # Notebook processing (incl. thumbnail extraction)
     ├── git.py             # Git operations (tags, checkout)
     └── executor.py        # Parallel execution utilities
 
@@ -137,9 +147,10 @@ static/
 │   ├── manifest.json      # Package manifest (versions, latest)
 │   └── {tag}/             # Per-version content (e.g., v0.16.4)
 │       ├── api.json           # API documentation
-│       ├── manifest.json      # Notebook metadata
-│       ├── search-index.json  # Versioned search index
+│       ├── manifest.json      # Notebook metadata (incl. thumbnails)
+│       ├── search-index.json  # Versioned keyword search index
 │       ├── crossref-index.json # Versioned crossref index
+│       ├── embeddings-index.json # Versioned semantic search embeddings
 │       ├── notebooks/         # Jupyter notebook files
 │       ├── outputs/           # Pre-computed cell outputs
 │       └── figures/           # Pre-rendered figures
@@ -186,7 +197,8 @@ static/
 | Layer | Purpose | Key Files |
 |-------|---------|-----------|
 | **Build Script** | Extract API, notebooks, indexes | `scripts/build.py` |
-| **Search** | Per-version search indexes | `search.ts`, `search-index.json` |
+| **Keyword Search** | Per-version search indexes | `search.ts`, `search-index.json` |
+| **Semantic Search** | Natural language search via embeddings | `semantic/`, `embeddings-index.json` |
 | **Cross-refs** | Per-version link resolution | `crossref.ts`, `TypeRef.svelte` |
 | **Version Store** | Persist selected version per package | `versionStore.ts` |
 | **Notebook Loader** | Fetch versioned notebooks | `loader.ts` |
@@ -254,6 +266,40 @@ Each version has its own `search-index.json`:
 - **Scoring hierarchy**: Exact match (100) > prefix (50) > contains (30) > description (10)
 - **Type boosting**: Pages 1.5x, classes 1.2x, examples 1.15x
 - **Keyboard shortcut**: Ctrl+F focuses search bar
+
+---
+
+## Semantic Search
+
+In addition to keyword search, the documentation supports semantic search powered by Transformers.js running client-side.
+
+### How It Works
+
+1. **Build time**: `build-embeddings.py` generates embeddings for all API items and examples using e5-small-v2
+2. **Load time**: Embeddings index loaded per-version from `embeddings-index.json`
+3. **Query time**: User query embedded in browser, cosine similarity finds relevant results
+
+### Embedding Index Structure
+
+```json
+{
+  "items": [
+    {
+      "name": "Integrator",
+      "type": "class",
+      "path": "pathsim/v0.16.4/api#Integrator",
+      "embedding": [0.012, -0.034, ...]
+    }
+  ]
+}
+```
+
+### Features
+
+- **Natural language queries**: "How do I integrate a signal?" finds `Integrator` class
+- **Client-side inference**: No server required, runs in browser via ONNX Runtime
+- **Lazy loading**: Model loaded only when semantic search is triggered
+- **Combined results**: Semantic results merged with keyword search for best coverage
 
 ---
 
@@ -325,6 +371,28 @@ Jupyter notebooks run in the browser via Pyodide with versioned package support.
 - Cell outputs rendered: text, images, HTML, errors
 - Math support via KaTeX
 
+### Keyboard Shortcuts
+
+Jupyter-style keyboard shortcuts for code cells:
+
+| Shortcut | Action |
+|----------|--------|
+| `Ctrl+Enter` | Run cell and advance to next |
+| `Ctrl+Shift+Enter` | Run cell (stay in place) |
+| `Escape` | Unfocus current cell |
+
+- Pressing `Ctrl+Enter` with no cell focused auto-selects the first code cell
+- Focused cells show a highlight border for visibility
+- Cells scroll into view when focused
+
+### Example Thumbnails
+
+Example tiles on the gallery page display thumbnails extracted from notebook figures:
+
+- Extracted from the first `.. image::` (RST) or `![](...)` (Markdown) directive
+- Falls back to description text if no figure found
+- Thumbnails stored in version manifest metadata
+
 ### Version-Aware Execution
 
 When viewing `/pathsim/v0.14.0/examples/...`, Pyodide installs `pathsim==0.14.0` to ensure examples work correctly with that version's API.
@@ -383,7 +451,9 @@ export const TIMEOUTS = { INIT: 120000, EXECUTION: 60000 };
 | `npm run check` | TypeScript/Svelte type checking |
 | `python scripts/build.py` | Build all content (smart mode) |
 | `python scripts/build.py --all` | Rebuild all versions |
-| `python scripts/build-indexes.py` | Regenerate indexes only |
+| `python scripts/build-indexes.py` | Regenerate search/crossref indexes |
+| `python scripts/build-embeddings.py` | Generate semantic search embeddings |
+| `python scripts/rebuild-manifests.py` | Update notebook metadata without re-execution |
 
 ---
 
@@ -424,6 +494,14 @@ GitHub Pages deployment via GitHub Actions.
 2. Run `python scripts/build.py --all` (extracts API, notebooks, builds indexes)
 3. Build SvelteKit (`npm run build`)
 4. Deploy to GitHub Pages
+
+### Scheduled Builds
+
+Documentation is automatically rebuilt on a schedule to pick up new package releases:
+
+- **Trigger**: GitHub Actions cron schedule (configurable)
+- **Smart builds**: Only processes new git tags not already in static/
+- **Auto-deploy**: New versions appear without manual intervention
 
 ### Environment Variables
 
