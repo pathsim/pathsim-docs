@@ -102,8 +102,6 @@ jobs:
 
       - name: Build
         if: steps.need_build.outputs.skip != 'true'
-        env:
-          BASE_PATH: '/${{ github.event.repository.name }}'
         run: npm run build
 
       - name: Upload artifact
