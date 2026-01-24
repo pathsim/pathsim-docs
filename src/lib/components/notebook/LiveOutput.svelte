@@ -21,6 +21,29 @@
 	}
 
 	let { error, stdout, stderr, plots, duration, onClear }: Props = $props();
+
+	/**
+	 * Download a base64-encoded SVG as a file
+	 */
+	function downloadPlot(base64Data: string, index: number) {
+		const svgContent = atob(base64Data);
+		const blob = new Blob([svgContent], { type: 'image/svg+xml' });
+		const url = URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = plots.length > 1 ? `plot-${index + 1}.svg` : 'plot.svg';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url);
+	}
+
+	/**
+	 * Download all plots
+	 */
+	function downloadAllPlots() {
+		plots.forEach((plot, i) => downloadPlot(plot, i));
+	}
 </script>
 
 {#if error}
@@ -82,6 +105,9 @@
 		<div class="panel-header">
 			<span>Plot</span>
 			<div class="header-actions">
+				<button class="icon-btn" onclick={downloadAllPlots} use:tooltip={'Download SVG'}>
+					<Icon name="download" size={14} />
+				</button>
 				<button class="icon-btn" onclick={onClear} use:tooltip={'Clear'}>
 					<Icon name="x" size={14} />
 				</button>

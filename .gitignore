@@ -10,6 +10,12 @@ build/
 .env.*
 !.env.example
 
+# AI
+.claude
+claude.md
+CLAUDE.md
+CLAUDE.MD
+
 # IDE
 .idea/
 .vscode/
