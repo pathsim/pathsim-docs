@@ -31,52 +31,51 @@
 </script>
 
 <div class="notebook-controls">
-	<p class="controls-info">
-		This example is interactive. Click the play button on any cell to execute it,
-		or use <strong>Run All</strong> to execute all cells in order.
-	</p>
+	<div class="controls-content">
+		<p class="controls-info">
+			This example is interactive. Click the play button on any cell to execute it, or run all cells in sequence.
+		</p>
 
-	<div class="controls-actions">
-		<button
-			class="run-all-btn"
-			class:running={isExecuting}
-			onclick={handleRunAll}
-			disabled={isExecuting}
-		>
-			{#if isExecuting}
-				<span class="spinner"><Icon name="loader" size={16} /></span>
-				<span>Running...</span>
-			{:else}
-				<Icon name="play" size={16} />
-				<span>Run All</span>
-			{/if}
-		</button>
-
-		<label class="toggle-label">
-			<input
-				type="checkbox"
-				checked={forcePrerequisites}
-				onchange={toggleForcePrerequisites}
-			/>
-			<span class="toggle-text">Force execution order</span>
+		<div class="controls-actions">
 			<button
-				class="info-btn"
-				use:tooltip={'When enabled, prerequisite cells are always re-executed, even if they ran successfully before'}
+				class="icon-btn"
+				class:running={isExecuting}
+				onclick={handleRunAll}
+				disabled={isExecuting}
+				use:tooltip={isExecuting ? 'Running...' : 'Run all cells'}
 			>
-				<Icon name="info" size={14} />
+				{#if isExecuting}
+					<span class="spinner"><Icon name="loader" size={18} /></span>
+				{:else}
+					<Icon name="play" size={18} />
+				{/if}
 			</button>
-		</label>
+
+			<button
+				class="icon-btn"
+				class:active={forcePrerequisites}
+				onclick={toggleForcePrerequisites}
+				use:tooltip={forcePrerequisites ? 'Force execution order (on)' : 'Force execution order (off)'}
+			>
+				<Icon name="layers" size={18} />
+			</button>
+		</div>
 	</div>
 </div>
 
+<hr class="controls-separator" />
+
 <style>
 	.notebook-controls {
+		margin-bottom: var(--space-md);
+	}
+
+	.controls-content {
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
 		gap: var(--space-md);
-		padding: var(--space-md) var(--space-lg);
-		border-bottom: 1px solid var(--border);
-		margin-bottom: var(--space-lg);
+		flex-wrap: wrap;
 	}
 
 	.controls-info {
@@ -84,48 +83,58 @@
 		font-size: var(--font-sm);
 		color: var(--text-muted);
 		line-height: 1.5;
-	}
-
-	.controls-info strong {
-		color: var(--text);
-		font-weight: 600;
+		flex: 1;
+		min-width: 200px;
 	}
 
 	.controls-actions {
 		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-lg);
+		gap: var(--space-xs);
 		align-items: center;
 	}
 
-	/* Run All button */
-	.run-all-btn {
-		display: inline-flex;
+	/* Icon buttons */
+	.icon-btn {
+		display: flex;
 		align-items: center;
-		gap: var(--space-xs);
-		padding: var(--space-xs) var(--space-md);
-		font-size: var(--font-sm);
-		font-weight: 600;
-		border: none;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: 1px solid var(--border);
 		border-radius: var(--radius-sm);
+		background: var(--surface);
+		color: var(--text-muted);
 		cursor: pointer;
 		transition: all var(--transition-fast);
-		background: var(--accent);
-		color: white;
 	}
 
-	.run-all-btn:hover:not(:disabled) {
-		background: var(--accent-hover);
+	.icon-btn:hover:not(:disabled) {
+		background: var(--surface-raised);
+		color: var(--text);
+		border-color: var(--border-hover);
 	}
 
-	.run-all-btn:disabled {
-		opacity: 0.7;
+	.icon-btn:disabled {
+		opacity: 0.6;
 		cursor: not-allowed;
 	}
 
-	.run-all-btn.running {
+	.icon-btn.active {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: white;
+	}
+
+	.icon-btn.active:hover:not(:disabled) {
+		background: var(--accent-hover);
+		border-color: var(--accent-hover);
+	}
+
+	.icon-btn.running {
 		background: var(--surface-raised);
-		color: var(--text-muted);
+		border-color: var(--accent);
+		color: var(--accent);
 	}
 
 	/* Spinner */
@@ -143,55 +152,18 @@
 		to { transform: rotate(360deg); }
 	}
 
-	/* Toggle */
-	.toggle-label {
-		display: flex;
-		align-items: center;
-		gap: var(--space-xs);
-		cursor: pointer;
-		font-size: var(--font-sm);
-		color: var(--text-muted);
-		user-select: none;
-	}
-
-	.toggle-label input[type="checkbox"] {
-		width: 16px;
-		height: 16px;
-		margin: 0;
-		cursor: pointer;
-		accent-color: var(--accent);
-	}
-
-	.toggle-text {
-		transition: color var(--transition-fast);
-	}
-
-	.toggle-label:hover .toggle-text {
-		color: var(--text);
-	}
-
-	.toggle-label:has(input:checked) .toggle-text {
-		color: var(--text);
-	}
-
-	/* Info button */
-	.info-btn {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0;
-		width: 20px;
-		height: 20px;
+	/* Full-width separator - extends into doc-content padding */
+	.controls-separator {
 		border: none;
-		border-radius: var(--radius-sm);
-		background: transparent;
-		color: var(--text-muted);
-		cursor: pointer;
-		transition: color var(--transition-fast);
+		border-top: 1px solid var(--border);
+		margin: var(--space-md) calc(-1 * var(--space-xl));
+		margin-bottom: var(--space-lg);
 	}
 
-	.info-btn:hover {
-		color: var(--text);
-		background: transparent;
+	@media (max-width: 600px) {
+		.controls-separator {
+			margin-left: calc(-1 * var(--space-md));
+			margin-right: calc(-1 * var(--space-md));
+		}
 	}
 </style>
