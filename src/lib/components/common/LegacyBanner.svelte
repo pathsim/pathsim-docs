@@ -1,19 +1,7 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Icon from './Icon.svelte';
 
-	const STORAGE_KEY = 'legacy-banner-dismissed';
-
-	let dismissed = $state(true); // Start hidden to avoid flash
-
-	onMount(() => {
-		dismissed = localStorage.getItem(STORAGE_KEY) === 'true';
-	});
-
-	function dismiss() {
-		dismissed = true;
-		localStorage.setItem(STORAGE_KEY, 'true');
-	}
+	let dismissed = $state(false);
 </script>
 
 {#if !dismissed}
@@ -25,7 +13,7 @@
 				<Icon name="external-link" size={12} />
 			</a>
 		</span>
-		<button class="dismiss-btn" onclick={dismiss} aria-label="Dismiss banner">
+		<button class="dismiss-btn" onclick={() => dismissed = true} aria-label="Dismiss banner">
 			<Icon name="x" size={14} />
 		</button>
 	</div>
