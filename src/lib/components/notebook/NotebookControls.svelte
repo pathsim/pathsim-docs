@@ -8,6 +8,13 @@
 	import { notebookStore } from '$lib/stores/notebookStore';
 	import { notebookSettingsStore } from '$lib/stores/notebookSettingsStore';
 
+	interface Props {
+		/** Whether this is a view-only (non-executable) example */
+		viewOnly?: boolean;
+	}
+
+	let { viewOnly = false }: Props = $props();
+
 	// Subscribe to settings
 	let forcePrerequisites = $derived($notebookSettingsStore.forcePrerequisites);
 
@@ -33,7 +40,11 @@
 <div class="notebook-controls">
 	<div class="controls-content">
 		<p class="controls-info">
-			This example is interactive. Click the play button on any cell to execute it, or run all cells in sequence.
+			{#if viewOnly}
+				This example requires external dependencies and cannot be run in the browser.
+			{:else}
+				This example is interactive. Click the play button on any cell to execute it, or run all cells in sequence.
+			{/if}
 		</p>
 
 		<div class="controls-actions">
@@ -41,8 +52,8 @@
 				class="icon-btn"
 				class:running={isExecuting}
 				onclick={handleRunAll}
-				disabled={isExecuting}
-				use:tooltip={isExecuting ? 'Running...' : 'Run all cells'}
+				disabled={viewOnly || isExecuting}
+				use:tooltip={viewOnly ? 'Not available for this example' : isExecuting ? 'Running...' : 'Run all cells'}
 			>
 				{#if isExecuting}
 					<span class="spinner"><Icon name="loader" size={18} /></span>
@@ -55,6 +66,7 @@
 				class="icon-btn"
 				class:active={forcePrerequisites}
 				onclick={toggleForcePrerequisites}
+				disabled={viewOnly}
 				use:tooltip={'Force execution order'}
 			>
 				<Icon name="layers" size={18} />

@@ -76,13 +76,7 @@
 <Tooltip />
 
 <div class="notebook-page">
-	{#if !data.meta.executable}
-		<div class="notebook-notice">
-			<span class="badge warning">View Only</span>
-		</div>
-	{:else}
-		<NotebookControls />
-	{/if}
+	<NotebookControls viewOnly={!data.meta.executable} />
 
 	<Notebook
 		notebook={data.notebook}
@@ -98,9 +92,5 @@
 		max-width: var(--content-max-width);
 		min-width: 0;
 		padding-bottom: var(--space-4xl);
-	}
-
-	.notebook-notice {
-		margin-bottom: var(--space-lg);
 	}
 </style>
