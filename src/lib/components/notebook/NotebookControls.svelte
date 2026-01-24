@@ -31,21 +31,20 @@
 </script>
 
 <div class="notebook-controls">
-	<div class="controls-info">
-		<p>
-			This example is interactive. Click the play button on any cell to execute it,
-			or use <strong>Run All</strong> to execute all cells in order.
-		</p>
-	</div>
+	<p class="controls-info">
+		This example is interactive. Click the play button on any cell to execute it,
+		or use <strong>Run All</strong> to execute all cells in order.
+	</p>
 
 	<div class="controls-actions">
 		<button
-			class="btn primary"
+			class="run-all-btn"
+			class:running={isExecuting}
 			onclick={handleRunAll}
 			disabled={isExecuting}
 		>
 			{#if isExecuting}
-				<Icon name="loader" size={16} />
+				<span class="spinner"><Icon name="loader" size={16} /></span>
 				<span>Running...</span>
 			{:else}
 				<Icon name="play" size={16} />
@@ -53,15 +52,20 @@
 			{/if}
 		</button>
 
-		<button
-			class="btn toggle"
-			class:active={forcePrerequisites}
-			onclick={toggleForcePrerequisites}
-			use:tooltip={'When enabled, always re-run prerequisite cells even if already executed'}
-		>
-			<Icon name={forcePrerequisites ? 'check-square' : 'square'} size={16} />
-			<span>Force execution order</span>
-		</button>
+		<label class="toggle-label">
+			<input
+				type="checkbox"
+				checked={forcePrerequisites}
+				onchange={toggleForcePrerequisites}
+			/>
+			<span class="toggle-text">Force execution order</span>
+			<button
+				class="info-btn"
+				use:tooltip={'When enabled, prerequisite cells are always re-executed, even if they ran successfully before'}
+			>
+				<Icon name="info" size={14} />
+			</button>
+		</label>
 	</div>
 </div>
 
@@ -70,88 +74,124 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
-		padding: var(--space-lg);
-		background: var(--surface);
-		border: 1px solid var(--border);
-		border-radius: var(--radius-md);
-		margin-bottom: var(--space-xl);
+		padding: var(--space-md) var(--space-lg);
+		border-bottom: 1px solid var(--border);
+		margin-bottom: var(--space-lg);
 	}
 
-	.controls-info p {
+	.controls-info {
 		margin: 0;
-		font-size: var(--font-base);
+		font-size: var(--font-sm);
 		color: var(--text-muted);
 		line-height: 1.5;
 	}
 
 	.controls-info strong {
 		color: var(--text);
+		font-weight: 600;
 	}
 
 	.controls-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: var(--space-sm);
+		gap: var(--space-lg);
 		align-items: center;
 	}
 
-	.btn {
+	/* Run All button */
+	.run-all-btn {
 		display: inline-flex;
 		align-items: center;
 		gap: var(--space-xs);
-		padding: var(--space-sm) var(--space-md);
-		font-size: var(--font-base);
-		font-weight: 500;
-		border: 1px solid var(--border);
+		padding: var(--space-xs) var(--space-md);
+		font-size: var(--font-sm);
+		font-weight: 600;
+		border: none;
 		border-radius: var(--radius-sm);
 		cursor: pointer;
 		transition: all var(--transition-fast);
-		background: var(--surface);
-		color: var(--text);
+		background: var(--accent);
+		color: white;
 	}
 
-	.btn:hover:not(:disabled) {
-		background: var(--surface-raised);
+	.run-all-btn:hover:not(:disabled) {
+		background: var(--accent-hover);
 	}
 
-	.btn:disabled {
-		opacity: 0.6;
+	.run-all-btn:disabled {
+		opacity: 0.7;
 		cursor: not-allowed;
 	}
 
-	.btn.primary {
-		background: var(--accent);
-		border-color: var(--accent);
-		color: var(--bg);
-	}
-
-	.btn.primary:hover:not(:disabled) {
-		background: var(--accent-hover);
-		border-color: var(--accent-hover);
-	}
-
-	.btn.toggle {
-		background: var(--surface);
+	.run-all-btn.running {
+		background: var(--surface-raised);
 		color: var(--text-muted);
 	}
 
-	.btn.toggle.active {
-		background: var(--surface-raised);
-		color: var(--text);
-		border-color: var(--accent);
+	/* Spinner */
+	.spinner {
+		display: flex;
+		align-items: center;
 	}
 
-	.btn.toggle:hover:not(:disabled) {
-		color: var(--text);
-	}
-
-	/* Spinning loader */
-	.btn :global(svg.loader) {
+	.spinner :global(svg) {
 		animation: spin 1s linear infinite;
 	}
 
 	@keyframes spin {
 		from { transform: rotate(0deg); }
 		to { transform: rotate(360deg); }
+	}
+
+	/* Toggle */
+	.toggle-label {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
+		cursor: pointer;
+		font-size: var(--font-sm);
+		color: var(--text-muted);
+		user-select: none;
+	}
+
+	.toggle-label input[type="checkbox"] {
+		width: 16px;
+		height: 16px;
+		margin: 0;
+		cursor: pointer;
+		accent-color: var(--accent);
+	}
+
+	.toggle-text {
+		transition: color var(--transition-fast);
+	}
+
+	.toggle-label:hover .toggle-text {
+		color: var(--text);
+	}
+
+	.toggle-label:has(input:checked) .toggle-text {
+		color: var(--text);
+	}
+
+	/* Info button */
+	.info-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		width: 20px;
+		height: 20px;
+		border: none;
+		border-radius: var(--radius-sm);
+		background: transparent;
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: color var(--transition-fast);
+	}
+
+	.info-btn:hover {
+		color: var(--text);
+		background: transparent;
 	}
 </style>
