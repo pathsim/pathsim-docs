@@ -124,16 +124,20 @@
 		cursor: not-allowed;
 	}
 
-	.icon-btn.active,
-	.icon-btn.running {
-		background: var(--surface-raised);
+	.icon-btn.active {
+		background: color-mix(in srgb, var(--accent) 10%, var(--surface));
 		border-color: var(--accent);
 		color: var(--accent);
 	}
 
-	.icon-btn.active:hover:not(:disabled),
-	.icon-btn.running:hover:not(:disabled) {
-		background: var(--surface-hover);
+	.icon-btn.active:hover:not(:disabled) {
+		background: color-mix(in srgb, var(--accent) 15%, var(--surface));
+	}
+
+	.icon-btn.running {
+		background: var(--surface-raised);
+		border-color: var(--accent);
+		color: var(--accent);
 	}
 
 	/* Spinner */
