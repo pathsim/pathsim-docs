@@ -6,6 +6,7 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
+	import { notebookStore } from '$lib/stores/notebookStore';
 	import { groupByCategory } from '$lib/notebook/manifest';
 	import { packages } from '$lib/config/packages';
 	import type { PageData } from './$types';
@@ -18,28 +19,44 @@
 	// Base path for figures: /{package}/{tag}/figures/
 	let figuresBasePath = $derived(`${versionBasePath}/figures`);
 
-	// Set package versions for Pyodide execution
-	// Convert tag (e.g., 'v0.16.4') to version number (e.g., '0.16.4')
+	// Track current version to detect changes
+	let currentVersion = $state<string | null>(null);
+
+	// Set package versions for Pyodide execution (only when version changes)
 	$effect(() => {
 		const versionNumber = data.tag.replace(/^v/, '');
 		const pkg = packages[data.packageId];
-		// Use the pip package name from installation config, or fall back to package id
 		const pipName = pkg.installation.find((i) => i.name.toLowerCase() === 'pip')?.command.split(' ').pop() || data.packageId;
-		packageVersionsStore.set({ [pipName]: versionNumber });
 
-		// Also track slug to re-run effect when example changes
-		const _slug = data.meta.slug;
-
-		return async () => {
-			// Terminate Pyodide when leaving/changing example
-			// This ensures clean state and correct package versions
-			try {
-				const { terminate } = await import('$lib/pyodide');
-				terminate();
-			} catch {
-				// Ignore if not loaded
+		// Only update if version actually changed
+		if (currentVersion !== versionNumber) {
+			// If there was a previous version, terminate Pyodide for clean reinstall
+			if (currentVersion !== null) {
+				import('$lib/pyodide').then(({ terminate }) => terminate()).catch(() => {});
 			}
+			currentVersion = versionNumber;
+			packageVersionsStore.set({ [pipName]: versionNumber });
+		}
+
+		return () => {
+			// Only clear store when unmounting completely (not on example change)
 			packageVersionsStore.clear();
+		};
+	});
+
+	// Reset Pyodide namespace when example changes (but don't terminate)
+	$effect(() => {
+		const slug = data.meta.slug;
+
+		// Reset namespace and notebook state when switching examples
+		return async () => {
+			try {
+				const { reset } = await import('$lib/pyodide');
+				await reset();
+			} catch {
+				// Ignore if Pyodide not loaded
+			}
+			notebookStore.resetAllCells();
 		};
 	});
 
