@@ -2,10 +2,12 @@
 Notebook execution utilities.
 
 Executes notebooks and captures outputs (stdout, stderr, figures) separately.
+Figures are saved as SVG for better quality and smaller file sizes.
 """
 
 import base64
 import json
+import os
 import subprocess
 import sys
 import time
@@ -15,6 +17,30 @@ from pathlib import Path
 from typing import Any
 
 from .config import MAX_WORKERS, NOTEBOOK_TIMEOUT
+
+
+# Setup code to configure matplotlib for SVG output
+# This is prepended to notebooks before execution
+MATPLOTLIB_SVG_SETUP = '''
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
+# Configure matplotlib for SVG output
+plt.rcParams['savefig.format'] = 'svg'
+plt.rcParams['figure.facecolor'] = 'none'
+plt.rcParams['savefig.facecolor'] = 'none'
+plt.rcParams['savefig.transparent'] = True
+
+# Configure IPython inline backend for SVG
+try:
+    from IPython import get_ipython
+    ipython = get_ipython()
+    if ipython is not None:
+        ipython.run_line_magic('config', "InlineBackend.figure_formats = ['svg']")
+except:
+    pass
+'''
 
 
 def execute_notebooks(
@@ -109,8 +135,25 @@ def _execute_single_notebook(
     except Exception as e:
         return {"success": False, "error": f"Failed to read notebook: {e}", "cells": {}}
 
+    # Inject matplotlib SVG setup as first code cell
+    notebook_with_setup = _inject_svg_setup(notebook)
+
+    # Write temporary notebook with setup
+    temp_notebook_path = notebook_path.with_suffix(".temp.ipynb")
+    try:
+        with open(temp_notebook_path, "w", encoding="utf-8") as f:
+            json.dump(notebook_with_setup, f, ensure_ascii=False)
+    except Exception as e:
+        return {"success": False, "error": f"Failed to write temp notebook: {e}", "cells": {}}
+
     # Execute using nbconvert (simpler than manual kernel management)
-    result = _execute_with_nbconvert(notebook_path)
+    result = _execute_with_nbconvert(temp_notebook_path)
+
+    # Clean up temp notebook
+    try:
+        temp_notebook_path.unlink()
+    except Exception:
+        pass
 
     if not result["success"]:
         # Save partial results
@@ -132,12 +175,22 @@ def _execute_single_notebook(
         return {"success": False, "error": f"Failed to read executed notebook: {e}", "cells": {}}
 
     # Extract outputs from each cell
+    # Skip the first code cell (injected setup) when mapping indices
     cells_output = {}
     figure_count = 0
+    setup_cell_skipped = False
 
     for i, cell in enumerate(executed_nb.get("cells", [])):
         if cell.get("cell_type") != "code":
             continue
+
+        # Skip the injected setup cell (first code cell)
+        if not setup_cell_skipped:
+            setup_cell_skipped = True
+            continue
+
+        # Adjust index to match original notebook (subtract 1 for skipped setup cell)
+        original_index = i - 1
 
         cell_output = {
             "stdout": None,
@@ -159,13 +212,13 @@ def _execute_single_notebook(
             elif output_type in ("display_data", "execute_result"):
                 data = output.get("data", {})
 
-                # Extract images
-                for mime_type in ["image/png", "image/jpeg", "image/svg+xml"]:
+                # Extract images - prefer SVG, fall back to PNG/JPEG
+                for mime_type in ["image/svg+xml", "image/png", "image/jpeg"]:
                     if mime_type in data:
                         ext = {
+                            "image/svg+xml": "svg",
                             "image/png": "png",
                             "image/jpeg": "jpg",
-                            "image/svg+xml": "svg",
                         }[mime_type]
 
                         figure_name = f"{name}_{figure_count}.{ext}"
@@ -188,7 +241,7 @@ def _execute_single_notebook(
 
         # Only include cell if it has output
         if cell_output["stdout"] or cell_output["stderr"] or cell_output["figures"]:
-            cells_output[str(i)] = cell_output
+            cells_output[str(original_index)] = cell_output
 
     # Clean up temporary executed notebook
     if result.get("output_path"):
@@ -248,3 +301,25 @@ def _save_output(path: Path, data: dict):
     """Save output data as JSON."""
     with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+def _inject_svg_setup(notebook: dict) -> dict:
+    """
+    Inject matplotlib SVG setup code as the first code cell.
+
+    This ensures all plots are generated as SVG regardless of
+    what the notebook's original settings might be.
+    """
+    setup_cell = {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {"tags": ["setup", "hide"]},
+        "outputs": [],
+        "source": MATPLOTLIB_SVG_SETUP.strip().split("\n"),
+    }
+
+    # Create a copy with setup cell prepended
+    result = dict(notebook)
+    result["cells"] = [setup_cell] + list(notebook.get("cells", []))
+
+    return result

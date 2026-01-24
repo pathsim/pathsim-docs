@@ -311,19 +311,16 @@ def build_version(
         else:
             print(f"      No modules found")
 
-        # 2. Copy notebooks
+        # 2. Copy notebooks and referenced figures
         print(f"    Copying notebooks...")
         notebooks_source = pkg_config.get("notebooks")
         notebooks = []
 
         if notebooks_source and notebooks_source.exists():
-            notebooks = copy_notebooks(notebooks_source, output_dir)
+            # Use docs/source as root for figure search (covers figures anywhere in docs)
+            docs_root = repo_path / "docs" / "source"
+            notebooks = copy_notebooks(notebooks_source, output_dir, docs_root)
             print(f"      {len(notebooks)} notebooks")
-
-            # Copy figures
-            figures_source = pkg_config.get("figures")
-            if figures_source and figures_source.exists():
-                copy_figures(figures_source, output_dir)
         else:
             print(f"      No notebooks found")
 

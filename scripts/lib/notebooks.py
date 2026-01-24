@@ -11,9 +11,14 @@ from typing import Any
 from .config import CATEGORY_MAPPINGS, CATEGORIES, NON_EXECUTABLE
 
 
-def copy_notebooks(source_dir: Path, target_dir: Path) -> list[dict]:
+def copy_notebooks(source_dir: Path, target_dir: Path, docs_root: Path | None = None) -> list[dict]:
     """
     Copy notebooks from source to target directory and extract metadata.
+
+    Args:
+        source_dir: Directory containing notebooks
+        target_dir: Output directory for this version
+        docs_root: Root of docs directory to search for figures (optional)
 
     Returns list of notebook metadata dictionaries.
     """
@@ -24,12 +29,16 @@ def copy_notebooks(source_dir: Path, target_dir: Path) -> list[dict]:
     notebooks_dir.mkdir(parents=True, exist_ok=True)
 
     notebooks = []
+    all_figure_refs = set()
 
     for nb_path in sorted(source_dir.glob("*.ipynb")):
         try:
             meta = _process_notebook(nb_path, notebooks_dir)
             if meta:
                 notebooks.append(meta)
+                # Collect figure references from this notebook
+                figure_refs = extract_figure_paths(nb_path)
+                all_figure_refs.update(figure_refs)
         except Exception as e:
             print(f"    Warning: Failed to process {nb_path.name}: {e}")
 
@@ -38,11 +47,124 @@ def copy_notebooks(source_dir: Path, target_dir: Path) -> list[dict]:
     if mplstyle_source.exists():
         shutil.copy2(mplstyle_source, target_dir / "pathsim_docs.mplstyle")
 
+    # Copy referenced figures by searching docs directory
+    if all_figure_refs:
+        search_root = docs_root or source_dir.parent
+        copy_notebook_figures(all_figure_refs, search_root, target_dir)
+
     return notebooks
 
 
+def extract_figure_paths(notebook_path: Path) -> set[str]:
+    """
+    Extract all figure paths referenced in a notebook.
+
+    Looks for image references in markdown and raw cells using:
+    - RST syntax: .. image:: path
+    - Markdown syntax: ![alt](path)
+    - HTML syntax: <img src="path">
+
+    Returns set of figure filenames (just the filename, not full path).
+    """
+    try:
+        with open(notebook_path, "r", encoding="utf-8") as f:
+            notebook = json.load(f)
+    except (json.JSONDecodeError, UnicodeDecodeError):
+        return set()
+
+    figure_refs = set()
+
+    # Patterns for different image syntaxes
+    patterns = [
+        re.compile(r'\.\.\s+image::\s*(\S+)'),  # RST: .. image:: path
+        re.compile(r'!\[[^\]]*\]\(([^)]+)\)'),  # Markdown: ![alt](path)
+        re.compile(r'<img[^>]+src=["\']([^"\']+)["\']', re.IGNORECASE),  # HTML: <img src="path">
+    ]
+
+    for cell in notebook.get("cells", []):
+        cell_type = cell.get("cell_type")
+        if cell_type not in ("markdown", "raw"):
+            continue
+
+        source = cell.get("source", [])
+        if isinstance(source, list):
+            source = "".join(source)
+
+        for pattern in patterns:
+            for match in pattern.finditer(source):
+                path = match.group(1)
+                # Extract just the filename from the path
+                # Handle paths like "figures/figures_g/foo.png" or "../figures/bar.png"
+                filename = Path(path.replace("\\", "/")).name
+                if filename.lower().endswith((".png", ".jpg", ".jpeg", ".svg", ".gif")):
+                    figure_refs.add(filename)
+
+    return figure_refs
+
+
+def copy_notebook_figures(figure_refs: set[str], search_root: Path, target_dir: Path) -> int:
+    """
+    Search for referenced figures in the docs directory and copy them.
+
+    Args:
+        figure_refs: Set of figure filenames to find
+        search_root: Root directory to search in
+        target_dir: Output directory for this version
+
+    Returns number of figures copied.
+    """
+    figures_dir = target_dir / "figures"
+    figures_dir.mkdir(parents=True, exist_ok=True)
+
+    # Build index of all image files in search_root
+    image_index: dict[str, Path] = {}
+    for ext in ["*.png", "*.jpg", "*.jpeg", "*.svg", "*.gif"]:
+        for img_path in search_root.rglob(ext):
+            # Use lowercase filename as key for case-insensitive matching
+            image_index[img_path.name.lower()] = img_path
+
+    copied = 0
+    not_found = []
+
+    for ref in figure_refs:
+        ref_lower = ref.lower()
+        if ref_lower in image_index:
+            src_path = image_index[ref_lower]
+            # Determine target path - preserve subdirectory structure if in figures_g etc
+            rel_parts = src_path.relative_to(search_root).parts
+            # Check if it's in a subdirectory of figures
+            if "figures" in rel_parts:
+                fig_idx = rel_parts.index("figures")
+                sub_parts = rel_parts[fig_idx + 1:]
+                if len(sub_parts) > 1:
+                    # Has subdirectory (e.g., figures_g)
+                    subdir = figures_dir / sub_parts[0]
+                    subdir.mkdir(parents=True, exist_ok=True)
+                    dest_path = subdir / sub_parts[-1]
+                else:
+                    dest_path = figures_dir / sub_parts[-1] if sub_parts else figures_dir / src_path.name
+            else:
+                dest_path = figures_dir / src_path.name
+
+            if not dest_path.exists():
+                shutil.copy2(src_path, dest_path)
+                copied += 1
+        else:
+            not_found.append(ref)
+
+    if not_found:
+        print(f"      Warning: {len(not_found)} figures not found: {not_found[:3]}{'...' if len(not_found) > 3 else ''}")
+
+    return copied
+
+
 def copy_figures(source_dir: Path, target_dir: Path):
-    """Copy figures from source to target figures directory."""
+    """
+    Copy figures from source to target figures directory.
+
+    DEPRECATED: Use copy_notebook_figures() with extract_figure_paths() instead.
+    Kept for backward compatibility.
+    """
     if not source_dir.exists():
         return
 
