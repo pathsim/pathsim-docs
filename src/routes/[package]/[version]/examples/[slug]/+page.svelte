@@ -19,27 +19,15 @@
 	// Base path for figures: /{package}/{tag}/figures/
 	let figuresBasePath = $derived(`${versionBasePath}/figures`);
 
-	// Track current version to detect changes
-	let currentVersion = $state<string | null>(null);
-
-	// Set package versions for Pyodide execution (only when version changes)
+	// Set package versions for Pyodide execution
+	// Pyodide will lazily reinitialize on next execution if version changed
 	$effect(() => {
 		const versionNumber = data.tag.replace(/^v/, '');
 		const pkg = packages[data.packageId];
 		const pipName = pkg.installation.find((i) => i.name.toLowerCase() === 'pip')?.command.split(' ').pop() || data.packageId;
-
-		// Only update if version actually changed
-		if (currentVersion !== versionNumber) {
-			// If there was a previous version, terminate Pyodide for clean reinstall
-			if (currentVersion !== null) {
-				import('$lib/pyodide').then(({ terminate }) => terminate()).catch(() => {});
-			}
-			currentVersion = versionNumber;
-			packageVersionsStore.set({ [pipName]: versionNumber });
-		}
+		packageVersionsStore.set({ [pipName]: versionNumber });
 
 		return () => {
-			// Only clear store when unmounting completely (not on example change)
 			packageVersionsStore.clear();
 		};
 	});
