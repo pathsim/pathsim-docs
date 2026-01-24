@@ -63,9 +63,13 @@
 	</div>
 </div>
 
-<div class="separator"></div>
+<div class="separator controls-separator"></div>
 
 <style>
+	.controls-separator {
+		margin-bottom: var(--space-lg);
+	}
+
 	.notebook-controls {
 		margin-bottom: var(--space-md);
 	}
