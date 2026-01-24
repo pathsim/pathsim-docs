@@ -124,21 +124,16 @@
 		cursor: not-allowed;
 	}
 
-	.icon-btn.active {
-		background: var(--accent);
-		border-color: var(--accent);
-		color: white;
-	}
-
-	.icon-btn.active:hover:not(:disabled) {
-		background: var(--accent-hover);
-		border-color: var(--accent-hover);
-	}
-
+	.icon-btn.active,
 	.icon-btn.running {
 		background: var(--surface-raised);
 		border-color: var(--accent);
 		color: var(--accent);
+	}
+
+	.icon-btn.active:hover:not(:disabled),
+	.icon-btn.running:hover:not(:disabled) {
+		background: var(--surface-hover);
 	}
 
 	/* Spinner */
