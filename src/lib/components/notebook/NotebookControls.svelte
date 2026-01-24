@@ -55,7 +55,7 @@
 				class="icon-btn"
 				class:active={forcePrerequisites}
 				onclick={toggleForcePrerequisites}
-				use:tooltip={forcePrerequisites ? 'Force execution order (on)' : 'Force execution order (off)'}
+				use:tooltip={'Force execution order'}
 			>
 				<Icon name="layers" size={18} />
 			</button>
