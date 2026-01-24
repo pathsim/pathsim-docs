@@ -63,7 +63,7 @@
 	</div>
 </div>
 
-<hr class="controls-separator" />
+<div class="separator"></div>
 
 <style>
 	.notebook-controls {
@@ -152,18 +152,4 @@
 		to { transform: rotate(360deg); }
 	}
 
-	/* Full-width separator - extends into doc-content padding */
-	.controls-separator {
-		border: none;
-		border-top: 1px solid var(--border);
-		margin: var(--space-md) calc(-1 * var(--space-xl));
-		margin-bottom: var(--space-lg);
-	}
-
-	@media (max-width: 600px) {
-		.controls-separator {
-			margin-left: calc(-1 * var(--space-md));
-			margin-right: calc(-1 * var(--space-md));
-		}
-	}
 </style>
