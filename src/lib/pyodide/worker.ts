@@ -190,12 +190,12 @@ plt.rcParams.update({
 })
 
 def _capture_plots():
-    """Capture all open matplotlib figures as base64 PNGs."""
+    """Capture all open matplotlib figures as base64 SVGs."""
     plots = []
     for fig_num in plt.get_fignums():
         fig = plt.figure(fig_num)
         buf = io.BytesIO()
-        fig.savefig(buf, format='png', bbox_inches='tight', dpi=150)
+        fig.savefig(buf, format='svg', bbox_inches='tight')
         buf.seek(0)
         plots.append(base64.b64encode(buf.read()).decode('utf-8'))
         plt.close(fig)

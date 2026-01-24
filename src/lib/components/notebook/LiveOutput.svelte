@@ -12,7 +12,7 @@
 		stdout: string;
 		/** Standard error text */
 		stderr: string;
-		/** Base64-encoded plot images */
+		/** Base64-encoded SVG plots */
 		plots: string[];
 		/** Execution duration in ms */
 		duration: number | null;
@@ -89,7 +89,7 @@
 		</div>
 		<div class="panel-body plots-body">
 			{#each plots as plot, i}
-				<img src="data:image/png;base64,{plot}" alt="Plot {i + 1}" class="plot-image" />
+				<img src="data:image/svg+xml;base64,{plot}" alt="Plot {i + 1}" class="plot-image" />
 			{/each}
 		</div>
 	</div>
