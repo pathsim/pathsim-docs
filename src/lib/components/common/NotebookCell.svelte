@@ -9,6 +9,7 @@
 	import Icon from './Icon.svelte';
 	import { tooltip } from './Tooltip.svelte';
 	import { notebookStore, type CellStatus } from '$lib/stores/notebookStore';
+	import { notebookSettingsStore } from '$lib/stores/notebookSettingsStore';
 	import { pyodideState } from '$lib/stores/pyodideStore';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import CellOutput from '$lib/components/notebook/CellOutput.svelte';
@@ -153,7 +154,8 @@
 	async function handleRun() {
 		if (isRunning || isPending) return;
 
-		const result = await notebookStore.runWithPrerequisites(id);
+		const settings = get(notebookSettingsStore);
+		const result = await notebookStore.runWithPrerequisites(id, settings.forcePrerequisites);
 
 		if (!result.success && result.error) {
 			// Show error if it's a chain-level error (like circular deps)

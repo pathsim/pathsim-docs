@@ -176,9 +176,14 @@ function createNotebookStore() {
 
 		/**
 		 * Run a cell with automatic prerequisite execution
+		 * @param cellId - The cell to run
+		 * @param forcePrerequisites - If true, always re-run prerequisites even if already successful
 		 * Returns list of cells that were run (in order)
 		 */
-		async runWithPrerequisites(cellId: string): Promise<{
+		async runWithPrerequisites(
+			cellId: string,
+			forcePrerequisites: boolean = false
+		): Promise<{
 			success: boolean;
 			executedCells: string[];
 			error?: string;
@@ -200,11 +205,13 @@ function createNotebookStore() {
 			const executionOrder = getExecutionOrder(cellId, cells);
 
 			// Filter to only cells that need to run
-			const cellsToRun = executionOrder.filter((id) => {
-				const cell = cells.get(id);
-				// Run if not yet successful, or if it's the target cell (always re-run target)
-				return cell && (cell.status !== 'success' || id === cellId);
-			});
+			const cellsToRun = forcePrerequisites
+				? executionOrder // Run all cells in order when forcing
+				: executionOrder.filter((id) => {
+						const cell = cells.get(id);
+						// Run if not yet successful, or if it's the target cell (always re-run target)
+						return cell && (cell.status !== 'success' || id === cellId);
+					});
 
 			// Mark all cells as pending
 			for (const id of cellsToRun) {
@@ -258,6 +265,109 @@ function createNotebookStore() {
 			}
 
 			return { success: true, executedCells };
+		},
+
+		/**
+		 * Run all registered cells in order
+		 * Cells are executed based on their prerequisites (topological order)
+		 */
+		async runAll(): Promise<{
+			success: boolean;
+			executedCells: string[];
+			error?: string;
+		}> {
+			const state = get({ subscribe });
+			const cells = state.cells;
+
+			if (cells.size === 0) {
+				return { success: true, executedCells: [] };
+			}
+
+			// Get all cell IDs and build a combined execution order
+			const allCellIds = [...cells.keys()];
+			const visited = new Set<string>();
+			const executionOrder: string[] = [];
+
+			// Build execution order respecting all prerequisites
+			for (const cellId of allCellIds) {
+				const order = getExecutionOrder(cellId, cells, new Set(visited));
+				for (const id of order) {
+					if (!visited.has(id)) {
+						visited.add(id);
+						executionOrder.push(id);
+					}
+				}
+			}
+
+			// Mark all cells as pending
+			for (const id of executionOrder) {
+				this.setCellStatus(id, 'pending');
+			}
+
+			const executedCells: string[] = [];
+
+			// Execute in order
+			for (const id of executionOrder) {
+				const cell = get({ subscribe }).cells.get(id);
+				if (!cell) continue;
+
+				this.setCellStatus(id, 'running');
+
+				try {
+					await cell.execute();
+					const updatedCell = get({ subscribe }).cells.get(id);
+					if (updatedCell?.status === 'error') {
+						// Reset remaining pending cells
+						for (const remainingId of executionOrder) {
+							const remaining = get({ subscribe }).cells.get(remainingId);
+							if (remaining?.status === 'pending') {
+								this.setCellStatus(remainingId, 'idle');
+							}
+						}
+						return {
+							success: false,
+							executedCells,
+							error: `Cell "${id}" failed`
+						};
+					}
+					executedCells.push(id);
+				} catch (err) {
+					this.setCellStatus(id, 'error');
+					for (const remainingId of executionOrder) {
+						const remaining = get({ subscribe }).cells.get(remainingId);
+						if (remaining?.status === 'pending') {
+							this.setCellStatus(remainingId, 'idle');
+						}
+					}
+					return {
+						success: false,
+						executedCells,
+						error: err instanceof Error ? err.message : String(err)
+					};
+				}
+			}
+
+			return { success: true, executedCells };
+		},
+
+		/**
+		 * Get all registered cell IDs
+		 */
+		getAllCellIds(): string[] {
+			return [...get({ subscribe }).cells.keys()];
+		},
+
+		/**
+		 * Check if any cells are currently running or pending
+		 */
+		isExecuting(): boolean {
+			const cells = get({ subscribe }).cells;
+			for (const cell of cells.values()) {
+				if (cell.status === 'running' || cell.status === 'pending') {
+					return true;
+				}
+			}
+			return false;
 		},
 
 		/**

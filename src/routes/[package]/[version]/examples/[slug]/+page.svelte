@@ -2,6 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import { base } from '$app/paths';
 	import { Notebook } from '$lib/components/notebook';
+	import NotebookControls from '$lib/components/notebook/NotebookControls.svelte';
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
@@ -74,6 +75,8 @@
 		<div class="notebook-notice">
 			<span class="badge warning">View Only</span>
 		</div>
+	{:else}
+		<NotebookControls />
 	{/if}
 
 	<Notebook
