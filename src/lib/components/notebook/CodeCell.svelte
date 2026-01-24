@@ -14,6 +14,8 @@
 		index: number;
 		/** IDs of previous code cells (for prerequisites) */
 		prerequisites?: string[];
+		/** Whether the cell can be executed */
+		executable?: boolean;
 		/** Whether to show static outputs (before any execution) */
 		showStaticOutputs?: boolean;
 		/** Pre-computed output from build */
@@ -28,6 +30,7 @@
 		cell,
 		index,
 		prerequisites = [],
+		executable = true,
 		showStaticOutputs = true,
 		precomputedOutput = null,
 		figureUrls = [],
@@ -58,6 +61,7 @@
 		code={transformedCode}
 		title="Python"
 		editable={true}
+		{executable}
 		{prerequisites}
 		staticOutputs={showStaticOutputs && !hasPrecomputedOutput ? cell.outputs : []}
 		precomputedStdout={showStaticOutputs ? precomputedOutput?.stdout : null}

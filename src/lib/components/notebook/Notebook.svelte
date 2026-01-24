@@ -23,6 +23,8 @@
 		figuresBasePath?: string;
 		/** Show stored outputs from notebook file */
 		showStaticOutputs?: boolean;
+		/** Whether code cells can be executed */
+		executable?: boolean;
 	}
 
 	let {
@@ -30,7 +32,8 @@
 		basePath = '',
 		precomputedOutputs = null,
 		figuresBasePath = '',
-		showStaticOutputs = true
+		showStaticOutputs = true,
+		executable = true
 	}: Props = $props();
 
 	// Get list of code cells with their indices
@@ -152,6 +155,7 @@
 						{cell}
 						{index}
 						prerequisites={prerequisitesMap.get(cell.id) || []}
+						{executable}
 						{showStaticOutputs}
 						precomputedOutput={getCellOutput(index)}
 						figureUrls={getCellFigureUrls(index)}

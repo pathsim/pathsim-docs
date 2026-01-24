@@ -25,6 +25,8 @@
 		title?: string;
 		/** Whether code can be edited */
 		editable?: boolean;
+		/** Whether code can be executed */
+		executable?: boolean;
 		/** IDs of cells that must execute first (will auto-run) */
 		prerequisites?: string[];
 		/** Static outputs from notebook file (shown before execution) */
@@ -44,6 +46,7 @@
 		code,
 		title = 'Code',
 		editable = false,
+		executable = true,
 		prerequisites = [],
 		staticOutputs = [],
 		precomputedStdout = null,
@@ -213,23 +216,25 @@
 		bind:this={codeBlockRef}
 		{code}
 		{title}
-		{editable}
-		onrun={handleRun}
-		onrunadvance={handleRunAdvance}
+		editable={editable && executable}
+		onrun={executable ? handleRun : undefined}
+		onrunadvance={executable ? handleRunAdvance : undefined}
 	>
 		{#snippet headerActions()}
-			{#if isRunning}
-				<button class="icon-btn" disabled use:tooltip={'Running...'}>
-					<Icon name="loader" size={14} />
-				</button>
-			{:else if isPending}
-				<button class="icon-btn" disabled use:tooltip={'Waiting...'}>
-					<Icon name="loader" size={14} />
-				</button>
-			{:else}
-				<button class="icon-btn" onclick={handleRun} use:tooltip={'Run cell'}>
-					<Icon name="play" size={14} />
-				</button>
+			{#if executable}
+				{#if isRunning}
+					<button class="icon-btn" disabled use:tooltip={'Running...'}>
+						<Icon name="loader" size={14} />
+					</button>
+				{:else if isPending}
+					<button class="icon-btn" disabled use:tooltip={'Waiting...'}>
+						<Icon name="loader" size={14} />
+					</button>
+				{:else}
+					<button class="icon-btn" onclick={handleRun} use:tooltip={'Run cell'}>
+						<Icon name="play" size={14} />
+					</button>
+				{/if}
 			{/if}
 		{/snippet}
 	</CodeBlock>

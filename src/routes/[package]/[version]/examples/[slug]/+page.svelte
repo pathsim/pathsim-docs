@@ -84,6 +84,7 @@
 		precomputedOutputs={data.outputs}
 		{figuresBasePath}
 		showStaticOutputs={true}
+		executable={data.meta.executable}
 	/>
 </div>
 
