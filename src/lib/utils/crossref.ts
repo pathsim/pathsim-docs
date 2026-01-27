@@ -94,6 +94,7 @@ export function getCrossRefIndex(): Map<string, CrossRefTarget> {
  *
  * Handles:
  * - RST role syntax: :class:`ClassName`, :func:`function_name`, :meth:`method_name`
+ * - Docutils literal code: ``ClassName`` (<tt class="docutils literal">)
  * - Plain backtick code: `ClassName`, `function_name`
  * - Title tag references from docutils: <cite>ClassName</cite>
  * - Single-quoted class names in text: 'ClassName'
@@ -132,7 +133,16 @@ export function processCrossRefs(
 		return match;
 	});
 
-	// 3. Handle inline code that matches known classes/functions
+	// 3. Handle docutils literal inline code: <tt class="docutils literal">Name</tt>
+	html = html.replace(/<tt class="docutils literal">([A-Z][a-zA-Z0-9_]*)<\/tt>/g, (match, name) => {
+		const target = index.get(name);
+		if (target && target.type === 'class') {
+			return `<a href="${fullPath(target.path)}" class="crossref crossref-${target.type}">${name}</a>`;
+		}
+		return match;
+	});
+
+	// 4. Handle inline code that matches known classes/functions
 	// Be careful not to match code inside pre blocks or already-processed links
 	html = html.replace(/<code>([A-Z][a-zA-Z0-9_]*)<\/code>/g, (match, name) => {
 		// Skip if it looks like it's already part of a link
@@ -143,7 +153,7 @@ export function processCrossRefs(
 		return match;
 	});
 
-	// 4. Handle title attribute references (docutils)
+	// 5. Handle title attribute references (docutils)
 	html = html.replace(
 		/<span class="[^"]*" title="([^"]+)">([^<]+)<\/span>/g,
 		(match, title, text) => {
@@ -155,7 +165,7 @@ export function processCrossRefs(
 		}
 	);
 
-	// 5. Handle single-quoted class names in plain text: 'ClassName'
+	// 6. Handle single-quoted class names in plain text: 'ClassName'
 	// Only match PascalCase names (likely class names)
 	html = html.replace(/'([A-Z][a-zA-Z0-9_]*)'/g, (match, name) => {
 		const target = index.get(name);
