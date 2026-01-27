@@ -290,7 +290,7 @@ pre {
 	font-size: var(--font-base);
 	font-weight: 500;
 	line-height: 1.5;
-	color: var(--text);
+	color: var(--text-muted);
 	white-space: pre-wrap;
 	word-break: break-word;
 	margin: 0;

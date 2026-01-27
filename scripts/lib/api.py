@@ -405,6 +405,7 @@ def _rst_to_html(rst_text: str) -> str:
 
     try:
         processed = _preprocess_numpy_docstring(rst_text)
+        processed = _preprocess_rst_roles(processed)
 
         parts = publish_parts(
             processed,
@@ -420,6 +421,13 @@ def _rst_to_html(rst_text: str) -> str:
         return parts["body"]
     except Exception:
         return _markdown_fallback(rst_text)
+
+
+def _preprocess_rst_roles(text: str) -> str:
+    """Convert Sphinx-specific RST roles to standard RST links."""
+    # :doi:`...` -> hyperlink to https://doi.org/...
+    text = re.sub(r':doi:`([^`]+)`', r'`doi:\1 <https://doi.org/\1>`_', text)
+    return text
 
 
 def _preprocess_numpy_docstring(docstring: str) -> str:
