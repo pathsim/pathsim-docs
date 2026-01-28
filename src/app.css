@@ -115,7 +115,6 @@
 	--surface-hover: color-mix(in srgb, var(--surface-raised) 90%, black);
 
 	--text: #1a1a1f;
-	--text-muted: #606068;
 	--text-disabled: #909098;
 
 	--border: rgba(0, 0, 0, 0.1);
