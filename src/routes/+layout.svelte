@@ -31,11 +31,17 @@
 	});
 
 	onMount(() => {
-		const saved = localStorage.getItem('theme');
-		if (saved === 'light' || saved === 'dark') {
-			theme = saved;
-		} else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-			theme = 'light';
+		const urlTheme = new URL(window.location.href).searchParams.get('theme');
+		if (urlTheme === 'dark' || urlTheme === 'light') {
+			theme = urlTheme;
+			localStorage.setItem('theme', urlTheme);
+		} else {
+			const saved = localStorage.getItem('theme');
+			if (saved === 'light' || saved === 'dark') {
+				theme = saved;
+			} else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+				theme = 'light';
+			}
 		}
 		document.documentElement.setAttribute('data-theme', theme);
 
