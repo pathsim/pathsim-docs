@@ -10,6 +10,19 @@
 	import { searchTarget } from '$lib/stores/searchNavigation';
 	import { SearchResult as SearchResultComponent } from '$lib/components/search';
 
+	function navigateWithTransition(path: string) {
+		const doc = document as Document & {
+			startViewTransition?: (cb: () => Promise<void>) => { finished: Promise<void> };
+		};
+
+		if (!doc.startViewTransition) {
+			goto(path);
+			return;
+		}
+
+		doc.startViewTransition(() => goto(path).then(() => {}));
+	}
+
 	// Use shared search hook
 	const searchState = createDebouncedSearch({ limit: 8 });
 	let searchInput = $state<HTMLInputElement | null>(null);
@@ -161,9 +174,9 @@
 							</a>
 						</div>
 					</div>
-					<a href="{base}/{pkg.docs}" class="package-body">
+					<button class="package-body" onclick={() => navigateWithTransition(`${base}/${pkg.docs}`)}>
 						<img src="{base}/{pkg.logo}" alt={pkg.name} />
-					</a>
+					</button>
 				</div>
 			{/each}
 		</div>
@@ -371,8 +384,11 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		width: 100%;
 		padding: var(--space-xl);
 		background: var(--surface);
+		border: none;
+		cursor: pointer;
 		text-decoration: none;
 	}
 
