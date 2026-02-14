@@ -7,7 +7,8 @@ export const external = {
 	github: 'https://github.com/pathsim',
 	pypi: 'https://pypi.org/project',
 	conda: 'https://anaconda.org/conda-forge',
-	sponsor: 'https://github.com/sponsors/milanofthe'
+	sponsor: 'https://github.com/sponsors/milanofthe',
+	consulting: 'https://milanrother.com/#services'
 };
 
 export type PackageId = 'pathsim' | 'chem' | 'vehicle';
@@ -209,5 +210,6 @@ export const nav = {
 	home: external.home,
 	editor: external.view,
 	github: external.github,
-	sponsor: external.sponsor
+	sponsor: external.sponsor,
+	consulting: external.consulting
 };

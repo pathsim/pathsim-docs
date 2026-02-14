@@ -115,9 +115,9 @@
 					<Icon name="github" size={20} />
 					<span class="action-label">GitHub</span>
 				</a>
-				<a href={nav.sponsor} class="action-card">
-					<Icon name="heart" size={20} />
-					<span class="action-label">Sponsor</span>
+				<a href={nav.consulting} class="action-card">
+					<Icon name="activity" size={20} />
+					<span class="action-label">Consulting</span>
 				</a>
 			</div>
 		</header>
