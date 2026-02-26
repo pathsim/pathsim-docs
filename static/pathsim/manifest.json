@@ -1,7 +1,12 @@
 {
   "package": "pathsim",
-  "latestTag": "v0.17.2",
+  "latestTag": "v0.18.0",
   "versions": [
+    {
+      "tag": "v0.18.0",
+      "released": "2026-02-26",
+      "hasExamples": true
+    },
     {
       "tag": "v0.17.2",
       "released": "2026-02-19",
