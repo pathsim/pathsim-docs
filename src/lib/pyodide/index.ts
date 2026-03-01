@@ -5,11 +5,12 @@
 
 import { TIMEOUTS, ERROR_MESSAGES } from '$lib/config/pyodide';
 import { pyodideState, updateState, setError, setReady } from '$lib/stores/pyodideStore';
-import type { WorkerRequest, WorkerResponse, ExecutionResult, PackageVersions } from './types';
+import type { WorkerRequest, WorkerResponse, ExecutionResult, PackageVersions, PyodidePackageInfo } from './types';
 
 let worker: Worker | null = null;
 let initPromise: Promise<void> | null = null;
 let initializedVersions: PackageVersions | null = null;
+let initializedPackages: PyodidePackageInfo[] | null = null;
 
 // Streaming callbacks for real-time output
 export interface StreamCallbacks {
@@ -139,29 +140,45 @@ function send(request: WorkerRequest): void {
 }
 
 /**
- * Check if versions have changed and reinitialization is needed
+ * Check if packages or versions have changed and reinitialization is needed
  */
-function needsReinitialization(newVersions?: PackageVersions): boolean {
-	if (!newVersions) return false;
-	if (!initializedVersions) return true;
+function needsReinitialization(newPackages?: PyodidePackageInfo[], newVersions?: PackageVersions): boolean {
+	// No arguments = just checking if initialized, don't force reinit
+	if (!newPackages && !newVersions) return false;
 
-	// Check if any version has changed
-	for (const [pkg, version] of Object.entries(newVersions)) {
-		if (initializedVersions[pkg] !== version) {
-			return true;
+	// Check if package list changed
+	if (newPackages) {
+		if (!initializedPackages) return true;
+		const oldPips = new Set(initializedPackages.map((p) => p.pip));
+		const newPips = new Set(newPackages.map((p) => p.pip));
+		if (oldPips.size !== newPips.size) return true;
+		for (const pip of newPips) {
+			if (!oldPips.has(pip)) return true;
 		}
 	}
+
+	// Check if any version has changed
+	if (newVersions) {
+		if (!initializedVersions) return true;
+		for (const [pkg, version] of Object.entries(newVersions)) {
+			if (initializedVersions[pkg] !== version) {
+				return true;
+			}
+		}
+	}
+
 	return false;
 }
 
 /**
  * Initialize Pyodide
  * Returns a promise that resolves when Pyodide is ready
+ * @param packages Simulation packages to install (from package config)
  * @param packageVersions Optional package versions to install (e.g., { pathsim: '0.16.4' })
  */
-export async function initPyodide(packageVersions?: PackageVersions): Promise<void> {
-	// Check if we need to reinitialize due to version change
-	if (needsReinitialization(packageVersions)) {
+export async function initPyodide(packages?: PyodidePackageInfo[], packageVersions?: PackageVersions): Promise<void> {
+	// Check if we need to reinitialize due to package or version change
+	if (needsReinitialization(packages, packageVersions)) {
 		terminate();
 	}
 
@@ -192,6 +209,7 @@ export async function initPyodide(packageVersions?: PackageVersions): Promise<vo
 			originalHandler(event);
 			if (event.data.type === 'ready') {
 				worker!.onmessage = originalHandler;
+				initializedPackages = packages ?? null;
 				initializedVersions = packageVersions ?? null;
 				resolve();
 			} else if (event.data.type === 'error' && !event.data.id) {
@@ -200,9 +218,9 @@ export async function initPyodide(packageVersions?: PackageVersions): Promise<vo
 			}
 		};
 
-		// Update state and send init message with package versions
+		// Update state and send init message with packages and versions
 		updateState({ status: 'loading', progress: 'Starting...', error: null });
-		send({ type: 'init', packageVersions });
+		send({ type: 'init', packages, packageVersions });
 
 		// Set timeout
 		setTimeout(() => {
@@ -298,11 +316,12 @@ export function terminate(): void {
 		worker = null;
 	}
 	initPromise = null;
+	initializedPackages = null;
 	initializedVersions = null;
 	pendingExecutions.clear();
 	updateState({ status: 'idle', progress: '', error: null });
 }
 
 // Re-export types and store
-export type { ExecutionResult, PyodideState, PyodideStatus, PackageVersions } from './types';
+export type { ExecutionResult, PyodideState, PyodideStatus, PackageVersions, PyodidePackageInfo } from './types';
 export { pyodideState } from '$lib/stores/pyodideStore';

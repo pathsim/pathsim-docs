@@ -19,13 +19,20 @@
 	// Base path for figures: /{package}/{tag}/figures/
 	let figuresBasePath = $derived(`${versionBasePath}/figures`);
 
-	// Set package versions for Pyodide execution
-	// Pyodide will lazily reinitialize on next execution if version changed
+	// Set package config for Pyodide execution
+	// Pyodide will lazily reinitialize on next execution if packages/versions changed
 	$effect(() => {
 		const versionNumber = data.tag.replace(/^v/, '');
 		const pkg = packages[data.packageId];
+
+		// Build version map: pin the primary package to the selected version
 		const pipName = pkg.installation.find((i) => i.name.toLowerCase() === 'pip')?.command.split(' ').pop() || data.packageId;
-		packageVersionsStore.set({ [pipName]: versionNumber });
+		const versions: Record<string, string> = { [pipName]: versionNumber };
+
+		packageVersionsStore.set({
+			packages: pkg.pyodidePackages,
+			versions
+		});
 
 		return () => {
 			packageVersionsStore.clear();
