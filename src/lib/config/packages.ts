@@ -38,6 +38,12 @@ export interface ApiModule {
 // Note: Examples are now loaded dynamically from manifest.json
 // See src/lib/notebook/manifest.ts
 
+export interface PyodidePackage {
+	pip: string;      // pip package name (e.g., 'pathsim-chem')
+	import: string;   // Python import name (e.g., 'pathsim_chem')
+	pre: boolean;     // Allow pre-release versions
+}
+
 export interface PackageConfig {
 	id: PackageId;
 	name: string;
@@ -60,6 +66,9 @@ export interface PackageConfig {
 
 	// API page content
 	apiModules: ApiModule[];
+
+	// Pyodide: pip packages needed for this package's examples
+	pyodidePackages: PyodidePackage[];
 }
 
 export const packages: Record<PackageId, PackageConfig> = {
@@ -116,6 +125,9 @@ scope.plot()`,
 			{ name: 'pathsim.blocks', description: 'Block library (Integrator, Amplifier, Scope, etc.)' },
 			{ name: 'pathsim.solvers', description: 'Numerical integrators' },
 			{ name: 'pathsim.events', description: 'Event handling' }
+		],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true }
 		]
 	},
 	chem: {
@@ -164,6 +176,10 @@ P_sat = antoine.outputs[0]  # ≈ 101325 Pa`,
 			{ name: 'pathsim_chem.thermodynamics.enthalpy', description: 'Excess enthalpy and enthalpy departure' },
 			{ name: 'pathsim_chem.thermodynamics.reactions', description: 'Equilibrium constants, rate constants, power-law rates' },
 			{ name: 'pathsim_chem.tritium', description: 'GLC, TCAP, bubbler, splitter blocks' }
+		],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true },
+			{ pip: 'pathsim-chem', import: 'pathsim_chem', pre: true }
 		]
 	},
 	vehicle: {
@@ -186,6 +202,10 @@ P_sat = antoine.outputs[0]  # ≈ 101325 Pa`,
 			{ name: 'pathsim_vehicle.suspension', description: 'Spring-damper systems' },
 			{ name: 'pathsim_vehicle.powertrain', description: 'Engine, transmission models' },
 			{ name: 'pathsim_vehicle.body', description: 'Multi-body vehicle dynamics' }
+		],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true },
+			{ pip: 'pathsim-vehicle', import: 'pathsim_vehicle', pre: true }
 		]
 	}
 };

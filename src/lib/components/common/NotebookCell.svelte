@@ -108,12 +108,15 @@
 			// Dynamically import pyodide
 			const { execute, initPyodide } = await import('$lib/pyodide');
 
-			// Get package versions from store (set by example page)
-			const packageVersions = get(packageVersionsStore);
+			// Get package config from store (set by example page)
+			const config = get(packageVersionsStore);
 
-			// Ensure Pyodide is initialized with the correct package versions
+			// Ensure Pyodide is initialized with the correct packages and versions
 			pyodideState.setLoading('Initializing Python...');
-			await initPyodide(Object.keys(packageVersions).length > 0 ? packageVersions : undefined);
+			await initPyodide(
+				config.packages.length > 0 ? config.packages : undefined,
+				Object.keys(config.versions).length > 0 ? config.versions : undefined
+			);
 			pyodideState.setReady();
 
 			// Execute with streaming callbacks for real-time output

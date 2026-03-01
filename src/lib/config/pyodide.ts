@@ -13,14 +13,8 @@ export interface PackageConfig {
 	import: string;
 }
 
-// Packages installed via micropip after Pyodide loads
-export const PYTHON_PACKAGES: PackageConfig[] = [
-	{
-		pip: 'pathsim',
-		required: true,
-		pre: true,
-		import: 'pathsim'
-	},
+// Base packages always installed (utilities, not simulation packages)
+export const BASE_PACKAGES: PackageConfig[] = [
 	{
 		pip: 'matplotlib',
 		required: true,

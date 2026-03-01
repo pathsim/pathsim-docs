@@ -6,12 +6,12 @@
 import {
 	PYODIDE_CDN_URL,
 	PYODIDE_PRELOAD,
-	PYTHON_PACKAGES,
+	BASE_PACKAGES,
 	PROGRESS_MESSAGES,
 	ERROR_MESSAGES,
 	type PackageConfig
 } from '$lib/config/pyodide';
-import type { WorkerRequest, WorkerResponse, PackageVersions } from './types';
+import type { WorkerRequest, WorkerResponse, PackageVersions, PyodidePackageInfo } from './types';
 
 // Pyodide types (loaded dynamically from CDN)
 interface PyodideInterface {
@@ -36,9 +36,10 @@ function send(response: WorkerResponse): void {
 
 /**
  * Initialize Pyodide and install packages
+ * @param dynamicPackages Simulation packages to install (from package config)
  * @param packageVersions Optional version overrides for packages (e.g., { pathsim: '0.16.4' })
  */
-async function initialize(packageVersions?: PackageVersions): Promise<void> {
+async function initialize(dynamicPackages?: PyodidePackageInfo[], packageVersions?: PackageVersions): Promise<void> {
 	if (isInitialized) {
 		send({ type: 'ready' });
 		return;
@@ -75,17 +76,27 @@ async function initialize(packageVersions?: PackageVersions): Promise<void> {
 	send({ type: 'progress', message: PROGRESS_MESSAGES.INSTALLING_DEPS });
 	await pyodide.loadPackage([...PYODIDE_PRELOAD]);
 
+	// Build package list: dynamic simulation packages first, then base packages
+	const allPackages: PackageConfig[] = [
+		...(dynamicPackages ?? []).map((p) => ({
+			pip: p.pip,
+			import: p.import,
+			pre: p.pre,
+			required: true
+		})),
+		...BASE_PACKAGES
+	];
+
 	// Install packages via micropip
-	for (const pkg of PYTHON_PACKAGES) {
+	for (const pkg of allPackages) {
 		// Check if a specific version was requested for this package
 		const version = packageVersions?.[pkg.pip];
 		const versionSuffix = version ? `==${version}` : '';
 
-		const progressKey = `INSTALLING_${pkg.import.toUpperCase()}` as keyof typeof PROGRESS_MESSAGES;
 		const versionDisplay = version ? ` ${version}` : '';
 		send({
 			type: 'progress',
-			message: PROGRESS_MESSAGES[progressKey]?.replace('...', `${versionDisplay}...`) ?? `Installing ${pkg.import}${versionDisplay}...`
+			message: `Installing ${pkg.pip}${versionDisplay}...`
 		});
 
 		try {
@@ -296,7 +307,7 @@ self.onmessage = async (event: MessageEvent<WorkerRequest>) => {
 	try {
 		switch (type) {
 			case 'init':
-				await initialize(event.data.packageVersions);
+				await initialize(event.data.packages, event.data.packageVersions);
 				break;
 
 			case 'exec': {
