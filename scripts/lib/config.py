@@ -98,6 +98,12 @@ CATEGORY_MAPPINGS = {
 
     # Chemical
     "chemical_reactor": ("chemical", ["cstr", "reaction"]),
+    "vapor_pressure_curves": ("chemical", ["thermodynamics", "vle"]),
+    "equation_of_state": ("chemical", ["thermodynamics", "eos"]),
+    "vle_calculation": ("chemical", ["thermodynamics", "vle"]),
+    "cstr_reaction": ("chemical", ["cstr", "reaction", "dynamics"]),
+    "heat_exchanger": ("chemical", ["heat-transfer", "dynamics"]),
+    "flash_distillation": ("chemical", ["separation", "vle", "distillation"]),
 
     # Advanced
     "algebraic_loop": ("advanced", ["algebraic", "solver"]),
