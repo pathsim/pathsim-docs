@@ -154,16 +154,24 @@ scope.plot()`,
 			{ name: 'pip', command: 'pip install pathsim-chem' }
 		],
 		quickstart: {
-			description: 'PathSim-Chem blocks follow the standard PathSim interface. Set inputs, call update, read outputs.',
-			code: `from pathsim_chem.thermodynamics import Antoine
+			description: 'PathSim-Chem blocks plug into PathSim simulations. Connect thermodynamic correlations to sources, scopes, and other blocks.',
+			code: `from pathsim import Simulation, Connection
+from pathsim.blocks import Source, Scope
+from pathsim_chem.thermodynamics import Antoine
 
-# Antoine vapor pressure correlation for water
+# Antoine vapor pressure for water (natural log, Pa, K)
 antoine = Antoine(a0=23.2256, a1=3835.18, a2=-45.343)
 
-# Evaluate at 100 °C (373.15 K)
-antoine.inputs[0] = 373.15
-antoine.update(None)
-P_sat = antoine.outputs[0]  # ≈ 101325 Pa`,
+# Sweep temperature from 300 K to 400 K
+T_src = Source(func=lambda t: 300 + t)
+scope = Scope()
+
+sim = Simulation(
+    [T_src, antoine, scope],
+    [Connection(T_src, antoine), Connection(antoine, scope)]
+)
+sim.run(100)
+scope.plot()`,
 			title: 'Example'
 		},
 		apiModules: [
