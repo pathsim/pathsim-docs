@@ -83,7 +83,10 @@
 <Tooltip />
 
 <div class="notebook-page">
-	<NotebookControls viewOnly={!data.meta.executable} />
+	<NotebookControls
+		viewOnly={!data.meta.executable}
+		downloadUrl={`${versionBasePath}/notebooks/${data.meta.file}`}
+	/>
 
 	<Notebook
 		notebook={data.notebook}

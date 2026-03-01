@@ -11,9 +11,11 @@
 	interface Props {
 		/** Whether this is a view-only (non-executable) example */
 		viewOnly?: boolean;
+		/** URL to download the .ipynb file */
+		downloadUrl?: string;
 	}
 
-	let { viewOnly = false }: Props = $props();
+	let { viewOnly = false, downloadUrl }: Props = $props();
 
 	// Subscribe to settings
 	let forcePrerequisites = $derived($notebookSettingsStore.forcePrerequisites);
@@ -71,6 +73,17 @@
 			>
 				<Icon name="layers" size={18} />
 			</button>
+
+			{#if downloadUrl}
+				<a
+					class="icon-btn"
+					href={downloadUrl}
+					download
+					use:tooltip={'Download notebook'}
+				>
+					<Icon name="download" size={18} />
+				</a>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -123,6 +136,10 @@
 		color: var(--text-muted);
 		cursor: pointer;
 		transition: all var(--transition-fast);
+	}
+
+	a.icon-btn {
+		text-decoration: none;
 	}
 
 	.icon-btn:hover:not(:disabled) {
