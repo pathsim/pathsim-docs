@@ -6,7 +6,6 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
-	import { notebookStore } from '$lib/stores/notebookStore';
 	import { groupByCategory } from '$lib/notebook/manifest';
 	import { packages } from '$lib/config/packages';
 	import type { PageData } from './$types';
@@ -40,11 +39,10 @@
 	});
 
 	// Reset Pyodide namespace when example changes (but don't terminate)
+	// {#key} on Notebook handles component destruction and store cleanup via onDestroy
 	$effect(() => {
 		const slug = data.meta.slug;
 
-		// Reset namespace when switching examples
-		// Note: {#key} on Notebook handles component destruction and store cleanup
 		return async () => {
 			try {
 				const { reset } = await import('$lib/pyodide');
@@ -52,7 +50,6 @@
 			} catch {
 				// Ignore if Pyodide not loaded
 			}
-			notebookStore.reset();
 		};
 	});
 
