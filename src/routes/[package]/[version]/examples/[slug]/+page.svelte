@@ -6,6 +6,7 @@
 	import Tooltip from '$lib/components/common/Tooltip.svelte';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 	import { exampleGroupsStore } from '$lib/stores/examplesContext';
+	import { notebookStore } from '$lib/stores/notebookStore';
 	import { groupByCategory } from '$lib/notebook/manifest';
 	import { packages } from '$lib/config/packages';
 	import type { PageData } from './$types';
@@ -38,12 +39,15 @@
 		};
 	});
 
-	// Reset Pyodide namespace when example changes (but don't terminate)
-	// {#key} on Notebook handles component destruction and store cleanup via onDestroy
+	// Reset Pyodide namespace and notebook store when example changes
 	$effect(() => {
 		const slug = data.meta.slug;
 
 		return async () => {
+			// Cell IDs are prefixed with the slug, so old cells won't collide
+			// with new ones. But we still need to clean up stale store entries
+			// and reset the Python namespace.
+			notebookStore.reset();
 			try {
 				const { reset } = await import('$lib/pyodide');
 				await reset();
@@ -86,16 +90,14 @@
 		downloadUrl={`${versionBasePath}/notebooks/${data.meta.file}`}
 	/>
 
-	{#key data.meta.slug}
-		<Notebook
-			notebook={data.notebook}
-			basePath={versionBasePath}
-			precomputedOutputs={data.outputs}
-			{figuresBasePath}
-			showStaticOutputs={true}
-			executable={data.meta.executable}
-		/>
-	{/key}
+	<Notebook
+		notebook={data.notebook}
+		basePath={versionBasePath}
+		precomputedOutputs={data.outputs}
+		{figuresBasePath}
+		showStaticOutputs={true}
+		executable={data.meta.executable}
+	/>
 </div>
 
 <style>

@@ -32,6 +32,13 @@ export const load: PageLoad = async ({ params, parent, fetch }) => {
 	// Parse the notebook
 	const notebook = parseNotebook(JSON.stringify(rawNotebook));
 
+	// Prefix cell IDs with slug to prevent ID collisions when switching examples.
+	// Many notebooks use simple numeric IDs (0, 1, 2...) which would collide,
+	// causing Svelte to reuse components and leave stale state.
+	for (const cell of notebook.cells) {
+		cell.id = `${slug}:${cell.id}`;
+	}
+
 	return {
 		notebook,
 		outputs,
