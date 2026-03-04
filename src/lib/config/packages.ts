@@ -246,7 +246,7 @@ scope.plot()`,
 		docs: 'rf',
 		api: 'rf/api',
 		examples: 'rf/examples',
-		pypi: null,
+		pypi: `${external.pypi}/pathsim-rf`,
 		conda: null,
 		github: `${external.github}/pathsim-rf`,
 		features: [
@@ -255,7 +255,9 @@ scope.plot()`,
 			{ title: 'RF Amplifiers', description: 'Amplifiers with optional IP3 nonlinearity and P1dB' },
 			{ title: 'Mixers', description: 'Ideal frequency converters via time-domain multiplication' }
 		],
-		installation: [],
+		installation: [
+			{ name: 'pip', command: 'pip install pathsim-rf' }
+		],
 		quickstart: null,
 		apiModules: [
 			{ name: 'pathsim_rf', description: 'RF engineering blocks (RFNetwork, TransmissionLine, RFAmplifier, RFMixer)' }
