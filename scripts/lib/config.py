@@ -57,6 +57,17 @@ PACKAGES = {
             "pathsim_flight",
         ],
     },
+    "rf": {
+        "repo": ROOT_DIR / "pathsim-rf",
+        "source": ROOT_DIR / "pathsim-rf" / "src",
+        "notebooks": ROOT_DIR / "pathsim-rf" / "docs" / "source" / "examples",
+        "figures": ROOT_DIR / "pathsim-rf" / "docs" / "source" / "examples" / "figures",
+        "display_name": "PathSim-RF",
+        "griffe_package": "pathsim_rf",
+        "root_modules": [
+            "pathsim_rf",
+        ],
+    },
 }
 
 # Minimum supported versions per package
@@ -66,6 +77,7 @@ MIN_SUPPORTED_VERSIONS = {
     "chem": "0.1",
     "vehicle": "0.1",
     "flight": "0.1",
+    "rf": "0.1",
 }
 
 # Patterns to skip during API extraction
@@ -123,6 +135,12 @@ CATEGORY_MAPPINGS = {
     "lorenz_attractor": ("advanced", ["chaos", "ode"]),
     "poincare_maps": ("advanced", ["analysis", "chaos"]),
 
+    # RF Engineering
+    "rf_amplifier_compression": ("rf-engineering", ["amplifier", "nonlinear", "compression"]),
+    "rf_mixer_downconversion": ("rf-engineering", ["mixer", "frequency", "downconversion"]),
+    "transmission_line_reflection": ("rf-engineering", ["transmission-line", "propagation"]),
+    "superheterodyne_receiver": ("rf-engineering", ["receiver", "system"]),
+
     # FMU Integration
     "fmu_cosimulation": ("fmu", ["fmu", "cosim"]),
     "fmu_model_exchange_bouncing_ball": ("fmu", ["fmu", "model-exchange"]),
@@ -146,7 +164,8 @@ CATEGORIES = [
     {"id": "signal-processing", "title": "Signal Processing", "order": 5},
     {"id": "chemical", "title": "Chemical Engineering", "order": 6},
     {"id": "advanced", "title": "Advanced Topics", "order": 7},
-    {"id": "fmu", "title": "FMU Integration", "order": 8},
+    {"id": "rf-engineering", "title": "RF Engineering", "order": 8},
+    {"id": "fmu", "title": "FMU Integration", "order": 9},
 ]
 
 # Execution settings
