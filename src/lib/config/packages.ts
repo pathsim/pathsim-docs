@@ -11,7 +11,7 @@ export const external = {
 	consulting: 'https://milanrother.com/#services'
 };
 
-export type PackageId = 'pathsim' | 'chem' | 'vehicle' | 'flight';
+export type PackageId = 'pathsim' | 'chem' | 'vehicle' | 'flight' | 'rf';
 
 export interface Feature {
 	title: string;
@@ -236,11 +236,39 @@ scope.plot()`,
 			{ pip: 'pathsim', import: 'pathsim', pre: true },
 			{ pip: 'pathsim-flight', import: 'pathsim_flight', pre: true }
 		]
+	},
+	rf: {
+		id: 'rf',
+		name: 'PathSim-RF',
+		shortName: 'rf',
+		description: 'RF and microwave engineering blocks for PathSim — S-parameter networks via vector fitting, transmission lines, amplifiers with IP3 nonlinearity, and mixers.',
+		logo: 'pathsim_rf_logo.png',
+		docs: 'rf',
+		api: 'rf/api',
+		examples: null,
+		pypi: null,
+		conda: null,
+		github: `${external.github}/pathsim-rf`,
+		features: [
+			{ title: 'S-Parameter Networks', description: 'N-port networks from Touchstone data via vector fitting' },
+			{ title: 'Transmission Lines', description: 'Lossy delay-based lines in scattering domain' },
+			{ title: 'RF Amplifiers', description: 'Amplifiers with optional IP3 nonlinearity and P1dB' },
+			{ title: 'Mixers', description: 'Ideal frequency converters via time-domain multiplication' }
+		],
+		installation: [],
+		quickstart: null,
+		apiModules: [
+			{ name: 'pathsim_rf', description: 'RF engineering blocks (RFNetwork, TransmissionLine, RFAmplifier, RFMixer)' }
+		],
+		pyodidePackages: [
+			{ pip: 'pathsim', import: 'pathsim', pre: true },
+			{ pip: 'pathsim-rf', import: 'pathsim_rf', pre: true }
+		]
 	}
 };
 
 // Ordered list for tabs/navigation
-export const packageOrder: PackageId[] = ['pathsim', 'chem', 'vehicle', 'flight'];
+export const packageOrder: PackageId[] = ['pathsim', 'chem', 'vehicle', 'flight', 'rf'];
 
 // Sidebar navigation (auto-generated from package config)
 export interface SidebarItem {
