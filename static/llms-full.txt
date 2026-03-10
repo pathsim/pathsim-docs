@@ -1,0 +1,3962 @@
+# PathSim Documentation (Full)
+
+> PathSim is a Python framework for simulating dynamical systems using block diagrams. It supports continuous-time, discrete-time, and hybrid systems with 18+ numerical solvers, hierarchical subsystems, event handling, and MIMO connections.
+
+## PathSim (v0.18.0)
+
+### pathsim.connection
+
+#### class Connection
+
+Class to handle input-output relations of blocks by connecting them (directed graph)
+
+- `source`
+- `targets`
+
+**Connection.__init__**`(source, targets = ())`
+
+**Connection.get_blocks**`()`
+: Returns all the unique internal source and target blocks
+
+**Connection.on**`()`
+
+**Connection.off**`()`
+
+**Connection.update**`()`
+: Transfers data from the source block output port
+
+#### class Duplex(pathsim.connection.Connection)
+
+Extension of the 'Connection' class, that defines bidirectional
+
+- `source`
+- `target`
+- `targets`
+
+**Duplex.__init__**`(source, target)`
+
+**Duplex.update**`()`
+: Transfers data between the two target blocks
+
+### pathsim.simulation
+
+#### class Simulation
+
+Class that performs transient analysis of the dynamical system, defined by the
+
+- `blocks`
+- `connections`
+- `events`
+- `dt`
+- `dt_min`
+- `dt_max`
+- `Solver`
+- `engine`
+- `graph`
+- `boosters`
+- `tolerance_fpi`
+- `solver_kwargs`
+- `iterations_max`
+- `log`
+- `time`
+- `logger`
+- `size` — Get size information of the simulation, such as total number
+
+**Simulation.__init__**`(blocks = None, connections = None, events = None, dt = SIM_TIMESTEP, dt_min = SIM_TIMESTEP_MIN, dt_max = SIM_TIMESTEP_MAX, Solver = SSPRK22, tolerance_fpi = SIM_TOLERANCE_FPI, iterations_max = SIM_ITERATIONS_MAX, log = LOG_ENABLE, solver_kwargs = {})`
+
+**Simulation.plot**`(args = (), kwargs = {})`
+: Plot the simulation results by calling all the blocks
+
+**Simulation.add_block**`(block)`
+: Adds a new block to the simulation, initializes its local solver
+
+**Simulation.remove_block**`(block)`
+: Removes a block from the simulation.
+
+**Simulation.add_connection**`(connection)`
+: Adds a new connection to the simulation and checks if
+
+**Simulation.remove_connection**`(connection)`
+: Removes a connection from the simulation.
+
+**Simulation.add_event**`(event)`
+: Checks and adds a new event to the simulation.
+
+**Simulation.remove_event**`(event)`
+: Removes an event from the simulation.
+
+**Simulation.reset**`(time = 0.0)`
+: Reset the blocks to their initial state and the global time of
+
+**Simulation.linearize**`()`
+: Linearize the full system in the current simulation state
+
+**Simulation.delinearize**`()`
+: Revert the linearization of the full system.
+
+**Simulation.steadystate**`(reset = False)`
+: Find steady state solution (DC operating point) of the system
+
+**Simulation.timestep_fixed_explicit**`(dt = None)`
+: Advances the simulation by one timestep 'dt' for explicit fixed step solvers.
+
+**Simulation.timestep_fixed_implicit**`(dt = None)`
+: Advances the simulation by one timestep 'dt' for implicit fixed step solvers.
+
+**Simulation.timestep_adaptive_explicit**`(dt = None)`
+: Advances the simulation by one timestep 'dt' for explicit adaptive solvers.
+
+**Simulation.timestep_adaptive_implicit**`(dt = None)`
+: Advances the simulation by one timestep 'dt' for implicit adaptive solvers.
+
+**Simulation.timestep**`(dt = None, adaptive = True)`
+: Advances the transient simulation by one timestep 'dt'.
+
+**Simulation.step**`(dt = None, adaptive = True)`
+: Wraps 'Simulation.timestep' for backward compatibility
+
+**Simulation.collect**`()`
+: Collect all current simulation results from the internal
+
+**Simulation.stop**`()`
+: Set the flag for active simulation to 'False', intended to be
+
+**Simulation.run**`(duration = 10, reset = False, adaptive = True)`
+: Perform multiple simulation timesteps for a given 'duration'.
+
+**Simulation.run_streaming**`(duration = 10, reset = False, adaptive = True, tickrate = 10, func_callback = None)`
+: Perform simulation with streaming output at a fixed wall-clock rate.
+
+**Simulation.run_realtime**`(duration = 10, reset = False, adaptive = True, tickrate = 30, speed = 1.0, func_callback = None)`
+: Perform simulation paced to wall-clock time.
+
+### pathsim.subsystem
+
+#### class Interface(pathsim.blocks._block.Block)
+
+Bare-bone block that serves as a data interface for the 'Subsystem' class.
+
+**Interface.register_port_map**`(port_map_in, port_map_out)`
+: Update the input and output registers of the interface block with port mappings
+
+#### class Subsystem(pathsim.blocks._block.Block)
+
+Subsystem class that holds its own blocks and connecions and
+
+- `engine`
+- `tolerance_fpi`
+- `iterations_max`
+- `op_alg`
+- `op_dyn`
+- `graph`
+- `boosters`
+- `connections`
+- `blocks`
+- `interface`
+- `size` — Get size information from subsystem, recursively assembled
+- `events` — Recursively collect and return events spawned by the
+- `inputs`
+- `outputs`
+
+**Subsystem.__init__**`(blocks = None, connections = None, events = None, tolerance_fpi = SIM_TOLERANCE_FPI, iterations_max = SIM_ITERATIONS_MAX)`
+
+**Subsystem.add_block**`(block)`
+: Adds a new block to the subsystem.
+
+**Subsystem.remove_block**`(block)`
+: Removes a block from the subsystem.
+
+**Subsystem.add_connection**`(connection)`
+: Adds a new connection to the subsystem.
+
+**Subsystem.remove_connection**`(connection)`
+: Removes a connection from the subsystem.
+
+**Subsystem.add_event**`(event)`
+: Adds an event to the subsystem.
+
+**Subsystem.remove_event**`(event)`
+: Removes an event from the subsystem.
+
+**Subsystem.plot**`(args = (), kwargs = {})`
+: Plot the simulation results by calling all the blocks
+
+**Subsystem.collect**`()`
+: Aggregate results from internal blocks.
+
+**Subsystem.reset**`()`
+: Reset the subsystem interface and all internal blocks
+
+**Subsystem.on**`()`
+: Activate the subsystem and all internal blocks, sets the boolean
+
+**Subsystem.off**`()`
+: Deactivate the subsystem and all internal blocks, sets the boolean
+
+**Subsystem.linearize**`(t)`
+: Linearize the algebraic and dynamic components of the internal blocks.
+
+**Subsystem.delinearize**`()`
+: Revert the linearization of the internal blocks.
+
+**Subsystem.sample**`(t, dt)`
+: Update the internal connections again and sample data from
+
+**Subsystem.update**`(t)`
+: Update the instant time components of the internal blocks
+
+**Subsystem.solve**`(t, dt)`
+: Advance solution of implicit update equation
+
+**Subsystem.step**`(t, dt)`
+: Explicit component of timestep for internal blocks
+
+**Subsystem.set_solver**`(Solver, parent, solver_args = {})`
+: Initialize all blocks with solver for numerical integration
+
+**Subsystem.revert**`()`
+: revert the internal blocks to the state
+
+**Subsystem.buffer**`(dt)`
+: buffer internal states of blocks with
+
+### pathsim.blocks._block
+
+#### class Block
+
+Base 'Block' object that defines the inputs, outputs and the block interface.
+
+- `input_port_labels`
+- `output_port_labels`
+- `inputs`
+- `outputs`
+- `engine`
+- `events`
+- `op_alg`
+- `op_dyn`
+- `size` — Get size information from block, such as
+- `shape` — Get the number of input and output ports of the block
+- `state` — Expose the state of the internal integration engine /
+
+**Block.__init__**`()`
+
+**Block.info**`(cls)`
+: Get block metadata for introspection and UI integration.
+
+**Block.plot**`(args = (), kwargs = {})`
+: Block specific visualization, enables plotting
+
+**Block.on**`()`
+: Activate the block and all internal events, sets the boolean
+
+**Block.off**`()`
+: Deactivate the block and all internal events, sets the boolean
+
+**Block.reset**`()`
+: Reset the blocks inputs and outputs and also its internal solver,
+
+**Block.linearize**`(t)`
+: Linearize the algebraic and dynamic components of the block.
+
+**Block.delinearize**`()`
+: Revert the linearization of the blocks algebraic and dynamic components.
+
+**Block.set_solver**`(Solver, parent, solver_args = {})`
+: Initialize the numerical integration engine with local truncation error
+
+**Block.revert**`()`
+: Revert the block to the state of the previous timestep, if the
+
+**Block.buffer**`(dt)`
+: Buffer current internal state of the block and the current timestep
+
+**Block.sample**`(t, dt)`
+: Samples the data of the blocks inputs or internal state when called.
+
+**Block.read**`()`
+: Read data from recording blocks.
+
+**Block.collect**`()`
+: Yield (category, id, data) tuples for recording blocks to simplify
+
+**Block.get_all**`()`
+: Retrieves and returns internal states of engine (if available)
+
+**Block.update**`(t)`
+: The 'update' method is called iteratively for all blocks to evaluate the
+
+**Block.solve**`(t, dt)`
+: The 'solve' method performs one iterative solution step that is required
+
+**Block.step**`(t, dt)`
+: The 'step' method is used in transient simulations and performs an action
+
+### pathsim.blocks.adder
+
+#### class Adder(pathsim.blocks._block.Block)
+
+Summs / adds up all input signals to a single output signal (MISO)
+
+- `input_port_labels`
+- `output_port_labels`
+- `operations`
+- `op_alg`
+
+**Adder.__init__**`(operations = None)`
+
+**Adder.update**`(t)`
+: update system equation in fixed point loop for
+
+### pathsim.blocks.amplifier
+
+#### class Amplifier(pathsim.blocks._block.Block)
+
+Amplifies the input signal by multiplication with a constant gain term.
+
+- `gain`
+- `op_alg`
+
+**Amplifier.__init__**`(gain = 1.0)`
+
+**Amplifier.update**`(t)`
+: update system equation in fixed point loop
+
+### pathsim.blocks.comparator
+
+#### class Comparator(pathsim.blocks._block.Block)
+
+Comparator block that sets output depending on predefined thresholds for the input.
+
+- `input_port_labels`
+- `output_port_labels`
+- `threshold`
+- `tolerance`
+- `span`
+- `events`
+
+**Comparator.__init__**`(threshold = 0, tolerance = 0.0001, span = [-1, 1])`
+
+**Comparator.update**`(t)`
+: update system equation for fixed point loop,
+
+### pathsim.blocks.converters
+
+#### class ADC(pathsim.blocks._block.Block)
+
+Models an ideal Analog-to-Digital Converter (ADC).
+
+- `input_port_labels`
+- `output_port_labels`
+- `n_bits`
+- `span`
+- `T`
+- `tau`
+- `events`
+
+**ADC.__init__**`(n_bits = 4, span = [-1, 1], T = 1, tau = 0)`
+
+#### class DAC(pathsim.blocks._block.Block)
+
+Models an ideal Digital-to-Analog Converter (DAC).
+
+- `input_port_labels`
+- `output_port_labels`
+- `n_bits`
+- `span`
+- `T`
+- `tau`
+- `events`
+
+**DAC.__init__**`(n_bits = 4, span = [-1, 1], T = 1, tau = 0)`
+
+### pathsim.blocks.counter
+
+#### class Counter(pathsim.blocks._block.Block)
+
+Counts the number of detected bidirectional threshold crossings.
+
+- `input_port_labels`
+- `output_port_labels`
+- `start`
+- `threshold`
+- `E`
+- `events`
+
+**Counter.__init__**`(start = 0, threshold = 0.0)`
+
+**Counter.update**`(t)`
+: update system equation for fixed point loop,
+
+#### class CounterUp(pathsim.blocks.counter.Counter)
+
+Counts the number of detected unidirectional (lo->hi) threshold crossings.
+
+- `E`
+- `events`
+
+**CounterUp.__init__**`(start = 0, threshold = 0.0)`
+
+#### class CounterDown(pathsim.blocks.counter.Counter)
+
+Counts the number of detected unidirectional (hi->lo) threshold crossings.
+
+- `E`
+- `events`
+
+**CounterDown.__init__**`(start = 0, threshold = 0.0)`
+
+### pathsim.blocks.ctrl
+
+#### class PT1(pathsim.blocks.lti.StateSpace)
+
+First-order lag element (PT1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `K`
+- `T`
+
+**PT1.__init__**`(K = 1.0, T = 1.0)`
+
+#### class PT2(pathsim.blocks.lti.StateSpace)
+
+Second-order lag element (PT2).
+
+- `input_port_labels`
+- `output_port_labels`
+- `K`
+- `T`
+- `d`
+
+**PT2.__init__**`(K = 1.0, T = 1.0, d = 1.0)`
+
+#### class LeadLag(pathsim.blocks.lti.StateSpace)
+
+Lead-Lag compensator.
+
+- `input_port_labels`
+- `output_port_labels`
+- `K`
+- `T1`
+- `T2`
+
+**LeadLag.__init__**`(K = 1.0, T1 = 1.0, T2 = 1.0)`
+
+#### class PID(pathsim.blocks.lti.StateSpace)
+
+Proportional-Integral-Differentiation (PID) controller.
+
+- `input_port_labels`
+- `output_port_labels`
+- `Kp`
+- `Ki`
+- `Kd`
+- `f_max`
+
+**PID.__init__**`(Kp = 0, Ki = 0, Kd = 0, f_max = 100)`
+
+#### class AntiWindupPID(pathsim.blocks.ctrl.PID)
+
+Proportional-Integral-Differentiation (PID) controller with anti-windup mechanism (back-calculation).
+
+- `Ks`
+- `limits`
+- `op_dyn`
+
+**AntiWindupPID.__init__**`(Kp = 0, Ki = 0, Kd = 0, f_max = 100, Ks = 10, limits = [-10, 10])`
+
+#### class RateLimiter(pathsim.blocks.dynsys.DynamicalSystem)
+
+Rate limiter block that limits the rate of change of a signal.
+
+- `input_port_labels`
+- `output_port_labels`
+- `rate`
+- `f_max`
+
+**RateLimiter.__init__**`(rate = 1.0, f_max = 100)`
+
+#### class Backlash(pathsim.blocks.dynsys.DynamicalSystem)
+
+Backlash (mechanical play) element.
+
+- `input_port_labels`
+- `output_port_labels`
+- `width`
+- `f_max`
+
+**Backlash.__init__**`(width = 1.0, f_max = 100)`
+
+#### class Deadband(pathsim.blocks._block.Block)
+
+Deadband (dead zone) element.
+
+- `input_port_labels`
+- `output_port_labels`
+- `lower`
+- `upper`
+- `op_alg`
+
+**Deadband.__init__**`(lower = -1.0, upper = 1.0)`
+
+### pathsim.blocks.delay
+
+#### class Delay(pathsim.blocks._block.Block)
+
+Delays the input signal by a time constant 'tau' in seconds.
+
+- `tau`
+- `sampling_period`
+- `events`
+
+**Delay.__init__**`(tau = 0.001, sampling_period = None)`
+
+**Delay.reset**`()`
+
+**Delay.update**`(t)`
+: Evaluation of the buffer at different times
+
+**Delay.sample**`(t, dt)`
+: Sample input values and time of sampling
+
+### pathsim.blocks.differentiator
+
+#### class Differentiator(pathsim.blocks._block.Block)
+
+Differentiates the input signal.
+
+- `f_max`
+- `initial_value`
+- `op_dyn`
+- `op_alg`
+
+**Differentiator.__init__**`(f_max = 100.0)`
+
+**Differentiator.update**`(t)`
+: update system equation fixed point loop,
+
+**Differentiator.solve**`(t, dt)`
+: advance solution of implicit update equation
+
+**Differentiator.step**`(t, dt)`
+: compute update step with integration engine
+
+### pathsim.blocks.divider
+
+#### class Divider(pathsim.blocks._block.Block)
+
+Multiplies and divides input signals (MISO).
+
+- `input_port_labels`
+- `output_port_labels`
+- `zero_div`
+- `operations`
+- `op_alg`
+
+**Divider.__init__**`(operations = '*/', zero_div = 'warn')`
+
+**Divider.update**`(t)`
+: Update system equation.
+
+### pathsim.blocks.dynsys
+
+#### class DynamicalSystem(pathsim.blocks._block.Block)
+
+This block implements a nonlinear dynamical system / nonlinear state space model.
+
+- `func_dyn`
+- `func_alg`
+- `jac_dyn`
+- `initial_value`
+- `op_dyn`
+- `op_alg`
+
+**DynamicalSystem.__init__**`(func_dyn = lambda x, u, t: -x, func_alg = lambda x, u, t: x, initial_value = 0.0, jac_dyn = None)`
+
+**DynamicalSystem.update**`(t)`
+: update system equation for fixed point loop, by evaluating the
+
+**DynamicalSystem.solve**`(t, dt)`
+: advance solution of implicit update equation of the solver
+
+**DynamicalSystem.step**`(t, dt)`
+: compute timestep update with integration engine
+
+### pathsim.blocks.filters
+
+#### class ButterworthLowpassFilter(pathsim.blocks.lti.StateSpace)
+
+Direct implementation of a low pass butterworth filter block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `Fc`
+- `n`
+
+**ButterworthLowpassFilter.__init__**`(Fc = 100, n = 2)`
+
+#### class ButterworthHighpassFilter(pathsim.blocks.lti.StateSpace)
+
+Direct implementation of a high pass butterworth filter block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `Fc`
+- `n`
+
+**ButterworthHighpassFilter.__init__**`(Fc = 100, n = 2)`
+
+#### class ButterworthBandpassFilter(pathsim.blocks.lti.StateSpace)
+
+Direct implementation of a bandpass butterworth filter block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `Fc`
+- `n`
+
+**ButterworthBandpassFilter.__init__**`(Fc = [50, 100], n = 2)`
+
+#### class ButterworthBandstopFilter(pathsim.blocks.lti.StateSpace)
+
+Direct implementation of a bandstop butterworth filter block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `Fc`
+- `n`
+
+**ButterworthBandstopFilter.__init__**`(Fc = [50, 100], n = 2)`
+
+#### class AllpassFilter(pathsim.blocks.lti.StateSpace)
+
+Direct implementation of a first order allpass filter, or a cascade
+
+- `input_port_labels`
+- `output_port_labels`
+- `fs`
+- `n`
+
+**AllpassFilter.__init__**`(fs = 100, n = 1)`
+
+### pathsim.blocks.fir
+
+#### class FIR(pathsim.blocks._block.Block)
+
+Models a discrete-time Finite-Impulse-Response (FIR) filter.
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+- `T`
+- `tau`
+- `events`
+
+**FIR.__init__**`(coeffs = [1.0], T = 1, tau = 0)`
+
+**FIR.reset**`()`
+: Resets the filter state (buffer) and output.
+
+### pathsim.blocks.fmu
+
+#### class CoSimulationFMU(pathsim.blocks._block.Block)
+
+Co-Simulation FMU block using FMPy with support for FMI 2.0 and FMI 3.0.
+
+- `start_values`
+- `fmu_wrapper`
+- `dt`
+- `events`
+
+**CoSimulationFMU.__init__**`(fmu_path, instance_name = 'fmu_instance', start_values = None, dt = None)`
+
+**CoSimulationFMU.reset**`()`
+: Reset the FMU instance.
+
+#### class ModelExchangeFMU(pathsim.blocks.dynsys.DynamicalSystem)
+
+Model Exchange FMU block using FMPy with support for FMI 2.0 and FMI 3.0.
+
+- `tolerance`
+- `verbose`
+- `start_values`
+- `fmu_wrapper`
+- `time_event`
+
+**ModelExchangeFMU.__init__**`(fmu_path, instance_name = 'fmu_instance', start_values = None, tolerance = 1e-10, verbose = False)`
+
+**ModelExchangeFMU.sample**`(t, dt)`
+: Sample block after successful timestep and handle FMU step completion events.
+
+**ModelExchangeFMU.reset**`()`
+: Reset the FMU instance.
+
+### pathsim.blocks.function
+
+#### class Function(pathsim.blocks._block.Block)
+
+Arbitrary MIMO function block, defined by a function or `lambda` expression.
+
+- `func`
+- `op_alg`
+
+**Function.__init__**`(func = lambda x: x)`
+
+**Function.update**`(t)`
+: Evaluate function block as part of algebraic component
+
+#### class DynamicalFunction(pathsim.blocks._block.Block)
+
+Arbitrary MIMO time and input dependent function block.
+
+- `func`
+- `op_alg`
+
+**DynamicalFunction.__init__**`(func = lambda u, t: u)`
+
+**DynamicalFunction.update**`(t)`
+: Evaluate function with time dependency as part of algebraic
+
+### pathsim.blocks.integrator
+
+#### class Integrator(pathsim.blocks._block.Block)
+
+Integrates the input signal.
+
+- `initial_value`
+
+**Integrator.__init__**`(initial_value = 0.0)`
+
+**Integrator.update**`(t)`
+: update system equation fixed point loop
+
+**Integrator.solve**`(t, dt)`
+: advance solution of implicit update equation of the solver
+
+**Integrator.step**`(t, dt)`
+: compute timestep update with integration engine
+
+### pathsim.blocks.kalman
+
+#### class KalmanFilter(pathsim.blocks._block.Block)
+
+Discrete-time Kalman filter for state estimation.
+
+- `F`
+- `H`
+- `Q`
+- `R`
+- `B`
+- `dt`
+- `x`
+- `P`
+- `inputs`
+- `outputs`
+- `events`
+
+**KalmanFilter.__init__**`(F, H, Q, R, B = None, x0 = None, P0 = None, dt = None)`
+
+**KalmanFilter.sample**`(t, dt)`
+: Sample after successful timestep.
+
+### pathsim.blocks.logic
+
+#### class Logic(pathsim.blocks._block.Block)
+
+Base logic block.
+
+**Logic.update**`(t)`
+: update algebraic component of system equation
+
+#### class GreaterThan(pathsim.blocks.logic.Logic)
+
+Greater-than comparison block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `op_alg`
+
+**GreaterThan.__init__**`()`
+
+#### class LessThan(pathsim.blocks.logic.Logic)
+
+Less-than comparison block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `op_alg`
+
+**LessThan.__init__**`()`
+
+#### class Equal(pathsim.blocks.logic.Logic)
+
+Equality comparison block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `tolerance`
+- `op_alg`
+
+**Equal.__init__**`(tolerance = 1e-12)`
+
+#### class LogicAnd(pathsim.blocks.logic.Logic)
+
+Logical AND block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `op_alg`
+
+**LogicAnd.__init__**`()`
+
+#### class LogicOr(pathsim.blocks.logic.Logic)
+
+Logical OR block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `op_alg`
+
+**LogicOr.__init__**`()`
+
+#### class LogicNot(pathsim.blocks.logic.Logic)
+
+Logical NOT block.
+
+- `op_alg`
+
+**LogicNot.__init__**`()`
+
+### pathsim.blocks.lti
+
+#### class StateSpace(pathsim.blocks._block.Block)
+
+Linear time invariant (LTI) multi input multi output (MIMO) state space model.
+
+- `A`
+- `B`
+- `C`
+- `D`
+- `inputs`
+- `outputs`
+- `initial_value`
+- `op_dyn`
+- `op_alg`
+
+**StateSpace.__init__**`(A = -1.0, B = 1.0, C = -1.0, D = 1.0, initial_value = None)`
+
+**StateSpace.solve**`(t, dt)`
+: advance solution of implicit update equation of the solver
+
+**StateSpace.step**`(t, dt)`
+: compute timestep update with integration engine
+
+#### class TransferFunctionPRC(pathsim.blocks.lti.StateSpace)
+
+This block defines a LTI (MIMO for pole residue) transfer function.
+
+**TransferFunctionPRC.__init__**`(Poles = [], Residues = [], Const = 0.0)`
+
+#### class TransferFunction(pathsim.blocks.lti.TransferFunctionPRC)
+
+Alias for TransferFunctionPRC.
+
+#### class TransferFunctionZPG(pathsim.blocks.lti.StateSpace)
+
+This block defines a LTI (SISO) transfer function.
+
+- `input_port_labels`
+- `output_port_labels`
+
+**TransferFunctionZPG.__init__**`(Zeros = [], Poles = [-1], Gain = 1.0)`
+
+#### class TransferFunctionNumDen(pathsim.blocks.lti.StateSpace)
+
+This block defines a LTI (SISO) transfer function.
+
+- `input_port_labels`
+- `output_port_labels`
+
+**TransferFunctionNumDen.__init__**`(Num = [1], Den = [1, 1])`
+
+### pathsim.blocks.math
+
+#### class Math(pathsim.blocks._block.Block)
+
+Base math block.
+
+**Math.update**`(t)`
+: update algebraic component of system equation
+
+#### class Sin(pathsim.blocks.math.Math)
+
+Sine operator block.
+
+- `op_alg`
+
+**Sin.__init__**`()`
+
+#### class Cos(pathsim.blocks.math.Math)
+
+Cosine operator block.
+
+- `op_alg`
+
+**Cos.__init__**`()`
+
+#### class Sqrt(pathsim.blocks.math.Math)
+
+Square root operator block.
+
+- `op_alg`
+
+**Sqrt.__init__**`()`
+
+#### class Abs(pathsim.blocks.math.Math)
+
+Absolute value operator block.
+
+- `op_alg`
+
+**Abs.__init__**`()`
+
+#### class Pow(pathsim.blocks.math.Math)
+
+Raise to power operator block.
+
+- `exponent`
+- `op_alg`
+
+**Pow.__init__**`(exponent = 2)`
+
+#### class PowProd(pathsim.blocks.math.Math)
+
+Power-Product operator block.
+
+- `exponents`
+- `op_alg`
+
+**PowProd.__init__**`(exponents = 2)`
+
+#### class Exp(pathsim.blocks.math.Math)
+
+Exponential operator block.
+
+- `op_alg`
+
+**Exp.__init__**`()`
+
+#### class Log(pathsim.blocks.math.Math)
+
+Natural logarithm operator block.
+
+- `op_alg`
+
+**Log.__init__**`()`
+
+#### class Log10(pathsim.blocks.math.Math)
+
+Base-10 logarithm operator block.
+
+- `op_alg`
+
+**Log10.__init__**`()`
+
+#### class Tan(pathsim.blocks.math.Math)
+
+Tangent operator block.
+
+- `op_alg`
+
+**Tan.__init__**`()`
+
+#### class Sinh(pathsim.blocks.math.Math)
+
+Hyperbolic sine operator block.
+
+- `op_alg`
+
+**Sinh.__init__**`()`
+
+#### class Cosh(pathsim.blocks.math.Math)
+
+Hyperbolic cosine operator block.
+
+- `op_alg`
+
+**Cosh.__init__**`()`
+
+#### class Tanh(pathsim.blocks.math.Math)
+
+Hyperbolic tangent operator block.
+
+- `op_alg`
+
+**Tanh.__init__**`()`
+
+#### class Atan(pathsim.blocks.math.Math)
+
+Arctangent operator block.
+
+- `op_alg`
+
+**Atan.__init__**`()`
+
+#### class Norm(pathsim.blocks.math.Math)
+
+Vector norm operator block.
+
+- `op_alg`
+
+**Norm.__init__**`()`
+
+#### class Mod(pathsim.blocks.math.Math)
+
+Modulo operator block.
+
+- `modulus`
+- `op_alg`
+
+**Mod.__init__**`(modulus = 1.0)`
+
+#### class Clip(pathsim.blocks.math.Math)
+
+Clipping/saturation operator block.
+
+- `min_val`
+- `max_val`
+- `op_alg`
+
+**Clip.__init__**`(min_val = -1.0, max_val = 1.0)`
+
+#### class Matrix(pathsim.blocks.math.Math)
+
+Linear matrix operation (matrix-vector product).
+
+- `inputs`
+- `outputs`
+- `A`
+- `op_alg`
+
+**Matrix.__init__**`(A = np.eye(1))`
+
+#### class Atan2(pathsim.blocks._block.Block)
+
+Two-argument arctangent block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `op_alg`
+
+**Atan2.__init__**`()`
+
+**Atan2.update**`(t)`
+: update algebraic component of system equation
+
+#### class Rescale(pathsim.blocks.math.Math)
+
+Linear rescaling / mapping block.
+
+- `i0`
+- `i1`
+- `o0`
+- `o1`
+- `saturate`
+- `op_alg`
+
+**Rescale.__init__**`(i0 = 0.0, i1 = 1.0, o0 = 0.0, o1 = 1.0, saturate = False)`
+
+#### class Alias(pathsim.blocks.math.Math)
+
+Signal alias / pass-through block.
+
+- `op_alg`
+
+**Alias.__init__**`()`
+
+### pathsim.blocks.multiplier
+
+#### class Multiplier(pathsim.blocks._block.Block)
+
+Multiplies all signals from all input ports (MISO).
+
+- `input_port_labels`
+- `output_port_labels`
+- `op_alg`
+
+**Multiplier.__init__**`()`
+
+**Multiplier.update**`(t)`
+: update system equation
+
+### pathsim.blocks.noise
+
+#### class WhiteNoise(pathsim.blocks._block.Block)
+
+White noise source with Gaussian distribution.
+
+- `input_port_labels`
+- `output_port_labels`
+- `standard_deviation`
+- `spectral_density`
+- `sampling_period`
+- `events`
+
+**WhiteNoise.__init__**`(standard_deviation = 1.0, spectral_density = None, sampling_period = None, seed = None)`
+
+**WhiteNoise.sample**`(t, dt)`
+: Generate new noise sample after successful timestep.
+
+**WhiteNoise.update**`(t)`
+
+#### class PinkNoise(pathsim.blocks._block.Block)
+
+Pink noise (1/f noise) source using the Voss-McCartney algorithm.
+
+- `input_port_labels`
+- `output_port_labels`
+- `standard_deviation`
+- `spectral_density`
+- `num_octaves`
+- `sampling_period`
+- `n_samples`
+- `octave_values`
+- `events`
+
+**PinkNoise.__init__**`(standard_deviation = 1.0, spectral_density = None, num_octaves = 16, sampling_period = None, seed = None)`
+
+**PinkNoise.reset**`()`
+: Reset the noise generator state.
+
+**PinkNoise.sample**`(t, dt)`
+: Generate new noise sample after successful timestep.
+
+**PinkNoise.update**`(t)`
+
+### pathsim.blocks.ode
+
+#### class ODE(pathsim.blocks._block.Block)
+
+Ordinary differential equation (ODE) defined by its right hand side function.
+
+- `func`
+- `initial_value`
+- `jac`
+- `op_dyn`
+
+**ODE.__init__**`(func = lambda x, u, t: -x, initial_value = 0.0, jac = None)`
+
+**ODE.update**`(t)`
+: update system equation for fixed point loop,
+
+**ODE.solve**`(t, dt)`
+: advance solution of implicit update equation of the solver
+
+**ODE.step**`(t, dt)`
+: compute timestep update with integration engine
+
+### pathsim.blocks.relay
+
+#### class Relay(pathsim.blocks._block.Block)
+
+Relay block with hysteresis (Schmitt trigger).
+
+- `input_port_labels`
+- `output_port_labels`
+- `threshold_up`
+- `threshold_down`
+- `value_up`
+- `value_down`
+- `events`
+
+**Relay.__init__**`(threshold_up = 1.0, threshold_down = 0.0, value_up = 1.0, value_down = 0.0)`
+
+**Relay.update**`(t)`
+: update system equation for fixed point loop,
+
+### pathsim.blocks.rf
+
+#### class RFNetwork(pathsim.blocks.lti.StateSpace)
+
+N-port RF network linear time invariant (LTI) multi input multi output (MIMO) state-space model.
+
+- `network`
+- `vf`
+
+**RFNetwork.__init__**`(ntwk: NetworkType | str | Path, auto_fit: bool = True, kwargs = {})`
+
+**RFNetwork.s**`(freqs: np.ndarray)`
+: S-matrix of the vector fitted N-port model calculated from its state-space representation.
+
+### pathsim.blocks.rng
+
+#### class RandomNumberGenerator(pathsim.blocks._block.Block)
+
+Generates a random output value using `numpy.random.rand`.
+
+- `input_port_labels`
+- `output_port_labels`
+- `sampling_period`
+- `Evt`
+- `events`
+
+**RandomNumberGenerator.__init__**`(sampling_period = None)`
+
+**RandomNumberGenerator.update**`(t)`
+: Setting output with random sample in case
+
+**RandomNumberGenerator.sample**`(t, dt)`
+: Generating a new random sample at each timestep
+
+#### class RNG(pathsim.blocks.rng.RandomNumberGenerator)
+
+Alias for RandomNumberGenerator.
+
+### pathsim.blocks.samplehold
+
+#### class SampleHold(pathsim.blocks._block.Block)
+
+Samples the inputs periodically and produces them at the output.
+
+- `T`
+- `tau`
+- `events`
+
+**SampleHold.__init__**`(T = 1, tau = 0)`
+
+### pathsim.blocks.scope
+
+#### class Scope(pathsim.blocks._block.Block)
+
+Block for recording time domain data with variable sampling period.
+
+- `input_port_labels`
+- `output_port_labels`
+- `t_wait`
+- `sampling_period`
+- `labels`
+- `recording_time`
+- `recording_data`
+- `events`
+
+**Scope.__init__**`(sampling_period = None, t_wait = 0.0, labels = None)`
+
+**Scope.reset**`()`
+
+**Scope.read**`(incremental = False)`
+: Return the recorded time domain data and the corresponding
+
+**Scope.collect**`()`
+: Yield (category, id, data) tuples for recording blocks to simplify
+
+**Scope.sample**`(t, dt)`
+: Sample the data from all inputs. Skips duplicate timestamps to maintain
+
+**Scope.plot**`(args = (), kwargs = {})`
+: Directly create a plot of the recorded data for quick visualization and debugging.
+
+**Scope.plot2D**`(args = (), axes = (0, 1), kwargs = {})`
+: Directly create a 2D plot of the recorded data for quick visualization and debugging.
+
+**Scope.plot3D**`(args = (), axes = (0, 1, 2), kwargs = {})`
+: Directly create a 3D plot of the recorded data for quick visualization.
+
+**Scope.save**`(path = 'scope.csv')`
+: Save the recording of the scope to a csv file.
+
+**Scope.update**`(t)`
+: update system equation for fixed point loop,
+
+#### class RealtimeScope(pathsim.blocks.scope.Scope)
+
+An extension of the 'Scope' block that initializes a realtime plotter.
+
+- `plotter`
+
+**RealtimeScope.__init__**`(sampling_period = None, t_wait = 0.0, labels = [], max_samples = None)`
+
+**RealtimeScope.sample**`(t, dt)`
+: Sample the data from all inputs, and overwrites existing timepoints,
+
+### pathsim.blocks.sources
+
+#### class Constant(pathsim.blocks._block.Block)
+
+Produces a constant output signal (SISO).
+
+- `input_port_labels`
+- `output_port_labels`
+- `value`
+
+**Constant.__init__**`(value = 1)`
+
+**Constant.update**`(t)`
+: update system equation fixed point loop
+
+#### class Source(pathsim.blocks._block.Block)
+
+Source that produces an arbitrary time dependent output defined by `func` (callable).
+
+- `input_port_labels`
+- `output_port_labels`
+- `func`
+
+**Source.__init__**`(func = lambda t: 1)`
+
+**Source.update**`(t)`
+: update system equation fixed point loop
+
+#### class TriangleWaveSource(pathsim.blocks.sources.Source)
+
+Source block that generates an analog triangle wave
+
+- `amplitude`
+- `frequency`
+- `phase`
+
+**TriangleWaveSource.__init__**`(frequency = 1, amplitude = 1, phase = 0)`
+
+#### class SinusoidalSource(pathsim.blocks.sources.Source)
+
+Source block that generates a sinusoid wave
+
+- `amplitude`
+- `frequency`
+- `phase`
+
+**SinusoidalSource.__init__**`(frequency = 1, amplitude = 1, phase = 0)`
+
+#### class GaussianPulseSource(pathsim.blocks.sources.Source)
+
+Source block that generates a gaussian pulse
+
+- `outputs`
+- `amplitude`
+- `f_max`
+- `tau`
+
+**GaussianPulseSource.__init__**`(amplitude = 1, f_max = 1000.0, tau = 0.0)`
+
+#### class SinusoidalPhaseNoiseSource(pathsim.blocks._block.Block)
+
+Sinusoidal source with cumulative and white phase noise.
+
+- `input_port_labels`
+- `output_port_labels`
+- `amplitude`
+- `frequency`
+- `phase`
+- `sampling_period`
+- `omega`
+- `sig_cum`
+- `sig_white`
+- `noise_1`
+- `noise_2`
+- `initial_value`
+- `events`
+
+**SinusoidalPhaseNoiseSource.__init__**`(frequency = 1, amplitude = 1, phase = 0, sig_cum = 0, sig_white = 0, sampling_period = 0.1)`
+
+**SinusoidalPhaseNoiseSource.reset**`()`
+: Reset block state including noise samples.
+
+**SinusoidalPhaseNoiseSource.update**`(t)`
+: Update system equation for fixed point loop, evaluating the
+
+**SinusoidalPhaseNoiseSource.sample**`(t, dt)`
+: Sample from a normal distribution after successful timestep.
+
+**SinusoidalPhaseNoiseSource.solve**`(t, dt)`
+: Advance solution of implicit update equation for cumulative noise integration.
+
+**SinusoidalPhaseNoiseSource.step**`(t, dt)`
+: Compute update step with integration engine for cumulative noise.
+
+#### class ChirpPhaseNoiseSource(pathsim.blocks._block.Block)
+
+Chirp source, sinusoid with frequency ramp up and ramp down, plus phase noise.
+
+- `input_port_labels`
+- `output_port_labels`
+- `amplitude`
+- `phase`
+- `f0`
+- `BW`
+- `T`
+- `sig_cum`
+- `sig_white`
+- `sampling_period`
+- `noise_1`
+- `noise_2`
+- `initial_value`
+- `events`
+
+**ChirpPhaseNoiseSource.__init__**`(amplitude = 1, f0 = 1, BW = 1, T = 1, phase = 0, sig_cum = 0, sig_white = 0, sampling_period = 0.1)`
+
+**ChirpPhaseNoiseSource.reset**`()`
+: Reset block state including noise samples.
+
+**ChirpPhaseNoiseSource.sample**`(t, dt)`
+: Sample from a normal distribution after successful timestep
+
+**ChirpPhaseNoiseSource.update**`(t)`
+: Update the block output, assemble phase and evaluate the sinusoid.
+
+**ChirpPhaseNoiseSource.solve**`(t, dt)`
+: Advance implicit solver of implicit integration engine, evaluate
+
+**ChirpPhaseNoiseSource.step**`(t, dt)`
+: Compute update step with integration engine, evaluate the triangle wave
+
+#### class ChirpSource(pathsim.blocks.sources.ChirpPhaseNoiseSource)
+
+Alias for ChirpPhaseNoiseSource.
+
+#### class PulseSource(pathsim.blocks._block.Block)
+
+Generates a periodic pulse waveform with defined rise and fall times.
+
+- `input_port_labels`
+- `output_port_labels`
+- `amplitude`
+- `T`
+- `t_rise`
+- `t_fall`
+- `tau`
+- `duty`
+- `events`
+
+**PulseSource.__init__**`(amplitude = 1.0, T = 1.0, t_rise = 0.0, t_fall = 0.0, tau = 0.0, duty = 0.5)`
+
+**PulseSource.reset**`(t: float = None)`
+: Resets the block state.
+
+**PulseSource.update**`(t)`
+: Calculate the pulse output value based on the current phase.
+
+#### class Pulse(pathsim.blocks.sources.PulseSource)
+
+Alias for PulseSource.
+
+#### class ClockSource(pathsim.blocks._block.Block)
+
+Discrete time clock source block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `T`
+- `tau`
+- `events`
+
+**ClockSource.__init__**`(T = 1, tau = 0)`
+
+#### class Clock(pathsim.blocks.sources.ClockSource)
+
+Alias for ClockSource.
+
+#### class SquareWaveSource(pathsim.blocks._block.Block)
+
+Discrete time square wave source.
+
+- `input_port_labels`
+- `output_port_labels`
+- `amplitude`
+- `frequency`
+- `phase`
+- `events`
+
+**SquareWaveSource.__init__**`(amplitude = 1, frequency = 1, phase = 0)`
+
+#### class StepSource(pathsim.blocks._block.Block)
+
+Discrete time unit step (or multi step) source block.
+
+- `input_port_labels`
+- `output_port_labels`
+- `amplitude`
+- `tau`
+- `Evt`
+- `events`
+
+**StepSource.__init__**`(amplitude = 1, tau = 0.0)`
+
+#### class Step(pathsim.blocks.sources.StepSource)
+
+Alias for StepSource.
+
+### pathsim.blocks.spectrum
+
+#### class Spectrum(pathsim.blocks._block.Block)
+
+Block for fourier spectrum analysis (spectrum analyzer).
+
+- `input_port_labels`
+- `output_port_labels`
+- `t_wait`
+- `t_sample`
+- `time`
+- `alpha`
+- `labels`
+- `freq`
+- `omega`
+- `initial_value`
+
+**Spectrum.__init__**`(freq = [], t_wait = 0.0, alpha = 0.0, labels = [])`
+
+**Spectrum.reset**`()`
+
+**Spectrum.read**`()`
+: Read the recorded spectrum
+
+**Spectrum.collect**`()`
+: Yield (category, id, data) tuples for recording blocks to simplify
+
+**Spectrum.solve**`(t, dt)`
+: advance solution of implicit update equation of the solver
+
+**Spectrum.step**`(t, dt)`
+: compute timestep update with integration engine
+
+**Spectrum.sample**`(t, dt)`
+: sample time of successfull timestep for waiting period
+
+**Spectrum.plot**`(args = (), kwargs = {})`
+: Directly create a plot of the recorded data for visualization.
+
+**Spectrum.save**`(path = 'spectrum.csv')`
+: Save the recording of the spectrum to a csv file
+
+**Spectrum.update**`(t)`
+: update system equation for fixed point loop,
+
+#### class RealtimeSpectrum(pathsim.blocks.spectrum.Spectrum)
+
+An extension of the 'Spectrum' block that also initializes a realtime plotter.
+
+- `plotter`
+
+**RealtimeSpectrum.__init__**`(freq = [], t_wait = 0.0, alpha = 0.0, labels = [])`
+
+**RealtimeSpectrum.step**`(t, dt)`
+: compute timestep update with integration engine
+
+### pathsim.blocks.switch
+
+#### class Switch(pathsim.blocks._block.Block)
+
+Switch block that selects between its inputs.
+
+- `input_port_labels`
+- `output_port_labels`
+- `switch_state`
+
+**Switch.__init__**`(switch_state = None)`
+
+**Switch.select**`(switch_state = 0)`
+: This method is unique to the `Switch` block and intended
+
+**Switch.update**`(t)`
+: Update switch output depending on inputs and switch state.
+
+### pathsim.blocks.table
+
+#### class LUT(pathsim.blocks.Function)
+
+N-dimensional lookup table with linear interpolation functionality.
+
+- `points`
+- `values`
+- `inter`
+
+**LUT.__init__**`(points = None, values = None)`
+
+#### class LUT1D(pathsim.blocks.Function)
+
+One-dimensional lookup table with linear interpolation functionality.
+
+- `points`
+- `values`
+- `inter`
+
+**LUT1D.__init__**`(points = None, values = None, fill_value = 'extrapolate')`
+
+### pathsim.blocks.wrapper
+
+#### class Wrapper(pathsim.blocks._block.Block)
+
+Wrapper block for discrete implementation and external code integration.
+
+- `func`
+- `Evt`
+- `events`
+- `tau` — Getter for tau
+- `T` — Get the sampling period of the block
+
+**Wrapper.__init__**`(func = None, T = 1, tau = 0)`
+
+**Wrapper.update**`(t)`
+: Update system equation for fixed point loop.
+
+**Wrapper.dec**`(cls, T = 1, tau = 0)`
+: decorator for direct instance construction from func
+
+### pathsim.solvers._rungekutta
+
+#### class ExplicitRungeKutta(pathsim.solvers._solver.ExplicitSolver)
+
+Base class for explicit Runge-Kutta integrators which implements
+
+- `n`
+- `m`
+- `s`
+- `beta`
+- `Ks`
+- `BT`
+- `TR`
+
+**ExplicitRungeKutta.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**ExplicitRungeKutta.error_controller**`(dt)`
+: Compute scaling factor for adaptive timestep based on
+
+**ExplicitRungeKutta.step**`(f, dt)`
+: Performs the (explicit) timestep at the intermediate RK stages
+
+#### class DiagonallyImplicitRungeKutta(pathsim.solvers._solver.ImplicitSolver)
+
+Base class for diagonally implicit Runge-Kutta (DIRK) integrators
+
+- `n`
+- `m`
+- `s`
+- `beta`
+- `Ks`
+- `BT`
+- `A`
+- `TR`
+
+**DiagonallyImplicitRungeKutta.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**DiagonallyImplicitRungeKutta.error_controller**`(dt)`
+: Compute scaling factor for adaptive timestep based on
+
+**DiagonallyImplicitRungeKutta.solve**`(f, J, dt)`
+: Solves the implicit update equation using the optimizer of the engine.
+
+**DiagonallyImplicitRungeKutta.step**`(f, dt)`
+: performs the (explicit) timestep at the intermediate RK stages
+
+### pathsim.solvers._solver
+
+#### class Solver
+
+Base skeleton class for solver definition. Defines the basic solver methods and
+
+- `initial_value`
+- `x`
+- `tolerance_lte_abs`
+- `tolerance_lte_rel`
+- `parent`
+- `is_adaptive`
+- `history`
+- `n`
+- `s`
+- `eval_stages`
+- `stage` — stage property management to interface with parent solver
+- `state` — Property for cleaner access to internal state.
+
+**Solver.__init__**`(initial_value = 0, parent = None, tolerance_lte_abs = SOL_TOLERANCE_LTE_ABS, tolerance_lte_rel = SOL_TOLERANCE_LTE_REL)`
+
+**Solver.is_first_stage**`()`
+
+**Solver.is_last_stage**`()`
+
+**Solver.stages**`(t, dt)`
+: Generator that yields the intermediate evaluation
+
+**Solver.get**`()`
+: Returns current internal state of the solver.
+
+**Solver.set**`(x)`
+: Sets the internal state of the integration engine.
+
+**Solver.reset**`(initial_value = None)`
+: "Resets integration engine to initial value,
+
+**Solver.buffer**`(dt)`
+: Saves the current state to an internal state buffer which
+
+**Solver.cast**`(cls, other, parent, solver_kwargs = {})`
+: Cast the integration engine to the new type and initialize
+
+**Solver.create**`(cls, initial_value, parent = None, from_engine = None, solver_kwargs = {})`
+: Create a new solver instance, optionally inheriting state from existing engine.
+
+**Solver.error_controller**`()`
+: Returns the estimated local truncation error (abs and rel) and scaling factor
+
+**Solver.revert**`()`
+: Revert integration engine to previous timestep.
+
+**Solver.step**`(f, dt)`
+: Performs the explicit timestep for (t+dt) based
+
+**Solver.interpolate**`(r, dt)`
+: Interpolate solution after successful timestep as a ratio
+
+#### class ExplicitSolver(pathsim.solvers._solver.Solver)
+
+Base class for explicit solver definition.
+
+- `is_explicit`
+- `is_implicit`
+- `eval_stages`
+
+**ExplicitSolver.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**ExplicitSolver.integrate_singlestep**`(func, time = 0.0, dt = SIM_TIMESTEP)`
+: Directly integrate the function for a single timestep 'dt' with
+
+**ExplicitSolver.integrate**`(func, time_start = 0.0, time_end = 1.0, dt = SIM_TIMESTEP, dt_min = SIM_TIMESTEP_MIN, dt_max = SIM_TIMESTEP_MAX, adaptive = True)`
+: Directly integrate the function 'func' from 'time_start'
+
+#### class ImplicitSolver(pathsim.solvers._solver.Solver)
+
+Base class for implicit solver definition.
+
+- `is_explicit`
+- `is_implicit`
+- `eval_stages`
+- `opt`
+
+**ImplicitSolver.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**ImplicitSolver.buffer**`(dt)`
+: Saves the current state to an internal state buffer which
+
+**ImplicitSolver.solve**`(j, J, dt)`
+: Advances the solution of the implicit update equation of the solver
+
+**ImplicitSolver.integrate_singlestep**`(func, jac, time = 0.0, dt = SIM_TIMESTEP, tolerance_fpi = SOL_TOLERANCE_FPI, max_iterations = SOL_ITERATIONS_MAX)`
+: Directly integrate the function 'func' for a single timestep 'dt' with
+
+**ImplicitSolver.integrate**`(func, jac, time_start = 0.0, time_end = 1.0, dt = SIM_TIMESTEP, dt_min = SIM_TIMESTEP_MIN, dt_max = SIM_TIMESTEP_MAX, adaptive = True, tolerance_fpi = SOL_TOLERANCE_FPI, max_iterations = SOL_ITERATIONS_MAX)`
+: Directly integrate the function 'func' from 'time_start'
+
+### pathsim.solvers.bdf
+
+#### class BDF(pathsim.solvers._solver.ImplicitSolver)
+
+Base class for the backward differentiation formula (BDF) integrators.
+
+- `n`
+- `K`
+- `F`
+- `startup`
+
+**BDF.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**BDF.cast**`(cls, other, parent, solver_kwargs = {})`
+: cast to this solver needs special handling of startup method
+
+**BDF.create**`(cls, initial_value, parent = None, from_engine = None, solver_kwargs = {})`
+: Create a new BDF solver, properly initializing the startup solver.
+
+**BDF.stages**`(t, dt)`
+: Generator that yields the intermediate evaluation
+
+**BDF.reset**`(initial_value = None)`
+: "Resets integration engine to initial value,
+
+**BDF.buffer**`(dt)`
+: buffer the state for the multistep method
+
+**BDF.solve**`(f, J, dt)`
+: Solves the implicit update equation using the optimizer of the engine.
+
+**BDF.step**`(f, dt)`
+: Performs the explicit timestep for (t+dt) based
+
+#### class BDF2(pathsim.solvers.bdf.BDF)
+
+Fixed-step 2nd order BDF method. A-stable.
+
+- `n`
+- `history`
+
+**BDF2.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class BDF3(pathsim.solvers.bdf.BDF)
+
+Fixed-step 3rd order BDF method. :math:`A(\alpha)`-stable with
+
+- `n`
+- `history`
+
+**BDF3.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class BDF4(pathsim.solvers.bdf.BDF)
+
+Fixed-step 4th order BDF method. :math:`A(\alpha)`-stable with
+
+- `n`
+- `history`
+
+**BDF4.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class BDF5(pathsim.solvers.bdf.BDF)
+
+Fixed-step 5th order BDF method. :math:`A(\alpha)`-stable with
+
+- `n`
+- `history`
+
+**BDF5.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class BDF6(pathsim.solvers.bdf.BDF)
+
+Fixed-step 6th order BDF method. **Not** A-stable
+
+- `n`
+- `history`
+
+**BDF6.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.dirk2
+
+#### class DIRK2(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Two-stage, 2nd order DIRK method. L-stable, SSP-optimal, symplectic.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+- `A`
+
+**DIRK2.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.dirk3
+
+#### class DIRK3(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Four-stage, 3rd order L-stable DIRK method. Stiffly accurate.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+
+**DIRK3.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.esdirk32
+
+#### class ESDIRK32(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Four-stage, 3rd order ESDIRK method with embedded 2nd order error
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**ESDIRK32.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.esdirk4
+
+#### class ESDIRK4(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Six-stage, 4th order ESDIRK method. L-stable and stiffly accurate.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+
+**ESDIRK4.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.esdirk43
+
+#### class ESDIRK43(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Six-stage, 4th order ESDIRK method with embedded 3rd order error
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**ESDIRK43.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.esdirk54
+
+#### class ESDIRK54(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Seven-stage, 5th order ESDIRK method with embedded 4th order error
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**ESDIRK54.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.esdirk85
+
+#### class ESDIRK85(pathsim.solvers._rungekutta.DiagonallyImplicitRungeKutta)
+
+Sixteen-stage, 8th order ESDIRK method with embedded 5th order error
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**ESDIRK85.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.euler
+
+#### class EUF(pathsim.solvers._solver.ExplicitSolver)
+
+Explicit forward Euler method. First-order, single-stage.
+
+**EUF.step**`(f, dt)`
+: performs the explicit forward timestep for (t+dt)
+
+#### class EUB(pathsim.solvers._solver.ImplicitSolver)
+
+Implicit backward Euler method. First-order, A-stable and L-stable.
+
+**EUB.solve**`(f, J, dt)`
+: Solves the implicit update equation
+
+### pathsim.solvers.gear
+
+#### class GEAR(pathsim.solvers._solver.ImplicitSolver)
+
+Base class for GEAR-type integrators that defines the universal methods.
+
+- `n`
+- `m`
+- `beta`
+- `history_dt`
+- `is_adaptive`
+- `startup`
+
+**GEAR.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**GEAR.cast**`(cls, other, parent, solver_kwargs = {})`
+: cast to this solver needs special handling of startup method
+
+**GEAR.create**`(cls, initial_value, parent = None, from_engine = None, solver_kwargs = {})`
+: Create a new GEAR solver, properly initializing the startup solver.
+
+**GEAR.stages**`(t, dt)`
+: Generator that yields the intermediate evaluation
+
+**GEAR.reset**`(initial_value = None)`
+: "Resets integration engine to initial value,
+
+**GEAR.buffer**`(dt)`
+: Buffer the state and timestep. Dynamically precompute
+
+**GEAR.revert**`()`
+: Revert integration engine to previous timestep, this is only
+
+**GEAR.error_controller**`(tr)`
+: Compute scaling factor for adaptive timestep based on absolute and
+
+**GEAR.solve**`(f, J, dt)`
+: Solves the implicit update equation using the optimizer of the engine.
+
+**GEAR.step**`(f, dt)`
+: Finalizes the timestep by resetting the solver for the implicit
+
+#### class GEAR21(pathsim.solvers.gear.GEAR)
+
+Variable-step 2nd order BDF with 1st order error estimate. A-stable.
+
+- `n`
+- `m`
+- `history`
+- `history_dt`
+
+**GEAR21.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class GEAR32(pathsim.solvers.gear.GEAR)
+
+Variable-step 3rd order BDF with 2nd order error estimate.
+
+- `n`
+- `m`
+- `history`
+- `history_dt`
+
+**GEAR32.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class GEAR43(pathsim.solvers.gear.GEAR)
+
+Variable-step 4th order BDF with 3rd order error estimate.
+
+- `n`
+- `m`
+- `history`
+- `history_dt`
+
+**GEAR43.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class GEAR54(pathsim.solvers.gear.GEAR)
+
+Variable-step 5th order BDF with 4th order error estimate.
+
+- `n`
+- `m`
+- `history`
+- `history_dt`
+
+**GEAR54.__init__**`(solver_args = (), solver_kwargs = {})`
+
+#### class GEAR52A(pathsim.solvers.gear.GEAR)
+
+Variable-step, variable-order BDF (orders 2--5). Adapts both timestep
+
+- `n`
+- `history`
+- `history_dt`
+
+**GEAR52A.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**GEAR52A.buffer**`(dt)`
+: Buffer the state and timestep. Dynamically precompute
+
+**GEAR52A.error_controller**`(tr_m, tr_p)`
+: Compute scaling factor for adaptive timestep based on absolute and
+
+**GEAR52A.solve**`(f, J, dt)`
+: Solves the implicit update equation using the optimizer of the engine.
+
+**GEAR52A.step**`(f, dt)`
+: Finalizes the timestep by resetting the solver for the implicit
+
+#### compute_bdf_coefficients`(order, timesteps)`
+Computes the coefficients for backward differentiation formulas for a given order.
+
+### pathsim.solvers.rk4
+
+#### class RK4(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Classical four-stage, 4th order explicit Runge-Kutta method.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+
+**RK4.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**RK4.interpolate**`(r, dt)`
+
+### pathsim.solvers.rkbs32
+
+#### class RKBS32(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Bogacki-Shampine 3(2) pair. Four-stage, 3rd order with FSAL property.
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKBS32.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkck54
+
+#### class RKCK54(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Cash-Karp 5(4) pair. Six stages, 5th order with embedded 4th order
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKCK54.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkdp54
+
+#### class RKDP54(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Dormand-Prince 5(4) pair (DOPRI5). Seven stages, 5th order with
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKDP54.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkdp87
+
+#### class RKDP87(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Dormand-Prince 8(7) pair (DOP853). Thirteen stages, 8th order with
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKDP87.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkf21
+
+#### class RKF21(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Three-stage, 2nd order Runge-Kutta-Fehlberg method with embedded 1st order error estimate.
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKF21.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkf45
+
+#### class RKF45(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Runge-Kutta-Fehlberg 4(5) pair. Six stages, 4th order propagation with
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKF45.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkf78
+
+#### class RKF78(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Runge-Kutta-Fehlberg 7(8) pair. Thirteen stages, 7th order propagation
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKF78.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.rkv65
+
+#### class RKV65(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Verner 6(5) "most robust" pair. Nine stages, 6th order with
+
+- `s`
+- `n`
+- `m`
+- `is_adaptive`
+- `eval_stages`
+- `BT`
+- `TR`
+
+**RKV65.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.ssprk22
+
+#### class SSPRK22(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Two-stage, 2nd order Strong Stability Preserving (SSP) Runge-Kutta method.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+
+**SSPRK22.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**SSPRK22.interpolate**`(r, dt)`
+
+### pathsim.solvers.ssprk33
+
+#### class SSPRK33(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Three-stage, 3rd order optimal SSP Runge-Kutta method.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+
+**SSPRK33.__init__**`(solver_args = (), solver_kwargs = {})`
+
+**SSPRK33.interpolate**`(r, dt)`
+
+### pathsim.solvers.ssprk34
+
+#### class SSPRK34(pathsim.solvers._rungekutta.ExplicitRungeKutta)
+
+Four-stage, 3rd order SSP Runge-Kutta method with SSP coefficient 2.
+
+- `s`
+- `n`
+- `eval_stages`
+- `BT`
+
+**SSPRK34.__init__**`(solver_args = (), solver_kwargs = {})`
+
+### pathsim.solvers.steadystate
+
+#### class SteadyState(pathsim.solvers._solver.ImplicitSolver)
+
+Pseudo-solver for computing the DC operating point (steady state).
+
+**SteadyState.solve**`(f, J, dt)`
+: Solve for steady state by finding x where f(x,u,t) = 0
+
+### pathsim.events._event
+
+#### class Event
+
+This is the base class of the event handling system.
+
+- `func_evt`
+- `func_act`
+- `tolerance`
+
+**Event.__init__**`(func_evt = None, func_act = None, tolerance = EVT_TOLERANCE)`
+
+**Event.on**`()`
+
+**Event.off**`()`
+
+**Event.reset**`()`
+: Reset the recorded event times. Resetting the history is not
+
+**Event.buffer**`(t)`
+: Buffer the event function evaluation before the timestep is
+
+**Event.estimate**`(t)`
+: Estimate the time of the next event, based on history or internal schedule.
+
+**Event.detect**`(t)`
+: Evaluate the event function and decide if an event has occurred.
+
+**Event.resolve**`(t)`
+: Resolve the event and record the time (t) at which it occurs.
+
+### pathsim.events.condition
+
+#### class Condition(pathsim.events._event.Event)
+
+Subclass of base 'Event' that triggers if the event function evaluates to 'True',
+
+**Condition.detect**`(t)`
+: Evaluate the event function and check if condition is satisfied.
+
+**Condition.resolve**`(t)`
+: Resolve the event and record the time (t) at which it occurs.
+
+### pathsim.events.schedule
+
+#### class Schedule(pathsim.events._event.Event)
+
+Subclass of base 'Event' that triggers dependent on the evaluation time.
+
+- `t_start`
+- `t_period`
+- `t_end`
+
+**Schedule.__init__**`(t_start = 0, t_end = None, t_period = 1, func_act = None, tolerance = TOLERANCE)`
+
+**Schedule.estimate**`(t)`
+: Estimate the time until the next scheduled event.
+
+**Schedule.buffer**`(t)`
+: Buffer the current time to history
+
+**Schedule.detect**`(t)`
+: Check if the event condition is satisfied, i.e. if the
+
+#### class ScheduleList(pathsim.events.schedule.Schedule)
+
+Subclass of base 'Schedule' that triggers dependent on the evaluation time.
+
+- `times_evt`
+
+**ScheduleList.__init__**`(times_evt, func_act = None, tolerance = TOLERANCE)`
+
+**ScheduleList.detect**`(t)`
+: Check if the event condition is satisfied, i.e. if the
+
+### pathsim.events.zerocrossing
+
+#### class ZeroCrossing(pathsim.events._event.Event)
+
+Subclass of base 'Event' that triggers if the event function crosses zero.
+
+**ZeroCrossing.detect**`(t)`
+: Evaluate the event function and check for zero-crossings
+
+#### class ZeroCrossingUp(pathsim.events._event.Event)
+
+Modification of standard 'ZeroCrossing' event where events are only triggered
+
+**ZeroCrossingUp.detect**`(t)`
+: Evaluate the event function and check for zero-crossings
+
+#### class ZeroCrossingDown(pathsim.events._event.Event)
+
+Modification of standard 'ZeroCrossing' event where events are only triggered
+
+**ZeroCrossingDown.detect**`(t)`
+: Evaluate the event function and check for zero-crossings
+
+### pathsim.optim.anderson
+
+#### class Anderson
+
+Anderson acceleration for fixed-point iteration.
+
+- `m`
+- `restart`
+- `dx_buffer`
+- `dr_buffer`
+- `x_prev`
+- `r_prev`
+
+**Anderson.__init__**`(m = OPT_HISTORY, restart = OPT_RESTART)`
+
+**Anderson.solve**`(func, x0, iterations_max = 100, tolerance = 1e-06)`
+: Solve the function 'func' with initial
+
+**Anderson.reset**`()`
+: reset the anderson accelerator
+
+**Anderson.step**`(x, g)`
+: Perform one iteration on the fixed-point solution.
+
+#### class NewtonAnderson(pathsim.optim.anderson.Anderson)
+
+Hybrid Newton--Anderson fixed-point solver.
+
+**NewtonAnderson.solve**`(func, x0, jac = None, iterations_max = 100, tolerance = 1e-06)`
+: Solve the function 'func' with initial value
+
+**NewtonAnderson.step**`(x, g, jac = None)`
+: Perform one iteration on the fixed-point solution.
+
+### pathsim.optim.booster
+
+#### class ConnectionBooster
+
+Wraps a `Connection` instance and injects a fixed point accelerator.
+
+- `connection`
+- `history`
+- `accelerator`
+
+**ConnectionBooster.__init__**`(connection)`
+
+**ConnectionBooster.get**`()`
+: Return the output values of the source block that is referenced in
+
+**ConnectionBooster.set**`(val)`
+: Set targets input values.
+
+**ConnectionBooster.reset**`()`
+: Reset the internal fixed point accelerator and update the history
+
+**ConnectionBooster.update**`()`
+: Wraps the `Connection.update` method for data transfer from source
+
+### pathsim.optim.numerical
+
+#### num_jac`(func, x, r = 0.001, tol = TOLERANCE)`
+Numerically computes the jacobian of the function 'func'
+
+#### num_autojac`(func)`
+Wraps a function object such that it computes the jacobian
+
+### pathsim.optim.operator
+
+#### class Operator(object)
+
+Operator class for function evaluation and linearization.
+
+- `f0`
+- `x0`
+- `J`
+
+**Operator.__init__**`(func, jac = None)`
+
+**Operator.jac**`(x)`
+: Compute the Jacobian matrix at point x.
+
+**Operator.linearize**`(x)`
+: Linearize the function at point x.
+
+**Operator.reset**`()`
+: Reset the linearization.
+
+#### class DynamicOperator(object)
+
+Operator class for dynamic system function evaluation and linearization.
+
+- `f0`
+- `x0`
+- `u0`
+- `Jx`
+- `Ju`
+
+**DynamicOperator.__init__**`(func, jac_x = None, jac_u = None)`
+
+**DynamicOperator.jac_x**`(x, u, t)`
+: Compute the Jacobian matrix with respect to x.
+
+**DynamicOperator.jac_u**`(x, u, t)`
+: Compute the Jacobian matrix with respect to u.
+
+**DynamicOperator.linearize**`(x, u, t)`
+: Linearize the function at point (x, u, t).
+
+**DynamicOperator.reset**`()`
+: Reset the linearization.
+
+### pathsim.utils.adaptivebuffer
+
+#### class AdaptiveBuffer
+
+A class that manages an adaptive buffer for delay modeling which is primarily
+
+- `delay`
+- `buffer_t`
+- `buffer_v`
+- `ns`
+
+**AdaptiveBuffer.__init__**`(delay)`
+
+**AdaptiveBuffer.add**`(t, value)`
+: adding a new datapoint to the buffer
+
+**AdaptiveBuffer.interp**`(t)`
+: interpolate buffer at defined lookup time
+
+**AdaptiveBuffer.get**`(t)`
+: lookup datapoint from buffer with
+
+**AdaptiveBuffer.clear**`()`
+: clear the buffer, reset everything
+
+### pathsim.utils.analysis
+
+#### class Timer(contextlib.ContextDecorator)
+
+Context manager that times the execution time
+
+- `verbose`
+- `time`
+- `logger`
+
+**Timer.__init__**`(verbose = True)`
+
+#### class Profiler(contextlib.ContextDecorator)
+
+Context manager for easy code profiling
+
+- `top_n`
+- `sort_by`
+- `profiler`
+
+**Profiler.__init__**`(top_n = 50, sort_by = 'cumulative')`
+
+#### timer`(func)`
+Shows the execution time in milliseconds of the
+
+### pathsim.utils.deprecation
+
+#### deprecated`(version = None, replacement = None, reason = None)`
+Decorator to mark functions, methods, or classes as deprecated.
+
+#### _prepend_deprecation_notice`(docstring, notice)`
+Prepend deprecation notice to docstring.
+
+### pathsim.utils.fmuwrapper
+
+#### class EventInfo
+
+Unified event information structure for both FMI 2.0 and 3.0.
+
+- `discrete_states_need_update: bool`
+- `terminate_simulation: bool`
+- `nominals_changed: bool`
+- `values_changed: bool`
+- `next_event_time_defined: bool`
+- `next_event_time: float`
+
+**EventInfo.__init__**`(discrete_states_need_update: bool = False, terminate_simulation: bool = False, nominals_changed: bool = False, values_changed: bool = False, next_event_time_defined: bool = False, next_event_time: float = 0.0)`
+
+#### class StepResult
+
+Result information from a co-simulation step.
+
+- `event_encountered: bool`
+- `terminate_simulation: bool`
+- `early_return: bool`
+- `last_successful_time: float`
+
+**StepResult.__init__**`(event_encountered: bool = False, terminate_simulation: bool = False, early_return: bool = False, last_successful_time: float = 0.0)`
+
+#### class _FMI2Ops
+
+FMI 2.0 specific operations.
+
+**_FMI2Ops.set_real**`(fmu, refs, values)`
+
+**_FMI2Ops.get_real**`(fmu, refs)`
+
+**_FMI2Ops.set_integer**`(fmu, refs, values)`
+
+**_FMI2Ops.get_integer**`(fmu, refs)`
+
+**_FMI2Ops.do_step**`(fmu, current_time, step_size)`
+
+**_FMI2Ops.get_derivatives**`(fmu, n_states)`
+
+**_FMI2Ops.update_discrete_states**`(fmu)`
+
+**_FMI2Ops.setup_experiment**`(fmu, tolerance, start_time, stop_time)`
+
+**_FMI2Ops.enter_initialization_mode**`(fmu, tolerance, start_time, stop_time)`
+
+**_FMI2Ops.exit_initialization_mode**`(fmu, mode)`
+
+#### class _FMI3Ops
+
+FMI 3.0 specific operations.
+
+**_FMI3Ops.set_real**`(fmu, refs, values)`
+
+**_FMI3Ops.get_real**`(fmu, refs)`
+
+**_FMI3Ops.set_integer**`(fmu, refs, values)`
+
+**_FMI3Ops.get_integer**`(fmu, refs)`
+
+**_FMI3Ops.do_step**`(fmu, current_time, step_size)`
+
+**_FMI3Ops.get_derivatives**`(fmu, n_states)`
+
+**_FMI3Ops.update_discrete_states**`(fmu)`
+
+**_FMI3Ops.setup_experiment**`(fmu, tolerance, start_time, stop_time)`
+
+**_FMI3Ops.enter_initialization_mode**`(fmu, tolerance, start_time, stop_time)`
+
+**_FMI3Ops.exit_initialization_mode**`(fmu, mode)`
+
+#### class FMUWrapper
+
+Version-agnostic wrapper for FMI 2.0 and 3.0 FMUs.
+
+- `fmu_path`
+- `instance_name`
+- `mode`
+- `model_description`
+- `fmi_version`
+- `unzipdir`
+- `n_states`
+- `n_event_indicators`
+- `fmu`
+- `default_step_size: Optional[float]` — Get default step size from FMU's default experiment, if defined.
+- `default_tolerance: Optional[float]` — Get default tolerance from FMU's default experiment, if defined.
+- `needs_completed_integrator_step: bool` — Check if FMU requires completedIntegratorStep notifications (Model Exchange only).
+- `provides_jacobian: bool` — Check if FMU provides directional derivatives for Jacobian computation.
+
+**FMUWrapper.__init__**`(fmu_path, instance_name = 'fmu_instance', mode = 'cosimulation')`
+
+**FMUWrapper.create_port_registers**`()`
+: Create input and output registers for block I/O.
+
+**FMUWrapper.initialize**`(start_values = None, start_time = 0.0, stop_time = None, tolerance = None)`
+: Complete FMU initialization sequence.
+
+**FMUWrapper.get_state_jacobian**`()`
+: Compute Jacobian of state derivatives w.r.t. states (Model Exchange only).
+
+**FMUWrapper.instantiate**`(visible = False, logging_on = False)`
+: Instantiate the FMU.
+
+**FMUWrapper.setup_experiment**`(tolerance = None, start_time = 0.0, stop_time = None)`
+: Setup experiment parameters.
+
+**FMUWrapper.enter_initialization_mode**`()`
+: Enter initialization mode.
+
+**FMUWrapper.exit_initialization_mode**`()`
+: Exit initialization mode and return event information.
+
+**FMUWrapper.reset**`()`
+: Reset FMU to initial state.
+
+**FMUWrapper.terminate**`()`
+: Terminate FMU.
+
+**FMUWrapper.free_instance**`()`
+: Free FMU instance and resources.
+
+**FMUWrapper.set_real**`(refs, values)`
+: Set real-valued variables by reference.
+
+**FMUWrapper.get_real**`(refs)`
+: Get real-valued variables by reference.
+
+**FMUWrapper.set_variable**`(name, value)`
+: Set a single variable by name (automatically detects type).
+
+**FMUWrapper.set_inputs_from_array**`(values)`
+: Set all FMU inputs from an array.
+
+**FMUWrapper.get_outputs_as_array**`()`
+: Get all FMU outputs as an array.
+
+**FMUWrapper.do_step**`(current_time, step_size)`
+: Perform a co-simulation step.
+
+**FMUWrapper.set_time**`(time)`
+: Set current time (Model Exchange only).
+
+**FMUWrapper.set_continuous_states**`(states)`
+: Set continuous states (Model Exchange only).
+
+**FMUWrapper.get_continuous_states**`()`
+: Get continuous states (Model Exchange only).
+
+**FMUWrapper.get_derivatives**`()`
+: Get state derivatives (Model Exchange only).
+
+**FMUWrapper.get_event_indicators**`()`
+: Get event indicators (Model Exchange only).
+
+**FMUWrapper.enter_event_mode**`()`
+: Enter event mode (Model Exchange only).
+
+**FMUWrapper.enter_continuous_time_mode**`()`
+: Enter continuous time mode (Model Exchange only).
+
+**FMUWrapper.update_discrete_states**`()`
+: Update discrete states during event iteration (Model Exchange only).
+
+**FMUWrapper.completed_integrator_step**`()`
+: Notify FMU that integrator step completed (Model Exchange only).
+
+### pathsim.utils.gilbert
+
+#### gilbert_realization`(Poles = [], Residues = [], Const = 0.0, tolerance = 1e-09)`
+Build real valued statespace model from transfer function
+
+### pathsim.utils.graph
+
+#### class Graph
+
+Optimized graph representation with efficient assembly and cycle detection.
+
+- `blocks`
+- `connections`
+- `has_loops`
+- `size` — Returns the size of the graph as (number of blocks, number of connections).
+- `depth` — Returns the depths of the graph as (algebraic depth, loop depth).
+
+**Graph.__init__**`(blocks = None, connections = None)`
+
+**Graph.is_algebraic_path**`(start_block, end_block)`
+: Check if blocks are connected through an algebraic path.
+
+**Graph.outgoing_connections**`(block)`
+: Returns outgoing connections of a block.
+
+**Graph.dag**`()`
+: Generator for DAG levels.
+
+**Graph.loop**`()`
+: Generator for loop DAG levels.
+
+**Graph.loop_closing_connections**`()`
+: Returns loop-closing connections.
+
+### pathsim.utils.logger
+
+#### class LoggerManager
+
+Singleton class for centralized logging configuration in PathSim.
+
+
+**LoggerManager.__init__**`(enabled = False, output = None, level = logging.INFO, format = None, date_format = '%H:%M:%S')`
+: Initialize the logger manager and setup root logger.
+
+**LoggerManager.configure**`(enabled = True, output = None, level = logging.INFO, format = None, date_format = None)`
+: Configure the root PathSim logger and all child loggers.
+
+**LoggerManager.get_logger**`(name)`
+: Get or create a logger with PathSim hierarchy.
+
+**LoggerManager.set_level**`(level, module = None)`
+: Set logging level globally or for a specific module.
+
+**LoggerManager.is_enabled**`()`
+: Check if logging is currently enabled.
+
+**LoggerManager.get_effective_level**`(module = None)`
+: Get the effective logging level.
+
+### pathsim.utils.mutable
+
+#### _do_reinit`(block)`
+Re-run __init__ with current parameter values, preserving engine state.
+
+#### mutable`(cls)`
+Class decorator that makes all ``__init__`` parameters trigger automatic
+
+### pathsim.utils.portreference
+
+#### class PortReference
+
+Container class that holds a reference to a block and a list of ports.
+
+- `block`
+- `ports`
+
+**PortReference.__init__**`(block = None, ports = None)`
+
+**PortReference.to**`(other)`
+: Transfer the data between two `PortReference` instances,
+
+**PortReference.get_inputs**`()`
+: Return the input values of the block at specified ports
+
+**PortReference.set_inputs**`(vals)`
+: Set the block inputs with values at specified ports
+
+**PortReference.get_outputs**`()`
+: Return the output values of the block at specified ports
+
+**PortReference.set_outputs**`(vals)`
+: Set the block outputs with values at specified ports
+
+**PortReference.to_dict**`()`
+: Serialization into dict
+
+### pathsim.utils.progresstracker
+
+#### class ProgressTracker
+
+A progress tracker for simulations with adaptive ETA and step rate display.
+
+- `total_duration`
+- `description`
+- `log`
+- `log_level`
+- `min_log_interval`
+- `update_log_every`
+- `bar_width`
+- `ema_alpha`
+- `logger`
+- `start_time`
+- `stats`
+- `current_progress` — Current progress fraction (0.0 to 1.0)
+
+**ProgressTracker.__init__**`(total_duration, description = 'Progress', logger = None, log = True, log_level = logging.INFO, min_log_interval = LOG_MIN_INTERVAL, update_log_every = LOG_UPDATE_EVERY, bar_width = 20, ema_alpha = 0.3)`
+
+**ProgressTracker.start**`()`
+: Start the progress tracker
+
+**ProgressTracker.update**`(progress, success = True, kwargs = {})`
+: Update progress and optionally log
+
+**ProgressTracker.interrupt**`()`
+: Mark tracker as interrupted
+
+**ProgressTracker.close**`()`
+: Close tracker and log final stats
+
+### pathsim.utils.realtimeplotter
+
+#### class RealtimePlotter
+
+Class that manages a realtime plotting window that
+
+- `max_samples`
+- `update_interval`
+- `labels`
+- `x_label`
+- `y_label`
+- `lines`
+- `data`
+- `last_update`
+- `is_running`
+- `legend`
+- `lined`
+
+**RealtimePlotter.__init__**`(max_samples = None, update_interval = 1, labels = [], x_label = '', y_label = '')`
+
+**RealtimePlotter.update_all**`(x, y)`
+: update the plot completely with new data
+
+**RealtimePlotter.update**`(x, y)`
+: update the plot with new data
+
+**RealtimePlotter.show**`()`
+
+**RealtimePlotter.on_close**`(event)`
+
+### pathsim.utils.register
+
+#### class Register
+
+This class is a intended to be used for the inputs and outputs of blocks.
+
+
+**Register.__init__**`(size = None, mapping = None, dtype = np.float64)`
+
+**Register.resize**`(size)`
+: Resize the internal data array to accommodate more entries.
+
+**Register.reset**`()`
+: Set all stored values to zero.
+
+**Register.to_array**`()`
+: Returns a copy of the internal array.
+
+**Register.update_from_array**`(arr)`
+: Update the register values from an array in place.
+
+### Examples
+
+#### [Harmonic Oscillator](https://docs.pathsim.org/pathsim/v0.18.0/examples/harmonic-oscillator)
+Simulation of a damped harmonic oscillator, modeling a spring-mass-damper system.
+Tags: ode, basics
+
+#### [Linear Feedback System](https://docs.pathsim.org/pathsim/v0.18.0/examples/linear-feedback)
+Simulation of a simple linear feedback system with step response.
+Tags: ode, feedback
+
+#### [Pendulum](https://docs.pathsim.org/pathsim/v0.18.0/examples/pendulum)
+Simulation of a nonlinear mathematical pendulum.
+Tags: ode, adaptive, physics
+
+#### [Van der Pol](https://docs.pathsim.org/pathsim/v0.18.0/examples/vanderpol)
+Simulation of the Van der Pol oscillator, a classic example of a stiff dynamical system.
+Tags: ode, nonlinear
+
+#### [Anti-lock Braking System (ABS)](https://docs.pathsim.org/pathsim/v0.18.0/examples/abs-braking)
+This example demonstrates an anti-lock braking system (ABS) using nonlinear tire dynamics and event-driven slip control. The system prevents wheel lockup during braking by modulating brake torque t...
+Tags: hybrid, events, automotive
+
+#### [Cascade Controller](https://docs.pathsim.org/pathsim/v0.18.0/examples/cascade-controller)
+Demonstration of a two-loop cascade PID control system with inner and outer loops.
+Tags: cascade, feedback
+
+#### [DC Motor Speed Control](https://docs.pathsim.org/pathsim/v0.18.0/examples/dcmotor-control)
+This example demonstrates multi-domain modeling of a DC motor with PID speed control. The system combines electrical and mechanical dynamics with anti-windup control to handle voltage saturation.
+Tags: motor, pid
+
+#### [Kalman Filter](https://docs.pathsim.org/pathsim/v0.18.0/examples/kalman-filter)
+This example demonstrates the Kalman filter in PathSim for optimal state estimation of a linear dynamical system from noisy measurements. The filter recursively estimates the state of a moving obje...
+Tags: estimation, filter
+
+#### [PID Controller](https://docs.pathsim.org/pathsim/v0.18.0/examples/pid-controller)
+Simulation of a PID controller tracking a step-changing setpoint.
+Tags: pid, feedback
+
+#### [Thermostat](https://docs.pathsim.org/pathsim/v0.18.0/examples/thermostat)
+Simulation of a thermostat with threshold-based switching between heater states.
+Tags: hybrid, events
+
+#### [Billards & Collisions](https://docs.pathsim.org/pathsim/v0.18.0/examples/billards)
+Simulation of a ball bouncing inside a circular boundary using event detection.
+Tags: events, collision
+
+#### [Bouncing Ball](https://docs.pathsim.org/pathsim/v0.18.0/examples/bouncing-ball)
+Simulation of a bouncing ball using PathSim's event handling system.
+Tags: events, hybrid
+
+#### [Bouncing Pendulum](https://docs.pathsim.org/pathsim/v0.18.0/examples/bouncing-pendulum)
+This example demonstrates a hybrid system combining continuous pendulum dynamics with discrete bounce events. The pendulum swings until it hits the ground (zero angle), at which point it bounces ba...
+Tags: events, collision
+
+#### [Coupled Oscillators](https://docs.pathsim.org/pathsim/v0.18.0/examples/coupled-oscillators)
+Simulation of two coupled damped harmonic oscillators using ODE blocks.
+Tags: ode, physics
+
+#### [Elastic Pendulum](https://docs.pathsim.org/pathsim/v0.18.0/examples/elastic-pendulum)
+Simulation of an elastic pendulum combining spring and pendulum dynamics.
+Tags: ode, physics
+
+#### [Stick Slip](https://docs.pathsim.org/pathsim/v0.18.0/examples/stick-slip)
+Simulation of a mechanical system exhibiting stick-slip behavior due to Coulomb friction.
+Tags: friction, hybrid
+
+#### [Switched Bouncing Ball](https://docs.pathsim.org/pathsim/v0.18.0/examples/switched-bouncing-ball)
+This example demonstrates advanced event handling with multiple simultaneous events, event switching, and conditional event logic. The bouncing ball bounces on a table first, and then drops to the ...
+Tags: events, hybrid
+
+#### [Delta-Sigma ADC](https://docs.pathsim.org/pathsim/v0.18.0/examples/delta-sigma-adc)
+Simulation of a first-order delta-sigma analog-to-digital converter.
+Tags: adc, mixed-signal
+
+#### [Diode Circuit](https://docs.pathsim.org/pathsim/v0.18.0/examples/diode-circuit)
+Simulation of a diode circuit demonstrating nonlinear algebraic loop solving.
+Tags: nonlinear, circuit
+
+#### [Noisy Amplifier](https://docs.pathsim.org/pathsim/v0.18.0/examples/noisy-amplifier)
+Simulation of a nonlinear, noisy, and band-limited amplifier model.
+Tags: noise, circuit
+
+#### [SAR ADC](https://docs.pathsim.org/pathsim/v0.18.0/examples/sar-adc)
+Simulation of a Successive Approximation Register ADC with custom block creation.
+Tags: adc, mixed-signal
+
+#### [FMCW Radar](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmcw-radar)
+In this example we simulate a simple frequency modulated continuous wave (FMCW) radar system.
+Tags: radar, frequency
+
+#### [RF Network - One Port](https://docs.pathsim.org/pathsim/v0.18.0/examples/rf-network-oneport)
+Simulation of a Radio Frequency (RF) network using scikit-rf for state-space conversion.
+Tags: rf, network
+
+#### [Spectrum Analysis](https://docs.pathsim.org/pathsim/v0.18.0/examples/spectrum-analysis)
+In this example we demonstrate frequency domain analysis using PathSim's spectrum block. We'll examine the frequency response of a Butterworth lowpass filter by analyzing its response to a Gaussian...
+Tags: fft, frequency
+
+#### [Transfer Function](https://docs.pathsim.org/pathsim/v0.18.0/examples/transfer-function)
+In this example we demonstrate how to use transfer functions in PathSim using the Pole-Residue-Constant (PRC) form. This representation is particularly convenient for transfer functions with comple...
+Tags: frequency, bode
+
+#### [Chemical Reactor](https://docs.pathsim.org/pathsim/v0.18.0/examples/chemical-reactor)
+Simulation of a continuous stirred tank reactor (CSTR) with consecutive exothermic reactions.
+Tags: cstr, reaction
+
+#### [Algebraic Loop](https://docs.pathsim.org/pathsim/v0.18.0/examples/algebraic-loop)
+Demonstration of PathSim's automatic handling of algebraic loops.
+Tags: algebraic, solver
+
+#### [Lorenz Attractor](https://docs.pathsim.org/pathsim/v0.18.0/examples/lorenz-attractor)
+Simulation of the famous Lorenz attractor, a chaotic dynamical system.
+Tags: chaos, ode
+
+#### [Nested Subsystems](https://docs.pathsim.org/pathsim/v0.18.0/examples/nested-subsystems)
+Demonstration of hierarchical modeling using nested subsystems for a Van der Pol oscillator.
+Tags: hierarchy, subsystem
+
+#### [Poincaré Maps](https://docs.pathsim.org/pathsim/v0.18.0/examples/poincare-maps)
+Demonstration of computing Poincaré sections for chaotic dynamical systems using event handling.
+Tags: analysis, chaos
+
+#### [FMU Co-Simulation](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmu-cosimulation)
+Demonstration of integrating Functional Mock-up Units (FMU) as PathSim blocks.
+Tags: fmu, cosim
+
+#### [FMU ME: Bouncing Ball](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmu-model-exchange-bouncing-ball)
+This example demonstrates Model Exchange FMU integration with PathSim. Unlike co-simulation FMUs, Model Exchange FMUs provide only the differential equations. PathSim's solvers perform the numerica...
+Tags: fmu, model-exchange
+
+#### [FMU ME: Van der Pol](https://docs.pathsim.org/pathsim/v0.18.0/examples/fmu-model-exchange-vanderpol)
+This example demonstrates Model Exchange FMU integration with a nonlinear oscillator. The Van der Pol equation exhibits self-sustained oscillations:
+Tags: fmu, model-exchange
+
+## PathSim-Chem (v0.2.2)
+
+### pathsim_chem.neutronics.point_kinetics
+
+#### class PointKinetics(pathsim.blocks.dynsys.DynamicalSystem)
+
+Reactor point kinetics equations with delayed neutron precursors.
+
+- `input_port_labels`
+- `output_port_labels`
+- `n0`
+- `Lambda`
+- `beta`
+- `lam`
+- `G`
+- `beta_total`
+
+**PointKinetics.__init__**`(n0 = 1.0, Lambda = 1e-05, beta = None, lam = None)`
+
+### pathsim_chem.process.cstr
+
+#### class CSTR(pathsim.blocks.dynsys.DynamicalSystem)
+
+Continuous stirred-tank reactor with Arrhenius kinetics and energy balance.
+
+- `input_port_labels`
+- `output_port_labels`
+- `V`
+- `F`
+- `k0`
+- `Ea`
+- `n`
+- `dH_rxn`
+- `rho`
+- `Cp`
+- `UA`
+
+**CSTR.__init__**`(V = 1.0, F = 0.1, k0 = 1000000.0, Ea = 50000.0, n = 1.0, dH_rxn = -50000.0, rho = 1000.0, Cp = 4184.0, UA = 500.0, C_A0 = 0.0, T0 = 300.0)`
+
+### pathsim_chem.process.distillation
+
+#### class DistillationTray(pathsim.blocks.dynsys.DynamicalSystem)
+
+Single equilibrium distillation tray with constant molar overflow.
+
+- `input_port_labels`
+- `output_port_labels`
+- `M`
+- `alpha`
+
+**DistillationTray.__init__**`(M = 1.0, alpha = 2.5, x0 = 0.5)`
+
+### pathsim_chem.process.flash_drum
+
+#### class FlashDrum(pathsim.blocks.dynsys.DynamicalSystem)
+
+Binary isothermal flash drum with Raoult's law vapor-liquid equilibrium.
+
+- `input_port_labels`
+- `output_port_labels`
+- `holdup`
+- `antoine_A`
+- `antoine_B`
+- `antoine_C`
+
+**FlashDrum.__init__**`(holdup = 100.0, antoine_A = None, antoine_B = None, antoine_C = None, N0 = None)`
+
+### pathsim_chem.process.heat_exchanger
+
+#### class HeatExchanger(pathsim.blocks.dynsys.DynamicalSystem)
+
+Counter-current shell and tube heat exchanger with discretized cells.
+
+- `input_port_labels`
+- `output_port_labels`
+- `N_cells`
+- `F_h`
+- `F_c`
+- `V_h`
+- `V_c`
+- `UA`
+- `rho_h`
+- `Cp_h`
+- `rho_c`
+- `Cp_c`
+
+**HeatExchanger.__init__**`(N_cells = 5, F_h = 0.1, F_c = 0.1, V_h = 0.5, V_c = 0.5, UA = 500.0, rho_h = 1000.0, Cp_h = 4184.0, rho_c = 1000.0, Cp_c = 4184.0, T_h0 = 370.0, T_c0 = 300.0)`
+
+### pathsim_chem.process.heater
+
+#### class Heater(pathsim.blocks.function.Function)
+
+Algebraic duty-specified heater/cooler with no thermal mass.
+
+- `input_port_labels`
+- `output_port_labels`
+- `rho`
+- `Cp`
+
+**Heater.__init__**`(rho = 1000.0, Cp = 4184.0)`
+
+### pathsim_chem.process.mixer
+
+#### class Mixer(pathsim.blocks.function.Function)
+
+Algebraic 2-stream mixer with mass and energy balance.
+
+- `input_port_labels`
+- `output_port_labels`
+
+**Mixer.__init__**`()`
+
+### pathsim_chem.process.multicomponent_flash
+
+#### class MultiComponentFlash(pathsim.blocks.dynsys.DynamicalSystem)
+
+Generalized isothermal flash drum for N components with Raoult's law VLE.
+
+- `N_comp`
+- `holdup`
+- `antoine_A`
+- `antoine_B`
+- `antoine_C`
+- `input_port_labels`
+- `output_port_labels`
+
+**MultiComponentFlash.__init__**`(N_comp = 3, holdup = 100.0, antoine_A = None, antoine_B = None, antoine_C = None, N0 = None)`
+
+### pathsim_chem.process.pfr
+
+#### class PFR(pathsim.blocks.dynsys.DynamicalSystem)
+
+Plug flow reactor with Arrhenius kinetics and energy balance.
+
+- `input_port_labels`
+- `output_port_labels`
+- `N_cells`
+- `V`
+- `F`
+- `k0`
+- `Ea`
+- `n`
+- `dH_rxn`
+- `rho`
+- `Cp`
+
+**PFR.__init__**`(N_cells = 5, V = 1.0, F = 0.1, k0 = 1000000.0, Ea = 50000.0, n = 1.0, dH_rxn = -50000.0, rho = 1000.0, Cp = 4184.0, C0 = 0.0, T0 = 300.0)`
+
+### pathsim_chem.process.valve
+
+#### class Valve(pathsim.blocks.function.Function)
+
+Algebraic pressure-drop valve with standard flow equation.
+
+- `input_port_labels`
+- `output_port_labels`
+- `Cv`
+
+**Valve.__init__**`(Cv = 1.0)`
+
+### pathsim_chem.thermodynamics.activity_coefficients
+
+#### class NRTL(pathsim.blocks.function.Function)
+
+Non-Random Two-Liquid activity coefficient model (IK-CAPE Chapter 4.1).
+
+- `input_port_labels`
+- `x`
+- `n`
+- `a`
+- `b`
+- `e`
+- `f`
+- `c`
+- `d`
+
+**NRTL.__init__**`(x, a, b = None, c = None, d = None, e = None, f = None)`
+
+#### class Wilson(pathsim.blocks.function.Function)
+
+Wilson activity coefficient model (IK-CAPE Chapter 4.3).
+
+- `input_port_labels`
+- `x`
+- `n`
+- `a`
+- `b`
+- `c`
+- `d`
+
+**Wilson.__init__**`(x, a, b = None, c = None, d = None)`
+
+#### class UNIQUAC(pathsim.blocks.function.Function)
+
+Universal Quasi-Chemical activity coefficient model (IK-CAPE Chapter 4.2).
+
+- `input_port_labels`
+- `x`
+- `n`
+- `r`
+- `q`
+- `q_prime`
+- `z`
+- `a`
+- `b_param`
+- `c_param`
+- `d_param`
+- `l`
+
+**UNIQUAC.__init__**`(x, r, q, a, q_prime = None, b = None, c = None, d = None, z = 10)`
+
+#### class FloryHuggins(pathsim.blocks.function.Function)
+
+Flory-Huggins activity coefficient model (IK-CAPE Chapter 4.4).
+
+- `input_port_labels`
+- `x`
+- `n`
+- `r_poly`
+- `chi0`
+- `chi1`
+
+**FloryHuggins.__init__**`(x, r, chi0, chi1 = None)`
+
+### pathsim_chem.thermodynamics.averages
+
+#### class MolarAverage(pathsim.blocks.function.Function)
+
+Molar average mixing rule (IK-CAPE code: MOLA).
+
+- `output_port_labels`
+- `x`
+
+**MolarAverage.__init__**`(x)`
+
+#### class MassAverage(pathsim.blocks.function.Function)
+
+Mass fraction average mixing rule (IK-CAPE code: MASS).
+
+- `output_port_labels`
+- `w`
+
+**MassAverage.__init__**`(w)`
+
+#### class LogMolarAverage(pathsim.blocks.function.Function)
+
+Logarithmic molar average mixing rule (IK-CAPE code: MOLG).
+
+- `output_port_labels`
+- `x`
+
+**LogMolarAverage.__init__**`(x)`
+
+#### class LogMassAverage(pathsim.blocks.function.Function)
+
+Logarithmic mass fraction average mixing rule (IK-CAPE code: MALG).
+
+- `output_port_labels`
+- `w`
+
+**LogMassAverage.__init__**`(w)`
+
+#### class LambdaAverage(pathsim.blocks.function.Function)
+
+Thermal conductivity average for gaseous mixtures (IK-CAPE code: LAMB).
+
+- `output_port_labels`
+- `x`
+
+**LambdaAverage.__init__**`(x)`
+
+#### class ViscosityAverage(pathsim.blocks.function.Function)
+
+Viscosity average for gaseous mixtures (IK-CAPE code: VISC).
+
+- `output_port_labels`
+- `x`
+- `M`
+- `weights`
+
+**ViscosityAverage.__init__**`(x, M)`
+
+#### class VolumeAverage(pathsim.blocks.function.Function)
+
+Volume-based density average (IK-CAPE code: VOLU).
+
+- `output_port_labels`
+- `x`
+
+**VolumeAverage.__init__**`(x)`
+
+#### class WilkeViscosity(pathsim.blocks.function.Function)
+
+Wilke mixing rule for gas viscosity (IK-CAPE code: WILK).
+
+- `output_port_labels`
+- `y`
+- `M`
+
+**WilkeViscosity.__init__**`(y, M)`
+
+#### class WassiljewaMasonSaxena(pathsim.blocks.function.Function)
+
+Wassiljewa-Mason-Saxena mixing rule for gas thermal conductivity
+
+- `output_port_labels`
+- `y`
+- `M`
+- `n`
+
+**WassiljewaMasonSaxena.__init__**`(y, M)`
+
+#### class DIPPRSurfaceTension(pathsim.blocks.function.Function)
+
+DIPPR surface tension average (IK-CAPE code: DIST).
+
+- `output_port_labels`
+- `x`
+- `V`
+- `xV`
+
+**DIPPRSurfaceTension.__init__**`(x, V)`
+
+#### class DIPPRLiquidConductivity(pathsim.blocks.function.Function)
+
+DIPPR liquid thermal conductivity average (IK-CAPE code: DIKL).
+
+- `output_port_labels`
+- `x`
+- `V`
+- `xv`
+
+**DIPPRLiquidConductivity.__init__**`(x, V)`
+
+### pathsim_chem.thermodynamics.corrections
+
+#### class PoyntingCorrection(pathsim.blocks.function.Function)
+
+Poynting pressure correction factor (IK-CAPE Chapter 5).
+
+- `input_port_labels`
+- `output_port_labels`
+
+**PoyntingCorrection.__init__**`()`
+
+#### class HenryConstant(pathsim.blocks.function.Function)
+
+Temperature-dependent Henry's law constant (IK-CAPE Chapter 6).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**HenryConstant.__init__**`(a, b = 0.0, c = 0.0, d = 0.0)`
+
+### pathsim_chem.thermodynamics.correlations
+
+#### class Polynomial(pathsim.blocks.function.Function)
+
+Polynomial correlation (IK-CAPE code: POLY).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Polynomial.__init__**`(coeffs)`
+
+#### class ExponentialPolynomial(pathsim.blocks.function.Function)
+
+Exponential polynomial correlation (IK-CAPE code: EPOL).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**ExponentialPolynomial.__init__**`(coeffs)`
+
+#### class Watson(pathsim.blocks.function.Function)
+
+Watson correlation (IK-CAPE code: WATS).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Watson.__init__**`(a0, a1, a2, a3 = 0.0)`
+
+#### class Antoine(pathsim.blocks.function.Function)
+
+Antoine correlation (IK-CAPE code: ANTO).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Antoine.__init__**`(a0, a1, a2)`
+
+#### class ExtendedAntoine(pathsim.blocks.function.Function)
+
+Extended Antoine correlation (IK-CAPE code: ANT1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**ExtendedAntoine.__init__**`(a0, a1, a2, a3 = 0.0, a4 = 0.0, a5 = 0.0, a6 = 0.0)`
+
+#### class Kirchhoff(pathsim.blocks.function.Function)
+
+Kirchhoff correlation (IK-CAPE code: KIRC).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Kirchhoff.__init__**`(a0, a1, a2)`
+
+#### class ExtendedKirchhoff(pathsim.blocks.function.Function)
+
+Extended Kirchhoff correlation (IK-CAPE code: KIR1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**ExtendedKirchhoff.__init__**`(a0, a1, a2, a3 = 0.0, a4 = 0.0)`
+
+#### class Sutherland(pathsim.blocks.function.Function)
+
+Sutherland correlation (IK-CAPE code: SUTH).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Sutherland.__init__**`(a0, a1)`
+
+#### class Wagner(pathsim.blocks.function.Function)
+
+Wagner correlation (IK-CAPE code: WAGN).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Wagner.__init__**`(Tc, Pc, a2, a3, a4, a5)`
+
+#### class LiquidHeatCapacity(pathsim.blocks.function.Function)
+
+Liquid heat capacity correlation (IK-CAPE code: CPL).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**LiquidHeatCapacity.__init__**`(a0, a1 = 0.0, a2 = 0.0, a3 = 0.0, a4 = 0.0)`
+
+#### class ExtendedLiquidHeatCapacity(pathsim.blocks.function.Function)
+
+Extended liquid heat capacity correlation (IK-CAPE code: ICPL).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**ExtendedLiquidHeatCapacity.__init__**`(a0, a1 = 0.0, a2 = 0.0, a3 = 0.0, a4 = 0.0, a5 = 0.0)`
+
+#### class DynamicViscosity(pathsim.blocks.function.Function)
+
+Dynamic viscosity correlation (IK-CAPE code: VISC).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**DynamicViscosity.__init__**`(a0, a1, a2 = 0.0)`
+
+#### class Rackett(pathsim.blocks.function.Function)
+
+Rackett correlation (IK-CAPE code: RACK).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**Rackett.__init__**`(a0, a1, a2, a3)`
+
+#### class AlyLee(pathsim.blocks.function.Function)
+
+Aly-Lee correlation (IK-CAPE code: ALYL).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**AlyLee.__init__**`(a0, a1, a2, a3, a4)`
+
+#### class DIPPR4(pathsim.blocks.function.Function)
+
+DIPPR Equation 4 correlation (IK-CAPE code: DIP4).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**DIPPR4.__init__**`(Tc, a1, a2, a3 = 0.0, a4 = 0.0, a5 = 0.0)`
+
+#### class DIPPR5(pathsim.blocks.function.Function)
+
+DIPPR Equation 5 correlation (IK-CAPE code: DIP5).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**DIPPR5.__init__**`(a0, a1, a2 = 0.0, a3 = 0.0)`
+
+### pathsim_chem.thermodynamics.enthalpy
+
+#### class ExcessEnthalpyNRTL(pathsim.blocks.function.Function)
+
+Excess enthalpy from the NRTL model (IK-CAPE Chapter 9.6.1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `x`
+- `n`
+- `a`
+- `b`
+- `e`
+- `f`
+- `c`
+- `d`
+
+**ExcessEnthalpyNRTL.__init__**`(x, a, b = None, c = None, d = None, e = None, f = None)`
+
+#### class ExcessEnthalpyUNIQUAC(pathsim.blocks.function.Function)
+
+Excess enthalpy from the UNIQUAC model (IK-CAPE Chapter 9.6.2).
+
+- `input_port_labels`
+- `output_port_labels`
+- `x`
+- `n`
+- `r`
+- `q`
+- `q_prime`
+- `a`
+- `b_param`
+- `c_param`
+- `d_param`
+
+**ExcessEnthalpyUNIQUAC.__init__**`(x, r, q, a, q_prime = None, b = None, c = None, d = None)`
+
+#### class ExcessEnthalpyWilson(pathsim.blocks.function.Function)
+
+Excess enthalpy from the Wilson model (IK-CAPE Chapter 9.6.3).
+
+- `input_port_labels`
+- `output_port_labels`
+- `x`
+- `n`
+- `a`
+- `b`
+- `c`
+- `d`
+
+**ExcessEnthalpyWilson.__init__**`(x, a, b = None, c = None, d = None)`
+
+#### class ExcessEnthalpyRedlichKister(pathsim.blocks.function.Function)
+
+Excess enthalpy from the Redlich-Kister expansion (IK-CAPE Chapter 9.6.5).
+
+- `input_port_labels`
+- `output_port_labels`
+- `x`
+- `n`
+- `coeffs`
+
+**ExcessEnthalpyRedlichKister.__init__**`(x, coeffs)`
+
+#### class EnthalpyDepartureRKS(pathsim.blocks.function.Function)
+
+Isothermal enthalpy departure from the SRK EoS (IK-CAPE Chapter 9.7.1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `Tc`
+- `Pc`
+- `omega`
+- `nc`
+- `phase`
+- `x`
+- `k`
+- `m`
+- `a_c`
+- `b_i`
+
+**EnthalpyDepartureRKS.__init__**`(Tc, Pc, omega, x = None, k = None, phase = 'vapor')`
+
+#### class EnthalpyDeparturePR(pathsim.blocks.function.Function)
+
+Isothermal enthalpy departure from the Peng-Robinson EoS (IK-CAPE Chapter 9.7.2).
+
+- `input_port_labels`
+- `output_port_labels`
+- `Tc`
+- `Pc`
+- `omega`
+- `nc`
+- `phase`
+- `x`
+- `k`
+- `m`
+- `a_c`
+- `b_i`
+
+**EnthalpyDeparturePR.__init__**`(Tc, Pc, omega, x = None, k = None, phase = 'vapor')`
+
+### pathsim_chem.thermodynamics.equations_of_state
+
+#### class PengRobinson(pathsim.blocks.function.Function)
+
+Peng-Robinson cubic equation of state (IK-CAPE Chapter 7.2).
+
+- `input_port_labels`
+- `output_port_labels`
+- `Tc`
+- `Pc`
+- `omega`
+- `n`
+- `phase`
+- `x`
+- `k`
+- `m`
+- `a_c`
+- `b_i`
+
+**PengRobinson.__init__**`(Tc, Pc, omega, x = None, k = None, phase = 'vapor')`
+
+#### class RedlichKwongSoave(pathsim.blocks.function.Function)
+
+Soave-Redlich-Kwong cubic equation of state (IK-CAPE Chapter 7.1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `Tc`
+- `Pc`
+- `omega`
+- `n`
+- `phase`
+- `x`
+- `k`
+- `m`
+- `a_c`
+- `b_i`
+
+**RedlichKwongSoave.__init__**`(Tc, Pc, omega, x = None, k = None, phase = 'vapor')`
+
+#### _solve_cubic_eos`(coeffs, phase = 'vapor')`
+Solve cubic equation in Z and return the appropriate root.
+
+### pathsim_chem.thermodynamics.fugacity_coefficients
+
+#### class FugacityRKS(pathsim.blocks.function.Function)
+
+Fugacity coefficients from the Soave-Redlich-Kwong EoS (IK-CAPE Chapter 8.1).
+
+- `input_port_labels`
+- `Tc`
+- `Pc`
+- `omega`
+- `nc`
+- `phase`
+- `x`
+- `k`
+- `m`
+- `a_c`
+- `b_i`
+
+**FugacityRKS.__init__**`(Tc, Pc, omega, x = None, k = None, phase = 'vapor')`
+
+#### class FugacityPR(pathsim.blocks.function.Function)
+
+Fugacity coefficients from the Peng-Robinson EoS (IK-CAPE Chapter 8.2).
+
+- `input_port_labels`
+- `Tc`
+- `Pc`
+- `omega`
+- `nc`
+- `phase`
+- `x`
+- `k`
+- `m`
+- `a_c`
+- `b_i`
+
+**FugacityPR.__init__**`(Tc, Pc, omega, x = None, k = None, phase = 'vapor')`
+
+#### class FugacityVirial(pathsim.blocks.function.Function)
+
+Fugacity coefficients from the truncated virial equation (IK-CAPE Chapter 8.3).
+
+- `input_port_labels`
+- `B`
+- `nc`
+- `y`
+
+**FugacityVirial.__init__**`(B, y = None)`
+
+### pathsim_chem.thermodynamics.reactions
+
+#### class EquilibriumConstant(pathsim.blocks.function.Function)
+
+Temperature-dependent chemical equilibrium constant (IK-CAPE Chapter 10.1).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**EquilibriumConstant.__init__**`(a0, a1 = 0.0, a2 = 0.0, a3 = 0.0, a4 = 0.0, a5 = 0.0)`
+
+#### class KineticRateConstant(pathsim.blocks.function.Function)
+
+Temperature-dependent kinetic rate constant (IK-CAPE Chapter 10.2).
+
+- `input_port_labels`
+- `output_port_labels`
+- `coeffs`
+
+**KineticRateConstant.__init__**`(a0, a1 = 0.0, a2 = 0.0, a3 = 0.0)`
+
+#### class PowerLawRate(pathsim.blocks.function.Function)
+
+Power-law reaction rate expression (IK-CAPE Chapter 10.2 KILM/KIVM).
+
+- `nu`
+- `nu_fwd`
+- `Keq`
+
+**PowerLawRate.__init__**`(nu, nu_fwd = None, Keq = None)`
+
+### pathsim_chem.tritium.bubbler
+
+#### class Bubbler4(pathsim.blocks.dynsys.DynamicalSystem)
+
+Tritium bubbling system with sequential vial collection stages.
+
+- `input_port_labels`
+- `output_port_labels`
+- `replacement_times`
+- `vial_efficiency`
+- `conversion_efficiency`
+
+**Bubbler4.__init__**`(conversion_efficiency = 0.9, vial_efficiency = 0.9, replacement_times = None)`
+
+### pathsim_chem.tritium.glc
+
+#### class GLC(pathsim.blocks.Function)
+
+Counter-current bubble column gas-liquid contactor (GLC) for tritium extraction.
+
+- `input_port_labels`
+- `output_port_labels`
+- `params`
+
+**GLC.__init__**`(P_in, L, D, T, BCs, g = const.g, initial_nb_of_elements = 20)`
+
+**GLC.func**`(c_T_in, flow_l, y_T2_inlet, flow_g)`
+
+#### _calculate_properties`(params)`
+Calculate temperature-dependent and geometry-dependent physical properties.
+
+#### _calculate_dimensionless_groups`(params, phys_props)`
+Calculate the dimensionless groups for the ODE system.
+
+#### _solve_bvp_system`(dim_params, y_T2_in, BCs, elements)`
+Set up and solve the Boundary Value Problem for tritium extraction.
+
+#### _process_results`(solution, params, phys_props, dim_params)`
+Process the BVP solution to produce dimensional results.
+
+#### solve`(params)`
+Main solver function for the bubble column model.
+
+### pathsim_chem.tritium.residencetime
+
+#### class ResidenceTime(pathsim.blocks.dynsys.DynamicalSystem)
+
+Chemical process block with residence time model.
+
+- `tau`
+- `betas`
+- `gammas`
+- `source_term`
+
+**ResidenceTime.__init__**`(tau = 1, betas = None, gammas = None, initial_value = 0, source_term = 0)`
+
+#### class Process(pathsim_chem.tritium.residencetime.ResidenceTime)
+
+Simplified version of the `ResidenceTime` model block
+
+- `input_port_labels`
+- `output_port_labels`
+
+**Process.__init__**`(tau = 1, initial_value = 0, source_term = 0)`
+
+### pathsim_chem.tritium.splitter
+
+#### class Splitter(pathsim.blocks.function.Function)
+
+Splitter block that splits the input signal into multiple
+
+- `input_port_labels`
+- `output_port_labels`
+- `fractions`
+
+**Splitter.__init__**`(fractions = None)`
+
+### pathsim_chem.tritium.tcap
+
+#### class TCAP1D(pathsim.blocks.ode.ODE)
+
+This block models the Thermal Cycle Absorption Process (TCAP) in 1d.
+
+### Examples
+
+#### [Activity Coefficients](https://docs.pathsim.org/chem/v0.2.2/examples/vle-calculation)
+Simulating how NRTL activity coefficients for the ethanol-water system evolve with temperature using PathSim blocks and connections.
+Tags: thermodynamics, vle
+
+#### [Continuous Stirred-Tank Reactor](https://docs.pathsim.org/chem/v0.2.2/examples/cstr-reaction)
+Simulating the startup transient of an exothermic first-order reaction in a cooled CSTR, showing the dynamic interaction between concentration decay and temperature rise.
+Tags: cstr, reaction, dynamics
+
+#### [Counter-Current Heat Exchanger](https://docs.pathsim.org/chem/v0.2.2/examples/heat-exchanger)
+Simulating the startup transient of a counter-current shell-and-tube heat exchanger, showing how temperature profiles develop along the exchanger length.
+Tags: heat-transfer, dynamics
+
+#### [Cubic Equations of State](https://docs.pathsim.org/chem/v0.2.2/examples/equation-of-state)
+Simulating the compressibility factor of methane across a pressure sweep using the Peng-Robinson and Soave-Redlich-Kwong equations of state wired into a PathSim simulation.
+Tags: thermodynamics, eos
+
+#### [Flash Drum and Distillation Column](https://docs.pathsim.org/chem/v0.2.2/examples/flash-distillation)
+Simulating two fundamental separation processes: an isothermal binary flash drum and a multi-tray distillation column built from individual  blocks wired in series.
+Tags: separation, vle, distillation
+
+#### [Vapor Pressure Curves](https://docs.pathsim.org/chem/v0.2.2/examples/vapor-pressure-curves)
+Comparing vapor pressure correlations for water by sweeping temperature through Antoine, Kirchhoff, and Wagner blocks wired into a PathSim simulation.
+Tags: thermodynamics, vle
+
+#### [Multi-Component Flash Separation (BTX)](https://docs.pathsim.org/chem/v0.2.2/examples/multicomponent-flash)
+Simulating an isothermal flash drum for a ternary benzene–toluene–p-xylene (BTX) mixture.
+
+#### [Process Flowsheet: Mixer → Heater → CSTR](https://docs.pathsim.org/chem/v0.2.2/examples/process-flowsheet)
+A simple process combining multiple unit operations into a flowsheet:
+
+#### [Reactor Point Kinetics](https://docs.pathsim.org/chem/v0.2.2/examples/point-kinetics)
+Simulating the transient neutron population in a nuclear reactor using the point kinetics equations (PKE) with six delayed neutron precursor groups.
+
+#### [Valve Flow Characteristics](https://docs.pathsim.org/chem/v0.2.2/examples/valve-characteristics)
+Exploring the flow behaviour of the  block under varying pressure drop conditions.
+
+## PathSim-RF (v0.1.1)
+
+### pathsim_rf.amplifier
+
+#### class RFAmplifier(pathsim.blocks.function.Function)
+
+RF amplifier with optional nonlinearity (IP3 / P1dB compression).
+
+- `input_port_labels`
+- `output_port_labels`
+- `gain`
+- `Z0`
+- `IIP3`
+- `P1dB`
+
+**RFAmplifier.__init__**`(gain = 20.0, P1dB = None, IIP3 = None, Z0 = 50.0)`
+
+#### _dbm_to_vpeak`(p_dbm, z0)`
+Convert power in dBm to peak voltage amplitude.
+
+### pathsim_rf.mixer
+
+#### class RFMixer(pathsim.blocks.function.Function)
+
+Ideal RF mixer (frequency converter).
+
+- `input_port_labels`
+- `output_port_labels`
+- `conversion_gain`
+- `Z0`
+
+**RFMixer.__init__**`(conversion_gain = 0.0, Z0 = 50.0)`
+
+### pathsim_rf.network
+
+#### class RFNetwork(pathsim.blocks.lti.StateSpace)
+
+N-port RF network linear time invariant (LTI) MIMO state-space model.
+
+- `network`
+- `vf`
+
+**RFNetwork.__init__**`(ntwk: rf.Network | str | Path, auto_fit: bool = True, kwargs = {})`
+
+**RFNetwork.s**`(freqs: np.ndarray)`
+: S-matrix of the vector fitted N-port model from its state-space representation.
+
+### pathsim_rf.transmission_line
+
+#### class TransmissionLine(pathsim.blocks._block.Block)
+
+Lossy transmission line modeled as a delayed scattering two-port.
+
+- `input_port_labels`
+- `output_port_labels`
+- `length`
+- `er`
+- `attenuation`
+- `Z0`
+- `vp`
+- `tau`
+- `T`
+
+**TransmissionLine.__init__**`(length = 1.0, er = 1.0, attenuation = 0.0, Z0 = 50.0)`
+
+**TransmissionLine.reset**`()`
+
+**TransmissionLine.sample**`(t, dt)`
+: Store current incident waves into the delay buffer.
+
+**TransmissionLine.update**`(t)`
+: Read delayed waves, cross and scale.
+
+### Examples
+
+#### [RF Amplifier Compression](https://docs.pathsim.org/rf/v0.1.1/examples/rf-amplifier-compression)
+Simulation of an RF amplifier with gain compression demonstrating the third-order nonlinearity model. We sweep the input power and observe the 1 dB compression point and gain saturation behavior.
+Tags: amplifier, nonlinear, compression
+
+#### [RF Mixer Downconversion](https://docs.pathsim.org/rf/v0.1.1/examples/rf-mixer-downconversion)
+Simulation of a superheterodyne downconversion stage using the  block. A high-frequency RF signal is mixed with a local oscillator (LO) to produce an intermediate frequency (IF) output.
+Tags: mixer, frequency, downconversion
+
+#### [Superheterodyne Receiver Chain](https://docs.pathsim.org/rf/v0.1.1/examples/superheterodyne-receiver)
+Simulation of a basic superheterodyne receiver front-end combining multiple PathSim-RF blocks: an RF amplifier (LNA), a mixer for downconversion, and an IF amplifier. This demonstrates how the bloc...
+Tags: receiver, system
+
+#### [Transmission Line Pulse Propagation](https://docs.pathsim.org/rf/v0.1.1/examples/transmission-line-reflection)
+Simulation of pulse propagation through a lossy transmission line using the  block. We observe the propagation delay and attenuation of a Gaussian pulse traveling through the line.
+Tags: transmission-line, propagation
+
+## Links
+
+- [PathSim Homepage](https://pathsim.org): Project homepage
+- [PathView Editor](https://view.pathsim.org): Browser-based visual block diagram editor
+- [GitHub](https://github.com/pathsim): Source code repositories
+- [PyPI](https://pypi.org/project/pathsim): Python package
+- [JOSS Paper](https://doi.org/10.21105/joss.07484): Published paper
