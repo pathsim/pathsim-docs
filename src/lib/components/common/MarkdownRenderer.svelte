@@ -93,6 +93,13 @@
 		return { text, blocks };
 	}
 
+	/**
+	 * Convert GitHub-style ```math fenced blocks to $$...$$ display math
+	 */
+	function convertMathCodeBlocks(text: string): string {
+		return text.replace(/```math\s*\n([\s\S]*?)```/g, (_, content) => `$$${content.trim()}$$`);
+	}
+
 	// Convert markdown to HTML and extract math blocks
 	let processedMarkdown = $derived.by(() => {
 		// Subscribe to crossref store to trigger re-processing when index loads
@@ -100,8 +107,10 @@
 		if (!markdown?.trim()) return { html: '', mathBlocks: new Map<string, { content: string; isDisplay: boolean }>() };
 		// Rewrite relative image URLs before processing
 		const rewritten = rewriteImageUrls(markdown, basePath);
+		// Convert ```math blocks to $$...$$ before math protection
+		const mathConverted = convertMathCodeBlocks(rewritten);
 		// Protect math blocks before marked processes them
-		const { text: protected_, blocks } = protectMath(rewritten);
+		const { text: protected_, blocks } = protectMath(mathConverted);
 		const rawHtml = marked.parse(protected_, { async: false }) as string;
 		return { html: processCrossRefs(rawHtml, base), mathBlocks: blocks };
 	});

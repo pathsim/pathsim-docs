@@ -45,6 +45,7 @@ from lib.notebooks import (
     generate_version_manifest,
 )
 from lib.executor import execute_notebooks
+from lib.roadmap import build_roadmap
 
 # Optional: embeddings for semantic search
 try:
@@ -402,10 +403,22 @@ def generate_package_manifest(package_id: str, dry_run: bool = False):
             "hasExamples": has_examples,
         })
 
+    # Check if roadmap exists
+    roadmap_path = output_dir / "roadmap.json"
+    has_roadmap = False
+    if roadmap_path.exists():
+        try:
+            with open(roadmap_path, "r", encoding="utf-8") as f:
+                roadmap_data = json.load(f)
+                has_roadmap = len(roadmap_data.get("issues", [])) > 0
+        except Exception:
+            pass
+
     manifest = {
         "package": package_id,
         "latestTag": latest_tag,
         "versions": versions,
+        "hasRoadmap": has_roadmap,
     }
 
     if dry_run:
@@ -479,6 +492,10 @@ def build_package(
     # Return to main branch
     if not dry_run:
         checkout_main(repo_path)
+
+    # Fetch roadmap issues from GitHub
+    print(f"\n  Fetching roadmap...")
+    build_roadmap(package_id, dry_run)
 
     # Generate package manifest
     if not dry_run:

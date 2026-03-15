@@ -20,6 +20,7 @@ PACKAGES = {
         "figures": ROOT_DIR / "pathsim" / "docs" / "source" / "examples" / "figures",
         "display_name": "PathSim",
         "griffe_package": "pathsim",
+        "github_repo": "pathsim/pathsim",
         "root_modules": [
             "pathsim",
         ],
@@ -31,6 +32,7 @@ PACKAGES = {
         "figures": ROOT_DIR / "pathsim-chem" / "docs" / "source" / "examples" / "figures",
         "display_name": "PathSim-Chem",
         "griffe_package": "pathsim_chem",
+        "github_repo": "pathsim/pathsim-chem",
         "root_modules": [
             "pathsim_chem",
         ],
@@ -42,6 +44,7 @@ PACKAGES = {
         "figures": ROOT_DIR / "pathsim-vehicle" / "docs" / "source" / "examples" / "figures",
         "display_name": "PathSim-Vehicle",
         "griffe_package": "pathsim_vehicle",
+        "github_repo": "pathsim/pathsim-vehicle",
         "root_modules": [
             "pathsim_vehicle",
         ],
@@ -53,6 +56,7 @@ PACKAGES = {
         "figures": ROOT_DIR / "pathsim-flight" / "docs" / "source" / "examples" / "figures",
         "display_name": "PathSim-Flight",
         "griffe_package": "pathsim_flight",
+        "github_repo": "pathsim/pathsim-flight",
         "root_modules": [
             "pathsim_flight",
         ],
@@ -64,6 +68,7 @@ PACKAGES = {
         "figures": ROOT_DIR / "pathsim-rf" / "docs" / "source" / "examples" / "figures",
         "display_name": "PathSim-RF",
         "griffe_package": "pathsim_rf",
+        "github_repo": "pathsim/pathsim-rf",
         "root_modules": [
             "pathsim_rf",
         ],

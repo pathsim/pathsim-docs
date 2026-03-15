@@ -1,0 +1,124 @@
+{
+  "package": "pathsim",
+  "repo": "pathsim/pathsim",
+  "updated": "2026-03-15T14:18:02Z",
+  "issues": [
+    {
+      "number": 172,
+      "title": "Fine Grained Diagnostics",
+      "body": "If simulation doesnt converge, we want to know where the problem comes from. Which block for the ode solvers. Which connection for the algebraic loop solvers. We want block wise error and convergence metrics. \n\nLuckiely everything is there already, we just need to expose it through a nice interface.",
+      "labels": [
+        "enhancement",
+        "numerics"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/172",
+      "created": "2025-12-22T22:18:45Z"
+    },
+    {
+      "number": 160,
+      "title": "ODE Solver Error Control",
+      "body": "The adaptive timestep solvers currently use a P controler to adjust the timestep given an estimate for the current truncation error. In the literature and in practice, different kinds of controlers have been explored for that such as I, PI and PID controlers. \n\nIt would make sense to implement a new class `TruncationErrorControler` to modularize this and enable different controler types.",
+      "labels": [
+        "enhancement",
+        "numerics",
+        "refactor"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/160",
+      "created": "2025-12-02T08:53:24Z"
+    },
+    {
+      "number": 146,
+      "title": "FSAL for ode solvers",
+      "body": "Some runge kutta solvers such as `RKBS32` and `RKDP54` have the first-same-as-last (FSAL) property, where the last slope of the previous stage is the first slope of the next one. This saves one function evaluation per successful step and therefore increases solver efficiency. \n\nCurrently this is not implemented in pathsim, but it would give some additional 5% to 20% speedup for some solvers.",
+      "labels": [
+        "numerics"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/146",
+      "created": "2025-11-04T15:00:43Z"
+    },
+    {
+      "number": 124,
+      "title": "Type Hints",
+      "body": "Currently, PathSim is not explicitly typed. Adding type hints makes sense.",
+      "labels": [
+        "documentation"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/124",
+      "created": "2025-10-15T09:14:08Z"
+    },
+    {
+      "number": 109,
+      "title": "Checkpoints",
+      "body": "Saving simulation state as checkpoint and loading simulation state from checkpoints.",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/109",
+      "created": "2025-10-09T19:49:11Z"
+    },
+    {
+      "number": 105,
+      "title": "pseudo steady state mode for dynamical blocks",
+      "body": "Sometimes in big complex systems, individual components have wildly different timescales for their physics. In some cases it makes sense to approximate components with very fast dynamics as being in a steady state at each timestep, such that the component becomes purely algebraic.\n\nTo achieve this, the time derivative of the block ode \n\n```math\n\\dot{x} = f(x, u, t) \n```\n\nwill be forced to zero (transients have settled locally). Then the behavior of the block becomes algebraic and is defined by this algebraic implicit equation \n\n```math\n0 = f(x, u, t) \n```\n\nthat has to be solved for `x` for given block inputs `u` and time `t`.\n\n**Implementation ideas:**\n\n- define new `pseudosteadystate(t)` method for blocks and implement it for blocks that have dynamic operators \n- add a new `_pss` flag to blocks and enable `pss` as an arg for the blocks that support it \n- in the timestepping methods of the block check if `_pss` is set and handle the logic accordingly\n\nThis will work but maybe there is a more elegant solution\n\n- alternatively build a `PeriodicSteadyState` block that wraps other blocks and solves the algebraic equation through the same interface as the `Simulation` using the already existing `SteadyState` solver\n\nI think thats more elegant but might be less efficient",
+      "labels": [
+        "enhancement",
+        "numerics"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/105",
+      "created": "2025-10-08T11:53:15Z"
+    },
+    {
+      "number": 104,
+      "title": "Runtime System Modifications",
+      "body": "PathSim already supports adding and activating/deactivating blocks and connections at simulation runtime. For example through events. Whats missing is the capability to cleanly replace and remove blocks in a similar fashion.\n\n**What this will enable:**\nImagine you are running a big system simulation with many (maybe hundreds) of blocks that might be small or large individual models themself. Some of these blocks might be surrogate models, i.e. trained neural odes. The described functionality would enable seamless hot-swapping of models mid simulation. For example a nn that has been trained on some real world data and update the surrogate model every couple of minutes with the newly trained nn.",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/104",
+      "created": "2025-10-08T11:37:36Z"
+    },
+    {
+      "number": 91,
+      "title": "Asynchronous and parallel block updates",
+      "body": "PathSim has a decentralized architecture for the blocks which lends itself to parallelism and asynchronizity. Expensive blocks should compute asynchronously and not make the other blocks wait. With free-threading from Python 3.13, parallelization of the block updates is possible and has been verified with multiprocessing (slow but validation of the concept) for an earlier build.\n\nNear linear scaling of performance with number of cpus for large numbers of blocks can be expected.",
+      "labels": [
+        "enhancement",
+        "numerics"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/91",
+      "created": "2025-09-25T12:07:35Z"
+    },
+    {
+      "number": 84,
+      "title": "Copy blocks, subsystems and simulation",
+      "body": "Implement a `copy` method for the blocks, the `Subsystem` class, and the `Simulation`. \n\nThis should enable convenient copying of standard blocks for defining a system.",
+      "labels": [
+        "enhancement"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/84",
+      "created": "2025-09-15T09:20:59Z"
+    },
+    {
+      "number": 82,
+      "title": "IMEX integrators",
+      "body": "Implementing implicit-explicit ode solvers. \n\nSome blocks in large systems may exhibit local stiffness while the coupling to external blocks is non-stiff. In these cases it would be nice to use more stable implicit ode solvers for these blocks while using explicit solvers for the other, non-stiff blocks. \n\nThe global solver would remain explicit, while locally, blocks can be flagged as stiff and then use the implicit counterpart. Implicit iterations will only be done locally for that block. Methods that would suit this are:\n\n\n- [ARS443](https://doi.org/10.1016/S0168-9274(97)00056-1) pair of explicit and diagonally implicit runge kutta methods\n- [ARK4(3)7L[2]SA](https://doi.org/10.1016/j.apnum.2018.10.007) pair of explicit and diagonally implicit runge kutta methods with embedded pairs for error control",
+      "labels": [
+        "enhancement",
+        "numerics"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/82",
+      "created": "2025-09-12T17:05:18Z"
+    },
+    {
+      "number": 81,
+      "title": "exponential integrators",
+      "body": "Using exponential integrators is a way to eliminate stiffness from linear dynamical systems. Many pathsim blocks are pure linear odes such as the `StateSpace` blocks and its derivates, as well as the `Differentiator` and the `PID`. \n\nThey are more or less of the following form:\n\n```math\n\\dot{\\vec{x}} = \\mathbf{A} \\vec{x} + \\mathbf{B} \\vec{u} \n```\n\nStiffness occurs when the eigenvalues of A are on vastly different scales, i.e. there are fast and slow time constants in the system. \n\nTyppically the ODE is solved from one timestep to the next like this:\n\n```math\n\\vec{x}_{n+1}  = \\vec{x}_{n} + \\int_{t_n}^{t_{n+1}}   \\mathbf{A} \\vec{x}(\\tau) + \\mathbf{B} \\vec{u}(\\tau)  \\ d\\tau\n```\n\nBut since the exact solution can be expressed for linea systems, the problem can be reduced to:\n\n```math\n\\vec{x}_{n+1}  = e^{\\mathbf{A}h} \\vec{x}_{n} + \\int_{t_n}^{t_{n+1}}   e^{\\mathbf{A} (t_{n+1} - \\tau)} \\mathbf{B} \\vec{u}(\\tau)  \\ d\\tau\n```\n\nIt removes the state dependency from the integration. Intuitively it can be explained by superposition due to the linearity. The solution is an exponentially dacaying state added to the input convolved with the impulse response.\n\nThe resulting convolution integral can then be solved by some ode solver. \n\nImplementing this as an option for linear ode blocks will help reduce stiffness induced by these kinds of blocks.",
+      "labels": [
+        "enhancement",
+        "numerics"
+      ],
+      "url": "https://github.com/pathsim/pathsim/issues/81",
+      "created": "2025-09-12T16:52:32Z"
+    }
+  ]
+}
