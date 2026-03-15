@@ -6,7 +6,7 @@
 	import NotebookCell from '$lib/components/common/NotebookCell.svelte';
 	import { packages, type PackageId, type InstallOption } from '$lib/config/packages';
 	import { copyToClipboard } from '$lib/utils/clipboard';
-	import { type PackageManifest, versionHasExamples } from '$lib/api/versions';
+	import { type PackageManifest, versionHasExamples, packageHasRoadmap } from '$lib/api/versions';
 	import { packageVersionsStore } from '$lib/stores/packageVersionsStore';
 
 	/**
@@ -74,6 +74,7 @@
 	let examplesAvailable = $derived(
 		manifest && selectedTag ? versionHasExamples(selectedTag, manifest) : false
 	);
+	let roadmapAvailable = $derived(manifest ? packageHasRoadmap(manifest) : false);
 
 	// Check if conda is available for this version
 	let condaAvailable = $derived.by(() => {
@@ -137,6 +138,12 @@
 			<a href={examplesPath} class="action-card">
 				<Icon name="play" size={20} />
 				<span class="action-label">Examples</span>
+			</a>
+		{/if}
+		{#if roadmapAvailable}
+			<a href="{base}/{packageId}/roadmap" class="action-card">
+				<Icon name="roadmap" size={20} />
+				<span class="action-label">Roadmap</span>
 			</a>
 		{/if}
 		<a href={pkg.github} class="action-card">

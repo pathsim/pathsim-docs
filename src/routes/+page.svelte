@@ -4,10 +4,11 @@
 	import { goto } from '$app/navigation';
 	import Icon from '$lib/components/common/Icon.svelte';
 	import Tooltip, { tooltip } from '$lib/components/common/Tooltip.svelte';
-	import { packages, packageOrder, nav } from '$lib/config/packages';
+	import { packages, packageOrder, nav, type PackageId } from '$lib/config/packages';
 	import type { SearchResult } from '$lib/utils/search';
 	import { createDebouncedSearch } from '$lib/stores/searchHook.svelte';
 	import { searchTarget } from '$lib/stores/searchNavigation';
+	import { getPackageManifest, packageHasRoadmap } from '$lib/api/versions';
 	import { SearchResult as SearchResultComponent } from '$lib/components/search';
 
 	function navigateWithTransition(path: string) {
@@ -34,8 +35,21 @@
 		}
 	}
 
+	// Track which packages have roadmaps
+	let roadmapFlags = $state<Record<string, boolean>>({});
+
 	onMount(() => {
 		window.addEventListener('keydown', handleGlobalKeydown);
+
+		// Load manifests to check roadmap availability
+		for (const pkgId of packageOrder) {
+			getPackageManifest(pkgId, fetch)
+				.then((manifest) => {
+					roadmapFlags[pkgId] = packageHasRoadmap(manifest);
+				})
+				.catch(() => {});
+		}
+
 		return () => {
 			window.removeEventListener('keydown', handleGlobalKeydown);
 		};
@@ -117,7 +131,7 @@
 				</a>
 				<a href={nav.consulting} class="action-card">
 					<Icon name="activity" size={20} />
-					<span class="action-label">Consulting</span>
+					<span class="action-label">Support</span>
 				</a>
 			</div>
 		</header>
@@ -167,6 +181,11 @@
 							{#if pkg.examples}
 								<a href="{base}/{pkg.examples}" class="icon-btn" use:tooltip={'Examples'}>
 									<Icon name="play" size={14} />
+								</a>
+							{/if}
+							{#if roadmapFlags[pkgId]}
+								<a href="{base}/{pkgId}/roadmap" class="icon-btn" use:tooltip={'Roadmap'}>
+									<Icon name="roadmap" size={14} />
 								</a>
 							{/if}
 							<a href={pkg.github} class="icon-btn" use:tooltip={'GitHub'}>

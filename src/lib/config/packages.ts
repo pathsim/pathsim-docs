@@ -305,6 +305,9 @@ export function getSidebarItems(packageId: PackageId, version?: string): Sidebar
 		}
 	}
 
+	// Add roadmap (unversioned, per-package)
+	items.push({ title: 'Roadmap', path: `${packageId}/roadmap`, icon: 'roadmap' });
+
 	return items;
 }
 

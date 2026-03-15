@@ -12,6 +12,7 @@ export interface PackageManifest {
 	package: string;
 	latestTag: string;
 	versions: VersionInfo[];
+	hasRoadmap?: boolean;
 }
 
 /**
@@ -105,4 +106,11 @@ export function versionHasExamples(tag: string, manifest: PackageManifest): bool
 	const normalized = normalizeTag(tag);
 	const version = manifest.versions.find((v) => v.tag === normalized);
 	return version?.hasExamples ?? false;
+}
+
+/**
+ * Check if a package has roadmap items
+ */
+export function packageHasRoadmap(manifest: PackageManifest): boolean {
+	return manifest.hasRoadmap ?? false;
 }

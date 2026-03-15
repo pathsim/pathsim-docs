@@ -53,6 +53,8 @@
 				// New version has no examples - go to overview
 				goto(`${base}/${packageId}`, { invalidateAll: true });
 			}
+		} else if (pathname.includes('/roadmap')) {
+			// Roadmap is unversioned — stay on the same page
 		} else if (pathname.includes('/api')) {
 			goto(`${base}/${packageId}/${tag}/api${hash}`, { invalidateAll: true });
 		} else {
