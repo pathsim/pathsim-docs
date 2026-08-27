@@ -1,10 +1,10 @@
 {
   "package": "fastsim",
-  "latestTag": "v0.28.1",
+  "latestTag": "v0.28.3",
   "versions": [
     {
-      "tag": "v0.28.1",
-      "released": "2026-08-17",
+      "tag": "v0.28.3",
+      "released": "2026-08-27",
       "hasExamples": true,
       "hasApi": true
     },

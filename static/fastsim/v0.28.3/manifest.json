@@ -1,6 +1,6 @@
 {
   "package": "fastsim",
-  "tag": "v0.28.1",
+  "tag": "v0.28.3",
   "notebooks": [
     {
       "slug": "one-script-two-engines",
